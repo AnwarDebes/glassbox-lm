@@ -1,0 +1,31 @@
+--- a/scripts/train_controller.py
++++ b/scripts/train_controller.py
+@@ -52,6 +52,7 @@
+     ap.add_argument("--batch-size", type=int, default=128)
+     ap.add_argument("--neg-sampling", default="hardest", choices=["hardest", "random"])
+     ap.add_argument("--backend", default="auto", choices=["auto", "torch", "numba"])
++    ap.add_argument("--device", default="cuda")  # logical-llm M5 patch 2: torch backend on CPU (fit() default is "cuda")
+     ap.add_argument("--emb-dir", default=str(ROOT / "results" / "embeddings"))
+     ap.add_argument("--out-dir", default=str(ROOT / "results" / "runs"))
+     args = ap.parse_args()
+@@ -78,10 +79,11 @@
+         neg_sampling=args.neg_sampling,
+     )
+     t0 = time.time()
+-    tm.fit(Btr, ytr, X_val=Bva, y_val=yva, eval_every=2, backend=args.backend)
++    tm.fit(Btr, ytr, X_val=Bva, y_val=yva, eval_every=2, backend=args.backend, device=args.device)
+     train_s = time.time() - t0
+ 
+     pred, margin, scores = tm.predict_with_margin(Bte)
++    val_pred = tm.predict(Bva)  # logical-llm M5 patch: in-scope val accuracy of the final model (no training change)
+     metrics = {
+         "dataset": args.dataset,
+         "featurizer": args.featurizer,
+@@ -93,6 +95,7 @@
+         "test_accuracy": label_accuracy(yte, pred),
+         "test_macro_f1": macro_f1(yte, pred, n_classes=tm.n_classes),
+         "best_val_acc": float(getattr(tm, "best_val_acc_", float("nan"))),
++        "val_accuracy": label_accuracy(yva, val_pred),  # logical-llm M5 patch
+         "clause_stats": tm.clause_stats(),
+         "model_version_id": tm.version_id(),
+         "history": getattr(tm, "history_", []),

@@ -1,0 +1,18 @@
+--- a/scripts/train_controller.py
++++ b/scripts/train_controller.py
+@@ -82,6 +82,7 @@
+     train_s = time.time() - t0
+ 
+     pred, margin, scores = tm.predict_with_margin(Bte)
++    val_pred = tm.predict(Bva)  # logical-llm M5 patch: in-scope val accuracy of the final model (no training change)
+     metrics = {
+         "dataset": args.dataset,
+         "featurizer": args.featurizer,
+@@ -93,6 +94,7 @@
+         "test_accuracy": label_accuracy(yte, pred),
+         "test_macro_f1": macro_f1(yte, pred, n_classes=tm.n_classes),
+         "best_val_acc": float(getattr(tm, "best_val_acc_", float("nan"))),
++        "val_accuracy": label_accuracy(yva, val_pred),  # logical-llm M5 patch
+         "clause_stats": tm.clause_stats(),
+         "model_version_id": tm.version_id(),
+         "history": getattr(tm, "history_", []),
