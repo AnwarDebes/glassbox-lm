@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 360" width="1280" height="360" role="img" aria-labelledby="t d">
+  <title id="t">Logic-based language modelling with Tsetlin Machines</title>
+  <desc id="d">Two groups of words, each joined by OR, feed an AND node that forms one readable clause and casts a vote.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b1220"/>
+      <stop offset="1" stop-color="#14213d"/>
+    </linearGradient>
+    <pattern id="dots" width="28" height="28" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.1" fill="#1e2b47"/>
+    </pattern>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="#94a3b8"/>
+    </marker>
+  </defs>
+
+  <rect width="1280" height="360" fill="url(#bg)"/>
+  <rect width="1280" height="360" fill="url(#dots)"/>
+  <rect x="0" y="0" width="8" height="360" fill="#2dd4bf"/>
+
+  <g transform="translate(72 62) scale(0.094)" fill="none" stroke="#2dd4bf" stroke-width="20" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M25 120 L140 88 L262 62 L352 76 L405 122 L195 318 Z" fill="#2dd4bf"/>
+    <path d="M405 100 C470 78 560 80 700 104 C770 118 830 150 880 195 L195 308"/>
+    <path d="M422 32 L455 40 L500 82"/>
+    <path d="M540 175 L740 160"/>
+    <path d="M460 235 L615 228"/>
+  </g>
+
+  <g font-family="Segoe UI, Helvetica, Arial, sans-serif">
+    <text x="170" y="92" font-size="20" letter-spacing="3" fill="#2dd4bf">TSETLIN MACHINE RESEARCH</text>
+    <text x="72" y="158" font-size="58" font-weight="700" fill="#f8fafc">Logic-based</text>
+    <text x="72" y="222" font-size="58" font-weight="700" fill="#f8fafc">language modelling</text>
+    <text x="72" y="274" font-size="23" fill="#cbd5e1">Readable clauses. Pre-registered tests.</text>
+    <text x="72" y="306" font-size="23" fill="#cbd5e1">Negative results reported as measured.</text>
+  </g>
+
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" text-anchor="middle">
+    <g stroke="#2dd4bf" stroke-width="1.5" fill="#101a30">
+      <rect x="716" y="48" width="132" height="34" rx="8"/>
+      <rect x="716" y="94" width="132" height="34" rx="8"/>
+      <rect x="716" y="140" width="132" height="34" rx="8"/>
+    </g>
+    <g fill="#e2e8f0">
+      <text x="782" y="71">song</text>
+      <text x="782" y="117">music</text>
+      <text x="782" y="163">album</text>
+    </g>
+    <g stroke="#fbbf24" stroke-width="1.5" fill="#101a30">
+      <rect x="716" y="198" width="132" height="34" rx="8"/>
+      <rect x="716" y="244" width="132" height="34" rx="8"/>
+      <rect x="716" y="290" width="132" height="34" rx="8"/>
+    </g>
+    <g fill="#e2e8f0">
+      <text x="782" y="221">road</text>
+      <text x="782" y="267">route</text>
+      <text x="782" y="313">highway</text>
+    </g>
+
+    <g stroke="#475569" stroke-width="1.5" fill="none">
+      <path d="M848 65 L888 65 L888 157 L848 157"/>
+      <path d="M848 111 L900 111"/>
+      <path d="M848 215 L888 215 L888 307 L848 307"/>
+      <path d="M848 261 L900 261"/>
+      <path d="M952 111 L990 111 L990 170 L1016 170" marker-end="url(#arrow)"/>
+      <path d="M952 261 L990 261 L990 202 L1016 202" marker-end="url(#arrow)"/>
+      <path d="M1092 186 L1126 186" marker-end="url(#arrow)"/>
+    </g>
+
+    <circle cx="926" cy="111" r="26" fill="#0f2a2a" stroke="#2dd4bf" stroke-width="2"/>
+    <text x="926" y="117" fill="#2dd4bf" font-weight="700">OR</text>
+    <circle cx="926" cy="261" r="26" fill="#2b2410" stroke="#fbbf24" stroke-width="2"/>
+    <text x="926" y="267" fill="#fbbf24" font-weight="700">OR</text>
+
+    <rect x="1018" y="156" width="74" height="60" rx="10" fill="#172554" stroke="#93c5fd" stroke-width="2"/>
+    <text x="1055" y="192" fill="#bfdbfe" font-weight="700">AND</text>
+
+    <rect x="1130" y="162" width="106" height="48" rx="24" fill="#f8fafc"/>
+    <text x="1183" y="192" fill="#0b1220" font-weight="700">clause</text>
+    <text x="1183" y="240" fill="#94a3b8" font-size="15">one readable rule,</text>
+    <text x="1183" y="260" fill="#94a3b8" font-size="15">one vote</text>
+  </g>
+</svg>

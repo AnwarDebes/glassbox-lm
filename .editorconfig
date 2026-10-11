@@ -1,0 +1,46 @@
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.py]
+indent_style = space
+indent_size = 4
+max_line_length = 100
+
+[*.{json,yml,yaml,cff}]
+indent_style = space
+indent_size = 2
+
+[Makefile]
+indent_style = tab
+
+[*.md]
+trim_trailing_whitespace = false
+
+[*.patch]
+trim_trailing_whitespace = false
+
+# Vendored files and files that a record pins by hash are stored byte for byte.
+[studies/tm_language_model/third_party/**]
+insert_final_newline = unset
+trim_trailing_whitespace = unset
+
+[studies/tm_language_model/src/tmlm/kernels/graphtm_patched/kernels.py]
+insert_final_newline = unset
+trim_trailing_whitespace = unset
+
+[studies/tm_language_model/experiments/**.json]
+insert_final_newline = unset
+trim_trailing_whitespace = unset
+
+[studies/hierarchical_tm/**]
+insert_final_newline = unset
+trim_trailing_whitespace = unset
+
+[studies/clause_lm/src/clause_driven_llm/**]
+insert_final_newline = unset
+trim_trailing_whitespace = unset

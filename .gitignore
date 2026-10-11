@@ -1,0 +1,53 @@
+# Run folders, datasets and local working copies stay on the machine that
+# produced them. The rules are anchored and have no trailing slash, so a
+# link with one of these names is ignored as well.
+/studies/*/results
+/studies/*/data
+/studies/*/work
+/studies/*/references
+/studies/*/third_party/ref
+
+# Virtual environments are built inside the study folders.
+.venv*
+
+# Python caches and build products.
+__pycache__/
+*.py[cod]
+.pytest_cache/
+*.egg-info/
+build/
+dist/
+
+# Compiled engine binaries are rebuilt from source.
+*.so
+*.o
+*.cubin
+
+# Marker and output files that the launch chains write next to themselves.
+/studies/tm_language_model/launch/*.done
+/studies/tm_language_model/launch/*.lock
+/studies/tm_language_model/launch/*.out
+/studies/tm_language_model/launch/pids.txt
+/studies/tm_language_model/launch/r1_confirm_skipped.txt
+/studies/tm_language_model/launch/r1_confirm_release
+
+# State files of the job queue.
+/studies/hierarchical_tm/queue/mps
+/studies/hierarchical_tm/queue/share_test
+/studies/hierarchical_tm/queue/queue.pid
+/studies/hierarchical_tm/queue/queue.log
+/studies/hierarchical_tm/queue/jobs.txt
+/studies/hierarchical_tm/queue/jobs.before_*
+/studies/hierarchical_tm/queue/started.txt
+/studies/hierarchical_tm/queue/done.txt
+/studies/hierarchical_tm/queue/STOP
+/studies/hierarchical_tm/queue/cfg_*.json
+/studies/hierarchical_tm/queue/*.out
+
+# Output files that the probe scripts write next to themselves.
+/studies/hierarchical_tm/src/feas_slide11/*.json
+/studies/hierarchical_tm/src/feas_slide11/*.log
+/studies/hierarchical_tm/src/feas_slide11/*.txt
+/studies/hierarchical_tm/src/feas_slide11/*.npz
+/studies/tm_language_model/launch/*.lock.want.*
+/studies/tm_language_model/launch/r2r4_skipped.txt
