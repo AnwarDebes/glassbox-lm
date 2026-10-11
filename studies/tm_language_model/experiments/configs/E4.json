@@ -1,0 +1,20 @@
+{
+  "experiment": "E4",
+  "docs": "docs/05",
+  "milestone": "M6 (wall time), M8 (ECE)",
+  "lane": 1,
+  "status": "planned",
+  "prereg": [
+    "H2.2"
+  ],
+  "seeds": [
+    1
+  ],
+  "script": "experiments/e4_full_training.py",
+  "venv": ".venv-tm",
+  "gpu_lock": "shared",
+  "params": {
+    "wall_clock_target_h": 48,
+    "ece_target": 0.05
+  }
+}

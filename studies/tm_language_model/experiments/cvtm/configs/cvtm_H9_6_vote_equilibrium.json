@@ -1,0 +1,72 @@
+{
+ "experiment": "cvtm_H9_6_vote_equilibrium",
+ "mode": "confirmatory",
+ "status": "PRE-REGISTERED confirmatory run of docs/13 amendment A4, hypothesis H9.6, and the gate G1 T1 (lane B2). Validation split only; the test split is never loaded. Every analysis choice below was fixed on 2026-09-24 before any class score of the CP bank was computed by this lane.",
+ "prereg": ["H9.6", "G1 T1"],
+ "docs": "docs/13 amendment A4 (H9.6, gates) and A5 (rows D10, D11); docs/11 sections 4, 5.2, 5.3, 8c (the update rules the derivation uses); docs/12 F19, F20; the derivation is the constant DERIVATION of the script and is printed into log.txt",
+ "script": "experiments/cvtm_vote_equilibrium.py",
+ "venv": ".venv-tm",
+ "lane": "B2",
+ "gpu_lock": "shared, held only by the GPU phase: the script starts that phase as a child process under scripts/gpu_run.sh shared; the analysis runs afterwards without the lock",
+ "run_names": ["cvtm_H9_6_vote_equilibrium"],
+ "launch": "scripts/cpu_slot.sh 1 -- .venv-tm/bin/python scripts/mem_guard.py -- scripts/run_logged.py --name cvtm_H9_6_vote_equilibrium --config experiments/cvtm/configs/cvtm_H9_6_vote_equilibrium.json -- .venv-tm/bin/python -u experiments/cvtm_vote_equilibrium.py --config experiments/cvtm/configs/cvtm_H9_6_vote_equilibrium.json",
+ "bank": {
+  "model": "results/20260923T042350Z_CP_anchor/model_seed1.npz",
+  "metrics": "results/20260923T042350Z_CP_anchor/metrics.json",
+  "engine_must_be": {"mode": "causal", "vocab": 8000, "T": 64, "neg_mode": "binomial", "q": 1.0, "batch": 1024, "v_slots": 64, "n_clauses": 1048576},
+  "rule": "the model's state hash must equal epoch4.checkpoint.state_hash of the CP anchor metrics; the raw top-1 of predict_scores over every validation position must equal the logged 0.14151747957266259 exactly; the forward pass scores must equal predict_scores at every selected (position, class); otherwise the run stops"
+ },
+ "engine": {"epoch_argument": 4, "note": "causal mode: the epoch argument does not change predict_scores (no masking); 4 as in experiments/cvtm_t1_readout.py"},
+ "kn": {
+  "cache": "results/20260924T085728Z_cvtm_cache_build/cache",
+  "group": "validation",
+  "arrays": ["gold", "doc_start", "kn_top_ids", "kn_top_p", "p_kn_all"],
+  "variant": "all: KN-5 (modified discounts, pad, unk_interp) fitted on every training document, the full-data KN of docs/11 11.6 and the comparator of results/20260922T180823Z_M2_baselines_ngram_v8000/",
+  "top": 50,
+  "top_rule": "the first 50 entries of the cached top-64 (descending probability, ties to the lower token id)",
+  "cross_check": {"positions": 256, "seed": [20260924, 96, 3], "peak_gib": 14,
+                  "rule": "on 256 selected positions, KNModel.dist of kn5_all.npz (independent of the vote form the cache used): probabilities at the cached ids within 1e-9 relative, and no class outside the list above the list's last probability by more than 1e-9 relative; otherwise the run stops"}
+ },
+ "positions": {
+  "count": 200000,
+  "seed": [20260924, 96, 1],
+  "rule": "uniform without replacement from all 282,587 validation positions (every position is a causal target), numpy default_rng(SeedSequence(seed)).choice, sorted; 1 in the seed is the bank's seed (confirmatory seed, docs/13 section 3); this subsample is the only random choice of the measurement"
+ },
+ "statistics": {
+  "T": 64,
+  "V": 8000,
+  "Q": 1.0,
+  "p": "P_KN(c | h) of the full-data KN-5 (kn_top_p)",
+  "b": "(1 - p) * Q / (V - 1), per (position, class)",
+  "x": "ln(p) - ln(b) = ln(p / b)",
+  "S": "the raw integer class score of predict_scores (spec section 4 step 4), UNCLAMPED, at the (position, class) pair; the registered text says 'S/T'",
+  "bins": {"width": 0.25, "index": "floor(x / 0.25)", "included": "every non-empty bin, no minimum count", "weight": "number of (position, class) pairs in the bin"},
+  "theory_per_bin": "mean over the bin's pairs of tanh(x / 2) (primary); tanh(mean x / 2) is reported as a secondary row",
+  "weighted_r2": "1 - sum_k n_k (ybar_k - fbar_k)^2 / sum_k n_k (ybar_k - ybar)^2 with ybar_k the bin mean of S/T, fbar_k the bin mean of tanh(x/2), ybar = sum_k n_k ybar_k / sum_k n_k; no fitted parameter (the theory curve is the prediction)",
+  "spearman": {"p_over_b_min": 20.0, "rule": "Spearman rank correlation (average ranks for ties) between S and ln p, POOLED over every (position, class) pair of the sample with p > 20 b (strict); the mean within-position Spearman is a secondary row"},
+  "threshold": {"r2_min": 0.8, "spearman_max": 0.2, "rule": "H9.6 MET iff weighted R^2 >= 0.8 AND Spearman <= 0.2, both point estimates (docs/13 A4); the bootstrap intervals are reported and are not part of the rule"},
+  "gate_G1_T1": "OPEN iff weighted R^2 >= 0.8 (docs/13 A4 gates): opens a same-data bank trained on the positions the core predicts poorly; the NCE-style engine change follows only if that bank beats a uniform-negative bank by at least 0.005 bits per byte. CLOSED otherwise",
+  "a5_rows": "D10 if H9.6 is met, D11 if not (docs/13 A5)",
+  "bootstrap": {"unit": "validation document (60 documents)", "resamples": 2000, "seed": [20260924, 1106, 1],
+                "method": "tmlm.cvtm.protocol.bootstrap_index (the document-block bootstrap of the CVTM runs); per resample both statistics are recomputed on the multiset of drawn documents (weighted average ranks for the Spearman); percentile 95 percent intervals", "label": "derived"}
+ },
+ "secondary_not_registered": [
+  "weighted R^2 with clamp(S, -T, T)/T (the quantity the gates read; derivation assumption A4)",
+  "weighted R^2 with the theory tanh(mean x / 2) per bin",
+  "unbinned pair-level R^2",
+  "Spearman over all top-50 pairs and over the pairs with p <= 20 b",
+  "mean within-position Spearman over positions with at least 3 classes above 20 b",
+  "post hoc: the best shift ln kappa of tanh((x - ln kappa)/2) (b multiplied by kappa), exploratory",
+  "fractions of pairs with S >= T, S > T, S == 0, S < 0; fired clauses and positive and negative voters per pair (assumption A1); by-rank means"
+ ],
+ "ambiguities_resolved_here": {
+  "S": "the registered 'S/T' is read as the unclamped score; the clamped version is secondary",
+  "spearman_population": "pooled over (position, class) pairs; within-position is secondary",
+  "bins": "width 0.25 in x, every non-empty bin, weighted by pair counts; theory per bin = bin mean of tanh(x/2)",
+  "positions": "uniform random subsample of 200,000 of the 282,587 validation positions with seed 1",
+  "kn": "the cached top-64 of the KN-5 on all training documents (docs/11 11.6), not a refit"
+ },
+ "outputs": {"pairs_npz": "h96_pairs.npz", "plot_data_json": "h96_plot_data.json", "plot_data_csv": "h96_plot_data.csv", "plot_png": "h96_equilibrium.png"},
+ "compute": {"gpu_pool_limit_gib": 9.0, "score_chunk": 8192, "diag_chunk": 2048,
+             "note": "GPU memory below 10 GB (shared lock rule); host peak a few GiB except the KN cross-check (kn5_all.npz, about 7 GiB on disk), which waits until memory.current + 14 GiB < 0.80 memory.max"}
+}

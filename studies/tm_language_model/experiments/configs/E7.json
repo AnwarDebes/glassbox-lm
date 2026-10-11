@@ -1,0 +1,33 @@
+{
+  "experiment": "E7",
+  "docs": "docs/05",
+  "milestone": "M6 (smoke), M9",
+  "lane": 3,
+  "status": "planned",
+  "prereg": [],
+  "seeds": [
+    1,
+    2,
+    3
+  ],
+  "script": "experiments/e7_negation.py",
+  "venv": ".venv-tm (BERT rows in .venv-dl)",
+  "gpu_lock": "shared",
+  "params": {
+    "datasets": [
+      "minimal_pairs",
+      "joey234/nan-nli",
+      "lasha-nlp/CONDAQA (once)"
+    ],
+    "baseline": "bert_base",
+    "polarity_ablation": "from MASKED text only",
+    "counterfactual_imdb_robustness_ratio": true,
+    "textattack_recipes": [
+      "TextFooler",
+      "BERT-Attack",
+      "AdvGLUE"
+    ],
+    "harness": "third_party/ref/tm-llm-robustness-benchmark (logits wrapper over clause-bit scores)",
+    "reference_bag_of_words_tm_ratio": "0.70 vs BERT 0.97 [stated: repository README, re-measured before use]"
+  }
+}

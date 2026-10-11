@@ -1,0 +1,23 @@
+{
+ "dataset": "WordSimilarity-353 (Finkelstein et al. 2002, ACM TOIS 20(1))",
+ "files": {
+  "data/concept_eval/wordsim353/combined.csv": {
+   "bytes": 7433,
+   "sha256": "49ff6433ae68abe716fb66433fd870483e289a7a8c74531f59eca847d103fff3"
+  },
+  "data/concept_eval/wordsim353/wordsim353.html": {
+   "bytes": 12182,
+   "sha256": "3a2e028f0a201f3e79eee659ae90bb0a8b3a443d8fabb03a6fea67e432ddf0d5"
+  },
+  "data/concept_eval/wordsim353/wordsim353.zip": {
+   "bytes": 23257,
+   "sha256": "4f12a5fe9650184662306f8ae72c7e6bb44c2627e0275e9f9c6eb067e3441a22"
+  }
+ },
+ "licence": "Creative Commons Attribution 4.0 International (stated on the maintained page, wordsim353.html, 'License terms')",
+ "provenance_check": "re-downloaded 2026-09-24 about 15:04 UTC from gabrilovich.com: identical sha256 of the zip [measured]; the Technion mirror was unreachable",
+ "source": "https://gabrilovich.com/resources/data/wordsim353/wordsim353.zip (page wordsim353.html in the same directory)",
+ "splits": "none: WordSim-353 has no official train/test split (set1 and set2 are collection batches; combined.csv = both). All 353 pairs are read.",
+ "used_by": "experiments/ssl_concepts_early.py (exploratory, docs/12 F23)",
+ "written": "2026-09-24, once, before any evaluation run read the scores (write-once: never edit)"
+}

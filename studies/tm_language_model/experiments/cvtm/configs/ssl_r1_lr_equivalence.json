@@ -1,0 +1,18 @@
+{
+  "experiment": "ssl_r1_lr_equivalence",
+  "script": "experiments/ssl_r1_lr_equivalence.py",
+  "status": "EXPLORATORY engineering check for docs/13 amendment A8: the GPU LR backend (tmlm.ssl.lr_gpu) recomputes every logged LR cell of a finished R1 seed-100 probe run; no hypothesis is tested",
+  "fixed_before_any_output": "pass rule written before the run: every recomputed cell has the identical accuracy, the identical chosen C and the identical CV accuracy for every C; any difference is reported cell by cell and blocks the switch of registered runs to the GPU backend",
+  "params": {
+    "probe_params_config": "experiments/cvtm/configs/ssl_r1_pretext.json",
+    "arms": {
+      "A3": {
+        "probe_run": "results/20260924T230745Z_ssl_r1_probe_A3_seed100_exploratory",
+        "features_run": "results/20260924T223250Z_ssl_r1_features_A3_seed100_exploratory"
+      }
+    },
+    "backend": "gpu",
+    "gpu_lock": "shared",
+    "cpu_slots": 1
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "experiment": "CP",
+  "docs": "docs/05",
+  "milestone": "M6",
+  "lane": 1,
+  "status": "planned",
+  "prereg": [
+    "H1.1"
+  ],
+  "seeds": [
+    1,
+    2,
+    3
+  ],
+  "script": "experiments/cp_causal_perplexity.py",
+  "venv": ".venv-tm",
+  "gpu_lock": "shared",
+  "params": {
+    "dataset": "wikitext-103-raw-v1",
+    "comparator": "kn5_inhouse",
+    "metric_primary": "bits_per_byte",
+    "test_access": "once after validation freeze",
+    "anchor_for": [
+      "s1 C=1M",
+      "s2 N=65536"
+    ],
+    "epoch_budget": "docs/13 amendment A2",
+    "s_note": "s = 128 from the tiny-LM tuning of 2026-09-22 (docs/12 F17); was the v0.1 value 16"
+  },
+  "engine": {
+    "mode": "causal",
+    "vocab": 8000,
+    "n_clauses": 1048576,
+    "T": 64,
+    "s": 128,
+    "batch": 1024,
+    "n_bag_k": 13
+  }
+}

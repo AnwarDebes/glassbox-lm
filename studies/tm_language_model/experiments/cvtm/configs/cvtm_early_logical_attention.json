@@ -1,0 +1,34 @@
+{
+  "experiment": "cvtm_early_logical_attention",
+  "script": "experiments/cvtm_early_logical_attention.py",
+  "status": "EXPLORATORY, not pre-registered; no docs/13 threshold is tested; validation split only for reported numbers, the test split is never loaded",
+  "purpose": "early go/no-go: does a Tsetlin machine 'logical attention' copy gate over pair literals that include REFLECTIVE literals (the base model's own expectations) add accuracy over KN-5 + document n-gram cache that a logistic-regression gate on the same literals cannot",
+  "go_criterion": "stated in the design of this experiment (not pre-registered): TM gate gain >= 0.01 bits per byte over B with the document-bootstrap 95 percent CI excluding 0, AND TM gate not worse than the LR gate by more than 0.002 bits per byte; primary protocol P1",
+  "inputs": {
+    "train_prefix": "first 5,000,000 tokens of WikiText-103 train at V 8000 cut at a document boundary (m3_tiny_lm.slice_train); held-out documents SeedSequence([20260923, 715, 1]), 5 percent (54 documents); KN-5 (modified Kneser-Ney, src/tmlm/eval/baselines/ngram.py) fitted on the other 1029 documents, identical to the causal probe and the feasibility run results/20260924T021631Z_tm_levers_feasibility_causal_exploratory",
+    "heldout_split": "held-out documents split by SeedSequence([20260924, 4242, 1]): 55 percent part A (gate training pairs), 45 percent part C (LR L2, TM T/s/epoch selection, softmax temperature, mixture weights)",
+    "validation": "WikiText-103 validation at V 8000, all 60 documents, every position, causal; bytes from data/wikitext103/raw/validation"
+  },
+  "params": {
+    "base_B": "KN-5 + document n-gram cache orders 0..4 (P(y | left-k context) from earlier positions of the same document), normalized linear mixture, bucket weights order x log2 count (65), fitted on C; the full-vocabulary B row is rebuilt per position for the reflective literals",
+    "candidates": "distinct tokens earlier in the same document, the 256 most recent distinct ones; label = candidate is the next token",
+    "literals": "237 thermometer / flag literals over 29 bucketed pair features (see the script docstring); 60 of them reflective (P_B, rank under B, P_KN5, B cluster masses, ratio to B's top-1, KN-5 context order k*, P_B(top-1), longest document-cache order)",
+    "training_pairs": "every positive pair of the A positions (capped at 120,000) plus 3 uniformly sampled negatives per positive",
+    "LR": "L2-regularised logistic regression (L-BFGS, 800 iterations), L2 in {0.1, 1, 10, 100} chosen on C by the copy log-likelihood",
+    "TM": "tmu TMClassifier (upstream 5605ff07, CPU), 2 classes, 2000 clauses per class, weighted clauses, grid T:s in {600:10, 600:25, 1200:15, 2400:10, 2400:25}, 4 epochs, (T, s, epoch) chosen on C by the copy log-likelihood; ablation: the chosen config without the reflective literals. Grid range from the pilot results/20260924T055525Z_cvtm_early_logical_attention_pilot_exploratory (1000 clauses, 20,000 positives, held-out training documents only: s 10 best of 2.5/5/10 at T 300 and 1200, so s is extended upward; T scaled with the clause count)",
+    "readout": "score = LR logit or TM class-1 vote sum (unclipped, empty clauses 0); P_copy = softmax(score / tau) over the candidates, tau fitted on C; P_copy enters the mixture as one component with bucket weights (top-share decile x top-score sextile, 60)",
+    "protocols": "P1 (primary): all mixture weights fitted on C, validation scored once; P2: the same mixtures refitted by two-fold cross-fitting over even/odd validation documents (the feasibility run's protocol)",
+    "statistics": "document-block bootstrap over the 60 validation documents, 2,000 resamples of summed bits / summed bytes"
+  },
+  "compute_cap": "about 4 hours wall (--wall-cap-s 14400 stops the TM grid early and says so)",
+  "threads": 1,
+  "venv": ".venv-tm",
+  "gpu": "none (CPU only, one thread, nice 19; s4 holds the CPU slots)",
+  "memory_guard": "scripts/mem_guard.py --limit-gib 30 (cgroup working set, all processes)",
+  "command_args": [
+    "--tm-grid",
+    "600:10,600:25,1200:15,2400:10,2400:25",
+    "--tm-epochs",
+    "4"
+  ]
+}

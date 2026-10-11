@@ -1,0 +1,33 @@
+{
+  "experiment": "M2_baselines",
+  "docs": "docs/06",
+  "milestone": "M2",
+  "lane": 2,
+  "status": "planned",
+  "prereg": [],
+  "seeds": [
+    1
+  ],
+  "script": "experiments/m2_baselines.py",
+  "venv": ".venv-tm for ngram, count_probe, cbow_knn; .venv-dl for transformer, transformer_mlm_smoke, bert",
+  "gpu_lock": "shared for the .venv-dl families, none otherwise",
+  "params": {
+    "corpus": "wikitext103",
+    "families": {
+      "ngram": {"vocab": [2000, 8000], "order": 5, "discount_mode": "modified", "single_discount_also": 0.1,
+                "bidirectional": "product of forward and backward KN (documented approximation)"},
+      "count_probe": {"vocab": [2000, 8000], "offsets_masked": [-3, -2, -1, 1, 2, 3], "offsets_causal": [-3, -2, -1]},
+      "cbow_knn": {"vocab": [8000], "dim": 128, "window": 5, "negatives": 10, "batch": 4096, "lr": 0.025,
+                   "lr_min": 0.0001, "subsample_t": 0.0001, "epochs": 1, "knn_k": 32, "bank_size": 1000000},
+      "transformer": {"vocab": [8000], "layers": [2, 4, 6], "width": [128, 256], "heads": 4, "seq_len": 256,
+                      "batch_seqs": 64, "lr": 0.001, "warmup_steps": 200, "time_cap_s_per_config": 600,
+                      "objective": "causal", "split": "validation"},
+      "transformer_mlm_smoke": {"vocab": [8000], "layers": 4, "width": 256, "time_cap_s": 120,
+                                "note": "the 24 GPU-h masked transformer is written but NOT run in M2"},
+      "bert": {"model": "bert-base-uncased", "label": "contaminated reference (saw Wikipedia)",
+               "evalset": "validation wholeword", "window": 512, "stride": 256}
+    },
+    "evalsets": "frozen validation subword and wholeword sets of docs/13 section 4; the test split is never touched in M2",
+    "bits_per_byte": "protocol CP: total bits over the UTF-8 byte count of the validation raw text"
+  }
+}

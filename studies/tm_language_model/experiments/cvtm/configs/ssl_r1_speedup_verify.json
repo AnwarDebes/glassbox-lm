@@ -1,0 +1,73 @@
+{
+  "experiment": "ssl_r1_speedup_verify",
+  "status": "VERIFICATION (not a registered row): the exact speedups O4, O10 and O12 of the compute-reduction plan of 2026-09-25 for the R1 confirmatory Q_pred and features stages, checked under docs/13 A8 item 7 (a speedup is used for a registered row only if it reproduces the registered estimator on logged cells under a rule written before the check). An item whose rule fails is NOT adopted: the confirm config's speedups block keeps it disabled and the stages run the original computation of experiments/ssl_r1_controls.py.",
+  "written_before_any_output": "2026-09-25, before any run of experiments/ssl_r1_speedup_verify.py and before any run of the new code on a logged table (only synthetic unit tests had run). Every pass rule below is fixed here; the runs only evaluate them.",
+  "docs": "docs/13 A8 item 7; compute-reduction notes of 2026-09-25, items O4, O10, O12 (not published); docs/11 11.5 and 11.6 (T1 read-out, fit documents)",
+  "script": "experiments/ssl_r1_speedup_verify.py",
+  "code_under_test": {
+    "O4_t1_gval": "src/tmlm/ssl/qpred_fast.py T1GpuG (kernels t1_gval, t1_loglin_g), used by experiments/ssl_r1_confirm.py qpred_checkpoint_fast",
+    "O10_prefix_counts": "src/tmlm/ssl/qpred_fast.py prefix_pass, save_prefix_counts, load_prefix_counts; experiments/ssl_r1_confirm.py features_core, featurize_checkpoints_counts, prefix_count_index, load_matching_counts",
+    "O12_qpred_dedupe": "experiments/ssl_r1_confirm.py qpred_core (state-hash dedupe), copy_qpred"
+  },
+  "registered_code": "experiments/ssl_r1_controls.py (stage_features, featurize_checkpoints, stage_qpred, qpred_checkpoint, count_table, fit_rows_fired, Tables), experiments/ssl_r1_pretext.py (fire_counts), experiments/cvtm_t1_readout.py (T1Gpu, T1_SRC, loglin_fit_gpu): imported unchanged",
+  "controls_config": "experiments/cvtm/configs/ssl_r1_controls.json",
+  "references": {
+    "train_run": "results/20260925T072256Z_ssl_r1c_train_A3_seed100_exploratory",
+    "features_run": "results/20260925T081210Z_ssl_r1c_features_A3_seed100_exploratory",
+    "qpred_run": "results/20260925T081814Z_ssl_r1c_qpred_A3_seed100_exploratory",
+    "note": "the A3 seed-100 runs of the exploratory control study (the logged cells). The reference qpred run scored c0y and epoch4; the reference features run featurised c0y, the ladder, epoch1 and epoch4 (young_b77 recorded as a duplicate of c0y)."
+  },
+  "checkpoints": {
+    "features": "c0y,young_b77,epoch4",
+    "qpred": "c0y,young_b77,epoch4",
+    "kernel_tables": ["c0y", "epoch4"],
+    "dedupe_pair": {"copy": "young_b77", "source": "c0y"}
+  },
+  "engine": "cuda",
+  "stages_and_order": ["features (V2: the new features stage)", "qpred (V3: the new Q_pred stage, tables loaded from V2)", "crosscheck (V4: kernel identity, loaded table vs recomputed, computed young_b77 vs copied)"],
+  "comparison": {
+    "equality": "canonical JSON of the metric entry (sort_keys; Python float repr is round-trip exact, so equal strings mean equal float bits); arrays: same dtype, shape and bytes (floats compared as bit patterns)",
+    "entry_fields_ignored": ["exploratory", "confirmatory", "smoke", "verification"],
+    "timing_and_environment_keys_excluded": "a metric key whose last dotted component ends with 'wall_s' or '_per_s' or is 'wall_total_s', or that starts with 'memory.'; inside a 'qpred.<name>.fit' value the fields 'wall_s' and 's_per_evaluation'; these are reported (before and after), never compared",
+    "keys_of_other_checkpoints": "a reference key with a dotted component naming a checkpoint outside the stage's checkpoint list is not compared (the reference runs covered more checkpoints)"
+  },
+  "pass_rules": {
+    "features": {
+      "F1_files": "for c0y, young_b77 and epoch4: features_<name>.npz, fires_<name>.npy and dim_<name>.npy are byte-identical to the reference features run's files, and features.<name>.file_sha256 equals the reference metric",
+      "F2_metrics": "every reference metric of the stage-level keys (docs.*, data.*, prefix.*, control.*, config_params, features.train_run, check.docs.*, check.config.*) and of the keys naming c0y, young_b77 or epoch4 (timing and memory excluded) is present with an identical entry",
+      "F3_tables": "young_b77 is recorded as duplicate_of c0y in features and prefix_counts; prefix_counts_c0y.npz and prefix_counts_epoch4.npz exist and their sha256 equals prefix_counts.<name>.file_sha256; no table is written for young_b77",
+      "F4_clean": "failed_checks is empty"
+    },
+    "qpred": {
+      "Q1_metrics": "every reference metric (timing and environment excluded; qpred.checkpoints, qpred.summary, stage, failed_checks, qpred.test_accesses_before and qpred.test_accesses_after not compared) is present with an identical entry; for check.qpred.no_test_access only the value is compared (its before and after fields are run-wide counters); for qpred.<name>.fit every field except wall_s and s_per_evaluation is identical, including objective_trace_every_10th, function_evaluations, iterations, the objective values, the preconditioner and used_groups",
+      "Q2_summary": "qpred.summary entries of c0y and epoch4 are identical to the reference's",
+      "Q3_files": "qpred_c0y.npz and qpred_epoch4.npz hold the same arrays as the reference files (same names, dtype, shape and bytes); qpred_c0y_readout.json and qpred_epoch4_readout.json are byte-identical to the reference files",
+      "Q4_paths_used": "qpred.speedups_used is true for O4, O10 and O12; qpred.c0y.count_source and qpred.epoch4.count_source are 'loaded' (the V2 tables); qpred.c0y.t1_setup_wall_s and qpred.epoch4.t1_setup_wall_s name the kernel qpred_fast.T1GpuG",
+      "Q5_copy": "qpred.young_b77.duplicate_of is c0y and check.young_b77.state_hash_equals_train_run is true; for every metric qpred.c0y.<s> of this run whose <s> does not end with wall_s, qpred.young_b77.<s> exists with the same value (for fit: minus wall_s and s_per_evaluation), label 'derived' and copied_from 'c0y'; qpred_young_b77.npz and qpred_young_b77_readout.json are byte-identical to this run's c0y files",
+      "Q6_clean": "failed_checks is empty and check.qpred.no_test_access is true"
+    },
+    "crosscheck": {
+      "K1_kernel": "for the tables of c0y and epoch4 (built by the registered count_table and Tables from the A3 seed-100 checkpoints) and for both row sets (the fit rows by the registered fit_rows_fired, the validation rows by the registered api_fired_lists on the CPU engine), at every point of kernel_points and with want_grad 1 and 0: every output of qpred_fast.T1GpuG.run (lpg, pg, rank, top, sum; with gradients also gpair, gbeta) is bit-identical to cvtm_t1_readout.T1Gpu.run on the same prepared rows",
+      "K2_loaded_table": "for c0y and epoch4 the table loaded from the V2 features run (through the Q_pred loader, which checks the logged file sha256 and the input hashes) equals the registered count_table recomputed in this run bit for bit (dense int32 [C, V]), with equal counted events and equal fired lists of the cross-engine check rows; the loaded fit-row fired lists equal the registered fit_rows_fired (ptr and ids)",
+      "K3_copy_equals_computed": "the loaded c0y and young_b77 checkpoints have equal state hashes, both equal to the train run's logged hashes; young_b77 scored in this run through the registered ssl_r1_controls.qpred_checkpoint gives, for every metric qpred.young_b77.<s> that V3 copied, the same value (fit: minus wall_s and s_per_evaluation), and the same file arrays and readout bytes as V3's copies; the only copied metric the registered path may lack is the fast path's own descriptor count_source, and every non-timing qpred.young_b77.<s> metric of the registered computation must be among V3's copies",
+      "K4_clean": "failed_checks is empty"
+    }
+  },
+  "kernel_points": {
+    "init": "alpha = 1 / max(1, mean counted fired clauses per fit row) on every used group (the fit's start), beta0 = 1",
+    "logged_solution": "alpha_by_group and beta0 of the reference qpred_<name>_readout.json",
+    "random": "alpha ~ Normal(0.05, 0.05) on every used group, beta0 = 0.8, numpy default_rng(20260925)",
+    "half_zero": "the logged solution with every second used group (in ascending group order) set to 0 (the kernel's cf == 0 branch), beta0 = 0.5",
+    "large": "alpha = 3 on every used group, beta0 = -2",
+    "used_groups": "numpy.unique of the fit rows' group of every counted fired clause (as loglin_fit_gpu)"
+  },
+  "timing": {
+    "kernel": "per table: 3 interleaved repeats of one evaluation with gradients on the fit rows at the init point, registered kernel then fast kernel, wall seconds each (the GPU is shared with other jobs under the shared lock, so medians and the spread are reported, not a single number); the fast kernel's one-off setup (upload and t1_gval) is reported separately",
+    "stage": "V3 wall_total_s against the reference qpred run's 614.24 s (a different GPU load: other jobs share the GPU) and, contemporaneously, V4's young_b77 scored by the registered path (same state as c0y) against V3's c0y by the fast path; V2 prefix_fires wall per checkpoint against the reference features run's"
+  },
+  "adoption": "An item is adopted for the confirmatory chain only if every rule of the stages that exercise it holds: O4 needs K1 and Q1 to Q3; O10 needs F1 to F3, K2 and Q1 to Q4; O12 needs Q5 and K3. The confirm config then names the clean runs in its speedups block (the driver checks that they are clean before it uses an item).",
+  "gpu_lock": "shared (every stage)",
+  "cpu_slots": 1,
+  "memory_guard": "scripts/mem_guard.py --scope group: features 24 GiB, qpred 24, crosscheck 24",
+  "venv": ".venv-tm"
+}

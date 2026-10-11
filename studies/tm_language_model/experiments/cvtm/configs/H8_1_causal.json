@@ -1,0 +1,60 @@
+{
+  "experiment": "cvtm_H8_1_causal",
+  "status": "PRE-REGISTERED confirmatory run of docs/13 amendment A3, hypothesis H8.1 (causal arm). Validation split only; the test split is never loaded.",
+  "prereg": ["H8.1"],
+  "docs": "docs/11 section 11.5 (T1, the stand-alone count-vote read-out) and 11.6 (fit documents); docs/13 amendment A3",
+  "script": "experiments/cvtm_t1_readout.py",
+  "venv": ".venv-tm",
+  "gpu_lock": "shared",
+  "mode": "causal",
+  "run_names": ["cvtm_H8_1_causal_cp20M"],
+  "launch": "scripts/gpu_run.sh shared -- nice -n 19 .venv-tm/bin/python scripts/mem_guard.py --limit-gib 25 -- scripts/run_logged.py --name cvtm_H8_1_causal_cp20M --config experiments/cvtm/configs/H8_1_causal.json -- .venv-tm/bin/python -u experiments/cvtm_t1_readout.py --config experiments/cvtm/configs/H8_1_causal.json",
+  "bank": {
+    "checkpoint": "results/20260923T042350Z_CP_anchor/checkpoint_epoch4.npz",
+    "metrics": "results/20260923T042350Z_CP_anchor/metrics.json",
+    "rule": "the checkpoint hash must equal epoch4.checkpoint.state_hash; the signed votes must reproduce the logged raw top-1 exactly (0.14151747957266259) and the logged validation bits per byte with the logged epoch-4 calibration within 1e-9 (2.174863144248569), and the rebuilt vote sums must equal predict_scores on 2,000 rows, or the run stops"
+  },
+  "data": {
+    "corpus": "wikitext103",
+    "vocab": 8000,
+    "train_prefix_tokens": 20000000,
+    "train_prefix": "the first 20,000,000 tokens of the train split cut at a document boundary (m3_tiny_lm.slice_train, as the exploratory 20M probe)",
+    "validation": "every position of the validation split (282,587 tokens)",
+    "byte_accounting": "total negative log2-likelihood of the validation subword stream / UTF-8 bytes of the validation text (1,145,547), as experiments/cp_causal_perplexity.py"
+  },
+  "fit_documents": {"rule": "training document i (index in the train split) with splitmix64(i XOR 0xC0FFEE) mod 100 == 0 (docs/11 11.6); these documents are never counted", "salt": 12648430, "modulus": 100},
+  "readout": {
+    "class_score": "s(c) = beta0 ln P_uni(c) + sum over fired j with N_j > 0 of alpha_g(j) q_jc; P = softmax over V",
+    "vote": "q_jc = ln(1 + lam_j O_jc / (N_j (1 - lam_j) P_uni(c))), lam_j = N_j / (N_j + D_j) (Witten-Bell)",
+    "groups": "g(j) = min(n_inc_j, 12) * 24 + min(floor(log2 N_j), 23), n_inc = included literals of the alive clause",
+    "unigram": "add-one unigram of the counting positions",
+    "scoring": "GPU kernel t1_loglin: class sums as int64 fixed point with scale 2^40 (integer atomics, deterministic), q recomputed in float64 from the exact counts; cross-checked against the CPU float64 kernel k_loglin of experiments/ckm_posthoc_probe.py on 200 fit rows and 200 validation rows (max abs log-probability difference below 1e-6)",
+    "secondary_row": "lin: the probe's normalised linear mixture (group weights, add-one unigram with weight 1) on the same counts and fit rows; bits from the CPU float64 gold path, top-1 and top-5 from the probe's GPU mixer (cross-checked within 1e-9)"
+  },
+  "compute": {
+    "counting": "one CUDA forward pass over the prefix; (clause, next token) keys of the counting positions are sorted and run-length encoded on the GPU in a bounded buffer, then merged exactly on the host per clause range of 2^16 clauses (docs/11 11.5: exact integers, sort-based, on the GPU)",
+    "forward_chunk": 16384,
+    "validation_chunk": 8192,
+    "count_buffer_events": 134217728,
+    "count_range_bits": 16,
+    "gpu_pool_limit_gib": 10.5,
+    "host_memory_guard": "scripts/mem_guard.py --limit-gib 25"
+  },
+  "checks": {"cpu_crosscheck_rows": 200},
+  "fit": {
+    "fit_rows": 40000,
+    "check_rows": 40000,
+    "rows": "fit rows and check rows are disjoint random subsets (SeedSequence([20260924, 813])) of the positions of the fit documents of the prefix; check rows only report a held-out objective",
+    "loglin": {"optimizer": "scipy L-BFGS-B, mean negative log-likelihood (nats per row), GPU objective and gradient",
+               "precondition": "empirical_fisher_diagonal_at_init", "maxiter": 1000, "maxfun": 1500, "ftol": 1e-10, "gtol": 1e-6, "maxcor": 30,
+               "alpha_bounds": [-20, 20], "beta0_bounds": [-5, 5],
+               "init": "alpha = 1 / (mean counted fired clauses per fit row) for every group, beta0 = 1"},
+    "lin": {"optimizer": "scipy L-BFGS-B on the log group weights, mean negative log-likelihood, CPU", "maxiter": 3000, "maxfun": 4000, "ftol": 1e-10, "gtol": 1e-6,
+            "maxcor": 30, "log_weight_bounds": [-30, 30], "init": "log weights 0"},
+    "convergence_rule": "converged = scipy L-BFGS-B success: relative objective reduction per iteration below ftol, or projected gradient (in the optimizer's coordinates) below gtol, within maxiter and maxfun. The status, message, iterations, evaluations and the projected gradient in the original coordinates are recorded.",
+    "preconditioner_note": "a fixed diagonal reparametrisation u = x * s with s = sqrt(mean over fit rows of the squared per-row gradient) at the initial point; the model and its optimum are unchanged",
+    "budget_calibration": "fixed on 2026-09-24 before the first logged run: the optimizer settings are those that made the masked seed-1 smoke fit converge (see experiments/cvtm/configs/H8_1_masked.json); 40,000 fit rows is twice the planned minimum and fits the measured cost of an unlogged 2M-token causal smoke (0.47 s per evaluation for 16,242 rows on a shared GPU). No causal validation number of this read-out at 20M counts was computed before this file was written."
+  },
+  "threshold": {"causal_bpb_drop_min": 0.15, "rule": "H8.1 causal: loglin validation bits per byte at least 0.15 lower than the same bank's signed votes (2.1749 bits per byte, docs/13 A3)"},
+  "bootstrap": {"resamples": 2000, "unit": "validation document (60 documents)", "statistic": "sum of per-token bit differences / sum of UTF-8 bytes of the resampled documents", "label": "derived"}
+}

@@ -1,0 +1,160 @@
+{
+ "experiment": "ssl_r2_hao_head",
+ "round": "r3",
+ "docs": "docs/12 F27; docs/13 A7 (H17.5); EXPLORATORY tuning of the package at HEAD 5b4a223 on seed 100, fit/val split of the training combinations only",
+ "status": "EXPLORATORY (seed 100, docs/13 section 3: seeds >= 100 are never reported)",
+ "script": "experiments/ssl_r2_hao_head.py --stage tune",
+ "venv": ".venv-htm",
+ "gpu_lock": "shared",
+ "cpu_slots": 1,
+ "params": {
+  "seed": 100,
+  "world": {
+   "vocab": 2000,
+   "n_groups": 4,
+   "group_size": 6,
+   "n_distractors": 24,
+   "train_fraction": 0.3,
+   "extra_probs": [
+    0.5,
+    0.3,
+    0.2
+   ],
+   "val_fraction": 0.2,
+   "n_fit": 8000,
+   "n_val": 4000
+  },
+  "reference_run": "results/20260924T215754Z_ssl_r2_hao_gpu_exploratory",
+  "reference_hashes": {
+   "fit": {
+    "X_sha256": "d6e82d9dfdb9571734d02f7fb263e1f4f02602e4bdfd45afa456723df438189b",
+    "y_sha256": "66935b78e7c1fee979d839d04ca522b1e78e2fb30eef18ca77c70a979e169890"
+   },
+   "val": {
+    "X_sha256": "fa1147e70c06cf8cba60a9fc1b77f4e1cbec8287fcec407760d8060dd1d835b7",
+    "y_sha256": "f1fbd944cf01e2495cf088f167204918fab658f3299d74e889a6989ed8621e18"
+   }
+  },
+  "configs": [
+   {
+    "name": "h25",
+    "kind": "hier",
+    "clauses": 64,
+    "alternatives": 8,
+    "n_concepts": 4,
+    "T": 100000,
+    "s": 4.0,
+    "state_bits": 8,
+    "boost": 0,
+    "append_negated": true,
+    "binary_inference": 0,
+    "constant_update_p": 0,
+    "and_group_normalization": 0,
+    "no_clipping": 0,
+    "epochs": 100,
+    "eval_every": 10,
+    "stop_at_train": 0.999,
+    "wall_cap_s": 900,
+    "compare_to": {
+     "run": "results/20260925T022436Z_ssl_r2_hao_tune_r4_hier_exploratory",
+     "name": "h37",
+     "epochs": [
+      1,
+      10,
+      20,
+      30,
+      40,
+      50,
+      60,
+      70,
+      80,
+      90,
+      100
+     ]
+    },
+    "note": "the c85ca4e7 validation-best hierarchical configuration h37 (switches off) measured on HEAD for 100 epochs; its curve is checked against c85 h37 at epochs 1, 10, ..., 100"
+   },
+   {
+    "name": "h26",
+    "kind": "hier",
+    "clauses": 64,
+    "alternatives": 8,
+    "n_concepts": 4,
+    "T": 100000,
+    "s": 4.0,
+    "state_bits": 8,
+    "boost": 0,
+    "append_negated": true,
+    "binary_inference": 0,
+    "constant_update_p": 1,
+    "and_group_normalization": 0,
+    "no_clipping": 0,
+    "epochs": 100,
+    "eval_every": 10,
+    "stop_at_train": 0.999,
+    "wall_cap_s": 900,
+    "note": "h37 regime with constant_update_p (product vote kept)"
+   },
+   {
+    "name": "f25",
+    "kind": "flat",
+    "clauses": 2048,
+    "alternatives": 1,
+    "n_concepts": 1,
+    "T": 100000,
+    "s": 4.0,
+    "state_bits": 8,
+    "boost": 0,
+    "append_negated": true,
+    "binary_inference": 0,
+    "constant_update_p": 0,
+    "and_group_normalization": 0,
+    "no_clipping": 0,
+    "epochs": 100,
+    "eval_every": 10,
+    "stop_at_train": 0.999,
+    "wall_cap_s": 900,
+    "compare_to": {
+     "run": "results/20260925T025028Z_ssl_r2_hao_tune_r4_flat_exploratory",
+     "name": "f37",
+     "epochs": [
+      1,
+      10,
+      20,
+      30,
+      40,
+      50,
+      60,
+      70,
+      80,
+      90,
+      100
+     ]
+    },
+    "note": "the c85ca4e7 flat configuration f37 (switches off) measured on HEAD for 100 epochs; its curve is checked against c85 f37 at epochs 1, 10, ..., 100"
+   },
+   {
+    "name": "f26",
+    "kind": "flat",
+    "clauses": 2048,
+    "alternatives": 1,
+    "n_concepts": 1,
+    "T": 100000,
+    "s": 4.0,
+    "state_bits": 8,
+    "boost": 0,
+    "append_negated": true,
+    "binary_inference": 0,
+    "constant_update_p": 1,
+    "and_group_normalization": 0,
+    "no_clipping": 0,
+    "epochs": 100,
+    "eval_every": 10,
+    "stop_at_train": 0.999,
+    "wall_cap_s": 900,
+    "note": "f37 regime with constant_update_p (extends r2 f13 to 100 epochs)"
+   }
+  ],
+  "design": "round 3 (2 hier, 2 flat), after rounds 1 and 2 (no HEAD-switch configuration trained to 0.95; binary inference LOWERED validation accuracy in the negated-literal regime, h13/h16/h17 vs c85 h35/h37): per kind, the c85ca4e7 validation-best regime (negated literals, T 1e5, s 4, boost 0; hier 64 clauses x (8 x 4), flat 2048 clauses) measured on HEAD with the switches off for 100 epochs (curve checked against the c85 run) and with constant_update_p, the one switch that acts on both kinds. 100 epochs, evaluation every 10, no dead stop, wall cap 900 s."
+ }
+}

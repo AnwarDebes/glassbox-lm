@@ -1,0 +1,42 @@
+{
+  "experiment": "s3",
+  "docs": "docs/05",
+  "milestone": "M3",
+  "lane": 1,
+  "status": "planned",
+  "prereg": [],
+  "seeds": [
+    1,
+    2,
+    3
+  ],
+  "script": "experiments/s3_batch_staleness.py",
+  "venv": ".venv-tm",
+  "gpu_lock": "shared",
+  "params": {
+    "batch_sizes": [
+      1,
+      64,
+      256,
+      1024,
+      4096
+    ],
+    "kill": "KB3",
+    "tokens": 5000000,
+    "epochs": 4,
+    "note": "engine = experiments/configs/tiny_lm.json (docs/12 F17) so the default rung / default batch replays the H1.4 runs; 4 epochs per docs/13 amendment A2; top-1 measured once after the last epoch (per-epoch curves cost more than the training and are the tiny-LM experiment's job)"
+  },
+  "engine": {
+    "mode": "masked",
+    "vocab": 2000,
+    "n_clauses": 65536,
+    "n_bag_k": 2,
+    "seg_weighting": "recency",
+    "neg_mode": "binomial",
+    "v_slots": 64,
+    "s": 128,
+    "k_cover": 8,
+    "seed_cap": 32,
+    "rho_seed": 1.0
+  }
+}

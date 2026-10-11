@@ -1,0 +1,50 @@
+{
+  "experiment": "E1",
+  "docs": "docs/05",
+  "milestone": "M1",
+  "lane": 2,
+  "status": "planned",
+  "prereg": [
+    "H5.1"
+  ],
+  "seeds": [
+    1
+  ],
+  "script": "experiments/p0_masked_depth2.py",
+  "venv": ".venv-tm",
+  "gpu_lock": "shared",
+  "params": {
+    "vocab": 2000,
+    "tokens": 5000000,
+    "clauses": 4000,
+    "hv": 512,
+    "message": 256,
+    "mask_rate": 0.15,
+    "s_sweep": [
+      10,
+      30,
+      100,
+      300,
+      1000,
+      3000
+    ],
+    "depth_stage1": 2,
+    "depth_stage2": [
+      1,
+      3
+    ],
+    "baselines": [
+      "unigram",
+      "left_bigram",
+      "right_bigram",
+      "bidir_ngram"
+    ],
+    "grid": [
+      208,
+      1,
+      1
+    ],
+    "staged_grid": "docs/12 F7",
+    "concurrent_cells": 3
+  }
+}

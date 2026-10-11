@@ -1,0 +1,34 @@
+{
+  "experiment": "cvtm_copy_selector",
+  "mode": "build",
+  "lane": "B1: TA-learned copy selector at full data (docs/13 A4 H9.1, H9.2; gate G1 T2)",
+  "script": "experiments/cvtm_copy_selector.py build",
+  "status": "confirmatory input (pair stores); no hypothesis is judged in this run; validation only, the test split is never loaded",
+  "docs": "docs/11 section 11 (11.4 buckets, 11.5 sparse normaliser, 11.6 protocol); docs/12 F19, F20; docs/13 A4 (H' residues: 1 trains the T2 clauses, 2 selection, temperature and mixture weights; T2 inputs use a KN-5 fitted without H')",
+  "cache_dir": "results/20260924T085728Z_cvtm_cache_build/cache",
+  "cache_meta_sha256": "d94191e71d4a3e9b9d66977ed1525c0680d2af32da2d5f7cb14be32397ddf261",
+  "core_state_hash": "97052edf2f983dbc4fe6992e0037b104d7c322bc414a77d954c22105a7cc3bc3",
+  "core_validation_bpb": 1.240880320113308,
+  "build": {
+    "workers": 3,
+    "chunk_positions": 1024,
+    "peak_gib_hprime": 16,
+    "peak_gib_validation": 16,
+    "note": "3 forked workers over disjoint position ranges (per-pair results do not depend on the split); peaks are the expected anonymous memory of each phase for the lane memory rule"
+  },
+  "params": {
+    "base_hprime": "frozen EM weights of the L0 core over the suffix clauses of kn5_noHprime.npz (the cache group hprime base); every H' core row is checked bit for bit against the cache (gold entry, top-64)",
+    "base_validation": "the frozen CVTM-core cvtm_core.npz (state hash above); rows checked bit for bit against the cache",
+    "candidates": "the 1024 most recent distinct tokens that occurred earlier in the same document (recency order); label = candidate equals the next token",
+    "literals": "the 237 literals of experiments/cvtm_early_logical_attention.py (literal_spec, literal_tables, imported) over 29 pair features; base B of that script = the core here (P_core, its rank, P_S of its suffix clauses, its cluster masses, its k*, the highest firing D_m); frequency classes from the token counts of the training split without H'",
+    "groups": {
+      "r1": "every position of the H' residue-1 documents (t2_train): all positive pairs, and a Bernoulli(0.01) pool of the negative pairs keyed by mix64 of (stable document ID, offset, candidate)",
+      "s2a": "S2 = 1 in 8 positions of the H' residue-2 documents (selection): h = mix64(mix64(doc_id XOR 0x5E1EC7102) + offset), h mod 8 == 0; S2a = the S2 positions with bit 3 of h equal to 0: every configuration of every gate is scored here",
+      "s2b": "the S2 positions with bit 3 of h equal to 1: used, together with S2a, only to fit the read-out of the chosen configuration of each gate",
+      "val": "every validation position; all pairs with P_core of every candidate and the packed literal columns"
+    }
+  },
+  "launch": "scripts/cpu_slot.sh 3 -- nice -n 10 .venv-tm/bin/python scripts/mem_guard.py -- scripts/run_logged.py --no-gpu-sampler --name cvtm_copy_selector_pairs --config experiments/cvtm/configs/cvtm_copy_selector_pairs.json -- .venv-tm/bin/python -u experiments/cvtm_copy_selector.py build --config experiments/cvtm/configs/cvtm_copy_selector_pairs.json",
+  "compute_cap": "about 1 hour on 3 CPU slots; no GPU",
+  "venv": ".venv-tm"
+}

@@ -1,0 +1,26 @@
+{
+  "experiment": "E5",
+  "docs": "docs/05",
+  "milestone": "M9",
+  "lane": 3,
+  "status": "planned",
+  "prereg": [],
+  "seeds": [
+    1,
+    2,
+    3
+  ],
+  "script": "experiments/e5_transfer.py",
+  "venv": ".venv-tm",
+  "gpu_lock": "shared",
+  "params": {
+    "datasets": [
+      "dxgp/R8",
+      "stanfordnlp/imdb"
+    ],
+    "classifier": [
+      "logistic",
+      "small_tm"
+    ]
+  }
+}

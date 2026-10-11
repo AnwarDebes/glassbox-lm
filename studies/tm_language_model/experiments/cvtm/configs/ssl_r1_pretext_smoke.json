@@ -1,0 +1,105 @@
+{
+ "experiment": "ssl_r1_pretext_smoke",
+ "docs": "docs/13 amendment A7 (R1 pretext tournament, family H17); docs/12 F23 to F25; docs/11 sections 1 to 11",
+ "prereg": [],
+ "status": "SMOKE of experiments/ssl_r1_pretext.py (build check only; no number from it is reported as a result). Arm A1 at C = 4,096 on a 300k-token prefix, 1 epoch, AG News only at 32 labels per class, one draw. Train splits only; no test split, never SST-2 validation.",
+ "script": "experiments/ssl_r1_pretext.py",
+ "stages": [
+  "data",
+  "train",
+  "features",
+  "baselines",
+  "probe",
+  "report"
+ ],
+ "fixed_before_any_r1_output": "every parameter below, the arm definitions of src/tmlm/ssl/pretext.py, the carve of src/tmlm/ssl/downstream.py, the draws and probes of src/tmlm/ssl/probes.py and the controls of src/tmlm/ssl/controls.py were written before any R1 output existed (2026-09-24, after the A7 freeze of 20:08 UTC)",
+ "readings_of_a7_open_points": {
+  "f1_frequency": "f(y) = relative frequency of y in the 20M-token training prefix",
+  "f1_draw": "keep iff (mix64(p) >> 32) < q32(prob), prob >= 1 keeps always; no seed, no epoch: one subsample for all seeds and epochs",
+  "f2_selection": "per epoch e, per class with more than M positions, the M positions with the smallest rng64(0, 0xA7F2, e, p, 0); redrawn per epoch; one engine instance per epoch loading the previous state",
+  "random_kind_map": "one fixed permutation of the token ids (ascending rng64(0, 0xA7C6, t, 0, 0)) applied to kind_map levels 1 to 3; sym_freq recomputed from the same token counts",
+  "c0y": "checkpoint after ceil(0.01 x batches of epoch 1) batches of the same run",
+  "dim_matched": "the 8,192 clauses with the most firing positions over the 20M-token prefix, nothing hidden except the position itself (ties to the lower id)",
+  "gplus": "exact counts over every prefix position; positive exact literals of the arm's mode offsets and kinds 0..3 plus SYM_EDGE; pairs at different offsets only; top C by count (single before pair, then literal ids); dimension-matched G+ = its first 8,192",
+  "dev_carve": "mix64(example index) mod 20 in {1, 2} of each train split (10 percent)",
+  "label_draws": "5 draws, nested budgets, per class min(n, class pool size), numpy SeedSequence([20260924, 717, task code, draw, class])",
+  "tm_probe": "tmu TMCoalescedClassifier on binary features: dimension-matched columns of the banks and G+, all columns of bag of words and cluster bag of words, 8 thermometer bits per PPMI-SVD dimension; grid by 4-fold CV in the labelled sample; run at 32 labels per class only (H17.11)",
+  "full_budget": "supported by --full; not in the default launch (cost); to be run for the top arms",
+  "winner_variant": "the report ranks both 'all clauses' and 'dimension-matched'; A7 does not say which variant decides the winner: this is decided before the report is read"
+ },
+ "params": {
+  "smoke": true,
+  "vocab": 8000,
+  "n_clauses": 4096,
+  "n_tokens": 300000,
+  "epochs": 1,
+  "arms": {
+   "A0": "default masked",
+   "A1": "masked + F1 (t = 1e-4, draw by mix64(p))",
+   "A2": "F1 + F3 (neg_budget 1) + F4 (cand_tries 4), masked",
+   "A3": "F2 (at most M = 2,000 targets per class per epoch, redrawn per epoch), masked",
+   "A4": "default causal",
+   "A5": "default diffusion",
+   "A6": "A1 with a random kind_map (one fixed token permutation applied to the three cluster levels)"
+  },
+  "f1_t": 0.0001,
+  "f2_m": 2000,
+  "young_fraction": 0.01,
+  "dim_matched": 8192,
+  "tasks": [
+   "agnews"
+  ],
+  "budgets": [
+   32
+  ],
+  "draws": [
+   0
+  ],
+  "folds": 4,
+  "c_grid": [
+   0.01,
+   0.1,
+   1.0,
+   10.0,
+   100.0
+  ],
+  "lr_max_iter": 1000,
+  "tm_budgets": [
+   32
+  ],
+  "tm_grid": [
+   {
+    "clauses": 400,
+    "T": 300,
+    "s": 2.0
+   },
+   {
+    "clauses": 400,
+    "T": 300,
+    "s": 6.0
+   }
+  ],
+  "tm_epochs": 10,
+  "tm_ppmi_bits": 8,
+  "ppmi": {
+   "window": 8,
+   "dim": 300,
+   "power": 0.5
+  },
+  "forward_chunk": 8192,
+  "gplus_chunk_positions": 1048576,
+  "gplus_feature_chunk": 8192,
+  "seeds_exploratory": [
+   100
+  ],
+  "seeds_confirmatory_later": [
+   1,
+   2,
+   3
+  ]
+ },
+ "gpu_lock": "shared",
+ "cpu_slots": 1,
+ "memory_guard": "scripts/mem_guard.py --scope group --limit-gib 12",
+ "venv": ".venv-tm"
+}

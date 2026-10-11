@@ -1,0 +1,34 @@
+{
+  "experiment": "H3",
+  "docs": "docs/05",
+  "milestone": "M9 (last)",
+  "lane": 3,
+  "status": "planned",
+  "prereg": [],
+  "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "script": "experiments/h3_multiview_fusion.py",
+  "venv": ".venv-tm",
+  "gpu_lock": "shared",
+  "params": {
+    "views": [
+      "left",
+      "right",
+      "cluster"
+    ],
+    "fusion": "tabular-mode TM over concatenated fired bits",
+    "optional": true
+  },
+  "engine": {
+    "mode": "tabular",
+    "vocab": 2000,
+    "n_features": 196608,
+    "n_clauses": 4096,
+    "batch": 256
+  }
+}

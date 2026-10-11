@@ -1,0 +1,2 @@
+c6129e1466d87ebafe411c8a334276ad53c10763
+https://github.com/cair/GraphTsetlinMachine (MIT). The files kept here are unmodified; not included from upstream: .devcontainer/, .gitignore, .gitattributes, setup.py. Patched copies live in src/tmlm/kernels/graphtm_patched/.

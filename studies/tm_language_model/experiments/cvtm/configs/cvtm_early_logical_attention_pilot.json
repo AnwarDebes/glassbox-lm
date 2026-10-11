@@ -1,0 +1,15 @@
+{
+  "experiment": "cvtm_early_logical_attention (pilot: TM T and s range)",
+  "script": "experiments/cvtm_early_logical_attention.py",
+  "status": "EXPLORATORY, not pre-registered; held-out TRAINING documents only (part A trains, part C scores); validation is not scored (--stop-after-grid); the test split is never loaded",
+  "purpose": "choose the T and s range of the main run's TM grid from the copy log-likelihood on part C of the held-out training documents, at 1000 clauses per class and a 20,000-positive training subsample",
+  "command_args": ["--stop-after-grid", "--tm-clauses", "1000", "--tm-grid", "300:2.5,300:5,300:10,1200:2.5,1200:5,1200:10", "--tm-epochs", "2", "--max-train-pos", "20000", "--lr-l2", "1,10", "--tm-noreflective", "0"],
+  "inputs": {
+    "train_prefix": "first 5,000,000 tokens of WikiText-103 train at V 8000 cut at a document boundary (m3_tiny_lm.slice_train); held-out documents SeedSequence([20260923, 715, 1]), 5 percent; KN-5 (modified, in-house) on the other documents",
+    "heldout_split": "held-out documents split by SeedSequence([20260924, 4242, 1]): 55 percent part A (gate training pairs), 45 percent part C (selection, temperature, mixture weights)"
+  },
+  "threads": 1,
+  "venv": ".venv-tm",
+  "gpu": "none (CPU only, one thread, nice 19; s4 holds the CPU slots)",
+  "memory_guard": "scripts/mem_guard.py --limit-gib 30 (cgroup working set, all processes)"
+}

@@ -1,0 +1,36 @@
+{
+  "experiment": "TB",
+  "docs": "docs/05",
+  "milestone": "M7",
+  "lane": 2,
+  "status": "planned",
+  "prereg": [
+    "H1.3",
+    "H6.1",
+    "H6.5"
+  ],
+  "seeds": [
+    1,
+    2,
+    3
+  ],
+  "script": "experiments/tb_transformer_equal_cost.py",
+  "venv": ".venv-dl",
+  "gpu_lock": "exclusive",
+  "params": {
+    "layers": [
+      2,
+      4,
+      6
+    ],
+    "width": [
+      128,
+      256
+    ],
+    "budgets": [
+      "equal_wall_clock_to_CP_anchor",
+      "equal_joules_to_CP_anchor"
+    ],
+    "also": "24 GPU-h masked transformer (docs/06)"
+  }
+}

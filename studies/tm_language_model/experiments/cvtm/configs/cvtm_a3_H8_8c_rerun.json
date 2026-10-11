@@ -1,0 +1,95 @@
+{
+ "experiment": "cvtm_a3_H8_8c",
+ "mode": "H8_8c",
+ "prereg": [
+  "H8.8 (c)"
+ ],
+ "status": "PRE-REGISTERED confirmatory run of docs/13 amendment A3, hypothesis H8.8 part (c) (end-to-end fit throughput on the V100), full training split, under the EXCLUSIVE GPU lock. No evaluation split is scored.",
+ "rerun_of": {
+  "run": "results/20260924T152758Z_cvtm_a3_H8_8c/",
+  "why": "stopped by this job (SIGTERM to its own process, exit 143) at 15:29 UTC before any fit started: it held the EXCLUSIVE GPU lock while its memory rule waited (memory.current 59.5 GiB, of which about 51 GiB page cache of other jobs' files; working set 17.1 GiB; + 24 GiB >= 0.80 x 96 GiB), blocking every other GPU job. No measurement was made; the directory is kept as a record (protocol rule 9).",
+  "same_as": "experiments/cvtm/configs/cvtm_a3_H8_8c.json: identical protocol, repeats, threshold and checks; only compute.peak_gib changes (see compute.peak_note)"
+ },
+ "script": "experiments/cvtm_a3_rows.py",
+ "venv": ".venv-tm",
+ "lane": "A1 (docs/13 A3 rows H8.2, H8.7, H8.8, H8.9)",
+ "docs": "docs/11 sections 11.2 to 11.7; docs/12 F19 and F20 (b) residues, (c) pooled EM, (d) pruning estimator; docs/13 amendment A3",
+ "seeds": "none: the CVTM-core is deterministic given the data (docs/13 A3); uncertainty is the document-block bootstrap",
+ "data": {
+  "corpus": "wikitext103",
+  "vocab": 8000,
+  "splits": [
+   "train",
+   "validation"
+  ],
+  "byte_accounting": "total negative log2-likelihood of the validation subword stream / UTF-8 bytes of the validation text (1,145,547), protocol CP",
+  "dataset_hashes": "protocol.write_dataset_hashes(('train', 'validation')): tok and doc_start of both splits, validation text and doc_bytes, as results/20260923T042350Z_CP_anchor/dataset_hashes.json plus the document boundaries",
+  "test_split": "never loaded"
+ },
+ "frozen": {
+  "run": "results/20260924T085728Z_cvtm_cache_build/",
+  "cache_dir": "results/20260924T085728Z_cvtm_cache_build/cache",
+  "core_state_hash": "97052edf2f983dbc4fe6992e0037b104d7c322bc414a77d954c22105a7cc3bc3",
+  "core_file_sha256": "aeff5e7ee52991dc66104684e27ce5eb2da6abe77d0137e1c58a07070123de77",
+  "cache_meta_sha256": "d94191e71d4a3e9b9d66977ed1525c0680d2af32da2d5f7cb14be32397ddf261",
+  "cvtm_sources_sha256": {
+   "__init__.py": "c5d9259ac33bf0bcf2c288746aa4ede76f2f7006f3857995b28693998abe3630",
+   "cache.py": "7366c5dd5d488e1988a2439ed08687a810f4178dc855525d37f7de0da13d866d",
+   "doc_clauses.py": "e835c70904e9a0f28c4e2d54425249bfb71273c08f6a1c4e10827faff44d1f40",
+   "energy.py": "852f53fa9dc947a41e19b6c9bffde4f98009d58c53f0cd32efc58172fb8c4f60",
+   "kn_gpu.py": "582507f75a8a792f9716bdaed3f12188ac78200cfe5b74e1bc6472b10ba97fc4",
+   "mixture.py": "e1522c60b1b722ab53bb5990b2a21a606a172bcda3c1f1bba57ada1d3473cf11",
+   "model.py": "27200cc29c167dd0517a82e56ff475aa22ff30a6866384c77e9f8ca7d1f2f0d8",
+   "protocol.py": "ef0cc0c0d4f86a8c34f0f02f4c44228e259690c8b5f241db88b61cebbcea3e5a",
+   "suffix.py": "ea16dde565031d4086224411b3f81b610e08dbd2faf3a539a5fefbdcaa824d6f"
+  },
+  "note": "the frozen CVTM-core of lane L0 (docs/11 11.6 on the full V 8000 train split, whole-document window, components S, D0..D4, P); the stage-1 files must still carry these sha256 (checked at start)"
+ },
+ "reference": {
+  "kn5_validation_bpb": 1.3501314033898424,
+  "kn5_run": "results/20260922T180823Z_M2_baselines_ngram_v8000/",
+  "cvtm_core_validation_bpb": 1.240880320113308,
+  "cvtm_core_run": "results/20260924T085728Z_cvtm_cache_build/"
+ },
+ "bootstrap": {
+  "unit": "validation document",
+  "n_documents": 60,
+  "resamples": 2000,
+  "seed": [
+   20260924,
+   1106,
+   1
+  ],
+  "statistic": "per resample: sum of bits / sum of UTF-8 bytes of the drawn documents (paired: of the differences)",
+  "label": "derived"
+ },
+ "decisions_before_the_run": {
+  "end_to_end_fit": "the wall time of CVTMCore.fit on the full split with the tokens already in host memory: KN-5 without H (GPU), its suffix clauses, ln P and k* on H, document clauses of H and the MAP-EM, KN-5 on all documents (GPU), its suffix clauses; this is the whole docs/11 11.6 protocol from tokens to the frozen model",
+  "throughput": "training tokens of the split (135,246,414) / fit wall time; the tokens are counted once although two KN fits pass over them",
+  "repeats": "5 repeats in one process (docs/13 section 5: median of at least 5 repeats under the exclusive lock, min to max range); the first repeat includes the CUDA context start and is counted; every repeat must reproduce the frozen state hash",
+  "data_load": "the load and re-hash of the stores is timed once and reported separately (and as a derived throughput including it)",
+  "label": "exclusive GPU lock; the host CPU is shared (other container processes and host tenants), the CPU of other container processes is logged per repeat"
+ },
+ "hypothesis": "(c) end-to-end fit throughput on the V100",
+ "thresholds": {
+  "min_tokens_per_s": 1000000,
+  "text": "(c) at least 1M training tokens per second (docs/13 A3 H8.8)"
+ },
+ "params": {
+  "repeats": 5
+ },
+ "compute": {
+  "gpu_lock": "exclusive",
+  "kn_backend": "cupy",
+  "gpu_pool_limit_gib": 9.0,
+  "gpu_pool_note": "the same CuPy pool cap as the frozen fit of L0 (its peak pool was 7.3 GB, the cap does not bind)",
+  "cpu_slots": 1,
+  "peak_gib": 16,
+  "peak_note": "16 GiB = measured peak RSS of a driver process of this lane that ran the same full-split CVTMCore.fit, 12.50 GiB (VmHWM, results/20260924T150704Z_cvtm_a3_H8_8a/, fits at 5M, 20M, 67M and the full split plus validation scoring), and 11.12 GiB for loading the frozen core and scoring validation (results/20260924T102203Z_cvtm_a3_H8_2/, results/20260924T102454Z_cvtm_a3_H8_7/), plus a margin of about 3.5 GiB. The earlier 24 GiB was an estimate from the L0 cache build, whose driver also held the cache-writing callbacks. The memory rule itself is unchanged (memory.current + peak < 0.80 memory.max, poll every 2 minutes); memory.current counts page cache of other jobs' files (about 51 GiB of the 60 GiB at 15:28 UTC), so the 24 GiB bound kept a run waiting inside the exclusive GPU lock.",
+  "memory_rule": "before each repeat: memory.current + 16 GiB < 0.80 memory.max, else wait (poll 2 minutes); the same check is made OUTSIDE the lock before launching, so that the run does not queue for the exclusive lock while the rule already fails; mem_guard at its default limit"
+ },
+ "run_names": [
+  "cvtm_a3_H8_8c"
+ ],
+ "launch": "scripts/gpu_run.sh exclusive -- scripts/cpu_slot.sh 1 -- .venv-tm/bin/python scripts/mem_guard.py -- scripts/run_logged.py --name cvtm_a3_H8_8c --config experiments/cvtm/configs/cvtm_a3_H8_8c_rerun.json -- .venv-tm/bin/python -u experiments/cvtm_a3_rows.py --config experiments/cvtm/configs/cvtm_a3_H8_8c_rerun.json"
+}

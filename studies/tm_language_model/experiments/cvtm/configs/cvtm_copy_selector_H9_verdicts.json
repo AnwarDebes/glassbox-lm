@@ -1,0 +1,28 @@
+{
+  "experiment": "cvtm_copy_selector",
+  "mode": "verdicts",
+  "lane": "B1: TA-learned copy selector at full data (docs/13 A4 H9.1, H9.2; gate G1 T2)",
+  "script": "experiments/cvtm_copy_selector.py verdicts",
+  "status": "CONFIRMATORY verdicts over seeds 1, 2, 3 of experiments/cvtm/configs/cvtm_copy_selector_H9.json; this file only lists the seed runs; every rule is the H9 config's. The seed runs were first listed while the 2026-09-24 runs ran; those were stopped (an infrastructure interruption and a mem_guard limit that had been set too low), and on 2026-09-25 about 07:00 UTC the list was pointed at the completed relaunch of 2026-09-25 00:00 UTC, AFTER those runs' logged validation rows (TM, C0, LR, LR2, HGB) had been read. No rule, threshold or control changed, so the verdict is a mechanical reading of the registered H9 rules; validation only, the test split is never loaded",
+  "exploratory": false,
+  "pairs_run": "results/20260924T110143Z_cvtm_copy_selector_pairs",
+  "pairs_manifest_sha256": "7f67c29d45a8351949ef94ac18d779674059954147e88272bb05b1615346beb9",
+  "core_validation_bpb": 1.240880320113308,
+  "verdicts": {
+    "seed_runs": [
+      "results/20260925T000043Z_cvtm_copy_selector_seed1",
+      "results/20260925T000046Z_cvtm_copy_selector_seed2",
+      "results/20260925T000049Z_cvtm_copy_selector_seed3"
+    ]
+  },
+  "hypotheses": {
+    "H9.1": "validation bits per byte of core + TM at least 0.010 below the CVTM-core (1.240880320113308) on every seed, document-bootstrap 95 percent CI of the difference excluding 0",
+    "H9.2": "docs/13 A4 with A5 D0.2: per seed the best control (of LR, LR2, HGB, C0) is the one with the lowest S2b held-out bits per position (residue 2 of H', never validation); the verdict uses the 3-seed mean of (TM minus best control) with a paired document bootstrap over the 60 validation documents: at most -0.002 with the CI excluding 0 = beats; at most 0.000 = matches; otherwise trails. A control fit still at its raised iteration cap blocks 'beats'. Per-seed readings and TM minus each control are reported alongside",
+    "TM_minus_C0": "docs/13 A5 D0.2: reported as its own row (3-seed mean, paired document bootstrap; per seed)",
+    "G1_T2": "docs/13 A4 with the A5 D0.1 bands: A = every seed gains >= 0.010 with its CI excluding 0 -> open H9.3; B = every seed >= 0.005 with its CI excluding 0 and not A -> keep the row, H9.3 as a 5M pilot only; C = otherwise -> no T2 engine work. The smallest per-seed gain decides; the seed mean is reported",
+    "D0_3_credit": "docs/13 A5 D0.3: band A AND TM minus C0 (3-seed mean) at most -0.005 bits per byte with the CI excluding 0"
+  },
+  "statistics": "document-block bootstrap over the 60 validation documents, 2,000 resamples, tmlm.cvtm.protocol.BOOT_SEED, ratio of summed bits to summed bytes per resample; labelled derived",
+  "launch": "scripts/cpu_slot.sh 1 -- nice -n 10 .venv-tm/bin/python scripts/mem_guard.py -- scripts/run_logged.py --no-gpu-sampler --name cvtm_copy_selector_H9_verdicts --config experiments/cvtm/configs/cvtm_copy_selector_H9_verdicts.json -- .venv-tm/bin/python -u experiments/cvtm_copy_selector.py verdicts --config experiments/cvtm/configs/cvtm_copy_selector_H9_verdicts.json",
+  "venv": ".venv-tm"
+}

@@ -1,0 +1,395 @@
+{
+ "experiment": "ssl_r2_hao_diagnostics",
+ "status": "EXPLORATORY diagnostics of docs/13 amendment A8 item 3 (rows (i) to (vi)) on the H-AO world of A7 H17.5. World seeds 100 then 101 only (docs/13 section 3: never reported as results). Every package learner is trained on the fit bags only; the held-out UNSEEN combinations are the validation combinations carved from the training combinations; the registered test combinations are never sampled or scored. Nothing here is an A7 or A8 threshold; H17.5 is run and reported exactly as registered (package c85ca4e7, docs/12 F26).",
+ "docs": "docs/13 A8 item 3 (and A7 H17.5, phase R2); docs/12 F25 (CPU slot first, then the GPU lock), F26 and F27 (the two package commits); src/tmlm/ssl/hao_world.py (the world), src/tmlm/ssl/hao_diag.py (oracle, reference inference, Valiant elimination)",
+ "prereg": [],
+ "script": "experiments/ssl_r2_hao_diagnostics.py",
+ "venvs": {
+  "c85": ".venv-tm (PyHierarchicalTsetlinMachineCUDA at c85ca4e70af90511d6b4f8e8eedccd23a7d7d0ec)",
+  "head": ".venv-htm (PyHierarchicalTsetlinMachineCUDA at 5b4a223075c1e621577d508bc7c3c061230e29d5, env/htm_install.sh)",
+  "cpu_stages": ".venv-tm (valiant, controls, report)"
+ },
+ "stages": [
+  "demos",
+  "seen_unseen",
+  "pospair",
+  "oracle",
+  "threshold",
+  "valiant",
+  "controls",
+  "selftest",
+  "report"
+ ],
+ "gpu_lock": "shared for demos, seen_unseen, pospair, oracle, threshold, selftest; none for valiant, controls and report",
+ "cpu_slots": 1,
+ "written_before_any_output": "2026-09-25: the stages, data, oracle layout, s values, depths, epoch counts, caps, selection rule of the threshold stage, Valiant parameters and every reading note below were fixed before any run of experiments/ssl_r2_hao_diagnostics.py existed. Seen before: everything disclosed in docs/13 A8 (the H-AO tuning runs on c85ca4e7 and HEAD 5b4a223, the tuned configs, the HEAD controls run results/20260925T033205Z_ssl_r2_hao_head_controls_exploratory). Amended the same day, still before any output of the script (review fixes): the fresh unseen stream 22, the seed-100 bias note, the tuning-reproduction checks, the node-Jaccard note, the load() and set_state notes of params.oracle.write, the controls stage (params.controls) and the selftest stage; the seed-100 H17.5 CPU stage (results/20260924T231550Z_ssl_r2_hao_cpu_exploratory) was seen before (it is disclosed in docs/13 A8) and fixes the tmu grid points of params.controls.",
+ "params": {
+  "world_seeds": [
+   100,
+   101
+  ],
+  "world": {
+   "vocab": 2000,
+   "n_groups": 4,
+   "group_size": 6,
+   "n_distractors": 24,
+   "train_fraction": 0.3,
+   "extra_probs": [
+    0.5,
+    0.3,
+    0.2
+   ],
+   "val_fraction": 0.2,
+   "n_fit": 8000,
+   "n_val": 4000
+  },
+  "world_note": "identical to the world, fit and validation parameters of both tuned configs; the fit bags (stream 3) and validation bags (stream 4) are those of every H-AO tuning run",
+  "n_seen": 4000,
+  "n_unseen_fresh": 4000,
+  "streams": {
+   "seen": 21,
+   "unseen_fresh": 22,
+   "note": "seen: fresh bags of the fit combinations; unseen_fresh: fresh bags of the validation combinations, never used by any tuning run; ssl_r2_hao.STREAM uses 1 to 6, 11 and 12"
+  },
+  "reference": {
+   "seed": 100,
+   "run": "results/20260924T215754Z_ssl_r2_hao_gpu_exploratory",
+   "fit": {
+    "X_sha256": "d6e82d9dfdb9571734d02f7fb263e1f4f02602e4bdfd45afa456723df438189b",
+    "y_sha256": "66935b78e7c1fee979d839d04ca522b1e78e2fb30eef18ca77c70a979e169890"
+   },
+   "val": {
+    "X_sha256": "fa1147e70c06cf8cba60a9fc1b77f4e1cbec8287fcec407760d8060dd1d835b7",
+    "y_sha256": "f1fbd944cf01e2495cf088f167204918fab658f3299d74e889a6989ed8621e18"
+   }
+  },
+  "tuned_configs": {
+   "c85": "experiments/cvtm/configs/ssl_r2_hao_tuned.json",
+   "head": "experiments/cvtm/configs/ssl_r2_hao_head_tuned.json"
+  },
+  "eval_every": 5,
+  "seen_unseen": {
+   "row": "A8 3 (ii)",
+   "models": [
+    "htm_hier_neg",
+    "htm_flat_neg"
+   ],
+   "wall_cap_s": 14400,
+   "note": "each model exactly as in the installed commit's tuned config (hyperparameters, switches, tuned epoch count), trained on fit only; accuracy on fit, seen, unseen and unseen_fresh every 5 epochs",
+   "tuning_reproduction": "at the reference seed (100: fit and unseen bags checked bit-identical to the tuning data) a model that ran exactly its tuned chosen_epoch must reproduce the tuning run: fit accuracy equal to train_acc_at_chosen_epoch and unseen accuracy equal to val_acc_at_chosen_epoch of the tuned config (check <stage>.<tag>.seed100.<model>.reproduces_tuning_run; the same for the threshold stage at its evaluated tuned epoch); at seed 101, or when the epoch was not run, the metric records why it is not checked",
+   "wall_cap_note": "2026-09-25 18:40 UTC: raised from 3600 s for the same reason as the oracle stage (GPU sharing truncated epochs); a safety net only"
+  },
+  "pospair": {
+   "row": "A8 3 (i)",
+   "models": [
+    "htm_hier_pos",
+    "htm_flat_pos"
+   ],
+   "wall_cap_s": 14400,
+   "note": "the positive-literal pair (append_negated False) of the tuned config, same protocol as seen_unseen, plus derived capacity facts",
+   "wall_cap_note": "2026-09-25 18:40 UTC: raised from 3600 s for the same reason as the oracle stage (GPU sharing truncated epochs); a safety net only"
+  },
+  "oracle": {
+   "row": "A8 3 (iii)",
+   "models": [
+    "htm_hier_neg",
+    "htm_hier_pos"
+   ],
+   "s_values": [
+    4,
+    10,
+    25
+   ],
+   "depths": [
+    "deep",
+    "boundary"
+   ],
+   "epochs": 50,
+   "eval_every": 5,
+   "wall_cap_s": 14400,
+   "predict_min": 0.95,
+   "neg_design": {
+    "negated": "de_morgan",
+    "positive": "bias"
+   },
+   "layout": "src/tmlm/ssl/hao_diag.py docstring: positive (even) clauses hold OR-group c in node c, one word per alternative, alternatives beyond the group size repeat the group's words; negative (odd) clauses: with negated literals 'group g missing' (all 6 negated words of g in every leaf, g = clause pair index mod 4); with positive literals only, clause 1 is a constant-1 bias clause and the other odd clauses never fire; weights 1 - 2 x (clause mod 2), the package's own vanilla initialisation",
+   "depth_note": "deep: included TAs at 2^bits - 1, excluded at 0 (the PRIMARY depth: maximal margin); boundary: included at 2^(bits-1), excluded at 2^(bits-1) - 1 (the package's own initial value)",
+   "other_hyperparameters": "as in the installed commit's tuned config for that model (T, clauses, alternatives, state bits, boost, switches); only s is replaced",
+   "write": "fresh machine; the package's allocate_gpu_memory and initialize_weights_and_ta_states (exactly what the first fit() does); then pycuda memcpy_htod into ta_state_hierarchy_gpu and clause_weights_gpu; first = False. The package's own load(state_dict) (both commits: allocate_gpu_memory, the same two memcpy_htod, first = False) would give the same state: it only skips initialize_weights_and_ta_states, whose prepare_weights draws no random number for a non-coalesced TsetlinMachine (weights 1 - 2 x (clause mod 2)) and whose prepare_hierarchy output the copy overwrites [verified in source: tm.py load and kernels.py prepare_weights at c85ca4e7 and 5b4a223]; the direct copies are kept because they reproduce the first fit() step by step and are verified by read-back. Not set_state: at both commits it allocates number_of_clauses x number_of_ta_teams x number_of_state_bits x 4 bytes, a factor number_of_literal_chunks_per_leaf (125 with negated literals, 63 without, at 2,000 features) too small, so its memcpy_htod of a full-size state writes past the end of that allocation (an out-of-bounds device write: undefined behaviour, a CUDA error or silent corruption of neighbouring device buffers); and it leaves first = True, so the next fit() re-allocates and re-initialises (audited from source by hao_diag.set_state_allocation, in tests on both sources and at run time on the installed one)",
+   "stable_rule": {
+    "min_unseen_acc": 0.95,
+    "min_pos_node_jaccard_mean": 0.9,
+    "text": "a cell is STABLE iff all 50 epochs ran and at epoch 50 the unseen-combination accuracy is >= 0.95 AND the mean per-node Jaccard of the positive clauses against the oracle's node identities is >= 0.90"
+   },
+   "wall_cap_note": "2026-09-25 18:40 UTC: raised from 3600 s. Under GPU sharing by four jobs the 3600 s cap stopped cells after 15 to 25 of 50 epochs (results/20260925T121103Z_ssl_r2_hao_diag_oracle_c85_seed100_exploratory, stopped by hand at exit 143), so the verdict depended on GPU load; the oracle stage reruns after the confirmatory R1 run with this cap as a safety net only"
+  },
+  "threshold": {
+   "row": "A8 3 (iv)",
+   "world_seed": 100,
+   "selection": "the hierarchical model with the highest val_acc_at_chosen_epoch over both tuned configs (read at run time; today HEAD htm_hier_neg, config h25, 0.750, vs c85ca4e7 htm_hier_neg, h37, 0.708): it runs under .venv-htm",
+   "target_fit_acc": 0.95,
+   "eval_every": 10,
+   "max_epochs": 100000,
+   "wall_cap_s": 7200,
+   "note": "one instance; stops at the first evaluation (every 10 epochs) with fit accuracy >= 0.95 or when training plus evaluation wall time passes 2 hours"
+  },
+  "controls": {
+   "row": "A8 3 (ii), controls",
+   "models": [
+    "tmu_tm",
+    "tmu_ctm",
+    "lr",
+    "gbt",
+    "mlp"
+   ],
+   "tuned_config": "c85",
+   "tuned_config_note": "the non-package rows are identical in both tuned configs; they are read from the c85ca4e7 one (H17.5 as registered)",
+   "grid_choice": {
+    "tmu_tm": {
+     "s": 20.0
+    },
+    "tmu_ctm": {
+     "s": 5.0
+    }
+   },
+   "grid_choice_val_acc_seed100": {
+    "tmu_tm": 0.512,
+    "tmu_ctm": 0.91975
+   },
+   "grid_choice_source": "results/20260924T231550Z_ssl_r2_hao_cpu_exploratory: the H17.5 CPU stage at seed 100 trained each tmu grid point on the fit bags and scored the validation bags (our unseen bags at seed 100); tmu_tm s 5: 0.50575, s 20: 0.512; tmu_ctm s 5: 0.91975, s 20: 0.6165 [measured in that run, cells.jsonl]",
+   "note": "CPU, the constructors of experiments/ssl_r2_hao.py (tmu_fit_predict, sk_fit_predict), trained on fit only (lr: C by k-fold CV inside fit), scored on fit, seen, unseen and unseen_fresh. The tmu grid point is fixed to the seed-100 choice at both seeds, as the package rows use their seed-100 tuned configs; at seed 100 the tmu unseen accuracy must reproduce the logged validation accuracy (check controls.seed100.<model>.reproduces_selection_run)"
+  },
+  "valiant": {
+   "row": "A8 3 (v)",
+   "min_freq": 0.1,
+   "max_or": 6,
+   "max_candidates": 20000000,
+   "n_pos_curve": [
+    125,
+    250,
+    500,
+    1000,
+    2000,
+    "all"
+   ],
+   "note": "word frequencies over the positive fit bags, then one elimination pass over the same positive bags; the n_pos_curve rows use the first n positive fit bags in row order ('all' is the primary row); negatives are never used"
+  },
+  "demos": {
+   "c85": {
+    "andxor": {
+     "source": "examples/ANDOfXORsDemo.py",
+     "source_sha256": "156b911a3ab45db93513b86521d276da6a2d70842e24f1115f6c383b6e919edd",
+     "defaults": {
+      "epochs": 100,
+      "number_of_clauses": 2,
+      "number_of_state_bits": 8,
+      "number_of_irrelevant_features": 1,
+      "number_of_training_examples": 10000,
+      "number_of_testing_examples": 1000,
+      "T": 40,
+      "s": 2.5,
+      "number_of_alternatives": 10,
+      "number_of_ands": 4,
+      "noise": 0.01
+     },
+     "runs": 10,
+     "runs_note": "not an argparse default at this commit: the script loops 'for i in range(10)' and prints the mean final accuracy as 'Average Accuracy'",
+     "machine_clauses": {
+      "hier": [
+       "number_of_clauses"
+      ],
+      "vanilla": [
+       "number_of_clauses"
+      ]
+     },
+     "machine_clauses_note": "TsetlinMachine(args.number_of_clauses, ...) in both branches at this commit",
+     "variants": [
+      "hier",
+      "vanilla"
+     ],
+     "data_seed": 20260925,
+     "machine_seed_seed": 20260926,
+     "machine_seed_randint": [
+      2147483647
+     ],
+     "machine_seed_note": "the demo draws seed=np.random.randint(np.iinfo(np.int32).max) per run",
+     "learn_threshold": 0.95,
+     "wall_cap_s": 5400
+    },
+    "multiconcept": {
+     "source": "examples/MultiConceptDemo.py",
+     "source_sha256": "e94bbb96e265e5e64df8f14a27926236b709a6098d0e0e4cc72e6b86b6a71c76",
+     "defaults": {
+      "epochs": 1000,
+      "number_of_clauses": 2,
+      "number_of_examples": 10000,
+      "T": 128,
+      "s": 21.1,
+      "number_of_alternatives": 64,
+      "number_of_elements": 16,
+      "number_of_copies": 2,
+      "noise": 0.0
+     },
+     "runs": 1,
+     "runs_note": "one machine at this commit (no runs loop)",
+     "state_bits": 8,
+     "state_bits_note": "number_of_state_bits=8 is written in the constructor call at this commit",
+     "machine_clauses": {
+      "hier": [
+       "number_of_clauses"
+      ]
+     },
+     "variants": [
+      "hier"
+     ],
+     "variants_note": "no --vanilla flag at this commit",
+     "data_seed": 20260927,
+     "machine_seed_seed": 20260928,
+     "machine_seed_randint": [
+      1,
+      1073741824
+     ],
+     "machine_seed_note": "the demo passes no seed; MultiClassTsetlinMachine then draws np.random.randint(1, 2**30); here that draw is made from the seeded RandomState and passed explicitly, and the global numpy generator (used by MultiClassTsetlinMachine.fit) is seeded with it",
+     "learn_threshold": 0.95,
+     "wall_cap_s": 5400
+    }
+   },
+   "head": {
+    "andxor": {
+     "source": "examples/ANDOfXORsDemo.py",
+     "source_sha256": "59357498b2d79645d13a3088a7a3cea203f0d5d90b2f003c0ea0e60d8817bc83",
+     "defaults": {
+      "epochs": 10,
+      "runs": 10,
+      "number_of_clauses": 2,
+      "number_of_state_bits": 8,
+      "number_of_irrelevant_features": 1,
+      "number_of_training_examples": 100000,
+      "number_of_testing_examples": 1000,
+      "T": 40,
+      "s": 2.5,
+      "number_of_alternatives": 10,
+      "number_of_ands": 4,
+      "noise": 0.01
+     },
+     "runs": 10,
+     "machine_clauses": {
+      "hier": [
+       "number_of_clauses",
+       "number_of_alternatives"
+      ],
+      "vanilla": [
+       "number_of_clauses"
+      ]
+     },
+     "machine_clauses_note": "TsetlinMachine(args.number_of_clauses * args.number_of_alternatives, ...) in the hierarchical branch, args.number_of_clauses in the --vanilla branch",
+     "variants": [
+      "hier",
+      "vanilla"
+     ],
+     "switches": "binary_inference, constant_update_p, and_group_normalization, no_clipping passed as False (the demo's store_true defaults)",
+     "data_seed": 20260925,
+     "machine_seed_seed": 20260926,
+     "machine_seed_randint": [
+      2147483647
+     ],
+     "machine_seed_note": "the demo draws seed=np.random.randint(np.iinfo(np.int32).max) per run",
+     "learn_threshold": 0.95,
+     "wall_cap_s": 5400
+    },
+    "multiconcept": {
+     "source": "examples/MultiConceptDemo.py",
+     "source_sha256": "58d3343e1740b8f04b2f6d773cfa6c44c1d03ee3031b8de5761a7caa3e43c045",
+     "defaults": {
+      "epochs": 100,
+      "runs": 10,
+      "number_of_clauses": 2,
+      "number_of_state_bits": 8,
+      "number_of_examples": 10000,
+      "T": 128,
+      "s": 21.1,
+      "number_of_alternatives": 64,
+      "number_of_elements": 16,
+      "number_of_copies": 2,
+      "noise": 0.0
+     },
+     "runs": 10,
+     "machine_clauses": {
+      "hier": [
+       "number_of_clauses"
+      ],
+      "vanilla": [
+       "number_of_clauses",
+       "number_of_alternatives",
+       "number_of_copies"
+      ]
+     },
+     "variants": [
+      "hier",
+      "vanilla"
+     ],
+     "switches": "binary_inference, constant_update_p, and_group_normalization, no_clipping passed as False (the demo's store_true defaults)",
+     "data_seed": 20260927,
+     "machine_seed_seed": 20260928,
+     "machine_seed_randint": [
+      10000
+     ],
+     "machine_seed_note": "the demo draws seed = np.random.randint(10000) per run; the global numpy generator (used by MultiClassTsetlinMachine.fit) is seeded with it",
+     "learn_threshold": 0.95,
+     "wall_cap_s": 5400
+    }
+   }
+  }
+ },
+ "cost_estimate": {
+  "label": "derived from the logged epoch times of the tuning and control runs (3.2 to 3.9 s per epoch of 8,000 bags for the tuned negated-literal models, 1.6 to 1.9 s for the positive-literal ones, 6.6 s per ANDOfXORs epoch of 100,000 examples at HEAD); not measured for this script",
+  "demos": "c85ca4e7 about 1 h, HEAD about 1.7 h",
+  "oracle": "about 30 min per commit and world seed (2 models x 2 depths x 3 s x 50 epochs)",
+  "seen_unseen_and_pospair": "about 12 min per commit and world seed",
+  "threshold": "at most 2 h",
+  "valiant": "minutes (CPU)",
+  "controls": "about 15 min per world seed (CPU): tmu_tm s 20 219 s, tmu_ctm s 5 441 s, gbt 83 s, mlp 22 s, lr 1 s in the H17.5 CPU stage at seed 100 (results/20260924T231550Z_ssl_r2_hao_cpu_exploratory, fit or train bags)",
+  "selftest": "a few minutes per commit (tiny world, tiny demos)",
+  "total": "about 8.5 h of one CPU slot with the shared GPU lock"
+ },
+ "reading_notes": {
+  "written": "2026-09-25, before any output of experiments/ssl_r2_hao_diagnostics.py; amended the same day, still before any output (see written_before_any_output)",
+  "demos": {
+   "pass_mean_final_test_acc": 0.95,
+   "text": "a demo variant PASSES iff all its planned runs completed the default epochs and their mean final test accuracy is >= 0.95. The primary rows are the hierarchical variants; the vanilla rows are the author's own flat comparison and are reported, not judged. A failed hierarchical demo at a commit means the package fails its author's own positive control there (with this seeded port), and no H-AO failure at that commit is attributed to the H-AO world"
+  },
+  "seen_unseen": {
+   "combination_gap": 0.1,
+   "bag_gap": 0.1,
+   "generalise_min_unseen_acc": 0.9,
+   "generalise_max_gap": 0.05,
+   "text": "at the final (tuned) epoch: MEMORISES COMBINATIONS iff seen minus unseen accuracy >= 0.10; MEMORISES BAGS iff fit minus seen accuracy >= 0.10; GENERALISES TO UNSEEN COMBINATIONS iff unseen accuracy >= 0.90 and |seen minus unseen| < 0.05. A model with a large combination gap learned combinations, not OR-groups; H17.5's held-out test combinations are all unseen, so its registered accuracy tracks the unseen column",
+   "seed100_bias": "at world seed 100 the unseen bags are EXACTLY the validation bags (stream 4) on which every tuned configuration (hyperparameters and chosen epoch) was selected, so seed-100 unseen accuracies are biased upward by that choice and the seed-100 flags are optimistic; world seed 101 (a new world, new combinations, new bags) is the unbiased reading. The report marks every seed-100 row unseen_is_tuning_validation = true",
+   "unseen_fresh": "unseen_fresh (stream 22) are 4,000 new bags of the same validation combinations, never used by any tuning run; they are reported next to unseen at both seeds, with the same two flags computed on them (memorises_combinations_fresh, generalises_to_unseen_combinations_fresh). At seed 100 they remove the bag-level selection bias but not the combination-level one (the configurations were still chosen on these combinations)",
+   "controls": "the controls stage (tmu_tm, tmu_ctm, lr, gbt, mlp, params.controls) gets the same columns and flags; the rows are controls and carry no verdict of their own: the question of A8 3 (ii) is about the package, the controls say whether a non-hierarchical learner separates seen from unseen combinations on the same bags"
+  },
+  "pospair": {
+   "helps_min_diff": 0.1,
+   "helps_min_hier_unseen_acc": 0.75,
+   "neither_max_fit_acc": 0.6,
+   "text": "per commit and world seed at the final epoch: HIERARCHY HELPS WHERE FLAT CANNOT EXPRESS COMPACTLY iff hier minus flat unseen accuracy >= 0.10 and hier unseen accuracy >= 0.75; NEITHER LEARNS iff both fit accuracies are < 0.60; otherwise NO HIERARCHY ADVANTAGE. Derived expectation stated now: a flat positive-literal machine that only stores 4-word conjunctions of seen combinations fires on no unseen positive, so its unseen positive accuracy is 0 and its unseen accuracy is at most about 0.5 plus its negative accuracy share"
+  },
+  "oracle": {
+   "factorial_depth": "deep",
+   "factorial_seeds": [
+    100,
+    101
+   ],
+   "factorial_trigger": "the A8 width, distractor and sample-size factorial is added iff some (commit, model, s) cell of the DEEP oracle is STABLE (params.oracle.stable_rule) on BOTH world seeds 100 and 101",
+   "text": "per (commit, model, depth, s): a cell whose write was not verified (read-back, package equal to the numpy reference, prediction >= 0.95) is INVALID and says nothing about stability. If no deep cell is stable at any s, the true hierarchy is not a fixed point of the package's learning rule on H-AO at the tuned hyperparameters: learning it from scratch is then not expected at those settings, whatever the tuning. If deep cells are stable but boundary cells are not, the truth is stable only with a large margin (a narrow basin). The per-node Jaccard curve tells whether decay starts in the OR nodes (words dropped or distractors added) or in the negative clauses (de_morgan Jaccard)",
+   "node_jaccard_note": "the positive-clause node Jaccard (pos_node_jaccard_mean, part of the stable rule) counts POSITIVE literals only: the words of node c with an included positive literal against group c. Negated literals that the package adds to positive clauses (it can, with append_negated, at T = 1e5) do not change it; they show up in literals_added (per role) and in clauses_exact_share. So STABLE means stable in function (unseen accuracy >= 0.95) and in positive-literal node identity, not bit-identical to the oracle; clauses_exact_share and literals_added say how far from bit-identical a stable cell is"
+  },
+  "threshold": {
+   "text": "REACHED at the first evaluated epoch with fit accuracy >= 0.95 (resolution 10 epochs), else NOT REACHED within 2 GPU-hours with the last fit, seen and unseen accuracies reported; the package's own noisy-parity demo needs about 7,780 epochs for 99.71 percent (docs/13 A8 3 (iv)), so NOT REACHED within 2 hours is not read as 'never'"
+  },
+  "valiant": {
+   "learns_min_unseen_acc": 0.95,
+   "text": "Valiant elimination LEARNS THE CONCEPT on a world seed iff, with all positive fit bags, its unseen-combination accuracy is >= 0.95 and all 4 true OR-groups are among its minimal surviving ORs. If it does, the AND-of-OR concept is learnable from these positive bags by a logic-native learner with no Tsetlin automata, and a package failure on the same bags is a failure of the package's learning dynamics, not of the data. Its negatives are always right while the 4 true groups survive (a negative misses a whole group); its errors are unseen positives rejected by spurious ORs that the seen combinations did not eliminate"
+  }
+ }
+}

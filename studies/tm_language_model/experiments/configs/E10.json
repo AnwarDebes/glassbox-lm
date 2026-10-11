@@ -1,0 +1,36 @@
+{
+  "experiment": "E10",
+  "docs": "docs/05",
+  "milestone": "M9",
+  "lane": 3,
+  "status": "planned",
+  "prereg": [
+    "H6.1",
+    "H6.3",
+    "H6.5"
+  ],
+  "seeds": [
+    1
+  ],
+  "script": "experiments/e10_energy.py",
+  "venv": ".venv-tm",
+  "gpu_lock": "exclusive",
+  "params": {
+    "models": [
+      "tm_engine",
+      "transformer_small",
+      "bert_base"
+    ],
+    "regimes": [
+      "batch_1",
+      "max_throughput"
+    ],
+    "repeats": 5,
+    "metrics": [
+      "joules_per_token",
+      "tokens_per_s",
+      "ms_per_token"
+    ],
+    "cpu_engine": true
+  }
+}

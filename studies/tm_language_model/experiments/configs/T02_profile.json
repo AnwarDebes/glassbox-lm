@@ -1,0 +1,30 @@
+{
+  "experiment": "T0.2",
+  "docs": "docs/04",
+  "milestone": "M1",
+  "lane": 2,
+  "status": "planned",
+  "prereg": [
+    "H5.2"
+  ],
+  "seeds": [
+    1
+  ],
+  "script": "experiments/p0_profile.py",
+  "venv": ".venv-tm",
+  "gpu_lock": "exclusive",
+  "params": {
+    "outputs": [
+      1000,
+      16000
+    ],
+    "clauses": 2000,
+    "tool": "nvprof",
+    "split": [
+      "evaluate",
+      "select_clause_updates",
+      "update",
+      "update_message"
+    ]
+  }
+}

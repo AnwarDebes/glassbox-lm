@@ -1,0 +1,43 @@
+{
+ "dev_rows_sha256": "cd4617a9664c1b0e3f3c2fe65503e5eedcad100b138f9a833f5b44897981f721",
+ "dev_rule": "the 10000 image row indices i of the 60000-row train file with the smallest mix64(i XOR 0xfa5410a7d3) (tmlm.ssl.patch_tokens.dev_mask)",
+ "purpose": "docs/13 A7 phase R4: Fashion-MNIST train split hashed before any use; the test split is never downloaded",
+ "row_index_format": "int64 little endian, ascending",
+ "source": {
+  "access": "huggingface_hub.hf_hub_download of the train parquet file only; the test split is never downloaded",
+  "bytes": 30931277,
+  "file": "fashion_mnist/train-00000-of-00001.parquet",
+  "file_sha256": "a5769a70af055b15ada8bd3dad9057557554fdd30e17cba45e7ef0f8bf79c5bb",
+  "lfs_sha256": "a5769a70af055b15ada8bd3dad9057557554fdd30e17cba45e7ef0f8bf79c5bb",
+  "license": "MIT (dataset card: license: mit)",
+  "limit_images": null,
+  "repo": "zalando-datasets/fashion_mnist",
+  "revision": "531be5e2ccc9dba0c201ad3ae567a4f3d16ecdd2"
+ },
+ "store": {
+  "corpus": "fashion_mnist_p4",
+  "sha256": {
+   "codebook.npy": "14e4f640268eb9a55c8cf73c6c198cd64bd18ceb07afd630e89d284acfea48f2",
+   "dev.npy": "959225d731cbf9965b01080f36da0de4809f9b530a78c9228c22123568cded17",
+   "doc_start.npy": "607578bad8fb98ad3d6550a605755c152aa9196b578caf4ac9dfc484b219f5d3",
+   "kind_map.npy": "5c51dbf774c2cbe2b3d283c51eabc98d6b5bbe3ffbdd7baa8cf99468aea93945",
+   "labels.npy": "b06cb3cce18805d3b58c5c10d56122e6cba7413d18c0366b8a8b9a11d55a3d61",
+   "lut.npy": "2529750396949b83d978a0cafeef854063f9e17b940e14b77d0a3b6fadd7dbcf",
+   "stop.npy": "1d72627817a8b2e2f86f1722bb9eced8aac43b2dc8d559183fe065e10ce1b185",
+   "sym_freq.npy": "ebec5082179e4c7ef2c11bc2c480d11060c80eba342dd124d4b639580bd0bc21",
+   "targets.npy": "e5e1944be78085ca191918793a7482cd7de79ac4688b90e0ce3b011874ffba4c",
+   "tok.npy": "d3c25dc9a44f83d3309cddf31a9cd616d930833f831a666f87b9a00efb43e73f"
+  }
+ },
+ "tokenization": {
+  "grid": 7,
+  "n_codes": 1999,
+  "n_stop": 64,
+  "patch": 4,
+  "row_end": 1999,
+  "thresh": 75,
+  "tokens_per_image": 56
+ },
+ "written_by": "experiments/ssl_r4_images.py --stage data --write-prereg-hash; write-once, never edited",
+ "written_utc": "2026-09-24T22:02:31Z"
+}

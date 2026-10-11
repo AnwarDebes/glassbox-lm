@@ -1,0 +1,49 @@
+# 10 Glossary (TM terminology)
+
+- Tsetlin Automaton (TA): a two-action finite automaton with 2N states; states 1..N mean Exclude, N+1..2N mean Include. Updated by reward/penalty [verified in source].
+- Clause: a conjunction (AND) of included literals formed by a TA team [verified in source].
+- Literal: a Boolean input or its negation. In GraphTM both x and not-x are always available (the hypervector is doubled; there is no `append_negated` keyword) [verified in source: docs/02 V1]; the hierarchical package does take `append_negated` [verified in source: docs/02 V3].
+- Clause polarity: positive clauses vote for y=1, negative for y=0; half and half by default [verified in source].
+- Type I feedback: produces frequent patterns (reinforces true positives) [verified in source].
+- Type II feedback: increases discrimination (penalises false positives) [verified in source].
+- T (target/threshold): caps how large the class sum can grow; bounds voting [verified in paper].
+- s (specificity): controls how fine-grained clauses are; larger s makes more specific clauses [verified in paper].
+- Class sum: weighted sum of matching clauses for a class; central to voting and uncertainty [verified in paper].
+- State bits: bits per TA state (commonly 7 or 8); sets memory per literal [verified in source].
+- Coalesced TM (CoTM): one shared clause bank with per-output integer weights; enables multi-output [verified in source: abstract].
+- Q gate: in the graph kernel, the first of two gates on a negative-class update per (clause, class) pair: it selects a pair with probability Q/(CLASSES-1), default q=1.0; a selected pair is updated only if it also passes the error gate, probability err/(2T) [verified in source: tm.py:44, kernels.py:384].
+- Hypervector: a high-dimensional sparse binary code representing a symbol; size and bits set at Graphs init [verified in source].
+- Bundling: superposition (OR-like combine) of hypervectors [stated].
+- Binding: the (x) operator combining two hypervectors into a new unit, used to name edge-type (x) clause features [verified in source].
+- Message passing: matched clauses send messages along outgoing edges; receivers append them to properties [verified in source].
+- Depth: number of message rounds; depth d gives d layers of reasoning [verified in source].
+- Absorbing states: TA states that stop updating once reached; used by Contracting TM in the 50 to 100 band [stated].
+- Literal streaming: sampling a fraction (5 to 20%) of literals per step for speed [stated].
+- AND_GROUP / AND_ALTERNATIVES / OR_GROUP / OR_ALTERNATIVES: hierarchy node types (0/1/2/3) in the hierarchical package; OR_ALTERNATIVES builds synonym alternations [verified in source].
+- transform / transform_nodewise: methods returning per-example / per-node clause outputs (clause-codes); `transform` returns the tuple (clause_outputs, class_sum) [verified in source: tm.py:814-851].
+- d-DNNF / SDD: knowledge-compilation forms enabling exact marginals and sampling from a clause bank [stated].
+- BMF / FCA: Boolean matrix factorization / formal concept analysis, the mathematics behind OR_ALTERNATIVES groups [stated].
+
+## Terms added with the design decisions (Tracks A, B, C; see docs/03, docs/11)
+- Track A / Track B / Track C: the patched GraphTM reference; the sparse event-driven TM engine (main model); everything written once against the common interface (baselines, heads, decoders, certification, evals).
+- Frequency trap: in a coalesced TM a non-firing clause decays its literals at rate 1/s, so an included literal survives only if the clause fires more often than about 1/(s+1); language patterns are far rarer (docs/02) [derived].
+- Exact Binomial draw: drawing the number of negative classes per clause from Binomial(CLASSES-1, Q/(CLASSES-1)) and touching only those; distributionally identical to the dense Q gate. Each drawn class must still pass the unchanged error gate, so the mean number of Q-gate selections per clause is Q, while the mean number of realised negative updates is Q x mean(err/(2T)) (docs/02) [derived]. Poisson(Q) is only an approximation of the draw.
+- Position-bound literal: `lit = (seg << 17) | (sym << 1) | neg`; a symbol (token, cluster id, special) at a segment (exact offset or bag bucket), optionally negated. Readable without any codebook.
+- Segment: 0-15 are the exact offsets -8..-1 and +1..+8; 16-41 are multi-scale bag buckets per side, reaching 65536 tokens.
+- Bag bucket: the set of tokens at distance (8*2^k, 8*2^(k+1)] on one side, document-bounded; a bag literal asks whether a symbol occurs anywhere in the bucket.
+- Anchor: the exact-offset positive literal every clause must have; the inverted index over anchors is what makes evaluation event-driven.
+- Pointer clause: a pure-bag clause with no exact anchor (a logical cache LM); an ablation only.
+- Sparse signed votes: each clause holds at most 16 (class, weight) pairs instead of a row of a dense V x C weight matrix; an optional wide tier holds 1024.
+- Owned class: a class for which a clause holds a positive vote; lazy decay (R4) is scoped to owned classes.
+- Gate mass G[c]: the accumulated target-gate probability mass per class, used to compute the decay a clause owes without visiting it.
+- Seeding: recruiting a free clause for a target that too few fired clauses own (R5).
+- Dense-equivalent mode: the engine configured to reproduce the published coalesced TM (R8); the parity reference against tmu.
+- Deviation ladder D0..D7: from dense-equivalent mode to the full engine, one flag per rung, each rung measured (experiment s4).
+- count_probe: what plain counting achieves in the same literal space; a diagnostic baseline for KB2.
+- Counter-based RNG: random numbers as a pure function of (seed, stream, example uid, clause, slot), so results do not depend on batch composition, threads, or launch configuration.
+- state_hash: a hash of the full learnable state; equal hashes across oracle, CPU, and GPU engines are the bit-exactness test.
+- Receipt: context assignment + fired clauses with literals and votes + claimed token; verified by a standalone checker that imports nothing from the project.
+- Bits per byte: total negative log2-likelihood divided by the UTF-8 byte count of the text; the tokenizer-independent likelihood metric used for the causal model.
+- KN-5: interpolated Kneser-Ney 5-gram, built in-house on identical tokens; the only like-for-like perplexity comparator.
+- Split-conformal set: a prediction set with a coverage guarantee from a held-out calibration split; the stand-in for ConfTM.
+- mem_guard / GPU lock: `scripts/mem_guard.py` aborts a job at 85 GiB of host memory; `scripts/gpu_run.sh` serialises GPU use (shared or exclusive).

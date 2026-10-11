@@ -1,0 +1,133 @@
+{
+  "experiment": "cvtm_copy_selector",
+  "mode": "seed",
+  "lane": "B1: TA-learned copy selector at full data (docs/13 A4 H9.1, H9.2; gate G1 T2)",
+  "script": "experiments/cvtm_copy_selector.py seed --seed S",
+  "status": "CONFIRMATORY: seeds 1, 2, 3 (docs/13 section 3); every choice below is fixed before the first confirmatory run; validation only, the test split is never loaded. Finalised on 2026-09-24 after the pair build (results/20260924T110143Z_cvtm_copy_selector_pairs/, exit 0) and before any seed run: the placeholders were filled and the H9.2, G1 T2 and credit rules were aligned with docs/13 A5 D0.1 to D0.3 (saved 10:24 UTC, before this config was first written)",
+  "exploratory": false,
+  "seeds": [
+    1,
+    2,
+    3
+  ],
+  "pairs_run": "results/20260924T110143Z_cvtm_copy_selector_pairs",
+  "pairs_manifest_sha256": "7f67c29d45a8351949ef94ac18d779674059954147e88272bb05b1615346beb9",
+  "core_validation_bpb": 1.240880320113308,
+  "n_buckets": 520,
+  "seed_protocol": {
+    "train_positives": 250000,
+    "train_negatives": 750000,
+    "c0_fraction": 0.01,
+    "configs_per_gate": 8,
+    "gate_order": [
+      "TM",
+      "LR",
+      "LR2",
+      "HGB",
+      "C0"
+    ],
+    "tm_clauses_per_class": 2000,
+    "tm_epochs": 2,
+    "tm_grid": [
+      [
+        600,
+        25.0
+      ],
+      [
+        600,
+        50.0
+      ],
+      [
+        1200,
+        25.0
+      ],
+      [
+        1200,
+        50.0
+      ]
+    ],
+    "lr_l2_grid": [
+      0.01,
+      0.1,
+      1.0,
+      10.0,
+      100.0,
+      1000.0,
+      10000.0,
+      100000.0
+    ],
+    "lr2_l2_grid": [
+      0.1,
+      1.0,
+      10.0,
+      100.0,
+      1000.0,
+      10000.0,
+      100000.0,
+      1000000.0
+    ],
+    "lr_maxiter": 300,
+    "hgb_grid": [
+      {
+        "max_leaf_nodes": 31,
+        "learning_rate": 0.1,
+        "stages": [
+          50,
+          150
+        ]
+      },
+      {
+        "max_leaf_nodes": 31,
+        "learning_rate": 0.3,
+        "stages": [
+          50,
+          150
+        ]
+      },
+      {
+        "max_leaf_nodes": 127,
+        "learning_rate": 0.1,
+        "stages": [
+          50,
+          150
+        ]
+      },
+      {
+        "max_leaf_nodes": 127,
+        "learning_rate": 0.3,
+        "stages": [
+          50,
+          150
+        ]
+      }
+    ],
+    "prior_positions": 16,
+    "peak_gib": 6
+  },
+  "params": {
+    "training_pairs": "per seed: 250,000 positives drawn uniformly without replacement from every positive pair of the H' residue-1 documents and 750,000 negatives from the Bernoulli(0.01) pool of their negative pairs (numpy SeedSequence([seed, 20260924, 9101])); the same pairs and the same 237 literals for every gate",
+    "gates": {
+      "TM": "tmu TMClassifier (upstream 5605ff07, CPU), 2 classes, 2000 clauses per class, weighted clauses, Type I and Type II feedback (tmu defaults), seed = 1000 x seed + grid index; score = class-1 vote sum minus class-0 vote sum over the non-empty clauses, unclipped",
+      "LR": "logistic regression on the 237 literals, L2 on the weights, L-BFGS-B on the summed loss (ftol 1e-12, gtol 1e-5, maxcor 20, at most 300 iterations, warm start along the L2 path from strong to weak); docs/13 A5 D0.2: if the chosen configuration stopped at the iteration cap it is refitted once from the same starting point with at most 1,200 iterations and the refit replaces it (the same configuration: the selection budget is unchanged); a fit still at the cap is reported and 'beats' is not claimed",
+      "LR2": "logistic regression on all pairwise literal products x_i x_j (i <= j, 28,203 weights), same fitting and the same D0.2 refit rule",
+      "HGB": "scikit-learn 1.9.1 HistGradientBoostingClassifier on the literal matrix, max_leaf_nodes in {31, 127}, learning_rate in {0.1, 0.3}, min_samples_leaf 20, no L2, no early stopping, random_state = 1000 x seed + grid index; each fit is evaluated after 50 and after 150 trees (two configurations; the grid spans sklearn's defaults of 31 leaves, rate 0.1, 100 trees); scores from a tree walker equal to decision_function (checked)",
+      "C0": "a TM of the same size (2000 clauses per class) with the same grid, trained on 1 percent of the pairs (2,500 positives and 7,500 negatives drawn from the seed's pairs)"
+    },
+    "selection": "8 configurations per gate are scored on S2a (half of S2 = 1 in 8 positions of the H' residue-2 documents, split by bit 3 of the same hash): TM and C0 = 4 (T, s) x epochs 1 and 2; LR and LR2 = 8 L2 values; HGB = 4 fits x (50, 150) trees. Criterion within a gate: bits per S2a position of the read-out with one pooled (beta, a) fitted on S2a by maximum likelihood; lowest wins. The chosen configuration is then scored on S2b; its S2b bits per position under the S2a pooled (beta, a) is the held-out residue-2 criterion between gates (docs/13 A5 D0.2); its final read-out is fitted on S2a + S2b (pooled, then per bucket)",
+    "readout": "P(w) = P_core(w) exp(t(w)) / Z, t(c) = beta_b z(c) + a_b for the candidates, 0 otherwise, Z = 1 + sum over candidates of P_core(c)(exp(t(c)) - 1) (docs/11 11.5), z = gate score standardised on the S2 pairs, b = the core bucket (k*, m*, c, l), 520 buckets; (beta_b, a_b) of the chosen configuration: MAP on S2a + S2b with a Gaussian prior at the pooled pair, precision 16 x the pooled per-position Hessian (16 pseudo-positions, the analogue of docs/11 11.4)",
+    "hypotheses": {
+      "H9.1": "validation bits per byte of core + TM at least 0.010 below the CVTM-core (1.240880320113308) on every seed, document-bootstrap 95 percent CI of the difference excluding 0",
+      "H9.2": "docs/13 A4 with A5 D0.2: per seed the best control (of LR, LR2, HGB, C0) is the one with the lowest S2b held-out bits per position (residue 2 of H', never validation); the verdict uses the 3-seed mean of (TM minus best control) with a paired document bootstrap over the 60 validation documents: at most -0.002 with the CI excluding 0 = beats; at most 0.000 = matches; otherwise trails. A control fit still at its raised iteration cap blocks 'beats'. Per-seed readings and TM minus each control are reported alongside",
+      "TM_minus_C0": "docs/13 A5 D0.2: reported as its own row (3-seed mean, paired document bootstrap; per seed)",
+      "G1_T2": "docs/13 A4 with the A5 D0.1 bands: A = every seed gains >= 0.010 with its CI excluding 0 -> open H9.3; B = every seed >= 0.005 with its CI excluding 0 and not A -> keep the row, H9.3 as a 5M pilot only; C = otherwise -> no T2 engine work. The smallest per-seed gain decides; the seed mean is reported",
+      "D0_3_credit": "docs/13 A5 D0.3: band A AND TM minus C0 (3-seed mean) at most -0.005 bits per byte with the CI excluding 0"
+    },
+    "statistics": "document-block bootstrap over the 60 validation documents, 2,000 resamples, tmlm.cvtm.protocol.BOOT_SEED, ratio of summed bits to summed bytes per resample; labelled derived",
+    "rules": "the 10 most important TM clauses (|signed weight| x firing rate over the S2 pairs) as readable rules, with firing rate and precision on the S2 and validation pairs",
+    "cost_basis": "unlogged timing probes on residue-1 pool pairs of a smoke build (training data only, no validation): tmu about 0.22 to 0.27 ms per pair and epoch, TM scoring about 2.6 microseconds per pair, HGB about 50 ns per pair and tree, LR2 about 2 s per L-BFGS evaluation at 1M pairs; the S2 halves and the HGB grid were fixed from these costs, before any confirmatory run",
+    "verdicts": "experiments/cvtm_copy_selector.py verdicts over the three seed runs, with a config experiments/cvtm/configs/cvtm_copy_selector_H9_verdicts.json that only lists those run directories"
+  },
+  "launch": "scripts/cpu_slot.sh 1 -- nice -n 10 .venv-tm/bin/python scripts/mem_guard.py -- scripts/run_logged.py --no-gpu-sampler --name cvtm_copy_selector_seedS --config experiments/cvtm/configs/cvtm_copy_selector_H9.json -- .venv-tm/bin/python -u experiments/cvtm_copy_selector.py seed --seed S --config experiments/cvtm/configs/cvtm_copy_selector_H9.json",
+  "compute_cap": "about 4 to 5 hours per seed on 1 CPU slot; the three seeds run in parallel",
+  "venv": ".venv-tm"
+}

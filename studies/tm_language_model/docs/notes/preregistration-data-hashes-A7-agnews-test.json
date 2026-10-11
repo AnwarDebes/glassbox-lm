@@ -1,0 +1,38 @@
+{
+ "files": {
+  "data/test-00000-of-00001.parquet": {
+   "amendment": null,
+   "bytes": 1234829,
+   "git_blob_sha1": null,
+   "metadata": {
+    "blob_id": "a309573a1874d62dce6f554d94553679aab403f4",
+    "call": "HfApi.get_paths_info",
+    "lfs": {
+     "pointer_size": 132,
+     "sha256": "71de87ec66bc5737752a2502204dfa6d7fe9856ade3ea444dc6317789a4f13fb",
+     "size": 1234829
+    },
+    "path": "data/test-00000-of-00001.parquet",
+    "repo": "fancyzhx/ag_news",
+    "repo_type": "dataset",
+    "revision": "eb185aade064a813bc0b7f42de02595523103ca4",
+    "size": 1234829,
+    "type": "RepoFile",
+    "xet_hash": "b0dde0a77649ceedc1bd3353375fb9a0e8a7d4824b4f102013fb316cdf7cbd27"
+   },
+   "reference": "sha256",
+   "sha256": "71de87ec66bc5737752a2502204dfa6d7fe9856ade3ea444dc6317789a4f13fb",
+   "split": "test"
+  }
+ },
+ "purpose": "docs/13 amendment A9 item 10 (family H17): content hash of a confirmatory TEST file, taken from the dataset host's published file metadata at the pinned revision BEFORE the first counted access (no content downloaded); every counted access verifies the downloaded bytes against it; write-once, never edited",
+ "source": {
+  "hash_source": "the dataset host's published file metadata at the pinned revision (huggingface_hub HfApi.get_paths_info), taken before the first counted access; no content downloaded",
+  "licence": "non-commercial research (A7)",
+  "repo": "fancyzhx/ag_news",
+  "repo_type": "dataset",
+  "revision": "eb185aade064a813bc0b7f42de02595523103ca4"
+ },
+ "written_by": "src/tmlm/ssl/confirm.py write_test_hash_reference (experiments/ssl_r1_confirm.py --stage testhash)",
+ "written_utc": "2026-09-26T20:44:50Z"
+}

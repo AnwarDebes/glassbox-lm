@@ -1,0 +1,15 @@
+{
+  "experiment": "cvtm_early_fulldata_mixcheck",
+  "script": "experiments/cvtm_early_fulldata_mixcheck.py",
+  "status": "EXPLORATORY cross-check, not pre-registered; no docs/13 threshold is tested; validation split only, the test split is never loaded; tunes nothing",
+  "purpose": "recompute the rows of results/20260924T054225Z_cvtm_early_fulldata_exploratory with the repository combination module tmlm.cvtm.mixture (added during that run; tests/test_cvtm_mixture.py passes), which differs from the early script only in the pooled-weight prior and the empty-bucket fallback",
+  "inputs": {
+    "early_run": "results/20260924T054225Z_cvtm_early_fulldata_exploratory/ (per_token_log2.npz rows kn5 and kstar: log2 P_KN of the KN-5 fitted on all training documents and k* on every validation position; metrics.json for the comparison)",
+    "recomputed": "fit documents H (index hash must equal the early run), KN-5 fitted on the training split without H (P_KN and k* on H), document features by the current tmlm.cvtm.doc_clauses"
+  },
+  "params": {"em_iterations": 50, "prior_pseudocounts": 16, "rows": {"kn5_D0": ["S", "D0"], "kn5_D0to4": ["S", "D0", "D1", "D2", "D3", "D4"], "cvtm_core": ["S", "D0", "D1", "D2", "D3", "D4", "P"]}, "bootstrap": {"n_documents": 60, "resamples": 2000, "seed": [20260924, 1106, 1]}},
+  "compute": "CPU only, one thread, nice 19; no GPU",
+  "memory_guard": "scripts/mem_guard.py --limit-gib 30 (cgroup working set, all processes); the script waits before the KN fit until memory.current + 18 GiB < 0.80 memory.max and working set + 18 GiB < 0.97 x 30 GiB (the same fit peaked at 17.0 GiB RSS in the early run)",
+  "threads": 1,
+  "venv": ".venv-tm"
+}

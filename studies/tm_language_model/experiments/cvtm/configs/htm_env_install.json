@@ -1,0 +1,29 @@
+{
+ "experiment": "htm_env_install",
+ "docs": "docs/12 F27 (exploratory H-AO pilot on the hierarchical package at HEAD 5b4a223, separate environment .venv-htm)",
+ "status": "ENVIRONMENT BUILD (no data, no model)",
+ "script": "env/htm_install.sh",
+ "venv": ".venv-htm (created by this run; .venv-tm untouched)",
+ "gpu_lock": "none (the final import check opens a CUDA context for a device query only)",
+ "cpu_slots": 1,
+ "params": {
+  "python": "3.11",
+  "package": "PyHierarchicalTsetlinMachineCUDA @ git+https://github.com/cair/PyHierarchicalTsetlinMachineCUDA@5b4a223075c1e621577d508bc7c3c061230e29d5",
+  "pins": {
+   "numpy": "2.4.6",
+   "setuptools": "84.0.0",
+   "wheel": "0.48.0",
+   "scipy": "1.17.1",
+   "pytools": "2026.1.1",
+   "mako": "1.4.1",
+   "pycuda": "2025.1.3 (from source, --no-build-isolation)",
+   "scikit-learn": "1.9.1"
+  },
+  "tmlm": "editable install of this repository (src/tmlm)",
+  "outputs": [
+   "htm_freeze.txt in the run dir",
+   "env/htm.lock (copy of the freeze)",
+   "metrics.json: package provenance, installed file sha256 vs the reference clone, device"
+  ]
+ }
+}

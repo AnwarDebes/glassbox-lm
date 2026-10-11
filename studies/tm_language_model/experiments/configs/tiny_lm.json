@@ -1,0 +1,45 @@
+{
+  "experiment": "tiny_lm",
+  "docs": "docs/04",
+  "milestone": "M3",
+  "lane": 1,
+  "status": "planned",
+  "prereg": [
+    "H1.4"
+  ],
+  "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "script": "experiments/m3_tiny_lm.py",
+  "venv": ".venv-tm",
+  "gpu_lock": "shared",
+  "params": {
+    "tokens": 5000000,
+    "baselines": [
+      "left_bigram",
+      "count_probe"
+    ],
+    "epoch_budget_rule": "validation plateau, written to docs/13 amendment A2",
+    "epochs": 4,
+    "evalset": "wikitext103 validation subword, frozen (docs/13 section 4)",
+    "setting_note": "recency weighting, binomial negatives, 64 vote slots, s = 128, K_COVER = 8, SEED_CAP = 32, RHO_SEED = 1: chosen from the KB2 diagnosis runs of 2026-09-22 (exploratory seed 101, 300k-token slice, where this combination scored 0.155 at 32k clauses vs bigram 0.142); seeds 1, 2, 3 are the pre-registered ones"
+  },
+  "engine": {
+    "mode": "masked",
+    "vocab": 2000,
+    "n_clauses": 65536,
+    "batch": 1024,
+    "n_bag_k": 2,
+    "seg_weighting": "recency",
+    "neg_mode": "binomial",
+    "v_slots": 64,
+    "s": 128,
+    "k_cover": 8,
+    "seed_cap": 32,
+    "rho_seed": 1.0
+  }
+}

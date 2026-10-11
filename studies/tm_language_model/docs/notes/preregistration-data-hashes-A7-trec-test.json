@@ -1,0 +1,34 @@
+{
+ "files": {
+  "default/test/0000.parquet": {
+   "amendment": "docs/13 A10",
+   "bytes": 17084,
+   "git_blob_sha1": "29a327eca2a3c25593a4d34ad5db1cd89c47d89d",
+   "metadata": {
+    "blob_id": "29a327eca2a3c25593a4d34ad5db1cd89c47d89d",
+    "call": "HfApi.get_paths_info",
+    "lfs": null,
+    "path": "default/test/0000.parquet",
+    "repo": "CogComp/trec",
+    "repo_type": "dataset",
+    "revision": "65752bf53af25bc935a0dce92fb5b6c930728450",
+    "size": 17084,
+    "type": "RepoFile",
+    "xet_hash": null
+   },
+   "reference": "git_blob_sha1",
+   "sha256": null,
+   "split": "test"
+  }
+ },
+ "purpose": "docs/13 amendment A9 item 10 (family H17): content hash of a confirmatory TEST file, taken from the dataset host's published file metadata at the pinned revision BEFORE the first counted access (no content downloaded); every counted access verifies the downloaded bytes against it; write-once, never edited",
+ "source": {
+  "hash_source": "the dataset host's published file metadata at the pinned revision (huggingface_hub HfApi.get_paths_info), taken before the first counted access; no content downloaded",
+  "licence": "unknown (A7: TREC card 'unknown')",
+  "repo": "CogComp/trec",
+  "repo_type": "dataset",
+  "revision": "65752bf53af25bc935a0dce92fb5b6c930728450"
+ },
+ "written_by": "src/tmlm/ssl/confirm.py write_test_hash_reference (experiments/ssl_r1_confirm.py --stage testhash)",
+ "written_utc": "2026-09-26T20:44:50Z"
+}

@@ -1,0 +1,81 @@
+{
+  "experiment": "s1",
+  "docs": "docs/05",
+  "milestone": "M7",
+  "lane": 1,
+  "status": "planned",
+  "prereg": [
+    "H3.1",
+    "H3.2"
+  ],
+  "seeds": [
+    1,
+    2,
+    3
+  ],
+  "script": "experiments/s1_scaling_clauses.py",
+  "venv": ".venv-tm",
+  "gpu_lock": "shared",
+  "params": {
+    "clause_counts": [
+      65536,
+      262144,
+      1048576,
+      4194304,
+      16777216,
+      67108864
+    ],
+    "seeds_by_size": {
+      "65536": [
+        1,
+        2,
+        3
+      ],
+      "262144": [
+        1,
+        2,
+        3
+      ],
+      "1048576": [
+        1,
+        2,
+        3
+      ],
+      "4194304": [
+        1
+      ],
+      "16777216": [
+        1
+      ],
+      "67108864": [
+        1
+      ]
+    },
+    "vocabs": [
+      8000,
+      16000,
+      32000
+    ],
+    "equal_tokens": "anchor budget (B1)",
+    "modes": [
+      "causal",
+      "masked"
+    ],
+    "kill": "KB4",
+    "also": [
+      "wide_vote_tier",
+      "insertion_probability",
+      "pointer_clauses"
+    ],
+    "s_note": "s = 128 from the tiny-LM tuning of 2026-09-22 (docs/12 F17); was the v0.1 value 16"
+  },
+  "engine": {
+    "mode": "causal",
+    "vocab": 8000,
+    "n_clauses": 1048576,
+    "T": 64,
+    "s": 128,
+    "batch": 1024,
+    "n_bag_k": 13
+  }
+}

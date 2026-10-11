@@ -1,0 +1,772 @@
+{
+ "experiment": "ssl_r1_confirm",
+ "status": "CONFIRMATORY: docs/13 amendment A7 (family H17), R1 seeds 1 to 3 of the top two arms and every control, with the additions of amendment A8 (items 1, 6 and 7 and the erratum) and the readings of amendment A9 (binding). Every number that feeds a registered verdict is computed on the confirmatory sets (AG News and TREC-6 official test splits, the SST-2 hash-carved 5 percent of train, the MEN test split for Q_con), each read ONCE per frozen configuration through the counted path and only after that configuration's dev-carve stage succeeded and its preflight passed. The WikiText-103 test split is never loaded; Q_pred and the item 6 class sums read the frozen V 8000 VALIDATION targets only. SST-2 validation is never read.",
+ "docs": "docs/13 amendment A7 (R1, controls, splits, H17.1 to H17.4, H17.11, H17.12), amendment A8 (items 1, 6, 7, erratum) and amendment A9 (items 1 to 11: the readings of this evaluation, binding); docs/11 sections 5 and 11.5; docs/12 F23 to F28",
+ "script": "experiments/ssl_r1_confirm.py",
+ "library": "src/tmlm/ssl/confirm.py",
+ "imports_unchanged": [
+  "experiments/ssl_r1_pretext.py",
+  "experiments/ssl_r1_controls.py",
+  "experiments/ssl_r1_config_arms.py",
+  "src/tmlm/ssl/*.py",
+  "src/tmlm/engine/*"
+ ],
+ "prereg": [
+  "H17.1",
+  "H17.2",
+  "H17.3",
+  "H17.4",
+  "H17.11",
+  "H17.12",
+  "A8 item 1 (young ladder, twin, label, MNB, NBSVM, random conjunction bank, Q_pred)",
+  "A8 item 6 (per-run diagnostics)",
+  "A9 items 1 to 11 (readings of the confirmatory R1 evaluation, binding)"
+ ],
+ "written_before_any_output": "2026-09-25, after the R1 seed-100 report and before any run of this script: the arms, controls, probe plans, test discipline, statistics, verdict rules and every reading below were fixed without any confirmatory output. Seen at this time: everything disclosed in A7 and A8, and the seed-100 R1 ranking of results/20260925T105202Z_ssl_r1_report_seed100_exploratory (32 labels, LR, all clauses).",
+ "winner": {
+  "rule": "seed100",
+  "seed100_winner": "A3",
+  "seed100_runner_up": "A2",
+  "source": "results/20260925T105202Z_ssl_r1_report_seed100_exploratory, tournament.ranking_lr_32 (all clauses): A3 then A2, gap above the 0.5-point tie margin [measured there, exploratory]",
+  "tie_margin_points": 0.5,
+  "alternative_rule": "dev_seeds_1_3: the higher mean DEV-carve Q_text (32 labels, LR, all clauses, seeds 1 to 3) of A3 and A2, a gap below 0.5 points decided by the dev Q_con (MEN dev); computed and PRINTED by every report (field dev_seeds_1_3), never used (docs/13 A9 item 1)",
+  "reading": "docs/13 A9 item 1: the winner is A3, fixed by the seed-100 tournament; A2 is the second arm; seeds 1 to 3 confirm and do not re-select"
+ },
+ "configurations": {
+  "note": "A frozen configuration is one trained run (arm, seed) with all its checkpoints; 'common' (seed-independent controls); or one random conjunction bank. 28 configurations (eight arms on three seeds, common, three random banks; docs/13 A9 item 10); one counted access per (configuration, task), plus one MEN-test access per Q_con configuration.",
+  "arms": {
+   "A3": {
+    "base": "A3",
+    "twin": false,
+    "role": "top1",
+    "twin_arm": "A3T",
+    "features_checkpoints": "c0y,ladder,epoch4",
+    "qpred_checkpoints": "c0y,ladder,epoch4",
+    "probe_plan": "arm",
+    "qcon": true,
+    "qint": true
+   },
+   "A2": {
+    "base": "A2",
+    "twin": false,
+    "role": "top2",
+    "twin_arm": "A2T",
+    "features_checkpoints": "c0y,ladder,epoch4",
+    "qpred_checkpoints": "c0y,ladder,epoch4",
+    "probe_plan": "arm",
+    "qcon": true,
+    "qint": true
+   },
+   "A0": {
+    "base": "A0",
+    "twin": false,
+    "role": "h17_4",
+    "twin_arm": null,
+    "features_checkpoints": "c0y,ladder,epoch4",
+    "qpred_checkpoints": "c0y,ladder,epoch4",
+    "probe_plan": "arm",
+    "qcon": false,
+    "qint": false
+   },
+   "A1": {
+    "base": "A1",
+    "twin": false,
+    "role": "h17_4",
+    "twin_arm": null,
+    "features_checkpoints": "c0y,ladder,epoch4",
+    "qpred_checkpoints": "c0y,ladder,epoch4",
+    "probe_plan": "arm",
+    "qcon": false,
+    "qint": false
+   },
+   "A6": {
+    "base": "A6",
+    "twin": false,
+    "role": "control_random_kind_map",
+    "twin_arm": null,
+    "features_checkpoints": "c0y,ladder,epoch4",
+    "qpred_checkpoints": "c0y,ladder,epoch4",
+    "probe_plan": "arm",
+    "qcon": false,
+    "qint": false
+   },
+   "A3T": {
+    "base": "A3",
+    "twin": true,
+    "role": "twin",
+    "twin_arm": null,
+    "features_checkpoints": "epoch4",
+    "qpred_checkpoints": "epoch4",
+    "probe_plan": "twin",
+    "qcon": false,
+    "qint": false
+   },
+   "A2T": {
+    "base": "A2",
+    "twin": true,
+    "role": "twin",
+    "twin_arm": null,
+    "features_checkpoints": "epoch4",
+    "qpred_checkpoints": "epoch4",
+    "probe_plan": "twin",
+    "qcon": false,
+    "qint": false
+   },
+   "A3R": {
+    "base": "A3R",
+    "twin": false,
+    "role": "control_random_kind_map_winner",
+    "twin_arm": null,
+    "features_checkpoints": "c0y,ladder,epoch4",
+    "qpred_checkpoints": "c0y,ladder,epoch4",
+    "probe_plan": "arm",
+    "qcon": false,
+    "qint": false
+   }
+  },
+  "why_A0_A1": "H17.4 is 'Q_text of A1 minus A0': it cannot be decided without A0 and A1 on seeds 1 to 3, so both run with the registered probe set (no twins).",
+  "why_A6": "A7 lists 'random kind_map (concepts removed from the literals)' among the learning-credit controls; A6 (A1 with a random kind_map) is that control on A1's data and is one of the seven arms of A9 item 10. It feeds no threshold; it is run last in each lane.",
+  "twins": "A3T and A2T: the arm's data and EngineConfig with p_ins = 0, p_neg = 0, s = 2^62 (A8 item 1; A2T on A2's data and config, neg_budget 1 and cand_tries 4 kept); the checks of ssl_r1_controls.stage_train (literal thresholds zero, no insertion, decay provably zero, literals frozen at every checkpoint) apply.",
+  "why_A3R": "docs/13 A9 item 9: A3 with a random kind_map (one fixed token permutation of the three cluster levels, exactly A6's permutation, tmlm.ssl.pretext.random_kind_map), trained on seeds 1 to 3 with the registered probe set; reported, not part of any threshold. Registered at run time into P.ARMS from extra_arms (a data-level arm like A6: F2 targets, random tables)."
+ },
+ "probe_plans": {
+  "note": "Budgets are labels per class; every budget is an R1 budget (the dev doc set holds their labelled rows). 'ladder' = every young rung featurised for the run (young_b77, young_b196, young_b255, the 5 and 10 percent rungs); c0y is in the first block. LR everywhere; the Coalesced TM probe at 32 labels on the dimension-matched sets of the registered R1 probe set; MNB and NBSVM on bag of words (A8 item 1).",
+  "arm": [
+   {
+    "sets": [
+     "epoch4.all",
+     "epoch4.dim",
+     "c0y.all",
+     "c0y.dim"
+    ],
+    "lr": [
+     8,
+     32,
+     128,
+     512
+    ],
+    "tm": {
+     "budgets": [
+      32
+     ],
+     "sets": [
+      "epoch4.dim",
+      "c0y.dim"
+     ]
+    }
+   },
+   {
+    "sets": "ladder",
+    "lr": [
+     8,
+     32,
+     128
+    ]
+   }
+  ],
+  "twin": [
+   {
+    "sets": [
+     "epoch4.all",
+     "epoch4.dim"
+    ],
+    "lr": [
+     8,
+     32,
+     128,
+     512
+    ]
+   }
+  ],
+  "common": [
+   {
+    "sets": [
+     "gplus.all",
+     "gplus.dim",
+     "bow",
+     "cluster",
+     "ppmi",
+     "cbow"
+    ],
+    "lr": [
+     8,
+     32,
+     128,
+     512
+    ],
+    "tm": {
+     "budgets": [
+      32
+     ],
+     "sets": [
+      "gplus.dim",
+      "bow",
+      "cluster",
+      "ppmi",
+      "cbow"
+     ]
+    }
+   },
+   {
+    "sets": [
+     "bow"
+    ],
+    "mnb": [
+     8,
+     32,
+     128,
+     512
+    ],
+    "nbsvm": [
+     8,
+     32,
+     128,
+     512
+    ]
+   }
+  ],
+  "rand": [
+   {
+    "sets": [
+     "rand.all",
+     "rand.dim"
+    ],
+    "lr": [
+     8,
+     32,
+     128,
+     512
+    ]
+   }
+  ],
+  "why": "the registered R1 probe set (bank, C0y, G+ in all and dim; LR at 8, 32, 128, 512; TM at 32) for every trained non-twin arm; the young ladder at the control study's budgets 8, 32, 128 (every A8 row is read at 32); the twins with LR at every budget (they enter the A8 label at 32 with both codes); G+ is identical for every masked arm but A6 and every seed (it depends on the prefix, the kind_map and the mode only), so it is computed and probed ONCE in 'common' (identical inputs give identical cells: quality-neutral, A8 item 7). Q_text at the full label pool (A9 item 8) is its own plan (full_budget.plans), fitted on the full doc set before the configuration's confirm stage."
+ },
+ "test_discipline": {
+  "dev_stage": "stage probe on the R1 dev carve (mix64 residues 1 and 2 mod 20 of each train split): every cell's refit model (and TM thermometer edges) is pickled with its dev predictions; the model files' sha256 are logged",
+  "test_stage": "stage confirm runs a PREFLIGHT first and refuses before any access unless: the dev probe run (and for A3, A2 and common the full-pool probe run) and their features runs have exit status 0, no failed check and probe.complete = true; the frozen model files have their logged sha256; the test references (A9 item 10) exist and the SST-2 train file equals its A7 hash; a test file not yet in the local cache (downloaded inside the counted access) is still published by the host with the referenced digest and size (metadata only, fetched in the preflight); the tokenizer and prefix load; every checkpoint loads with the state hash the train run logged and the dev features used; every artefact the codes need exists and loads (gplus_select.npz, random_bank.npz, single_counts.npy, ppmi_svd.npy, the CBOW file, dim_<name>.npy); every stored dev prediction is reproduced by the loaded model; the post-access path itself (confirm_sparse_codes, ConfirmReps, the frozen models) run on the first preflight_dry_run_docs dev documents of every task reproduces their stored dev codes and dev predictions bit for bit (a code or device error of that path costs no access); no failed check before the access. Then ONE counted access per task (tmlm.ssl.confirm.load_confirm -> tmlm.data.evalsets.record_test_access, recorded BEFORE any byte of the set is read; the downloaded bytes verified against the reference before parsing); the frozen models are applied (never refit)",
+  "reaccess": "a second access of a (configuration, task) pair is refused unless --reaccess-reason is given; the reason is written into the access log and the report lists every re-access",
+  "sets": {
+   "agnews": "official test split, fancyzhx/ag_news revision eb185aade064a813bc0b7f42de02595523103ca4, data/test-00000-of-00001.parquet (downloaded inside the counted access if missing)",
+   "trec": "official test split, CogComp/trec revision 65752bf53af25bc935a0dce92fb5b6c930728450, default/test/0000.parquet, coarse labels (6 classes)",
+   "sst2": "the A7 confirm carve: rows i of the SST-2 train file with mix64(i) mod 20 == 0 (checked against carve.confirm.idx_sha256 of docs/notes/preregistration-data-hashes-A7-sst2.json); counted like a test split",
+   "men_test": "data/concept_eval/men/MEN/MEN_dataset_lemma_form.test (sha256 checked against docs/notes/preregistration-data-hashes-A6-men.json), counted once per Q_con configuration, after the dev Q_con of that configuration"
+  },
+  "test_hash_files": "docs/notes/preregistration-data-hashes-A7-<task>-test.json (agnews, trec), written write-once by the testhash stage from the host's metadata before the first counted access (exclusive create; a file created concurrently is re-read and must be equal); every access verifies the downloaded bytes against it",
+  "n_configurations": 28,
+  "preflight_dry_run_docs": 16,
+  "testhash": "stage testhash, run by the chain before any other step: for the AG News and TREC test files the sha256 and size from the Hugging Face file metadata at the pinned revision (huggingface_hub HfApi.get_paths_info, LFS sha256; no content download), written to the write-once docs/notes/preregistration-data-hashes-A7-<task>-test.json; no counted access (checked on the process's own access-log lines); a host without an LFS sha256 for the file is an error, not a fallback",
+  "access_counting": "per (configuration, task): the lines of the test-access log for that pair (tmlm.ssl.confirm.prior_accesses) must grow by exactly one in the stage that reads it; never a run-wide count (other lanes access in parallel). Stages that must make no access (qint, testhash) check the lines carrying their own pid",
+  "locks": "the chain holds an exclusive flock on night/r1_confirm_testaccess.lock for every step that makes counted accesses (confirm, qcon) and a shared one for census, qpred and qint (whose imported stages assert that the run-wide log does not change)",
+  "non_lfs_reference": "git_blob_sha1",
+  "non_lfs_reference_amendment": "docs/13 A10",
+  "non_lfs_reference_note": "A9 item 10 takes the sha256 of each test file from the host's published metadata. The host publishes a sha256 only for files stored in LFS; for a file stored in git it publishes the git blob id (SHA-1 of b'blob <size>' + NUL + content). The opt-in metadata test of tests/test_ssl_r1_confirm.py (2026-09-25 13:42 UTC, test output only, not a results/ log) saw the AG News test file in LFS and the TREC test file (default/test/0000.parquet at the pinned revision) stored in git with no LFS entry. With 'refuse' (A9 as written) the testhash stage writes the AG News reference, fails its TREC check, and no confirm stage passes its preflight. 'git_blob_sha1' makes the published git blob id the TREC reference (verified at every access with the sha256 of the bytes logged), and is accepted only with non_lfs_reference_amendment naming the docs/13 amendment that allows it (check_config refuses a name that is not an amendment heading of docs/13)"
+ },
+ "statistics": {
+  "n_boot": 10000,
+  "seed": 20260925,
+  "ci": 0.95,
+  "unit": "Q_text points (1.0 point = 0.010 of Q_text, the mean accuracy over AG News, SST-2 and TREC-6); one unit = one label draw of one pretraining seed; differences are paired per (seed, draw); seed-independent controls (G+, bag of words) pair by draw",
+  "two_level_bootstrap": "A8 item 1: resample the 3 seeds with replacement, then the 5 label draws within each resampled seed; statistic = mean over seeds of the mean over draws; 95 percent percentile interval over 10,000 resamples (tmlm.ssl.confirm.two_level_bootstrap)",
+  "t": "Student-t interval over the per-seed means (df = 2), reported next to every bootstrap interval",
+  "decides": [
+   "H17.1",
+   "H17.2",
+   "H17.4"
+  ],
+  "reading": "docs/13 A9 item 5: the two-level bootstrap decides 'CI excluding 0' for H17.1, H17.2 and H17.4; the seed-level t interval is reported"
+ },
+ "verdicts": {
+  "split": "test",
+  "probe": "lr",
+  "budget": 32,
+  "code": "all",
+  "code_note": "docs/13 A9 item 2 (docs/12 F26 (2)): the all-clauses code decides H17.1, H17.2, H17.3 and H17.4; the dimension-matched value of every row is printed next to it (report field side_by_side); the A8 label needs both codes as A8 says",
+  "H17.1": {
+   "min_points": 1.0,
+   "comparator": "docs/13 A9 item 4: per seed the control (C0y of the same run or G+) with the higher mean confirmatory Q_text over the draws, fixed before resampling",
+   "stronger_control": "per_seed_mean_confirmatory_q_text"
+  },
+  "H17.2": {
+   "min_points": 2.0,
+   "comparator": "bag of words, LR probe"
+  },
+  "H17.3": {
+   "min_vs_ppmi": 0.0,
+   "min_vs_c0y": 0.05,
+   "rule": "docs/13 A9 item 6: means over the 3 seeds of Q_con(winner) - Q_con(PPMI-SVD) and of Q_con(winner) - Q_con(C0y), Spearman units, confirmatory Q_con = SimLex-999 and WordSim-353 in full and MEN in full (2,000 dev and 1,000 test pairs, the test pairs read through the counted path once per configuration), one common covered pair set; all clauses decides, the dimension-matched word code is reported",
+   "over": "mean_over_seeds"
+  },
+  "H17.4": {
+   "min_points": 1.0,
+   "comparator": "A0 of the same seed"
+  },
+  "H17.11": {
+   "min_points": -2.0,
+   "tm_set": "epoch4.dim",
+   "lr_set": "epoch4.dim",
+   "reported_lr_set": "epoch4.all",
+   "rule": "docs/13 A9 item 3: mean over seeds of Q_text(TM probe, epoch4.dim) - Q_text(LR probe, epoch4.dim) at 32 labels; TM(dim) - LR(all clauses) reported"
+  },
+  "H17.12": {
+   "rule": "Q_int NPMI of the winner's concept groups minus C0y's with the PRIMARY reference of docs/13 A9 item 7 (WikiText-103 train tokens after the 20M-token prefix): point > 0 and two-level bootstrap lo > 0 (seeds, then groups; unpaired inside a seed); the validation reference is reported"
+  },
+  "literal_credit": {
+   "min_points": 1.0,
+   "rule": "A8: winner beats max(young ladder) AND the twin by >= 1.0 point at 32 labels, all-clauses AND dimension-matched codes, every two-level bootstrap interval above 0"
+  },
+  "met_rule": "'at least X points, CI excluding 0' = point estimate >= X and bootstrap lo > 0"
+ },
+ "a8": {
+  "exposure_matched_batch": 196,
+  "young_any_arm": [
+   "A3",
+   "A2",
+   "A0",
+   "A1",
+   "A6"
+  ],
+  "young_any_arm_note": "'best young bank of any arm' = the best (by mean test Q_text at that seed) of the C0y and young rungs of every confirmatory R1 arm at that seed; the twins and A3R are controls, not R1 arms, and are excluded",
+  "rows": [
+   "winner - young_b196 (exposure-matched)",
+   "winner - max(young ladder of the same run, c0y included)",
+   "winner - best young bank of any arm",
+   "winner - twin"
+  ],
+  "rows_without_threshold": [
+   "minus_exposure_matched",
+   "minus_best_young_any_arm"
+  ],
+  "rows_without_threshold_note": "docs/13 A9 item 5: estimates with intervals only, no MET or NOT MET; the ladder and twin rows keep the A8 label rule"
+ },
+ "qcon": {
+  "datasets": {
+   "simlex": {
+    "path": "data/concept_eval/simlex999/SimLex-999/SimLex-999.txt",
+    "parser": "simlex"
+   },
+   "ws353": {
+    "path": "data/concept_eval/wordsim353/combined.csv",
+    "parser": "ws353"
+   }
+  },
+  "men_dev": {
+   "path": "data/concept_eval/men/MEN/MEN_dataset_lemma_form.dev",
+   "use": "the dev Q_con (reported; computed before the MEN test access) and half of MEN in full for the confirmatory Q_con"
+  },
+  "men_test": {
+   "path": "data/concept_eval/men/MEN/MEN_dataset_lemma_form.test",
+   "use": "confirmatory Q_con (H17.3) together with the dev pairs (MEN in full), counted once per Q_con configuration"
+  },
+  "min_occurrences": 50,
+  "max_occurrences": 1000,
+  "checkpoints": [
+   "epoch4",
+   "c0y"
+  ],
+  "word_code": "A7: occurrences of the word in the 20M-token prefix = runs of one space-delimited word (corpus_store word_id) whose BPE-8k tokens equal the tokens of ' ' + word (the form given by the dataset, case kept); at most 1,000 per word, the ones with the smallest mix64(start position); per occurrence all its subtokens hidden and the indicator of every clause firing at ANY of its subtoken positions; occurrences are processed in rounds with at most one hidden occurrence per document, so no occurrence sees another one hidden; counts summed over occurrences; PPMI (tmlm.ssl.concepts weight 'ppmi', smoothing 0.75) with marginals over the evaluated words; cosine",
+  "coverage": "a word is covered with at least 50 occurrences in the prefix (all occurrences counted); one common covered pair set per Q_con: the pairs whose two words are covered, the same for every representation",
+  "baselines": "PPMI-SVD (the common run's token vectors) and CBOW (reported): word vector = mean of its subtoken vectors, cosine",
+  "men_confirm": "dev+test",
+  "reading": "docs/13 A9 item 6",
+  "dim_code": "the word code restricted to the checkpoint's 8,192 dimension-matched clauses (dim_<name>.npy of the dev features run), PPMI over those columns; reported next to the all-clauses code (A9 item 2)"
+ },
+ "qint": {
+  "checkpoints": [
+   "epoch4",
+   "c0y"
+  ],
+  "top_words": 10,
+  "min_count": 5,
+  "min_word_len": 3,
+  "window": 10,
+  "references": {
+   "validation": {
+    "split": "validation"
+   },
+   "train_remainder": {
+    "split": "train_remainder"
+   }
+  },
+  "primary_reference": "train_remainder",
+  "intruder_keep": 5,
+  "intruder_seed": 20260925,
+  "definition": "concept group of clause j (the 8,192 dimension-matched clauses of the bank) = its 10 top words: word-like non-stop tokens (' ' + lower-case ASCII letters, at least 3; stop flag 0) with count O_jc >= 5 in the T1 count table (clause j fires at a counting position of the prefix whose target is c), ranked by PPMI(j, c) (smoothing 0.75); a clause with fewer than 10 such words has no group (the qualifying fraction is reported for both banks); NPMI of a word pair over a 10-token sliding window inside the documents of the reference text (zero co-occurrence: -1); group coherence = mean NPMI of its 45 pairs; Q_int(NPMI) = mean over groups; intruder score = automated word intrusion (5 top words plus one word of another group, detected iff it has the strictly lowest mean NPMI)",
+  "clauses": "dim_matched",
+  "reading": "docs/13 A9 item 7",
+  "reference_note": "docs/13 A9 item 7: the primary NPMI reference is the WikiText-103 train tokens AFTER the 20M-token pretraining prefix (unseen by every bank, disjoint from the count table); the validation split, where only about 2 percent of pairs co-occur, is the secondary reference (reported)"
+ },
+ "random_bank": {
+  "seeds": [
+   1,
+   2,
+   3
+  ],
+  "max_literals": 3,
+  "chunk_positions": 4096,
+  "check_clauses": 2000,
+  "definition": "A8: the same number of clauses (65,536), 1 to 3 position-bound literals drawn with the pretraining text's literal frequencies, no training. Reading: n_lit uniform on {1, 2, 3}; each literal independently: a position uniform over the prefix and a column (offset -8..-1, +1..+8, kind 0..3) uniform among the offsets the clause does not use yet, the literal = the symbol true there (SYM_EDGE outside the document for kind 0; redraw when kind > 0 falls outside); positive exact literals only; features as the banks' count code; dimension-matched = the 8,192 most-firing clauses on the prefix"
+ },
+ "baselines": {
+  "cbow": {
+   "file": "results/20260922T210329Z_M2_baselines_cbow_knn_v8000/cbow_w_in.npy",
+   "dim": 128,
+   "note": "in-house CBOW input vectors (A7 count baseline CBOW-kNN as a representation: text = mean vector)"
+  },
+  "mnb": {
+   "alpha_grid": [
+    0.01,
+    0.1,
+    0.5,
+    1.0
+   ],
+   "input": "bag-of-words counts",
+   "choice": "alpha by stratified 4-fold CV inside the labelled sample, ties to the smaller"
+  },
+  "nbsvm": {
+   "c_grid": [
+    0.01,
+    0.1,
+    1.0,
+    10.0,
+    100.0
+   ],
+   "alpha": 1.0,
+   "beta": 0.25,
+   "max_iter": 10000,
+   "input": "binarised bag of words",
+   "choice": "C by stratified 4-fold CV inside the labelled sample, ties to the smaller; alpha and beta are Wang and Manning's values"
+  },
+  "r1_reference": {
+   "gplus": "results/20260924T212145Z_ssl_r1_features_A0_seed100_exploratory",
+   "ppmi_svd": "results/20260924T223741Z_ssl_r1_baselines/ppmi_svd.npy",
+   "note": "the common stage recomputes G+ and PPMI-SVD and compares them with the R1 artefacts (G+ integer arrays: a failed check if different; PPMI-SVD: max absolute difference reported)"
+  }
+ },
+ "qpred_references": {
+  "values": {
+   "kn5_substitutes_top1": [
+    "results/20260922T180823Z_M2_baselines_ngram_v8000",
+    "kn5_both.validation_subword.top1_visible"
+   ],
+   "cbow_knn_top1": [
+    "results/20260922T210329Z_M2_baselines_cbow_knn_v8000",
+    "cbow_knn.validation_subword.top1_visible"
+   ]
+  },
+  "note": "A7's count baselines 'CBOW-kNN, KN-5 substitutes' as masked predictors on the frozen V 8000 validation subword targets (visible context), read from their M2 logs: trained on the full train split, not the 20M-token prefix, and pretraining-seed independent"
+ },
+ "readings": {
+  "a9": "docs/13 amendment A9 (2026-09-25 12:25 UTC) fixes these readings and this config follows it (check_config refuses a config that disagrees): item 1 winner A3 fixed (winner); item 2 all-clauses code decides H17.1 to H17.4, dimension-matched printed next to every row (verdicts.code); item 3 H17.11 = TM(dim) - LR(dim) (verdicts.H17.11); item 4 max(C0y, G+) per seed on the mean confirmatory Q_text (verdicts.H17.1); item 5 the two-level bootstrap decides H17.1, H17.2, H17.4 and the exposure-matched and best-young rows have no threshold (statistics, a8); item 6 Q_con with MEN in full, mean over seeds (qcon, verdicts.H17.3); item 7 Q_int definition and references (qint); item 8 the full label pool (full_budget); item 9 A3R (extra_arms); item 10 test hash references and one access per (configuration, task) (test_discipline); item 11 the launch condition (the chain waits for the exploratory chains)",
+  "frozen_configuration": "one trained run (arm, seed) with all its checkpoints, 'common', or one random bank; one counted access per (configuration, task), AG News, TREC and the SST-2 confirm carve each counted",
+  "freezing": "the fitted probe models are frozen at the dev stage and applied at the test stage (no refit); A7 fixes no dev-side selection for R1 probes (C is chosen inside the labelled sample), so the dev stage freezes the pipeline and the models",
+  "q_con_word_code": "qcon.word_code (case kept, hashed occurrence sample, union over subtoken positions, rounds, PPMI marginals over the evaluated words)",
+  "q_int_words": "a 'word' of a concept group is a word-like non-stop token (' ' + lower-case ASCII letters, at least 3; stop flag 0), qint.definition; A9 item 7 fixes the rest of the definition",
+  "h17_12_ci": "two-level bootstrap with seeds, then concept groups resampled independently for the winner and C0y (the groups are not paired)",
+  "random_bank": "random_bank.definition (independent literal draws, n_lit uniform)",
+  "young_any_arm": "a8.young_any_arm_note",
+  "sst2_counted": "the SST-2 confirm carve is counted in the test-access log like the test splits",
+  "kn5_cbow": "A7's 'CBOW-kNN, KN-5 substitutes' are read as Q_pred count baselines (masked predictors) from the M2 logs; CBOW mean vectors are added as a Q_text and Q_con baseline",
+  "full_pool_matrices": "full_budget.matrices (an exact, memory-lean assembly of the registered LR input, not an approximation)",
+  "q_int": "no NPMI or Q_int implementation existed in src/ or experiments/ before this driver (grep NPMI, coherence, intruder, E9, SAE-TM: none), so it is implemented here (tmlm.ssl.confirm section 5)"
+ },
+ "controls_config": "experiments/cvtm/configs/ssl_r1_controls.json",
+ "config_arms_config": "experiments/cvtm/configs/ssl_r1_config_arms.json",
+ "r1_config": "experiments/cvtm/configs/ssl_r1_pretext.json",
+ "params_shared_with_r1": [
+  "vocab",
+  "n_clauses",
+  "n_tokens",
+  "epochs",
+  "f1_t",
+  "f2_m",
+  "young_fraction",
+  "dim_matched",
+  "tasks",
+  "budgets",
+  "draws",
+  "folds",
+  "c_grid",
+  "lr_max_iter",
+  "forward_chunk",
+  "tm_budgets",
+  "tm_grid",
+  "tm_epochs",
+  "tm_ppmi_bits",
+  "ppmi",
+  "gplus_chunk_positions",
+  "gplus_feature_chunk"
+ ],
+ "params_equal_controls": [
+  "young_ladder",
+  "twin_overrides",
+  "qpred",
+  "lr_backend",
+  "young_fraction"
+ ],
+ "doc_set_reference": {
+  "rule": "the downstream dev doc set (tokens, document starts, layout and labels) must equal the one of an R1 features run, so label draws, folds and dev rows pair exactly with R1 seed 100",
+  "run": "results/20260924T212145Z_ssl_r1_features_A0_seed100_exploratory"
+ },
+ "params": {
+  "smoke": false,
+  "vocab": 8000,
+  "n_clauses": 65536,
+  "n_tokens": 20000000,
+  "epochs": 4,
+  "f1_t": 0.0001,
+  "f2_m": 2000,
+  "young_fraction": 0.01,
+  "dim_matched": 8192,
+  "tasks": [
+   "agnews",
+   "sst2",
+   "trec"
+  ],
+  "budgets": [
+   8,
+   32,
+   128,
+   512
+  ],
+  "draws": [
+   0,
+   1,
+   2,
+   3,
+   4
+  ],
+  "folds": 4,
+  "c_grid": [
+   0.01,
+   0.1,
+   1.0,
+   10.0,
+   100.0
+  ],
+  "lr_max_iter": 1000,
+  "forward_chunk": 8192,
+  "seeds": [
+   1,
+   2,
+   3
+  ],
+  "young_ladder": {
+   "abs_batches": [
+    77,
+    196,
+    255
+   ],
+   "percent_of_epoch1": [
+    5,
+    10
+   ],
+   "rounding": "round half up of the exact value nb x percent / 100, computed as (nb x percent + 50) // 100 in integers (at least 1); nb = batches of epoch 1 of the arm; an absolute rung beyond nb is skipped",
+   "note": "77 and 196 are the C0y batch counts of A3 and A0 (seed 100), 255 is the last batch before the first sweep (docs/11 5.7, SWEEP_PERIOD 256, oracle N1); for A3 nb = 7,639 gives rungs 382 and 764, for A0 nb = 19,531 gives 977 and 1,953 [derived from the logged epoch-1 target counts]"
+  },
+  "twin_overrides": {
+   "p_ins": 0.0,
+   "p_neg": 0.0,
+   "s_log2": 62
+  },
+  "lr_backend": "cpu",
+  "qpred": {
+   "readout": "docs/11 11.5 T1 stand-alone count-vote read-out (loglin), the H8.1 masked flow of experiments/cvtm_t1_readout.py run_masked applied to a V 8000 R1 bank; its helpers and the reference kernels of experiments/ckm_posthoc_probe.py are imported unchanged; the wrapper exists because run_masked is bound to the V 2000 tiny-LM task",
+   "counting_positions": "every position of the 20M-token training prefix outside the fit documents, only the target hidden (all-zero bitmap, as R1 features and H8.1)",
+   "fit_documents": "prefix documents i (index in the train split) with splitmix64(i XOR 0xC0FFEE) mod 100 == 0 (docs/11 11.6); never counted",
+   "fit_rows": "every position of the fit documents inside the prefix, only the target hidden",
+   "validation": "the frozen V 8000 validation eval set, subword variant (42,213 targets under its frozen hidden mask), the target set of H8.11",
+   "metric": "Q_pred = loglin top-1 (ties toward the lowest class id); also top-5, bits per token, and the bank's own signed-vote top-1 (secondary, argmax of the vote sums, ties toward the lowest id)",
+   "fit_source": "experiments/cvtm/configs/H8_1_masked.json fit.loglin, copied unchanged (checked equal at run time)",
+   "fit": {
+    "optimizer": "scipy L-BFGS-B, mean negative log-likelihood (nats per row), GPU objective and gradient; the objective at the solution is recomputed by the CPU float64 reference (must agree within 1e-6)",
+    "precondition": "empirical_fisher_diagonal_at_init",
+    "maxiter": 1000,
+    "maxfun": 1500,
+    "ftol": 1e-10,
+    "gtol": 1e-06,
+    "maxcor": 30,
+    "alpha_bounds": [
+     -20,
+     20
+    ],
+    "beta0_bounds": [
+     -5,
+     5
+    ],
+    "init": "alpha = 1 / (mean counted fired clauses per fit row) for every group, beta0 = 1"
+   },
+   "checks": {
+    "cross_engine_count_rows": 500,
+    "cross_engine_fit_rows": 200,
+    "validation_api_rows": 200,
+    "validation_bruteforce_rows": 5,
+    "signed_predict_scores_rows": 512
+   },
+   "gpu_pool_limit_gib": 10.5
+  },
+  "diagnostics": {
+   "class_sum_rows": 4096,
+   "class_sum_sample_seed": 6,
+   "class_sum_bin_width": 8,
+   "fired_chunk_rows": 256,
+   "engine": "cpu"
+  },
+  "tm_budgets": [
+   32
+  ],
+  "tm_grid": [
+   {
+    "clauses": 400,
+    "T": 300,
+    "s": 2.0
+   },
+   {
+    "clauses": 400,
+    "T": 300,
+    "s": 6.0
+   }
+  ],
+  "tm_epochs": 10,
+  "tm_ppmi_bits": 8,
+  "ppmi": {
+   "window": 8,
+   "dim": 300,
+   "power": 0.5
+  },
+  "gplus_chunk_positions": 4194304,
+  "gplus_feature_chunk": 8192
+ },
+ "gpu_lock": "shared (train, features, fullfeat, common, randbank, confirm, qpred, qcon, qint); none (testhash, census, probe, report)",
+ "cpu_slots": 1,
+ "memory_guard": "scripts/mem_guard.py --scope group: testhash 4 GiB, train 16, census 8, features 24, fullfeat 24 (common 32), common 24, randbank 24, probe 24 (the full-pool probe of common 48), confirm 24, qpred 24, qcon 24, qint 32, report 8 (set before any measurement; the full-pool sizes are derived from the logged R1 doc set: common G+ about 1.4e9 entries on the full doc set, the AG News pool matrix about 1.2e9 entries, 14 GB in float64 CSR)",
+ "venv": ".venv-tm",
+ "compute_estimate": {
+  "label": "derived from logged wall times of the R1 seed-100 and control-study runs (results/20260924T*_ssl_r1_* and results/20260925T*_ssl_r1c_*: run.json wall_time_s, cells.jsonl wall_s); A2T training, the random-bank probe and every full-pool figure are unverified extrapolations (see full_pool)",
+  "per_run_seconds": {
+   "train": {
+    "A3": 339,
+    "A2": 270,
+    "A0": 860,
+    "A1": 320,
+    "A6": 320,
+    "A3T": 3260,
+    "A2T": "about 2500 (unverified)",
+    "A3R": "about 340 (A3's data lever; unverified, A3 measured 273 to 339)"
+   },
+   "census": 40,
+   "features": {
+    "non-twin (7 checkpoints)": "330 to 470",
+    "twin (epoch4)": "about 2000 (derived: the literal-frozen twin fires densely; the control-study A3T epoch4 features took 1,975 s, results/20260925T100313Z_ssl_r1c_features_A3T_seed100_exploratory/log.txt; A2T unverified)"
+   },
+   "probe": {
+    "non-twin arm": 5500,
+    "twin": 750,
+    "common": 8600,
+    "rand (per seed)": "about 3400 (unverified; the random bank fires about 600 clauses per position, near G+'s density)",
+    "A3R": "about 5500 (the arm plan, as A3; unverified)"
+   },
+   "confirm": {
+    "arm": "about 600 (the preflight now reproduces the dev predictions BEFORE the access; the same work as before, moved)",
+    "common": "about 900",
+    "rand": "about 300"
+   },
+   "qpred": {
+    "per checkpoint": "310 (A3-like) to 610 (A0)",
+    "non-twin (7 checkpoints)": "2200 to 4300",
+    "twin": "at least about 4000 (derived: the control-study A3T Q_pred took 3,375 s for c0y alone, results/20260925T115356Z_ssl_r1c_qpred_A3T_seed100_exploratory/log.txt, and its epoch4 checkpoint was still running about 4,000 s later at 13:56 UTC; unverified)",
+    "A3R": "about 2200 (A3-like, 7 checkpoints; unverified)"
+   },
+   "qcon": "about 300",
+   "qint": "about 900",
+   "common stage": 400,
+   "randbank stage": "about 700 (prefix fire counts measured at about 430 s)",
+   "testhash": "about 10 (two metadata calls; unverified)",
+   "fullfeat": {
+    "arm (epoch4, c0y)": "about 300 (9.6e6 tokens at the logged 0.7e6 to 1.6e6 positions per second, plus prefix fire counts about 35 s per checkpoint and BPE encoding of 189,366 documents; unverified)",
+    "common (G+)": "about 400 (G+ features about 55 s at the logged rate, writing an about 11.5 GB file; unverified)"
+   },
+   "probe_full": {
+    "method": "linear extrapolation in labelled rows of the logged 512-label LR cells of results/20260924T230745Z_ssl_r1_probe_A3_seed100_exploratory, results/20260925T045714Z_ssl_r1_probe_A2_seed100_exploratory and results/20260924T224005Z_ssl_r1_probe_baselines (ratios: AG News 107,965 / 2,048 = 52.7, SST-2 57,168 / 1,024 = 55.8, TREC 4,864 / 2,640 = 1.84); it assumes lbfgs needs as many iterations on the full pool as at 512 labels, which is not verified: at C = 10 and 100 it may need several times more (lr_max_iter 1,000 caps each fit)",
+    "A3 per seed": 3900,
+    "A2 per seed": 3600,
+    "common": 17500,
+    "common_cells": {
+     "gplus.all": 12700,
+     "gplus.dim": 4700,
+     "bow": 170
+    },
+    "memory": "common about 35 to 42 GiB peak (derived: the AG News pool G+ matrix about 14 GB in float64 CSR, a CV fold copy about 10.5 GB and the used-column copy made inside tmlm.ssl.transfer._fit_lr about 10.5 to 14 GB, the dev matrix about 1.6 GB; the doc-set codes, about 11.5 GB, are dropped before each fit), arms under 10 GiB; memory guard 48 GiB"
+   }
+  },
+  "per_lane_hours": {
+   "seed lane (each of 3)": "about 24 or more (21.4 as first estimated, plus about 2.9 for the twins A3T and A2T: features about 2,000 s instead of 300 and Q_pred at least about 4,000 s instead of 400 each; the full-pool part unverified and possibly several times longer)",
+   "common lane": "about 11.2 (6.2 before, plus the common full-pool fullfeat about 0.1 and probe about 4.9; the G+ full-pool probe is the least certain figure, up to about 10 h more if lbfgs needs three times the iterations)",
+   "report": 0.1
+  },
+  "totals_hours": {
+   "GPU-locked steps (shared lock)": "about 30 (26 before, plus per seed A3R train, features, confirm and qpred about 1.0 and fullfeat about 0.2)",
+   "CPU-only steps": "about 46 (30 before, plus per seed A3R census and probe about 1.5 and the full-pool probes about 2.1, plus the common full-pool probe about 4.9)",
+   "sequential": "about 76",
+   "wall with the 4 lanes in parallel": "about 25 to 30 after the exploratory chains finish (the seed lanes bound it, with the twin correction; unverified beyond the logged per-step times)"
+  },
+  "test_accesses": "84 counted accesses of the confirmatory sets (28 configurations x 3 tasks) plus 6 MEN-test accesses (A3 and A2 on 3 seeds): 90 (A9 item 10)"
+ },
+ "a9_update": "2026-09-25, after docs/13 A9 (saved 12:25 UTC) and before any confirmatory output or confirmatory test access: every reading A9 fixes is taken from A9 (check_config refuses a config that disagrees); added the arm A3R (A9 item 9), the full-label-pool rows (A9 item 8), the testhash stage (A9 item 10), MEN in full (A9 item 6), the train-remainder NPMI reference (A9 item 7), the preflight before every counted access and per-(configuration, task) access counting",
+ "extra_arms": {
+  "A3R": {
+   "mode": "masked",
+   "f1": false,
+   "f2": true,
+   "random_kind_map": true,
+   "engine": {},
+   "description": "A3 (F2: at most 2,000 targets per class per epoch) with the random kind_map of A6 (docs/13 A9 item 9)"
+  }
+ },
+ "reported_controls": [
+  "A6",
+  "A3R"
+ ],
+ "full_budget": {
+  "reading": "docs/13 A9 item 8: Q_text at the full label pool for A3 and A2 (epoch 4, C0y, G+, bag of words), draw 0 as in R1, on every confirmatory seed; dev carve first, then the confirmatory set within the same frozen configuration",
+  "arms": [
+   "A2",
+   "A3"
+  ],
+  "configurations": [
+   "A3",
+   "A2",
+   "common"
+  ],
+  "checkpoints": [
+   "epochE",
+   "c0y"
+  ],
+  "draw": 0,
+  "probe": "lr",
+  "plans": {
+   "arm": [
+    "epochE.all",
+    "epochE.dim",
+    "c0y.all",
+    "c0y.dim"
+   ],
+   "common": [
+    "gplus.all",
+    "gplus.dim",
+    "bow"
+   ]
+  },
+  "doc_set": "experiments/ssl_r1_pretext.py doc_set(full=True): every task's dev carve plus its WHOLE label pool (AG News 107,965, SST-2 57,168, TREC 4,864 labelled documents; the pool never holds the dev carve or the SST-2 confirm carve); the dev blocks are checked equal to the R1 dev doc set",
+  "order": "stage fullfeat (codes of the full doc set; dimension-matched columns and state hashes checked equal to the dev features run), stage probe on the fullfeat run (models frozen with their dev predictions), then the configuration's single confirm stage applies these models together with the R1-budget models (one counted access per task); the confirm stage refuses A3, A2 or common without its full-pool probe run",
+  "dim": "both codes (all clauses and dimension-matched) are fitted and printed side by side (A9 item 2)",
+  "matrices": "the LR inputs of the full pool are assembled chunk by chunk of rows (rows_csr), bit-identical to the R1 path SparseDocs.rows().to_csr() (tested, and checked again at run time on TREC before any fit); the doc-set codes are dropped from memory during each fit",
+  "g_plus_note": "G+ is identical for every masked arm and seed, so the G+ and bag-of-words full-pool cells are fitted once in 'common', as the R1-budget cells"
+ },
+ "test_access_lock": "exclusive: confirm, qcon; shared: census, qpred, qint; none: the rest (night/r1_confirm_testaccess.lock, taken before the GPU lock)",
+ "speedups": {
+  "rule": "docs/13 A8 item 7: an exact speedup is used only if it reproduced the registered estimator on logged cells under a rule written before the check (experiments/cvtm/configs/ssl_r1_speedup_verify.json, runs of experiments/ssl_r1_speedup_verify.py). The driver uses an item only when it is enabled AND every run in verified_by is clean (exit 0, no failed check); otherwise the stage runs the original computation of experiments/ssl_r1_controls.py. Recorded in every features and qpred run as speedup.<item>. O4: Q_pred's T1 GPU objective with the per-pair log term precomputed once per count table (src/tmlm/ssl/qpred_fast.py T1GpuG). O10: the features stage's one prefix pass also writes the Q_pred count table and fired lists, which Q_pred loads when they were computed from exactly its inputs (--features-run). O12: Q_pred copies the results of a checkpoint whose state hash equals one already scored in the same run (labelled derived, copied_from). Verification (A3 seed 100 of the control study): a first round (results/20260925T144847Z, T145814Z, T150758Z ssl_r1_speedup_verify_*) passed every rule; the one-pass features code was then rewritten without per-chunk host synchronisation (the first version saved little on a shared GPU: results/20260925T153833Z_ssl_r1_speedup_timing_A3_seed100) and the second round, named below, passed every rule again on the final code; prefix-pass timing of the final code: results/20260925T165742Z_ssl_r1_speedup_timing_A3_seed100.",
+  "O4_t1_gval": {"enabled": true, "verified_by": ["results/20260925T162101Z_ssl_r1_speedup_verify_qpred_A3_seed100", "results/20260925T163055Z_ssl_r1_speedup_verify_crosscheck_A3_seed100"]},
+  "O10_prefix_counts": {"enabled": true, "verified_by": ["results/20260925T161334Z_ssl_r1_speedup_verify_features_A3_seed100", "results/20260925T162101Z_ssl_r1_speedup_verify_qpred_A3_seed100", "results/20260925T163055Z_ssl_r1_speedup_verify_crosscheck_A3_seed100"]},
+  "O12_qpred_dedupe": {"enabled": true, "verified_by": ["results/20260925T162101Z_ssl_r1_speedup_verify_qpred_A3_seed100", "results/20260925T163055Z_ssl_r1_speedup_verify_crosscheck_A3_seed100"]}
+ }
+}

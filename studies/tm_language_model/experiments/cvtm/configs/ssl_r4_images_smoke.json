@@ -1,0 +1,82 @@
+{
+ "experiment": "ssl_r4_images",
+ "docs": "docs/13 A7 (phase R4), docs/12 F23",
+ "prereg": [],
+ "status": "SMOKE of the build task (2,000 images, C = 4,096, 1 epoch, seed 100); never reported; run with --data-root and --hf-cache in a scratch directory",
+ "script": "experiments/ssl_r4_images.py",
+ "venv": ".venv-tm",
+ "gpu_lock": "shared for --stage gpu; none for data, probe, probe_tm, report",
+ "cpu_slots": 1,
+ "params": {
+  "corpus": "fashion_mnist_p4",
+  "n_codes": 1999,
+  "n_stop": 64,
+  "cluster_seed": 1,
+  "cluster_max_iter": 20,
+  "limit_images": 2000,
+  "seeds": [
+   100
+  ],
+  "seed": 100,
+  "f1": true,
+  "f1_t": 0.0001,
+  "epochs": 1,
+  "young_fraction": 0.01,
+  "chunk_images": 500,
+  "engine": {
+   "n_clauses": 4096,
+   "n_bag_k": 3,
+   "batch": 1024
+  },
+  "engine_note": "masked mode, V 2000, every other field the EngineConfig default of docs/11 section 7 (T 64, s 128, l_slots 32, v_slots 64, budget 12, neg_mode binomial, seg_weighting recency, neg_budget 2, cand_tries 1, mask_rate 0.15); n_bag_k 3 because an image document has 56 tokens and bag buckets 3 to 12 cover distances above 64; epochs 4 as the R1 arms",
+  "probe": {
+   "budgets": [
+    10,
+    100
+   ],
+   "draws": 2,
+   "c_grid": [
+    0.01,
+    0.1,
+    1.0,
+    10.0,
+    100.0,
+    1000.0
+   ],
+   "folds": 4,
+   "lr_max_iter": 1000,
+   "bank_codes": {
+    "code_main": "codes_main_final.npz",
+    "code_young": "codes_main_young.npz",
+    "code_randkm": "codes_randkm_final.npz"
+   },
+   "tm_supervised_grid": [
+    {
+     "clauses": 200,
+     "T": 200,
+     "s": 5.0,
+     "epochs": 3
+    }
+   ],
+   "tm_folds": 3,
+   "tm_probe_reps": [
+    "code_main",
+    "code_young",
+    "bovw"
+   ],
+   "tm_probe_k": 1024,
+   "tm_probe_cfg": {
+    "clauses": 200,
+    "T": 200,
+    "s": 5.0,
+    "epochs": 3
+   },
+   "notes": "labels drawn per class from the 50,000 pool images only (patch_tokens.stratified_sample, key (seed, budget, draw)); accuracy on the 10,000 dev images; LR on log(1 + count) rows with unit L2 norm for codes and bovw, standardised dense features for pixels; the supervised tmu Coalesced TM sees the binarised pixels of the same labelled sample"
+  },
+  "verdict": {
+   "budget": 10,
+   "margin": 0.02,
+   "rule": "H17.10 (docs/13 A7): at 10 labels per class, code_main (trained bank) minus the stronger of code_young (C0y) and bovw (bag of visual words per quadrant; stronger = higher mean over all (seed, draw) cells), LR probe, paired over (seed, draw), seeds 1 to 3 x 5 draws: mean >= 2.0 points AND the paired-bootstrap 95 percent interval (10,000 resamples) excludes 0"
+  }
+ }
+}

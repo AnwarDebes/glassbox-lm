@@ -1,0 +1,839 @@
+{
+ "experiment": "ssl_transfer_early",
+ "stage": "classify",
+ "script": "experiments/ssl_transfer_early.py --stage classify",
+ "status": "EXPLORATORY (docs/12 F23), not pre-registered; no docs/13 threshold is tested. Downstream train (label pool) and validation/dev only; every choice (C, TM configuration) by cross-validation inside the labelled sample; the dev split is used only for the reported accuracy.",
+ "fixed_before_any_classification_output": "the feature sets, classifiers, grids, budgets, seeds, verdict roles and verdict rule below were written before any classify stage had produced a cell",
+ "params": {
+  "features_run": "results/20260924T152912Z_ssl_transfer_features_exploratory",
+  "tasks": [
+   "sst2",
+   "agnews",
+   "trec"
+  ],
+  "seeds": [
+   101,
+   102,
+   103
+  ],
+  "k_top": 2048,
+  "cbow_bits": 8,
+  "c_grid": [
+   0.01,
+   0.1,
+   1.0,
+   10.0,
+   100.0,
+   1000.0
+  ],
+  "c_grid_full": [
+   1.0,
+   10.0,
+   100.0
+  ],
+  "lr_max_iter": 500,
+  "lr_folds_small": 5,
+  "lr_folds_large": 3,
+  "folds_small_max_n": 256,
+  "tm_grid": [
+   {
+    "clauses": 400,
+    "T": 300,
+    "s": 2.0
+   },
+   {
+    "clauses": 400,
+    "T": 300,
+    "s": 6.0
+   }
+  ],
+  "tm_epochs": 10,
+  "tm_folds": 3,
+  "wall_cap_s": 10200,
+  "feature_sets": {
+   "cp_e4": "trained CP anchor bank, epoch 4: per-document counts of clause firings over all positions (left contexts)",
+   "cp_e1": "same bank after epoch 1 (training dose-response)",
+   "young": "the young bank (untrained control C0)",
+   "bpe_uni": "bag of BPE-8k unigrams of the text tokens",
+   "bpe_unibi": "bag of BPE-8k unigrams plus adjacent bigrams",
+   "clusters": "bag of exchange-cluster symbols, kind_map levels 1 to 3 (16 + 243 + 2497 columns)",
+   "cbow": "mean in-house CBOW input vector (128 dims) over the text tokens; lr: standardised with labelled-sample moments; tm: 8 thermometer bits per dim at labelled-sample quantiles",
+   ".log1p": "all columns, value log(1 + count), rows scaled to unit L2 norm (lr only)",
+   ".top": "the 2048 columns of highest document frequency over the task's unlabelled pool (ties to the lower id), binary; lr: unit L2 rows; tm: raw bits"
+  },
+  "classifiers": {
+   "lr": "sklearn LogisticRegression (L2, lbfgs, tol 1e-4, max_iter 500); C from c_grid (c_grid_full for the full budget) by stratified k-fold CV accuracy on the labelled sample, k = 5 for n <= 256 else 3 (ties to the smaller C); refit on the whole sample",
+   "tm": "tmu TMClassifier, CPU, weighted clauses, 10 epochs; configuration from tm_grid by stratified 3-fold CV accuracy on the labelled sample (ties to the first); refit on the whole sample"
+  },
+  "roles": {
+   "lr": {
+    "classifier": "lr",
+    "verdict": true,
+    "trained": "cp_e4.log1p",
+    "trained_e1": "cp_e1.log1p",
+    "young": "young.log1p",
+    "bag": [
+     "bpe_uni.log1p",
+     "bpe_unibi.log1p"
+    ]
+   },
+   "tm": {
+    "classifier": "tm",
+    "verdict": true,
+    "trained": "cp_e4.top",
+    "trained_e1": "cp_e1.top",
+    "young": "young.top",
+    "bag": [
+     "bpe_uni.top",
+     "bpe_unibi.top"
+    ]
+   },
+   "lr_top": {
+    "classifier": "lr",
+    "verdict": false,
+    "trained": "cp_e4.top",
+    "trained_e1": "cp_e1.top",
+    "young": "young.top",
+    "bag": [
+     "bpe_uni.top",
+     "bpe_unibi.top"
+    ]
+   }
+  },
+  "verdict_tasks": [
+   "sst2",
+   "agnews"
+  ],
+  "verdict_budgets": [
+   256,
+   1024
+  ],
+  "verdict_margin": 0.02,
+  "verdict_rule": "GO if, under at least one verdict role (lr: all-column clause counts; tm: top-2048 DF binary), for BOTH sst2 and agnews at BOTH 256 and 1024 labels, trained (cp_e4) minus the stronger bag of tokens AND trained minus young are each >= 2 points in mean over seeds with the Student-t 95 percent interval over the 3 seeds above 0; NO-GO if trained minus young has its interval above 0 in no cell of any verdict role (all tasks and budgets run); GREY otherwise",
+  "plan": [
+   {
+    "task": "sst2",
+    "budgets": [
+     256,
+     1024
+    ],
+    "classifier": "lr",
+    "features": [
+     "bpe_uni.log1p",
+     "bpe_unibi.log1p",
+     "clusters.log1p",
+     "cbow",
+     "bpe_uni.top",
+     "bpe_unibi.top"
+    ],
+    "note": "verdict budgets, baselines"
+   },
+   {
+    "task": "agnews",
+    "budgets": [
+     256,
+     1024
+    ],
+    "classifier": "lr",
+    "features": [
+     "bpe_uni.log1p",
+     "bpe_unibi.log1p",
+     "clusters.log1p",
+     "cbow",
+     "bpe_uni.top",
+     "bpe_unibi.top"
+    ],
+    "note": "verdict budgets, baselines"
+   },
+   {
+    "task": "sst2",
+    "budgets": [
+     256,
+     1024
+    ],
+    "classifier": "tm",
+    "features": [
+     "bpe_uni.top",
+     "bpe_unibi.top",
+     "clusters.top",
+     "cbow"
+    ],
+    "note": "verdict budgets, baselines"
+   },
+   {
+    "task": "agnews",
+    "budgets": [
+     256,
+     1024
+    ],
+    "classifier": "tm",
+    "features": [
+     "bpe_uni.top",
+     "bpe_unibi.top",
+     "clusters.top",
+     "cbow"
+    ],
+    "note": "verdict budgets, baselines"
+   },
+   {
+    "task": "sst2",
+    "budgets": [
+     256,
+     1024
+    ],
+    "classifier": "lr",
+    "features": [
+     "cp_e4.log1p",
+     "young.log1p",
+     "cp_e1.log1p",
+     "cp_e4.top",
+     "young.top",
+     "cp_e1.top"
+    ],
+    "note": "verdict budgets, banks"
+   },
+   {
+    "task": "agnews",
+    "budgets": [
+     256,
+     1024
+    ],
+    "classifier": "lr",
+    "features": [
+     "cp_e4.log1p",
+     "young.log1p",
+     "cp_e1.log1p",
+     "cp_e4.top",
+     "young.top",
+     "cp_e1.top"
+    ],
+    "note": "verdict budgets, banks"
+   },
+   {
+    "task": "sst2",
+    "budgets": [
+     256,
+     1024
+    ],
+    "classifier": "tm",
+    "features": [
+     "cp_e4.top",
+     "young.top",
+     "cp_e1.top"
+    ],
+    "note": "verdict budgets, banks"
+   },
+   {
+    "task": "agnews",
+    "budgets": [
+     256,
+     1024
+    ],
+    "classifier": "tm",
+    "features": [
+     "cp_e4.top",
+     "young.top",
+     "cp_e1.top"
+    ],
+    "note": "verdict budgets, banks"
+   },
+   {
+    "task": "sst2",
+    "budgets": [
+     64
+    ],
+    "classifier": "lr",
+    "features": [
+     "bpe_uni.log1p",
+     "bpe_unibi.log1p",
+     "clusters.log1p",
+     "cbow",
+     "bpe_uni.top",
+     "bpe_unibi.top"
+    ],
+    "note": "baselines"
+   },
+   {
+    "task": "sst2",
+    "budgets": [
+     64
+    ],
+    "classifier": "tm",
+    "features": [
+     "bpe_uni.top",
+     "bpe_unibi.top",
+     "clusters.top",
+     "cbow"
+    ],
+    "note": "baselines"
+   },
+   {
+    "task": "agnews",
+    "budgets": [
+     64
+    ],
+    "classifier": "lr",
+    "features": [
+     "bpe_uni.log1p",
+     "bpe_unibi.log1p",
+     "clusters.log1p",
+     "cbow",
+     "bpe_uni.top",
+     "bpe_unibi.top"
+    ],
+    "note": "baselines"
+   },
+   {
+    "task": "agnews",
+    "budgets": [
+     64
+    ],
+    "classifier": "tm",
+    "features": [
+     "bpe_uni.top",
+     "bpe_unibi.top",
+     "clusters.top",
+     "cbow"
+    ],
+    "note": "baselines"
+   },
+   {
+    "task": "trec",
+    "budgets": [
+     64,
+     256,
+     1024,
+     4096
+    ],
+    "classifier": "lr",
+    "features": [
+     "bpe_uni.log1p",
+     "bpe_unibi.log1p",
+     "clusters.log1p",
+     "cbow",
+     "bpe_uni.top",
+     "bpe_unibi.top"
+    ],
+    "note": "baselines"
+   },
+   {
+    "task": "trec",
+    "budgets": [
+     64,
+     256,
+     1024
+    ],
+    "classifier": "tm",
+    "features": [
+     "bpe_uni.top",
+     "bpe_unibi.top",
+     "clusters.top",
+     "cbow"
+    ],
+    "note": "baselines"
+   },
+   {
+    "task": "sst2",
+    "budgets": [
+     4096
+    ],
+    "classifier": "lr",
+    "features": [
+     "bpe_uni.log1p",
+     "bpe_unibi.log1p",
+     "clusters.log1p",
+     "cbow",
+     "bpe_uni.top",
+     "bpe_unibi.top"
+    ],
+    "note": "baselines"
+   },
+   {
+    "task": "agnews",
+    "budgets": [
+     4096
+    ],
+    "classifier": "lr",
+    "features": [
+     "bpe_uni.log1p",
+     "bpe_unibi.log1p",
+     "clusters.log1p",
+     "cbow",
+     "bpe_uni.top",
+     "bpe_unibi.top"
+    ],
+    "note": "baselines"
+   },
+   {
+    "task": "sst2",
+    "budgets": [
+     4096
+    ],
+    "classifier": "tm",
+    "features": [
+     "bpe_uni.top",
+     "bpe_unibi.top",
+     "clusters.top",
+     "cbow"
+    ],
+    "note": "baselines"
+   },
+   {
+    "task": "agnews",
+    "budgets": [
+     4096
+    ],
+    "classifier": "tm",
+    "features": [
+     "bpe_uni.top",
+     "bpe_unibi.top",
+     "clusters.top",
+     "cbow"
+    ],
+    "note": "baselines"
+   },
+   {
+    "task": "trec",
+    "budgets": [
+     4096
+    ],
+    "classifier": "tm",
+    "features": [
+     "bpe_uni.top",
+     "bpe_unibi.top",
+     "clusters.top",
+     "cbow"
+    ],
+    "note": "baselines"
+   },
+   {
+    "task": "sst2",
+    "budgets": [
+     "full"
+    ],
+    "classifier": "lr",
+    "features": [
+     "bpe_uni.log1p",
+     "bpe_unibi.log1p",
+     "clusters.log1p",
+     "cbow",
+     "bpe_uni.top",
+     "bpe_unibi.top"
+    ],
+    "seeds": [
+     101
+    ],
+    "note": "baselines; full = the whole pool, identical for every seed, so one seed"
+   },
+   {
+    "task": "agnews",
+    "budgets": [
+     "full"
+    ],
+    "classifier": "lr",
+    "features": [
+     "bpe_uni.log1p",
+     "bpe_unibi.log1p",
+     "clusters.log1p",
+     "cbow",
+     "bpe_uni.top",
+     "bpe_unibi.top"
+    ],
+    "seeds": [
+     101
+    ],
+    "note": "baselines; full = the whole pool, identical for every seed, so one seed"
+   },
+   {
+    "task": "trec",
+    "budgets": [
+     "full"
+    ],
+    "classifier": "lr",
+    "features": [
+     "bpe_uni.log1p",
+     "bpe_unibi.log1p",
+     "clusters.log1p",
+     "cbow",
+     "bpe_uni.top",
+     "bpe_unibi.top"
+    ],
+    "seeds": [
+     101
+    ],
+    "note": "baselines; full = the whole pool, identical for every seed, so one seed"
+   },
+   {
+    "task": "trec",
+    "budgets": [
+     "full"
+    ],
+    "classifier": "tm",
+    "features": [
+     "bpe_uni.top",
+     "bpe_unibi.top",
+     "clusters.top",
+     "cbow"
+    ],
+    "seeds": [
+     101
+    ],
+    "note": "baselines; full, one seed"
+   },
+   {
+    "task": "sst2",
+    "budgets": [
+     "full"
+    ],
+    "classifier": "tm",
+    "features": [
+     "bpe_uni.top",
+     "bpe_unibi.top",
+     "clusters.top",
+     "cbow"
+    ],
+    "seeds": [
+     101
+    ],
+    "note": "baselines; full, one seed"
+   },
+   {
+    "task": "agnews",
+    "budgets": [
+     "full"
+    ],
+    "classifier": "tm",
+    "features": [
+     "bpe_uni.top",
+     "bpe_unibi.top",
+     "clusters.top",
+     "cbow"
+    ],
+    "seeds": [
+     101
+    ],
+    "note": "baselines; full, one seed"
+   },
+   {
+    "task": "sst2",
+    "budgets": [
+     64
+    ],
+    "classifier": "lr",
+    "features": [
+     "cp_e4.log1p",
+     "young.log1p",
+     "cp_e1.log1p",
+     "cp_e4.top",
+     "young.top",
+     "cp_e1.top"
+    ],
+    "note": "banks"
+   },
+   {
+    "task": "sst2",
+    "budgets": [
+     64
+    ],
+    "classifier": "tm",
+    "features": [
+     "cp_e4.top",
+     "young.top",
+     "cp_e1.top"
+    ],
+    "note": "banks"
+   },
+   {
+    "task": "agnews",
+    "budgets": [
+     64
+    ],
+    "classifier": "lr",
+    "features": [
+     "cp_e4.log1p",
+     "young.log1p",
+     "cp_e1.log1p",
+     "cp_e4.top",
+     "young.top",
+     "cp_e1.top"
+    ],
+    "note": "banks"
+   },
+   {
+    "task": "agnews",
+    "budgets": [
+     64
+    ],
+    "classifier": "tm",
+    "features": [
+     "cp_e4.top",
+     "young.top",
+     "cp_e1.top"
+    ],
+    "note": "banks"
+   },
+   {
+    "task": "trec",
+    "budgets": [
+     64,
+     256,
+     1024,
+     4096
+    ],
+    "classifier": "lr",
+    "features": [
+     "cp_e4.log1p",
+     "young.log1p",
+     "cp_e1.log1p",
+     "cp_e4.top",
+     "young.top",
+     "cp_e1.top"
+    ],
+    "note": "banks"
+   },
+   {
+    "task": "trec",
+    "budgets": [
+     64,
+     256,
+     1024
+    ],
+    "classifier": "tm",
+    "features": [
+     "cp_e4.top",
+     "young.top",
+     "cp_e1.top"
+    ],
+    "note": "banks"
+   },
+   {
+    "task": "sst2",
+    "budgets": [
+     4096
+    ],
+    "classifier": "lr",
+    "features": [
+     "cp_e4.log1p",
+     "young.log1p",
+     "cp_e1.log1p",
+     "cp_e4.top",
+     "young.top",
+     "cp_e1.top"
+    ],
+    "note": "banks"
+   },
+   {
+    "task": "agnews",
+    "budgets": [
+     4096
+    ],
+    "classifier": "lr",
+    "features": [
+     "cp_e4.log1p",
+     "young.log1p",
+     "cp_e1.log1p",
+     "cp_e4.top",
+     "young.top",
+     "cp_e1.top"
+    ],
+    "note": "banks"
+   },
+   {
+    "task": "sst2",
+    "budgets": [
+     4096
+    ],
+    "classifier": "tm",
+    "features": [
+     "cp_e4.top",
+     "young.top",
+     "cp_e1.top"
+    ],
+    "note": "banks"
+   },
+   {
+    "task": "agnews",
+    "budgets": [
+     4096
+    ],
+    "classifier": "tm",
+    "features": [
+     "cp_e4.top",
+     "young.top",
+     "cp_e1.top"
+    ],
+    "note": "banks"
+   },
+   {
+    "task": "trec",
+    "budgets": [
+     4096
+    ],
+    "classifier": "tm",
+    "features": [
+     "cp_e4.top",
+     "young.top",
+     "cp_e1.top"
+    ],
+    "note": "banks"
+   },
+   {
+    "task": "sst2",
+    "budgets": [
+     "full"
+    ],
+    "classifier": "lr",
+    "features": [
+     "cp_e4.log1p",
+     "young.log1p",
+     "cp_e1.log1p",
+     "cp_e4.top",
+     "young.top",
+     "cp_e1.top"
+    ],
+    "seeds": [
+     101
+    ],
+    "note": "banks; full = the whole pool, identical for every seed, so one seed"
+   },
+   {
+    "task": "agnews",
+    "budgets": [
+     "full"
+    ],
+    "classifier": "lr",
+    "features": [
+     "cp_e4.log1p",
+     "young.log1p",
+     "cp_e1.log1p",
+     "cp_e4.top",
+     "young.top",
+     "cp_e1.top"
+    ],
+    "seeds": [
+     101
+    ],
+    "note": "banks; full = the whole pool, identical for every seed, so one seed"
+   },
+   {
+    "task": "trec",
+    "budgets": [
+     "full"
+    ],
+    "classifier": "lr",
+    "features": [
+     "cp_e4.log1p",
+     "young.log1p",
+     "cp_e1.log1p",
+     "cp_e4.top",
+     "young.top",
+     "cp_e1.top"
+    ],
+    "seeds": [
+     101
+    ],
+    "note": "banks; full = the whole pool, identical for every seed, so one seed"
+   },
+   {
+    "task": "trec",
+    "budgets": [
+     "full"
+    ],
+    "classifier": "tm",
+    "features": [
+     "cp_e4.top",
+     "young.top",
+     "cp_e1.top"
+    ],
+    "seeds": [
+     101
+    ],
+    "note": "banks; full, one seed"
+   },
+   {
+    "task": "sst2",
+    "budgets": [
+     "full"
+    ],
+    "classifier": "tm",
+    "features": [
+     "cp_e4.top",
+     "young.top",
+     "cp_e1.top"
+    ],
+    "seeds": [
+     101
+    ],
+    "note": "banks; full, one seed"
+   },
+   {
+    "task": "agnews",
+    "budgets": [
+     "full"
+    ],
+    "classifier": "tm",
+    "features": [
+     "cp_e4.top",
+     "young.top",
+     "cp_e1.top"
+    ],
+    "seeds": [
+     101
+    ],
+    "note": "banks; full, one seed"
+   }
+  ],
+  "plan_index": {
+   "0": "sst2 [256, 1024] lr verdict budgets, baselines",
+   "1": "agnews [256, 1024] lr verdict budgets, baselines",
+   "2": "sst2 [256, 1024] tm verdict budgets, baselines",
+   "3": "agnews [256, 1024] tm verdict budgets, baselines",
+   "4": "sst2 [256, 1024] lr verdict budgets, banks",
+   "5": "agnews [256, 1024] lr verdict budgets, banks",
+   "6": "sst2 [256, 1024] tm verdict budgets, banks",
+   "7": "agnews [256, 1024] tm verdict budgets, banks",
+   "8": "sst2 [64] lr baselines",
+   "9": "sst2 [64] tm baselines",
+   "10": "agnews [64] lr baselines",
+   "11": "agnews [64] tm baselines",
+   "12": "trec [64, 256, 1024, 4096] lr baselines",
+   "13": "trec [64, 256, 1024] tm baselines",
+   "14": "sst2 [4096] lr baselines",
+   "15": "agnews [4096] lr baselines",
+   "16": "sst2 [4096] tm baselines",
+   "17": "agnews [4096] tm baselines",
+   "18": "trec [4096] tm baselines",
+   "19": "sst2 ['full'] lr baselines; full = the whole pool, identical for every seed, so one seed",
+   "20": "agnews ['full'] lr baselines; full = the whole pool, identical for every seed, so one seed",
+   "21": "trec ['full'] lr baselines; full = the whole pool, identical for every seed, so one seed",
+   "22": "trec ['full'] tm baselines; full, one seed",
+   "23": "sst2 ['full'] tm baselines; full, one seed",
+   "24": "agnews ['full'] tm baselines; full, one seed",
+   "25": "sst2 [64] lr banks",
+   "26": "sst2 [64] tm banks",
+   "27": "agnews [64] lr banks",
+   "28": "agnews [64] tm banks",
+   "29": "trec [64, 256, 1024, 4096] lr banks",
+   "30": "trec [64, 256, 1024] tm banks",
+   "31": "sst2 [4096] lr banks",
+   "32": "agnews [4096] lr banks",
+   "33": "sst2 [4096] tm banks",
+   "34": "agnews [4096] tm banks",
+   "35": "trec [4096] tm banks",
+   "36": "sst2 ['full'] lr banks; full = the whole pool, identical for every seed, so one seed",
+   "37": "agnews ['full'] lr banks; full = the whole pool, identical for every seed, so one seed",
+   "38": "trec ['full'] lr banks; full = the whole pool, identical for every seed, so one seed",
+   "39": "trec ['full'] tm banks; full, one seed",
+   "40": "sst2 ['full'] tm banks; full, one seed",
+   "41": "agnews ['full'] tm banks; full, one seed"
+  },
+  "deadline_utc": "2026-09-24T18:48:00Z"
+ },
+ "gpu_lock": "none",
+ "cpu_slots": 1,
+ "venv": ".venv-tm",
+ "amendments_before_the_banks_run": [
+  "2026-09-24 ~16:00 UTC, after the baselines run (results/20260924T154753Z_ssl_transfer_classify_baselines_exploratory) had started and before the banks run started: (1) params.deadline_utc added, an operational stop time (no method change); (2) src/tmlm/ssl/transfer.py _fit_lr now fits sparse inputs on the columns used by the training rows only: the same L2 model (unused columns have optimal weight exactly 0; test_lr_column_restriction_is_the_same_model), at a cost set by the used columns; the report re-runs sample baseline cells with the new code and checks identical predictions",
+  "2026-09-24 16:30 UTC, before the banks run started: deadline_utc moved from 18:35 to 18:48 UTC (the 4-hour task budget started at about 15:03 UTC); operational only"
+ ]
+}

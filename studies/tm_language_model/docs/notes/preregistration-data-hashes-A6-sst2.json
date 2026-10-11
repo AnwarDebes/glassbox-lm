@@ -1,0 +1,48 @@
+{
+ "files": {
+  "sst2/train-00000-of-00001.parquet": {
+   "bytes": 3110468,
+   "hub_lfs_sha256": "66a253e67968acfabcbe49dbe9da964b42ac1c851c40ab760e8c8942efdb3229",
+   "hub_lfs_sha256_equal": true,
+   "sha256": "66a253e67968acfabcbe49dbe9da964b42ac1c851c40ab760e8c8942efdb3229",
+   "split": "train"
+  },
+  "sst2/validation-00000-of-00001.parquet": {
+   "bytes": 72819,
+   "hub_lfs_sha256": "a1371f3b3a7b0bcefa8388799a9359dc3ce76c349cc0079507a7991364fd2a9b",
+   "hub_lfs_sha256_equal": true,
+   "sha256": "a1371f3b3a7b0bcefa8388799a9359dc3ce76c349cc0079507a7991364fd2a9b",
+   "split": "validation"
+  }
+ },
+ "label_column": "label",
+ "n_classes": 2,
+ "preprocessing": "src/tmlm/ssl/features.py doc_text: wikitext_style (as tmlm.cvtm.crtm.wikitext_style) plus ' \\n' (END token), BPE 8000 of data/tokenizers/bpe_8000",
+ "purpose": "EXPLORATORY early transfer test (docs/12 F23): downstream data hashed before any use; train and validation/dev only, no test split downloaded",
+ "source": {
+  "access": "huggingface_hub.hf_hub_download of the named files only into data/hf_cache/hub, read with datasets.Dataset.from_parquet",
+  "license_dataset_card": "other (GLUE card: 'We refer users to the original licenses accompanying each dataset')",
+  "repo": "nyu-mll/glue",
+  "repo_type": "dataset",
+  "revision": "bcdcba79d07bc864c1c254ccfcedcce55bcc9a8c"
+ },
+ "splits": {
+  "dev": {
+   "n": 872,
+   "source": "validation split",
+   "source_rows_sha256": "0f69fb2244d96d009a62fe740582122699d319ad43841c1d535f9f33fed97801"
+  },
+  "dev_rule": "the validation split of the file as is",
+  "pool": {
+   "n": 67349,
+   "source_rows_sha256": "7c61045b75551892be9f61417f8a3f2df907177bc4e92827b78e604a9dc64049"
+  },
+  "row_index_format": "int64 little endian, ascending"
+ },
+ "text_columns": [
+  "sentence"
+ ],
+ "tokenizer_sha256": "a2a13a4e2888d17060f6779a3ca40a0f90a670ffb1d3a015441bf30a87de6b80",
+ "written_by": "experiments/ssl_transfer_early.py --stage data; write-once, never edited",
+ "written_utc": "2026-09-24T15:12:06Z"
+}

@@ -1,0 +1,47 @@
+{
+  "experiment": "tiny_lm",
+  "docs": "docs/04",
+  "milestone": "M3",
+  "lane": 1,
+  "status": "planned",
+  "prereg": [
+    "H1.4"
+  ],
+  "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "script": "experiments/m3_tiny_lm.py",
+  "venv": ".venv-tm",
+  "gpu_lock": "shared",
+  "params": {
+    "tokens": 5000000,
+    "baselines": [
+      "left_bigram",
+      "count_probe"
+    ],
+    "epoch_budget_rule": "validation plateau, written to docs/13 amendment A2",
+    "epochs": 3,
+    "evalset": "wikitext103 validation subword, frozen (docs/13 section 4)",
+    "purpose": "KB2 diagnosis run (docs/08): the focused-negative rule R3 suppresses frequent classes; exploratory seed 101, reported as diagnosis, not as a result",
+    "defaults_note": "engine values spelled out on 2026-09-22 when the text-tuned defaults (docs/12 F17) replaced the ones this config's logged runs used"
+  },
+  "engine": {
+    "mode": "masked",
+    "vocab": 2000,
+    "n_clauses": 65536,
+    "batch": 1024,
+    "n_bag_k": 2,
+    "k_neg": 0,
+    "s": 32,
+    "v_slots": 16,
+    "k_cover": 2,
+    "seed_cap": 4,
+    "rho_seed": 0.25,
+    "seg_weighting": "uniform",
+    "neg_mode": "focused"
+  }
+}

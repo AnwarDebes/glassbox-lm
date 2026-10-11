@@ -1,0 +1,18 @@
+{
+  "experiment": "ssl_transfer_early",
+  "stage": "data",
+  "script": "experiments/ssl_transfer_early.py --stage data",
+  "status": "EXPLORATORY (docs/12 F23), not pre-registered; no docs/13 threshold is tested. Downstream train and validation/dev splits only: no downstream test file is downloaded; the WikiText-103 test split is never loaded.",
+  "purpose": "download the pinned downstream files (SST-2 of GLUE: train, validation; AG News: train; TREC: train), hash them against the hub LFS oid, carve dev splits (AG News 7,600 and TREC 500, stratified, seeded) out of train, and write docs/notes/preregistration-data-hashes-A6-<dataset>.json once",
+  "params": {
+    "tasks": {
+      "sst2": {"repo": "nyu-mll/glue", "revision": "bcdcba79d07bc864c1c254ccfcedcce55bcc9a8c", "files": ["sst2/train-00000-of-00001.parquet", "sst2/validation-00000-of-00001.parquet"], "dev": "validation split (872)"},
+      "agnews": {"repo": "fancyzhx/ag_news", "revision": "eb185aade064a813bc0b7f42de02595523103ca4", "files": ["data/train-00000-of-00001.parquet"], "dev": "7,600 carved from train (the dataset has no validation split)"},
+      "trec": {"repo": "CogComp/trec", "revision": "65752bf53af25bc935a0dce92fb5b6c930728450", "files": ["default/train/0000.parquet"], "dev": "500 carved from train (coarse labels, 6 classes; no validation split)"}
+    },
+    "cache": "data/hf_cache/hub"
+  },
+  "gpu_lock": "none",
+  "cpu_slots": 1,
+  "venv": ".venv-tm"
+}

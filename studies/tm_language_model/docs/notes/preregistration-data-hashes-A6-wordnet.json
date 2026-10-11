@@ -1,0 +1,15 @@
+{
+ "dataset": "WordNet 3.0 as packaged by nltk_data (corpora/wordnet.zip)",
+ "files": {
+  "data/concept_eval/nltk_data/corpora/wordnet.zip": {
+   "bytes": 10775600,
+   "sha256": "cbda5ea6eef7f36a97a43d4a75f85e07fccbb4f23657d27b4ccbc93e2646ab59"
+  }
+ },
+ "licence": "WordNet 3.0 license (Princeton University; permissive, attribution and disclaimer; text in the LICENSE file inside the zip)",
+ "provenance_check": "re-downloaded 2026-09-24 about 15:05 UTC: identical sha256 [measured]",
+ "source": "https://raw.githubusercontent.com/nltk/nltk_data/gh-pages/packages/corpora/wordnet.zip",
+ "splits": "not a benchmark split: used as a label source for concept purity (lexicographer file = supersense, synsets)",
+ "used_by": "experiments/ssl_concepts_early.py (exploratory, docs/12 F23)",
+ "written": "2026-09-24, once, before any evaluation run read the scores (write-once: never edit)"
+}

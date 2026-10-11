@@ -1,0 +1,20 @@
+{
+  "experiment": "ssl_r1_speedup_timing",
+  "status": "MEASUREMENT ONLY (no pass rule; nothing is adopted or rejected by it): the like-for-like wall time of the prefix work that the one-pass speedup O10 replaces. The correctness of O10 is decided by experiments/cvtm/configs/ssl_r1_speedup_verify.json. Written 2026-09-25 after the verification run V2 (results/20260925T144847Z_ssl_r1_speedup_verify_features_A3_seed100) showed its one pass at 289.7 s against the reference fire-count pass at 53.8 s while the unchanged dev-set feature pass of the same run was also about 7 times slower than the reference (16.6 s against 2.3 s): the GPU was shared by five to six jobs, so the two runs cannot be compared.",
+  "script": "experiments/ssl_r1_speedup_timing.py",
+  "controls_config": "experiments/cvtm/configs/ssl_r1_controls.json",
+  "references": {
+    "train_run": "results/20260925T072256Z_ssl_r1c_train_A3_seed100_exploratory"
+  },
+  "checkpoints": [
+    "epoch4",
+    "c0y"
+  ],
+  "repeats": 2,
+  "method": "one process, one CUDA engine per checkpoint on the arm-table prefix; per repeat, in this order: the registered ssl_r1_pretext.fire_counts (the features stage's prefix pass), the registered ssl_r1_controls.count_table over the counting positions and fit_rows_fired over the fit positions (Q_pred's prefix work), then qpred_fast.prefix_pass (the one pass that does both); wall seconds each; medians over the repeats. Saving per checkpoint = (fire_counts + count_table + fit_rows) - one_pass. Output identity of the one pass against the registered outputs is recorded as information (the verification runs decide it). The GPU is shared with other jobs under the shared lock: the spread between repeats is reported.",
+  "gpu_lock": "shared",
+  "cpu_slots": 1,
+  "memory_guard": "scripts/mem_guard.py --scope group 24 GiB",
+  "venv": ".venv-tm",
+  "history": "First run results/20260925T153833Z_ssl_r1_speedup_timing_A3_seed100 measured the FIRST prefix_pass (four host synchronisations per chunk): epoch4, two repeats, fire_counts 136.0 and 137.3 s, count_table 135.1 and 136.2 s, fit rows 2.2 and 2.2 s, one pass 251.5 and 254.7 s (its log.txt); it was stopped (SIGTERM, exit 143) before c0y because prefix_pass was then rewritten without per-chunk synchronisation (one kernel launch per chunk; fit and check rows by the registered fit_rows_fired) and re-verified under the unchanged rules of ssl_r1_speedup_verify.json. Later runs of this config measure the rewritten prefix_pass."
+}

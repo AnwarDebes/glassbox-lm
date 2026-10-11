@@ -1,0 +1,22 @@
+{
+  "experiment": "cvtm_GX_verdicts",
+  "status": "Verdicts of lane GX, computed from finished logged runs and the frozen cache: docs/13 A3 H8.5 (confirmatory) and H8.6 (placement, no threshold); docs/13 A4 H9.7 pilot (exploratory, seed 100) and gate G1 frame. CPU only; no GPU; validation split only; the test split is never loaded.",
+  "prereg": ["H8.5", "H8.6", "H9.7"],
+  "gate": "G1 frame",
+  "script": "experiments/cvtm_energy.py",
+  "mode": "verdict",
+  "venv": ".venv-tm",
+  "configs": {
+    "H8_5": "experiments/cvtm/configs/H8_5_energy.json",
+    "H9_7": "experiments/cvtm/configs/H9_7_tuned_pilot.json"
+  },
+  "cache_dir": "results/20260924T085728Z_cvtm_cache_build/cache",
+  "inputs": "--fit-energy, --matched, --matched-rerun (only when the H8.5 rule triggered it; checked), --t600, --tuned-lrsel, --tuned-600: run directories; every run must have exit status 0; the energy runs must carry gpu_lock_mode exclusive",
+  "bootstrap": {"unit": "validation document", "n_documents": 60, "resamples": 2000, "seed": [20260924, 1106, 1], "function": "tmlm.cvtm.protocol.bootstrap_bpb (paired: per-document bits of the CVTM-core from cache/validation/core_p_gold.npy minus the transformer's from its per-token file)", "label": "derived"},
+  "rules": {
+    "H8.5": "see experiments/cvtm/configs/H8_5_energy.json verdict.H8.5",
+    "H8.6": "see experiments/cvtm/configs/H8_5_energy.json verdict.H8.6",
+    "G1 frame": "see experiments/cvtm/configs/H9_7_tuned_pilot.json gate_G1_frame"
+  },
+  "launch": "scripts/cpu_slot.sh 1 -- scripts/run_logged.py --name cvtm_GX_verdicts --config experiments/cvtm/configs/GX_verdicts.json -- .venv-tm/bin/python -u experiments/cvtm_energy.py --mode verdict --config experiments/cvtm/configs/GX_verdicts.json --fit-energy results/<...> --matched results/<...> [--matched-rerun results/<...>] --t600 results/<...> --tuned-lrsel results/<...> --tuned-600 results/<...>"
+}

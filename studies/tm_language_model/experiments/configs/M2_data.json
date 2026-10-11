@@ -1,0 +1,32 @@
+{
+  "experiment": "M2_data",
+  "docs": "docs/04",
+  "milestone": "M2",
+  "lane": 2,
+  "status": "planned",
+  "prereg": [],
+  "seeds": [
+    1
+  ],
+  "script": "experiments/m2_build_data.py",
+  "venv": ".venv-tm",
+  "gpu_lock": "none",
+  "params": {
+    "corpus": "wikitext103",
+    "hf_id": ["Salesforce/wikitext", "wikitext-103-raw-v1"],
+    "vocab_sizes": [2000, 8000, 16000, 32000],
+    "bpe_32000_time_limit_s": 1800,
+    "cluster_seed": 1,
+    "cluster_max_iter": 20,
+    "mask_rate": 0.15,
+    "max_validation_targets": 200000,
+    "pairs_vocab": 8000,
+    "pair_sizes": {"train": 100000, "validation": 10000, "test": 10000},
+    "pair_min_tokens": 20,
+    "contamination_vocab": 8000,
+    "ngram_orders": [8, 13],
+    "deoverlap_threshold": 0.5,
+    "ptb_timeout_s": 1200,
+    "ptb": "ptb-text-only/ptb_text_only at revision refs/convert/parquet, last, tokenized with the WikiText-103 BPE"
+  }
+}

@@ -1,0 +1,87 @@
+{
+ "experiment": "ssl_r2_hao_tune",
+ "round": "r4_flat",
+ "docs": "docs/13 A7 (H17.5); EXPLORATORY tuning of the package models on seed 100, fit/val split only",
+ "status": "EXPLORATORY (seed 100, docs/13 section 3: seeds >= 100 are never reported)",
+ "script": "experiments/ssl_r2_hao_tune.py",
+ "venv": ".venv-tm",
+ "gpu_lock": "shared",
+ "cpu_slots": 1,
+ "params": {
+  "seed": 100,
+  "world": {
+   "vocab": 2000,
+   "n_groups": 4,
+   "group_size": 6,
+   "n_distractors": 24,
+   "train_fraction": 0.3,
+   "extra_probs": [
+    0.5,
+    0.3,
+    0.2
+   ],
+   "val_fraction": 0.2,
+   "n_fit": 8000,
+   "n_val": 4000
+  },
+  "reference_run": "results/20260924T215754Z_ssl_r2_hao_gpu_exploratory",
+  "reference_hashes": {
+   "fit": {
+    "X_sha256": "d6e82d9dfdb9571734d02f7fb263e1f4f02602e4bdfd45afa456723df438189b",
+    "y_sha256": "66935b78e7c1fee979d839d04ca522b1e78e2fb30eef18ca77c70a979e169890"
+   },
+   "val": {
+    "X_sha256": "fa1147e70c06cf8cba60a9fc1b77f4e1cbec8287fcec407760d8060dd1d835b7",
+    "y_sha256": "f1fbd944cf01e2495cf088f167204918fab658f3299d74e889a6989ed8621e18"
+   }
+  },
+  "configs": [
+   {
+    "name": "f37",
+    "kind": "flat",
+    "append_negated": true,
+    "clauses": 2048,
+    "alternatives": 1,
+    "n_concepts": 1,
+    "T": 100000,
+    "s": 4.0,
+    "state_bits": 8,
+    "boost": 0,
+    "epochs": 150,
+    "eval_every": 10,
+    "wall_cap_s": 1200
+   },
+   {
+    "name": "f38",
+    "kind": "flat",
+    "append_negated": true,
+    "clauses": 2048,
+    "alternatives": 1,
+    "n_concepts": 1,
+    "T": 100000,
+    "s": 3.0,
+    "state_bits": 8,
+    "boost": 0,
+    "epochs": 150,
+    "eval_every": 10,
+    "wall_cap_s": 1200
+   },
+   {
+    "name": "f39",
+    "kind": "flat",
+    "append_negated": true,
+    "clauses": 4096,
+    "alternatives": 1,
+    "n_concepts": 1,
+    "T": 100000,
+    "s": 4.0,
+    "state_bits": 8,
+    "boost": 0,
+    "epochs": 150,
+    "eval_every": 10,
+    "wall_cap_s": 1200
+   }
+  ],
+  "design": "round 4 flat (f37..f39, 3 configurations): f35 (negated literals, 2048 clauses, T 1e5, s 4, boost 0; the flat counterpart of h35) was the flat regime that learned (train 0.739, val 0.607 at epoch 20); long runs of 150 epochs mirroring h37..h39: s 4, s 3, and 4096 clauses (= the leaf count of the 128-clause hierarchical model)"
+ }
+}

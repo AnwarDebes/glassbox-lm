@@ -1,0 +1,28 @@
+{
+  "experiment": "ssl_transfer_early",
+  "stage": "features",
+  "script": "experiments/ssl_transfer_early.py --stage features",
+  "status": "EXPLORATORY (docs/12 F23), not pre-registered; no docs/13 threshold is tested. Downstream train and validation/dev splits only; the WikiText-103 test split is never loaded (only the train split's kind_map, stop and sym_freq are read).",
+  "inputs": {
+    "data_hashes": "docs/notes/preregistration-data-hashes-A6-{sst2,agnews,trec}.json (written by results/20260924T151202Z_ssl_transfer_data_exploratory, verified by results/20260924T151234Z_ssl_transfer_data_exploratory)",
+    "banks": {
+      "cp_e4": "results/20260923T042350Z_CP_anchor/checkpoint_epoch4.npz (4 epochs over 135M WikiText-103 tokens; state hash checked against epoch4.checkpoint of its metrics.json)",
+      "cp_e1": "results/20260923T042350Z_CP_anchor/checkpoint_epoch1.npz (1 epoch; the training dose-response)",
+      "young": "results/20260924T022628Z_ckm_probe_causal_controls_exploratory/young_bank_checkpoint.npz (the untrained control C0: 10,487 batches = 7.9 percent of one epoch of feedback, alive >= 0.98 C)"
+    },
+    "tokenizer": "data/tokenizers/bpe_8000 (WikiText-103 train only)",
+    "kind_map_stop_sym_freq": "data/wikitext103/bpe8000/train (the corpus store's TRAIN statistics)"
+  },
+  "params": {
+    "document": "one example = one document: wikitext_style(text) + ' \\n' (END token); targets = every position; causal mode: position p sees t[0..p-1] of its document",
+    "representation": "x_j = number of positions of the document where clause j fires (the END position sees the whole text; position 0 sees nothing)",
+    "forward": "CudaEngine._forward(epoch 0, positions, no bitmap, training 0): read-only, no engine code changed; chunks of whole documents of about 16,384 positions",
+    "aggregation": "on the GPU: sort of (document << 32 | clause) keys per chunk, run lengths",
+    "checks": "24 random documents per bank: per-position fired counts equal the public fired_clauses, 2 positions equal fired_clauses_bruteforce, the per-document aggregate equals the CPU reference aggregate_doc_counts",
+    "tasks": ["sst2", "agnews", "trec"]
+  },
+  "gpu_lock": "shared",
+  "cpu_slots": 1,
+  "memory_guard": "scripts/mem_guard.py default limit",
+  "venv": ".venv-tm"
+}

@@ -1,0 +1,64 @@
+# 07 Novelty, impact, and signature demos
+
+## Novelty statement (qualified)
+The claim that can be made: the first token-level TM masked language model trained at corpus scale with a subword vocabulary, evaluated as a generative model with a reported likelihood.
+
+"First TM language model", "first TM text generation", "first integer-only LM" and "first logic-native perplexity", unqualified, are NOT claimable (docs/01 "Prior-art corrections", re-checked 2026-09-22, log `results/20260922T125436Z_prior_art_check/`). Cited next to the claim: Gorji, Granmo, Goodwin (IEA/AIE 2023, character-level TM LM); the TM-AE lineage; `cair/LogicalTransformer` (per-word TM prediction with relative-position-tagged context, dormant since 2025-05-27); Abdelwahab, Granmo, Jiao (ISTM 2025, contextual word prediction as classification features); Tsetlin.jl (character-level TM text generation); Sparse TM and literal streaming (sparse literals are prior art); HV-TM sequence generation; SNM skip-gram LMs, infini-gram, RDDLGN (conditional translation perplexity), QuWeiT (character-level loss).
+
+Verified white space as of 2026-09-22 [verified: three web scans plus spot checks, log `results/20260922T125436Z_prior_art_check/`]: no TM perplexity, bits per byte, subword vocabulary or causal TM LM anywhere; no logic-native model reports an UNCONDITIONAL LM perplexity on a standard corpus; no TM + compositional codes / label trees / masked diffusion; no TM clause sharding, scaling law or long-context work.
+
+The system behind the claim: a teacher-free logical language model built on a sparse event-driven TM engine with readable position-bound literals and sparse signed votes (Track B), with the initial design's masked-position predictor over a shared graph input on the Graph Tsetlin Machine, made tractable by an exact Binomial negative-class draw, as the measured reference (Track A); logic-native transparency (printed clauses, receipts verified by a standalone checker, concept dictionaries) and generation by absorbing masked diffusion.
+
+## Proof-of-concept criteria: the three pillars (fixed 2026-09-22, docs/12 F2)
+The goal is a proof of concept that a Tsetlin Machine can be the core of a language model, judged by the three things the transformer paper delivered. Each pillar is defined by measurements with pre-registered thresholds (docs/13); nothing here is a result.
+- P1 Accuracy jump. The first reported likelihood for a TM language model; the causal TM against the in-house KN-5 on identical tokens (H1.1); the masked TM against bigram and CBOW-kNN (H1.2, Gate 1); and a placement against a from-scratch causal transformer at EQUAL V100 wall-clock and equal joules, reported in both directions (H1.3, experiment TB).
+- P2 Reproducible and extendable. `env/bootstrap.sh` from a clean checkout with its log; bit-exact replay of training and generation; the CPU engine so no GPU is needed to reproduce; the standalone receipt checker; one shared header for the CPU and GPU engines; one reproduction command; the deviation ladder so every departure from the published TM is priced.
+- P3 Scales with compute. One V100 cannot run trillions of parameters, so the scalability proof has four measurable parts, all stated for the measured range only: (1) no superlinear component: every per-token cost is bounded by a constant or linear in exactly one of clause count, context length, or vocabulary (docs/11 section 10), then measured; (2) log-log curves across decades: clause count from 64k to the largest that fills 32 GB (experiment s1) and context from 16 to 65536 tokens (s2), accuracy and cost per token plotted together, 3 seeds at small sizes; (3) clause sharding proved bit-exact at 2 and 4 shards (docs/11 section 9, experiment s5), which is the mechanism a many-device run would use; (4) a cost model with measured constants (experiment CM) so anyone can compute what more devices give, with extrapolation labelled derived and never used in a claim.
+The context axis is the top priority and the most plausible real jump: n-gram models cannot use a 65k context and transformers pay a quadratic cost for it.
+- Speed (measured under every pillar, docs/13 amendment A1). The model itself must be fast: tokens per second and milliseconds per token at batch 1 on the V100 and on the 6-CPU engine, joules per token, and generation latency with incremental re-evaluation, against the transformer and BERT-base on the same positions. Why the design is fast: inference is index lookups plus integer adds with no per-token work over the vocabulary (docs/11 section 10). The time budget per step and the mechanisms that save time without touching legitimacy are in `docs/04-implementation-plan.md`.
+
+## Answering the proposal (the supervisor's project proposal, unpublished, 12 slides; docs/12 F1)
+The proposal title is "Logical self-supervised learning of language with hierarchical Tsetlin machines". Logical: yes, clauses and receipts. Self-supervised: yes, masked, diffusion and causal token prediction. Learning of language: yes, at corpus scale with a likelihood. Hierarchical Tsetlin machine: not as the engine, and this is answered with measurements rather than by omission (the HYBRID):
+- The hierarchical package is a MEASURED row on the project proposal's own slide-11 task (two paragraphs, same document or not) at reduced vocabulary, with a flat coalesced TM and a logistic regression as controls, so the hierarchy's own contribution is a number (experiment H1).
+- The engine's clauses are layer 1 of an HTM-style stack; a TM over their fired bits is layer 2, trained greedily with layer 1 frozen; the layer-2 delta is measured on the same task and on the LM (experiment H2). This promotes E5 (frozen clause codes) from a transfer test to the stacking mechanism of the proposal.
+- The project proposal's concept claims are tested: OR groups scored for WordNet purity and surface-variant counts per clause, the "216 variants" test (E9, G2).
+- The objective of the proposal's slide-11 task, the classification of paragraph pairs, is replaced in this study by token prediction with a likelihood; the pair task itself stays as the measured row of experiment H1.
+- The framing of Granmo's presentation of 2026-02-06 (docs/01): the hierarchy's "Projection" is meant to replace key/value and its "Composition" the attention head, taking token space to symbolic and deep symbolic space. The proposal answer therefore also states the engine's counterpart to each: a clause over position-bound literals is the projection (a readable key/value pair), the sparse signed vote set is the composition into the output, and the greedy layer 2 (H2) is the deep symbolic space. Whether the AND-OR hierarchy or the engine's flat clauses plus stacking make the better projection is exactly what Table P measures.
+- The repositories AnwarDebes/HGTM and AnwarDebes/Multi-HGTM (docs/01) supply the method (novelty audit, honest status box, 5-seed paired protocol, provably non-additive control task), not the engine, and are cited with their own reported status.
+
+## Targets, not results
+Nothing below is a result until a log under `results/` says so. If a target is missed, the measurement is still reported, as a negative result.
+1. First logic-native LM perplexity: the first model of any logic-native family with a reported LM perplexity (WikiText-103, causal config, bits per byte), against an in-house Kneser-Ney 5-gram on identical tokens. If KB7 triggers, it is reported as a first measurement with no superiority claim.
+2. Context-length scaling at near-constant cost per token: a measured cost-per-token curve for context N from 16 to 65k tokens at a fixed clause budget (experiment s2).
+3. First token-level TM masked-LM top-1/top-5 at corpus scale, against bigram, bidirectional n-gram, CBOW-kNN, a from-scratch small transformer, and BERT-base (labelled contaminated).
+4. Measured scaling curves: accuracy and cost vs clause count (8k to 16M+) and vocabulary.
+5. Every generated token carries a receipt verified by a standalone checker; training and generation replay bit-exactly; energy per token measured on the same GPU as the baselines.
+6. Clause-sharded training bit-exact with unsharded training at 2 and 4 shards (s5), and a cost model with measured constants (CM).
+7. A placement against a from-scratch causal transformer at equal wall-clock and equal joules on one V100, reported in both directions (TB).
+8. The proposal's hierarchical TM measured on its own task next to the engine's layer 1 and a greedy layer 2 (H1, H2).
+
+## Ten unclaimed combinations, ranked (the initial design's list; status added)
+1. Masked-position prediction over a shared graph input for a TM (signal density log2(V) vs 1 bit). Track A, one target per graph.
+2. Exact Binomial negative draw replacing the class loop losslessly (the initial design wrote Poisson(Q); the draw is the exact Binomial). Track A.
+3. Compositional-code output head on a TM to remove vocabulary from the output layer. Ablation in M6.
+4. Absorbing masked diffusion generation with a TM denoiser (RADD justifies completeness). M8.
+5. Polarity as a symbol (neg scope, scope adverbs, discourse connectives). Ablation, from masked text only.
+6. Elimination decoding by unit propagation over the trained clause CNF (slide 4 of the project proposal, literally). M8.
+7. Per-token SAT receipts checkable by z3, independent of the model. M8.
+8. Concept-dictionary export with WordNet/PPDB purity and empirical variant counts. M9.
+9. Competence-weighted composition of hierarchical, dependency-edge, and distance-edge specialists. Deferred (docs/12).
+10. d-DNNF compilation of a small bank for exact per-slot marginals plus a BMF/FCA clause-count theorem. Deferred (docs/12).
+New with Track B, stated as a COMBINATION (each part has a relative that is cited): an event-driven TRAINING engine over an anchor index (distinct from the event-driven inference hardware of Lan et al.) with sparse signed integer votes (relative: coalesced per-output weights, SNM); whole-vocabulary position-bound literals (relative: LogicalTransformer's per-word position-tagged features); bounded literal slots with insertion (relative: Sparse TM active literals, literal streaming); lazy decay scoped to owned classes (the fix for the frequency trap); multi-scale bag literals for long context; a causal TM LM with a real perplexity; a deviation ladder that prices each departure from the published coalesced TM; batch semantics measured because only an empirical staleness study exists (Abeyrathna 2021); clause sharding with a normative exchange list (docs/11 section 9); a greedy HTM-style layer 2 over self-supervised clause bits with its delta measured (H2).
+
+## Eight signature demos
+- G1 Elimination decoding: positive clauses with one unsatisfied OR group license tokens; negative clauses eliminate; sample from survivors weighted by votes. Shows reasoning by elimination. Impresses because it is the project proposal's thesis made runnable.
+- G2 Concept dictionary: each OR group as a synonym set with purity scores and a per-clause surface-variant count testing the "216 variants" claim. Shows interpretability with numbers.
+- G3 Negation headline: TM vs BERT-base on minimal pairs, CondaQA, NaN-NLI, with the slide-10 pair of the project proposal worked out, sensitivity AND correctness. Tests a capability where scale does not help LLMs.
+- G4 Energy per token: TM vs the from-scratch small transformer vs BERT-base through NVML under an exclusive GPU lock; CPU-only throughput. Shows the frugality argument with measured joules.
+- G5 Per-token receipt: a paragraph where every token carries a certificate that a standalone checker (z3 integer arithmetic) verifies. Shows verifiable generation.
+- G6 Deterministic replay: counter-based RNG (Track B), seeded curand (Track A); re-run and diff byte-for-byte. Shows reproducibility as a property, not a promise.
+- G7 Output-count scaling curve and the first published token-level TM masked-token top-1/top-5. Shows first measurements.
+- G8 Elastic crystallization: absorbed-literal fraction vs epoch with accuracy. Shows lifelong learning turning OR groups into vocabulary primitives.
+
+## Positioning
+Paper one: "first token-level TM masked language model with a reported likelihood" (the qualified claim above). Fallback if generation slips: "first published masked-token top-1/top-5 for a token-level Tsetlin Machine, with an output-count scaling law and a lossless class-loop reformulation". Target venues: ISTM 2027 primary; a workshop (e.g. an ICLR/NeurIPS interpretability or logic workshop) as a second option; a main-venue submission if generation with receipts lands. Honest framing: impact cannot be promised in advance; what is guaranteed is that every claim is measured, logged, replayable, and checkable, and that failures surface at cheap gates.

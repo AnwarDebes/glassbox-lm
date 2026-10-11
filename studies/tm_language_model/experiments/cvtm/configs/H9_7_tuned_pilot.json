@@ -1,0 +1,56 @@
+{
+  "experiment": "cvtm_H9_7_tuned_pilot",
+  "status": "EXPLORATORY pilot of docs/13 amendment A4, hypothesis H9.7 (transformer frontier), and the input of gate G1 frame. Seeds of 100 or more (docs/13 A4 'Seeds'): never reported as confirmatory. Validation split only; the test split is never loaded. Learning rate chosen on validation at the 150 s cap, as H9.7 allows. Every job runs alone on the GPU under scripts/gpu_run.sh exclusive, one job at a time.",
+  "prereg": ["H9.7"],
+  "gate": "G1 frame",
+  "docs": "docs/13 amendment A4 (H9.7, gate G1 frame); src/tmlm/eval/baselines/transformer_small.py (model, data packing, evaluation, NVML sampler, learning-rate schedule)",
+  "script": "experiments/cvtm_transformer_tuned.py",
+  "venv": ".venv-dl",
+  "model": {
+    "class": "tmlm.eval.baselines.transformer_small.SmallTransformer (pre-LN, learned positions, tied head, GELU MLP 4d, same-document causal mask), unchanged",
+    "families": [
+      {"name": "L6_W384", "layers": 6, "width": 384, "heads": 6},
+      {"name": "L8_W512", "layers": 8, "width": 512, "heads": 8}
+    ],
+    "heads_rule": "head dimension 64 (width / 64), as the M2 L6 W256 model (4 heads)",
+    "vocab": 8000,
+    "context": 1024
+  },
+  "training": {
+    "precision": "fp16 autocast (torch.autocast('cuda', dtype=torch.float16)) with torch.amp.GradScaler (default init scale 65536), fp32 master weights; loss in fp32",
+    "batch_seqs": 16,
+    "tokens_per_step": 16384,
+    "batch_note": "16 windows of 1024 = 16,384 positions per step, the same number of positions per step as the M2 transformer (64 x 256); not tuned",
+    "optimizer": "AdamW, betas (0.9, 0.95), weight decay 0.01, gradient clipping at 1.0 after unscaling (as transformer_small.train)",
+    "schedule": "transformer_small.lr_at: linear warmup over 200 steps, then linear decay driven by the elapsed fraction of the wall-clock cap to 0.1 x peak",
+    "data": "random windows of 1024 of the packed train stream (BOS before every document), shuffled epochs, numpy default_rng(seed) (as transformer_small.train)",
+    "determinism": "transformer_small.seed_everything(seed) before every model is built; torch deterministic algorithms with warn_only (memory-efficient attention stays non-deterministic on the V100, logged)",
+    "seed": 100
+  },
+  "lr_selection": {
+    "grid": [0.0003, 0.001, 0.002],
+    "cap_s": 150,
+    "metric": "validation bits per byte (protocol CP, transformer_small.bits_per_byte, seq_len 1024, stride 512, fp32 evaluation)",
+    "rule": "per family, the grid value with the lowest validation bits per byte at the 150 s cap; ties to the smaller learning rate; the rule is applied in code by the 600 s run (--select-from)",
+    "name": "cvtm_H9_7_tuned_lrsel_exploratory"
+  },
+  "cap_600": {
+    "cap_s": 600,
+    "rule": "every family at its selected learning rate, seed 100",
+    "name": "cvtm_H9_7_tuned_600s_exploratory"
+  },
+  "energy": "transformer_small.NvmlPowerSampler (10 Hz, device-wide) over every training loop; idle 10 s after the CUDA context exists, once per process; joules raw and idle-subtracted; a 10 s idle sample after every training is logged as a diagnostic and not used",
+  "gate_G1_frame": {
+    "input": "the lowest validation bits per byte among the tuned families at the 600 s cap",
+    "threshold": 1.2209,
+    "threshold_source": "docs/13 A4: CVTM-core minus 0.02",
+    "rule": "input <= 1.2209: the LM result is framed only as the energy frontier E*(D) plus the white-box properties, no parity sentence; input > 1.2209: a parity sentence is allowed against the TUNED 600 s comparator only",
+    "caveat": "pilot seed 100 (exploratory)"
+  },
+  "h9_7_prediction_checked": "the tuned 600 s model beats 1.2409 (the CVTM-core; docs/13 A4 prediction 0.6); reported, no threshold",
+  "launch": {
+    "lrsel": "scripts/gpu_run.sh exclusive -- scripts/cpu_slot.sh 1 -- .venv-tm/bin/python scripts/mem_guard.py -- scripts/run_logged.py --name cvtm_H9_7_tuned_lrsel_exploratory --config experiments/cvtm/configs/H9_7_tuned_pilot.json -- .venv-dl/bin/python -u experiments/cvtm_transformer_tuned.py --mode tuned_lrsel --config experiments/cvtm/configs/H9_7_tuned_pilot.json",
+    "cap600": "scripts/gpu_run.sh exclusive -- scripts/cpu_slot.sh 1 -- .venv-tm/bin/python scripts/mem_guard.py -- scripts/run_logged.py --name cvtm_H9_7_tuned_600s_exploratory --config experiments/cvtm/configs/H9_7_tuned_pilot.json -- .venv-dl/bin/python -u experiments/cvtm_transformer_tuned.py --mode tuned_cap --time-cap-s 600 --config experiments/cvtm/configs/H9_7_tuned_pilot.json --select-from results/<lrsel run>"
+  },
+  "not_run_now": "the frontier caps 2400 s and 9600 s, the L6 W256 and L12 W768 members of the H9.7 family, confirmatory seeds, and the CVTM-core fit joules at the H8.8 prefixes (E*(D)); their commands are listed in experiments/cvtm_transformer_tuned.py (docstring, 'Later')"
+}

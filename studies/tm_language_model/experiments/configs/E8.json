@@ -1,0 +1,19 @@
+{
+  "experiment": "E8",
+  "docs": "docs/05",
+  "milestone": "M9",
+  "lane": 3,
+  "status": "planned",
+  "prereg": [],
+  "seeds": [
+    1
+  ],
+  "script": "experiments/e8_blimp.py",
+  "venv": ".venv-tm",
+  "gpu_lock": "shared",
+  "params": {
+    "dataset": "nyu-mll/blimp",
+    "scoring": "pseudo_log_likelihood",
+    "phenomena": 67
+  }
+}

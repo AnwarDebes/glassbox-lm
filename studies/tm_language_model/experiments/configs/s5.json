@@ -1,0 +1,36 @@
+{
+  "experiment": "s5",
+  "docs": "docs/05",
+  "milestone": "M3, M4",
+  "lane": 1,
+  "status": "planned",
+  "prereg": [
+    "H3.5"
+  ],
+  "seeds": [
+    1
+  ],
+  "script": "experiments/s5_shard_equivalence.py",
+  "venv": ".venv-tm",
+  "gpu_lock": "shared",
+  "params": {
+    "shards": [
+      1,
+      2,
+      4
+    ],
+    "steps_oracle": 200,
+    "steps_gpu": 100,
+    "gpu_batches": [
+      64,
+      1024
+    ],
+    "spec": "docs/11 section 9"
+  },
+  "engine": {
+    "mode": "masked",
+    "vocab": 2000,
+    "n_clauses": 65536,
+    "batch": 1024
+  }
+}

@@ -1,0 +1,209 @@
+{
+ "experiment": "ssl_r1_controls",
+ "status": "EXPLORATORY control study before the confirmatory R1 seeds (not a docs/13 hypothesis; the docs/13 amendment is written separately). Seeds 100 and 101 only. Every downstream number uses the train splits of the tasks (the R1 exploration dev carve); no test split and never SST-2 validation. Q_pred reads the frozen V 8000 VALIDATION targets only; the WikiText-103 test split is never loaded (the test-access counter is read before and after every qpred run and must not change).",
+ "docs": "docs/13 amendment A7 (R1, the C0y control, Q_pred); docs/11 sections 5.1 to 5.7 (every literal learning path), section 7 (defaults) and section 11.5 (the T1 read-out); docs/12 F25 (CPU slot first, then the GPU lock)",
+ "script": "experiments/ssl_r1_controls.py",
+ "stages": [
+  "train",
+  "census",
+  "features",
+  "qpred",
+  "probe",
+  "report"
+ ],
+ "written_before_any_output": "2026-09-25: the arms, the twin overrides, the young ladder, the Q_pred read-out, the probe budgets and the reading rule below were fixed before any run of this study existed. The R1 seed-100 runs of A0 and A3 (probe cells included) had been read; they are the reason for the study (see why).",
+ "why": [
+  "The R1 learning-credit control C0y is 'the same run stopped at 1 percent of epoch 1', counted in BATCHES. Arms with a shorter epoch get a weaker control: A3's C0y saw 78,848 examples with 34,408 live clauses, A0's 200,704 examples with 58,029 live clauses (results/20260924T215716Z_ssl_r1_train_A3_seed100_exploratory, results/20260924T211347Z_ssl_r1_train_A0_seed100_exploratory, metrics c0y.examples and c0y.alive). The 32-label credit ranks in that order.",
+  "No R1 control isolates TA LITERAL learning (Type Ia insertion, negated insertion, Type Ia false-literal decrements, owned-class decay) from seeding, recycling and vote learning.",
+  "Questions: (1) does the trained bank beat the STRONGEST early stop (a young ladder)? (2) does it beat a twin in which only literal learning is switched off? (3) what does training cost on the natural token distribution (Q_pred)?"
+ ],
+ "arms": {
+  "A3": "R1 arm A3 unchanged (F2: at most 2,000 targets per class per epoch, redrawn per epoch), with extra young-ladder checkpoints",
+  "A0": "R1 arm A0 unchanged (default masked), with extra young-ladder checkpoints",
+  "A3T": "A3 with ONLY literal learning switched off, by EngineConfig values only (params.twin_overrides); data, seeds, seeding, recycling, votes and vetoes unchanged",
+  "A0T": "A0 with ONLY literal learning switched off, by EngineConfig values only (params.twin_overrides)"
+ },
+ "literal_paths": {
+  "note": "Every docs/11 path that adds, removes, includes or excludes a literal of an EXISTING clause, and how the twin disables it with config values only. Code references: src/tmlm/engine/oracle/oracle.py (the executable spec) and src/tmlm/engine/core/tm_core.h (shared by the CPU engine and the CUDA kernels; kernels.cu includes it and calls tm_event and tm_settle only). No engine file is changed.",
+  "type_ia_insertion": "docs/11 5.2.1 'Insertion: w.p. P_INS'; oracle.py _type_ia lines 710 to 713, tm_core.h tm_type_ia lines 494 to 497. Disabled by p_ins = 0: derive() gives p_ins_q32 = q32(0) = 0 and bern(0, ...) is rng32 < 0, never true. Eviction of an excluded slot (_insert_literal, tm_insert_literal) is reachable only from here and from negated insertion.",
+  "negated_insertion": "docs/11 5.2.2 'Negated insertion: w.p. P_NEG'; oracle.py _type_ii lines 777 to 780, tm_core.h tm_type_ii lines 510 to 513. Disabled by p_neg = 0 (p_neg_q32 = 0). The spec: 'This is the only way a negated literal can enter a clause.'",
+  "type_ia_false_literal_decrement": "docs/11 5.2.1 'v false: w.p. 1/s ... state = state - 1; if it reaches 0 the slot is freed'; oracle.py _type_ia line 708, tm_core.h line 492. Disabled by s = 2^62: inv_q32(2^62) = floor(2^32 / 2^62) = 0 (engine/rng.py inv_q32, exact integer path), so the draw never passes.",
+  "owned_class_lazy_decay": "docs/11 5.4 settle(j) (Type Ib feedback applied lazily): n_q16 = floor(owed * s_den / s_num); oracle.py _settle lines 885 to 903, tm_core.h tm_settle lines 367 to 384 (128-bit product). Called for every touched clause (5.1), on every ownership change (5.2 vote_add) and in the sweep (5.7). With s = 2^62 (s_num = 2^62, s_den = 1) n_q16 = 0 whenever owed < 2^62, and then no literal is touched (the 'if n_q16 > 0' guard). owed <= M(j) <= sum over classes of G, G only grows, so the run-time check sum(G_final) < 2^62 proves that no decay decrement happened anywhere in the run (4 epochs of at most 20M examples add at most 8e7 x 65,535 < 2^43 [derived]). The reviewer's s = 2^30 does NOT suffice: owed reaches 2^30 Q16 units after about 16,384 examples of full gate mass on an owned class, and inv_q32(2^30) = 4 is not 0.",
+  "type_ii_inclusion_of_excluded_literals": "docs/11 5.2.2 'For each used literal slot k with state < 128 whose literal is FALSE: state += 1'; oracle.py lines 774 to 776, tm_core.h line 509. Not a config switch, but EMPTY in the twin: seeds place 1 to 3 positive exact literals at state 136 (5.6, STATE_SEED), which is included; with the four paths above off no literal is ever inserted and no state ever decreases, so no tracked literal is ever below 128.",
+  "type_ia_reinforcement_of_true_literals": "docs/11 5.2.1 'v true: state = min(255, state + 1)'; oracle.py _state_up via line 707, tm_core.h line 491. NOT disableable by config. In the twin it only raises the state of already included literals (136 up to 255); it can never change which literals are included (the only downward paths are off), the anchor, or whether a clause fires, so it is functionally inert. It does change lit_state and therefore the state hash. This is the one TA state change left in the twin, and the freezing checks allow it (states may only rise).",
+  "eager_exact_type_ib": "docs/11 5.4 decay_mode eager_exact and section 6 dense mode (oracle N10, tm_core.h tm_type_ib): not used by any arm (decay_mode lazy_owned, dense_equivalent false); it would also be off by inv_s_q32 = 0.",
+  "kept_on": "seeding of new clauses (5.6), recycling and the MIN_FREE top-up (5.7), vote learning (vote_add of 5.2 and 5.3) and the veto votes (p_veto, a vote rule of 5.3) are unchanged"
+ },
+ "reading_rule": {
+  "written": "2026-09-25, before any output of this study",
+  "unit": "Q_text points: 1.0 point = 0.010 of Q_text, the mean accuracy over AG News, SST-2 and TREC-6 of the L2 logistic regression probe at 32 labels per class, averaged over the 5 label draws (identical draws and folds in every run)",
+  "bank": "checkpoint epoch4 of the arm (A3 or A0)",
+  "young_ladder": "the checkpoints young_b77, young_b196, young_b255, young_b<round(5 percent of the epoch-1 batches)>, young_b<round(10 percent)> and c0y of the SAME run; max(young ladder) is the rung with the highest mean Q_text over the draws, chosen per seed and per code",
+  "twin": "checkpoint epoch4 of the twin arm (A3T for A3, A0T for A0) with the same seed",
+  "d_ladder": "Q_text(bank) minus Q_text(max rung), points",
+  "d_twin": "Q_text(bank) minus Q_text(twin), points",
+  "q_pred": "Q_pred(bank) and Q_pred(twin): T1 loglin masked top-1 on the frozen V 8000 validation targets (params.qpred), point values",
+  "codes": [
+   "all",
+   "dim"
+  ],
+  "seeds": [
+   100,
+   101
+  ],
+  "decision": "per arm pair (A3 with A3T, A0 with A0T); the first row that holds is the reading",
+  "rows": [
+   "1 LITERAL LEARNING CREDITED iff for both seeds and both codes d_ladder >= 1.0 AND d_twin >= 1.0, AND for both seeds Q_pred(bank) >= Q_pred(twin) (the bank is not below the twin on Q_pred)",
+   "2 GAIN FROM CONTINUED SEEDING, SELECTION OR VOTES, NOT FROM LOGIC iff for both seeds and both codes d_ladder >= 1.0 AND |d_twin| < 1.0 (bank about equal to twin, above the ladder)",
+   "3 TRAINING DOES NOT ADD VALUE iff for both seeds and both codes d_ladder < 0 (the bank is below max(young ladder))",
+   "4 MIXED: none of the above; no reading, every component is reported"
+  ],
+  "reported_but_not_in_the_rule": "flag_twin_above_bank (d_twin <= -1.0 on both seeds and both codes); paired bootstrap intervals over draws for d_ladder and d_twin; budgets 8 and 128; Q_pred of c0y; the literal census (included literals per clause, negated, bag, more than 3 literals, exact-token share, literal churn between checkpoints)",
+  "status": "exploratory: a reading here is not an A7 learning-credit claim (A7 credits TA learning only through H17.1 on seeds 1 to 3)",
+  "edit_note": "2026-09-25, before any output: the extra row 'literal learning costs representation value' was moved out of the ordered rows into a reported flag, so the rule is the one specified (rows 1 to 3 plus mixed)"
+ },
+ "replay_reference": {
+  "rule": "for seed 100 the C0y, per-epoch and final state hashes of A3 and A0 must equal the logged hashes of the R1 runs (the extra checkpoints must not change the trajectory); the train run fails loudly otherwise",
+  "A3": {
+   "100": "results/20260924T215716Z_ssl_r1_train_A3_seed100_exploratory"
+  },
+  "A0": {
+   "100": "results/20260924T211347Z_ssl_r1_train_A0_seed100_exploratory"
+  }
+ },
+ "doc_set_reference": {
+  "rule": "the downstream document set (tokens, document starts, layout and labels) must equal the one of an R1 features run, so that label draws, folds and dev rows pair exactly across R1 and this study",
+  "run": "results/20260924T212145Z_ssl_r1_features_A0_seed100_exploratory"
+ },
+ "r1_config": "experiments/cvtm/configs/ssl_r1_pretext.json",
+ "params_shared_with_r1": [
+  "vocab",
+  "n_clauses",
+  "n_tokens",
+  "epochs",
+  "f1_t",
+  "f2_m",
+  "young_fraction",
+  "dim_matched",
+  "tasks",
+  "budgets",
+  "draws",
+  "folds",
+  "c_grid",
+  "lr_max_iter",
+  "forward_chunk"
+ ],
+ "params_shared_note": "these params must equal those of r1_config at run time (checked by every stage); budgets are the R1 budgets because they define the labelled union of the document set, the probe runs only probe_budgets",
+ "params": {
+  "smoke": false,
+  "vocab": 8000,
+  "n_clauses": 65536,
+  "n_tokens": 20000000,
+  "epochs": 4,
+  "f1_t": 0.0001,
+  "f2_m": 2000,
+  "young_fraction": 0.01,
+  "dim_matched": 8192,
+  "tasks": [
+   "agnews",
+   "sst2",
+   "trec"
+  ],
+  "budgets": [
+   8,
+   32,
+   128,
+   512
+  ],
+  "draws": [
+   0,
+   1,
+   2,
+   3,
+   4
+  ],
+  "folds": 4,
+  "c_grid": [
+   0.01,
+   0.1,
+   1.0,
+   10.0,
+   100.0
+  ],
+  "lr_max_iter": 1000,
+  "forward_chunk": 8192,
+  "seeds": [
+   100,
+   101
+  ],
+  "young_ladder": {
+   "abs_batches": [
+    77,
+    196,
+    255
+   ],
+   "percent_of_epoch1": [
+    5,
+    10
+   ],
+   "rounding": "round half up of the exact value nb x percent / 100, computed as (nb x percent + 50) // 100 in integers (at least 1); nb = batches of epoch 1 of the arm; an absolute rung beyond nb is skipped",
+   "note": "77 and 196 are the C0y batch counts of A3 and A0 (seed 100), 255 is the last batch before the first sweep (docs/11 5.7, SWEEP_PERIOD 256, oracle N1); for A3 nb = 7,639 gives rungs 382 and 764, for A0 nb = 19,531 gives 977 and 1,953 [derived from the logged epoch-1 target counts]"
+  },
+  "twin_overrides": {
+   "p_ins": 0.0,
+   "p_neg": 0.0,
+   "s_log2": 62
+  },
+  "probe_budgets": [
+   8,
+   32,
+   128
+  ],
+  "probe_classifier": "lr",
+  "lr_backend": "cpu",
+  "qpred": {
+   "readout": "docs/11 11.5 T1 stand-alone count-vote read-out (loglin), the H8.1 masked flow of experiments/cvtm_t1_readout.py run_masked applied to a V 8000 R1 bank; its helpers and the reference kernels of experiments/ckm_posthoc_probe.py are imported unchanged; the wrapper exists because run_masked is bound to the V 2000 tiny-LM task",
+   "counting_positions": "every position of the 20M-token training prefix outside the fit documents, only the target hidden (all-zero bitmap, as R1 features and H8.1)",
+   "fit_documents": "prefix documents i (index in the train split) with splitmix64(i XOR 0xC0FFEE) mod 100 == 0 (docs/11 11.6); never counted",
+   "fit_rows": "every position of the fit documents inside the prefix, only the target hidden",
+   "validation": "the frozen V 8000 validation eval set, subword variant (42,213 targets under its frozen hidden mask), the target set of H8.11",
+   "metric": "Q_pred = loglin top-1 (ties toward the lowest class id); also top-5, bits per token, and the bank's own signed-vote top-1 (secondary, argmax of the vote sums, ties toward the lowest id)",
+   "fit_source": "experiments/cvtm/configs/H8_1_masked.json fit.loglin, copied unchanged (checked equal at run time)",
+   "fit": {
+    "optimizer": "scipy L-BFGS-B, mean negative log-likelihood (nats per row), GPU objective and gradient; the objective at the solution is recomputed by the CPU float64 reference (must agree within 1e-6)",
+    "precondition": "empirical_fisher_diagonal_at_init",
+    "maxiter": 1000,
+    "maxfun": 1500,
+    "ftol": 1e-10,
+    "gtol": 1e-06,
+    "maxcor": 30,
+    "alpha_bounds": [
+     -20,
+     20
+    ],
+    "beta0_bounds": [
+     -5,
+     5
+    ],
+    "init": "alpha = 1 / (mean counted fired clauses per fit row) for every group, beta0 = 1"
+   },
+   "checks": {
+    "cross_engine_count_rows": 500,
+    "cross_engine_fit_rows": 200,
+    "validation_api_rows": 200,
+    "validation_bruteforce_rows": 5,
+    "signed_predict_scores_rows": 512
+   },
+   "gpu_pool_limit_gib": 10.5
+  },
+  "chain_checkpoints": {
+   "features": "ladder,c0y,epoch1,epoch4",
+   "qpred": "c0y,epoch4",
+   "probe_sets": "auto (every featurised checkpoint, codes all and dim)"
+  }
+ },
+ "gpu_lock": "shared (train, features, qpred); none (census, probe, report)",
+ "cpu_slots": 1,
+ "memory_guard": "scripts/mem_guard.py --scope group: train 16 GiB, census 8 GiB, features 24 GiB, qpred 24 GiB, probe 24 GiB, report 8 GiB (set before any measurement)",
+ "venv": ".venv-tm"
+}

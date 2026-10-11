@@ -1,0 +1,59 @@
+{
+ "carve": {
+  "confirm": {
+   "idx_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "n": 0,
+   "note": "none for this task"
+  },
+  "dev": {
+   "class_counts": [
+    6,
+    141,
+    115,
+    123,
+    97,
+    106
+   ],
+   "idx_sha256": "d241ac504ccc68b499f3d6631df316c91126d7f6e2831178fecf36473fdb7838",
+   "n": 588
+  },
+  "n_train": 5452,
+  "pool": {
+   "class_counts": [
+    80,
+    1109,
+    1047,
+    1100,
+    738,
+    790
+   ],
+   "idx_sha256": "662a68cfe5b7460a0e388033efc91f0ac82b85cd8e222cd973dcea927e06a918",
+   "n": 4864
+  },
+  "row_index_format": "int64 little endian, ascending",
+  "rule": "r(i) = mix64(i) mod 20 over the example index i (docs/11 section 3 mix64); confirm r = 0 (SST-2 only), dev r in {1, 2}, pool = the rest"
+ },
+ "files": {
+  "default/train/0000.parquet": {
+   "bytes": 213208,
+   "sha256": "5ffb07b1cbd45e47b4dd1dd113dadd19e44eb260721114c6147e0ce6c1e47590",
+   "split": "train"
+  }
+ },
+ "label_column": "coarse_label",
+ "n_classes": 6,
+ "purpose": "docs/13 amendment A7 (family H17): downstream data hashed once before any R1 use; train split only",
+ "refused": "every test split; SST-2 validation (read by the exploratory runs of 2026-09-24, A7 Disclosure)",
+ "source": {
+  "access": "the train parquet only, from data/hf_cache/hub (downloaded with huggingface_hub.hf_hub_download only when missing), read with pyarrow",
+  "licence": "unknown (A7: TREC card 'unknown')",
+  "repo": "CogComp/trec",
+  "repo_type": "dataset",
+  "revision": "65752bf53af25bc935a0dce92fb5b6c930728450"
+ },
+ "text_columns": [
+  "text"
+ ],
+ "written_by": "src/tmlm/ssl/downstream.py write_hash_file (experiments/ssl_r1_pretext.py --stage data); write-once, never edited",
+ "written_utc": "2026-09-24T21:06:30Z"
+}

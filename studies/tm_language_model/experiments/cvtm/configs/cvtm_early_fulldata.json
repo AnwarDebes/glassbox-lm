@@ -1,0 +1,23 @@
+{
+  "experiment": "cvtm_early_fulldata",
+  "script": "experiments/cvtm_early_fulldata.py",
+  "status": "EXPLORATORY early go/no-go estimate, not pre-registered; no docs/13 threshold is tested; validation split only, the test split is never loaded; the docs/13 A3 (H8) numbers will come from the frozen implementation in src/tmlm/cvtm/, not from this run; this run tunes nothing (the estimator is fixed by docs/11 section 11)",
+  "purpose": "full-data estimate of the CVTM-core (KN-5 suffix clauses + document clauses D0..D4 + pointer, docs/11 sections 11.2 to 11.6) before the frozen implementation exists",
+  "spec": "docs/11-engine-spec.md section 11 (11.3 document clauses, 11.4 combination, 11.6 fitting protocol)",
+  "params": {
+    "corpus": "wikitext103", "vocab": 8000, "kn_order": 5, "kn_discount_mode": "modified", "kn_pad": true, "kn_unk_interp": true,
+    "fit_documents": "training documents i with splitmix64(i XOR 0xC0FFEE) mod 100 == 0; splitmix64 = docs/11 section 3 mix64 (golden-gamma increment then the Steele-Lea-Flood/Stafford variant 13 finaliser), checked against tmlm.engine.rng.mix64",
+    "kn_fits": "KNModel on the training split without H (P_KN on H for the EM, validation as a check), then KNModel on all training documents (validation; must equal 1.3501314 of results/20260922T180823Z_M2_baselines_ngram_v8000/)",
+    "document_clauses": {"orders": [0, 1, 2, 3, 4], "window": "whole document", "pointer_min": 5, "pointer_max": 64, "implementation": "tmlm.cvtm.doc_clauses.doc_features (sort based), cross-checked against doc_features_stream"},
+    "combination": {"buckets": "(k*, m*, c, l) of docs/11 11.4", "em_iterations": 50, "init": "uniform over the firing components of the bucket", "prior_pseudocounts": 16, "pooled_weights_definition": "pi_j = sum of responsibilities of j over all fit rows / number of fit rows where j fires, recomputed every iteration, restricted to the bucket's firing set and renormalised (this script's reading; the spec does not define it further)", "fit_on": "H with the KN-without-H base", "applied_on": "validation with the KN-on-all base"},
+    "rows": ["kn5", "kn5_D0 (document unigram cache)", "kn5_D0to4 (document n-gram clauses)", "cvtm_core (+ pointer)"],
+    "sensitivity_not_rows": ["MLE weights (prior 0)", "weights applied with the KN-without-H base"],
+    "top1": "causal top-1 of every row from the full next-token distribution, every validation position",
+    "bootstrap": {"unit": "validation document", "n_documents": 60, "resamples": 2000, "seed": [20260924, 1106, 1], "statistic": "sum of bits over the drawn documents / sum of their UTF-8 bytes", "comparisons": ["each row minus kn5", "kn5_D0to4 minus kn5_D0", "cvtm_core minus kn5_D0to4", "cvtm_core minus 1.2340551926476289 (600 s transformer, results/20260922T172902Z_M2_baselines_transformer/ transformer_L6_W256, a constant)"]}
+  },
+  "byte_accounting": "total negative log2-likelihood of the validation subword stream / UTF-8 bytes of the validation text (1,145,547), as experiments/cp_causal_perplexity.py",
+  "compute": "CPU only, one thread, nice 19 (the s4 job holds the CPU slots); no GPU",
+  "memory_guard": "scripts/mem_guard.py --limit-gib 30 (cgroup working set, all processes); the script also waits before each KN fit until memory.current + 20 GiB < 0.80 memory.max and working set + 20 GiB < 0.97 x 30 GiB (expected KN fit peak about 18.4 GiB, scratch probe 3.68 GiB at 27M tokens scaled linearly)",
+  "threads": 1,
+  "venv": ".venv-tm"
+}

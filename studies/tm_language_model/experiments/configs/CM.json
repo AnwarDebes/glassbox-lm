@@ -1,0 +1,31 @@
+{
+  "experiment": "CM",
+  "docs": "docs/05",
+  "milestone": "M4, M7",
+  "lane": 1,
+  "status": "planned",
+  "prereg": [
+    "H3.2",
+    "H3.3",
+    "H6.2"
+  ],
+  "seeds": [
+    1
+  ],
+  "script": "experiments/cm_cost_model.py",
+  "venv": ".venv-tm",
+  "gpu_lock": "exclusive",
+  "params": {
+    "repeats": 5,
+    "constants": [
+      "bytes_per_clause",
+      "ns_per_candidate",
+      "ns_per_verified_literal",
+      "ns_per_fired_clause",
+      "ns_per_event",
+      "sweep_ns_per_clause",
+      "ns_per_token_vs_N"
+    ],
+    "cpu_engine": true
+  }
+}

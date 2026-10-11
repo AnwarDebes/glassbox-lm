@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tmlm"
+dynamic = ["version"]
+description = "A Tsetlin Machine language model: engines, baselines, and run governance tooling."
+readme = "README.md"
+authors = [{ name = "Anwar Debes" }]
+keywords = ["tsetlin-machine", "language-model", "interpretable-ml"]
+requires-python = ">=3.11,<3.12"
+# The full environment is pinned by env/ (uv lock files), not here.
+dependencies = ["numpy"]
+
+[project.urls]
+Repository = "https://github.com/AnwarDebes/glassbox-lm"
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.dynamic]
+version = { attr = "tmlm.__version__" }
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "gpu: needs the GPU, run it through scripts/gpu_run.sh",
+    "slow: takes more than a minute",
+]

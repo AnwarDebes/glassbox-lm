@@ -1,0 +1,30 @@
+{
+  "experiment": "E6",
+  "docs": "docs/05",
+  "milestone": "M9",
+  "lane": 3,
+  "status": "planned",
+  "prereg": [
+    "H4.1"
+  ],
+  "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "script": "experiments/e6_coherence.py",
+  "venv": ".venv-tm",
+  "gpu_lock": "shared",
+  "params": {
+    "tiers": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "tier1": "the H1 pair set",
+    "tier4_source": "third_party/ref/tm-llm-robustness-benchmark/data/robustness/counterfactual_imdb.json (Kaushik et al. 2020)"
+  }
+}

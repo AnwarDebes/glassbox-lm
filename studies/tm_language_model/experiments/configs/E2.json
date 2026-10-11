@@ -1,0 +1,31 @@
+{
+  "experiment": "E2",
+  "docs": "docs/05",
+  "milestone": "M5",
+  "lane": 2,
+  "status": "planned",
+  "prereg": [
+    "H5.3"
+  ],
+  "seeds": [
+    1
+  ],
+  "script": "experiments/e2_binomial_speedup.py",
+  "venv": ".venv-tm",
+  "gpu_lock": "exclusive",
+  "params": {
+    "Q": [
+      1.0,
+      0.5,
+      0.1
+    ],
+    "classes": [
+      100,
+      1000,
+      16000
+    ],
+    "M": 200000,
+    "test": "tests/test_binomial_draw.py",
+    "clauses": 8192
+  }
+}

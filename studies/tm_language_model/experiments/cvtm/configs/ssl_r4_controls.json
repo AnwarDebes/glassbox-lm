@@ -1,0 +1,121 @@
+{
+ "experiment": "ssl_r4_controls",
+ "docs": "docs/12 F29 items (2) and (3); docs/13 A7 (phase R4, H17.10) and A8 items 1 and 6; docs/11 section 5 (every literal learning path)",
+ "prereg": [],
+ "status": "REPORTED controls with NO threshold for the confirmatory R4 seeds 1 to 3, next to the registered H17.10 statistic (which stays the only H17.10 verdict, computed by experiments/ssl_r4_images.py on the unchanged experiments/cvtm/configs/ssl_r4_images.json). Written on 2026-09-30 (about 17:00 UTC), after the F29 decision of 16:45 UTC and BEFORE any confirmatory R4 output existed: no ssl_r4_gpu_seed1, seed2 or seed3 run and no output of these controls existed; the only R4 outputs seen are the seed-100 exploratory runs and the build smokes.",
+ "script": "experiments/ssl_r4_controls.py",
+ "venv": ".venv-tm",
+ "r4_config": "experiments/cvtm/configs/ssl_r4_images.json",
+ "r4_config_note": "every R4 parameter (store, engine, F1, epochs, young fraction, chunk size, probe budgets, draws, LR grid, folds, lr_max_iter) is read from r4_config at run time and never copied here; every stage checks that the gpu run it reads was made with exactly this r4_config (sha256)",
+ "gpu_lock": "shared for replay, twin, randbank (engine cuda) and diag; none for probe and report",
+ "cpu_slots": 1,
+ "stages": [
+  "replay",
+  "twin",
+  "randbank",
+  "probe",
+  "diag",
+  "report"
+ ],
+ "f29": "docs/12 F29 (2): the stricter reading of A8 item 1 applied to R4 as REPORTED rows with no threshold, built as a separate controls script after the confirmatory seeds (the running driver is not edited): the young ladder of the same training run at ceil(1 percent) (the registered C0y), round(5 percent), round(10 percent) of epoch 1's batches and the end of epoch 1, recovered by deterministic replay of the registered training and checked against its logged state hashes; a literal-frozen twin (p_ins = 0, p_neg = 0, s = 2^62); a random conjunction bank drawn with the image tokens' literal frequencies; the two-level bootstrap and the seed-level t interval next to the registered statistic; the label 'literal-learning credit' under A8's rule. Q_pred, NB and NBSVM are text-specific and not applied; the driver's masked-patch top-1 is reported instead. F29 (3): the A8 item 6 quantities for the R4 banks by the same script; any bank or quantity without them is listed as not measured.",
+ "params": {
+  "smoke": false,
+  "seeds": [
+   1,
+   2,
+   3
+  ],
+  "young_ladder": {
+   "rungs": {
+    "c0y": "max(1, ceil(young_fraction x nb)) batches of epoch 1: the registered C0y (its state hash is checked equal to the gpu run's main.young.state_hash)",
+    "pct5": "round(5 percent of nb)",
+    "pct10": "round(10 percent of nb)",
+    "epoch1": "the end of epoch 1 (nb batches)"
+   },
+   "percent_of_epoch1": [
+    5,
+    10
+   ],
+   "rounding": "round half up of nb x percent / 100 in exact integers, (nb x percent + 50) // 100, at least 1; nb = batches of epoch 1 (490 in the seed-100 exploratory run, so c0y 5, pct5 25, pct10 49, epoch1 490 [derived: results/20260924T220231Z_ssl_r4_gpu_seed100_exploratory, main.batches_per_epoch]); rungs at the same batch share one state, one checkpoint and one code file",
+   "max_ladder": "per seed and per budget the rung with the highest mean LR accuracy over the draws (ties: the earlier rung)"
+  },
+  "twin_overrides": {
+   "p_ins": 0.0,
+   "p_neg": 0.0,
+   "s_log2": 62,
+   "note": "the R1 twin overrides (experiments/cvtm/configs/ssl_r1_controls.json, block literal_paths, lists every docs/11 section 5 path and why these values switch it off); kept on: seeding, recycling, the MIN_FREE top-up, vote learning, vetoes. Checks per run: derived p_ins_q32 = p_neg_q32 = inv_s_q32 = 0, no insertion counted, sum(G) < 2^62 at the end, per batch no retained literal lowered or crossing 128 and every entering literal included, per epoch the R1 literal-freezing view"
+  },
+  "random_bank": {
+   "max_literals": 3,
+   "positions": "the 49 patch positions of every pool image (the pretraining target positions before F1); literal draw as tmlm.ssl.confirm.random_bank (stream SeedSequence([20260925, 0xA8, 3, seed]), n_lit uniform on 1..3, position uniform, column (offset -8..-1, +1..+8; kind 0..3) uniform among unused offsets, redraw when no literal is true), so every true (position, column) pair is equally likely and a literal is drawn with its frequency at the pool patch positions",
+   "n_clauses": "the gpu run's n_clauses (65,536)",
+   "seed": "the pretraining seed of the gpu run (one bank per seed)",
+   "code": "counts of (fired clause, quadrant) over the 49 patch positions, exactly the image code of ssl_r4_images.image_codes (offset 0 is never a literal, so nothing is hidden)",
+   "chunk_images": 40,
+   "chunk_note": "40 images = 1,960 positions per firing chunk: the smoke (C = 4,096, 500 images per chunk) peaked at 2,634 MiB of device memory (whole-GPU nvidia-smi sample, results/20260930T170204Z_ssl_r4c_randbank_smoke); candidates grow with C, so C = 65,536 at 40 images is about 16 x 2.6 GB x 40 / 500, near 3.4 GB [derived, upper bound]",
+   "check_images": 3,
+   "check_clauses": 64
+  },
+  "diag": {
+   "class_sum_max_log2": 20,
+   "banks": "registered main.final, main.young (C0y) and randkm.final of the gpu run; the replayed ladder rungs (a rung with the same state hash as a bank already listed is not repeated); the twin; the random bank (literal census only)",
+   "quantities": {
+    "included_literals_per_clause": "histogram over alive clauses (tmlm census of experiments/ssl_r1_controls.census_of)",
+    "negated_share": "fraction of included literals negated and of clauses with a negated literal",
+    "bag_share": "fraction of included literals that are bag literals and of clauses with one",
+    "owned_clauses_per_class_vs_T": "per class, alive clauses with a positive vote (docs/11 'owns'); quantiles and the number of classes below and at least T (T = 64)",
+    "include_boundary_crossings_per_epoch": "counted on the device between consecutive batch ends of the replayed main arm and of the twin: retained slots (same literal, same clause incarnation) whose state crossed 128, over retained slots whose state changed; slot turnover (insertion, seeding, eviction, recycling) reported separately. Transitions that cancel inside one batch are not visible (batch granularity; the engine applies all events of a batch in one kernel pass and exposes no per-event trace)",
+    "class_sum_histograms": "the engine's vote sums at the 490,000 dev patch positions under the frozen 15 percent mask (the forward pass of ssl_r4_images.masked_top1): gold class, top class, margin gold minus best other, signed log2 bins, fractions at or beyond +-T. The engine's closest analogue of a TM class sum; its feedback gates use the sums clipped at +-T",
+    "not_defined": "random bank: no votes (no owned classes, no class sums, no masked top-1) and no training (no transitions); randkm.final: not replayed here (no transitions)"
+   }
+  },
+  "report": {
+   "budgets": [
+    10,
+    100
+   ],
+   "label_budget": 10,
+   "label_threshold_points": 1.0,
+   "n_boot": 10000,
+   "boot_seed": 20260925,
+   "rows": "code_main (registered probe cells) minus: each ladder rung, max(ladder) chosen per seed, the twin, the random bank; also minus the registered code_young and bovw for context; units points (100 x accuracy), paired over (seed, draw)",
+   "statistics": "two-level bootstrap of A8 item 1 (tmlm.ssl.confirm.two_level_bootstrap: resample seeds, then draws within each resampled seed; 10,000 resamples), the seed-level Student-t interval (tmlm.ssl.confirm.seed_t_interval) and the driver's flat paired bootstrap over (seed, draw) (ssl_r4_images.paired_bootstrap)",
+   "label_rule": "A8 item 1 on the single image code: 'literal-learning credit' iff at 10 labels per class (the H17.10 budget) code_main minus max(ladder) AND code_main minus the twin are each at least 1.0 point with the two-level bootstrap interval excluding 0 (lo > 0), on all 3 seeds; otherwise 'no literal-learning credit'; INCOMPLETE if a seed is missing. The same components at 100 labels per class are reported without a label. A8's 'all-clauses AND dimension-matched' conjunct has no image analogue (R4 registers one code) and is not applied",
+   "checks": "every control cell's labelled sample equals the registered cell's (labelled_sha256); the C0y rung's predictions equal the registered code_young predictions cell for cell (pred_sha256): the probe path is the registered one"
+  }
+ },
+ "mem_limits_gib": {
+  "replay": 12,
+  "twin": 12,
+  "randbank": 12,
+  "probe": 16,
+  "diag": 12,
+  "report": 4,
+  "note": "scripts/mem_guard.py --scope group --limit-gib N (host memory); replay, twin and diag hold one C = 65,536 engine like the registered gpu stage (12 GiB there), probe the same code matrices as the registered probe stage (16 GiB there)"
+ },
+ "cost_estimate": {
+  "label": "derived from the logged seed-100 exploratory runs; not measured for these stages",
+  "sources": {
+   "gpu": "results/20260924T220231Z_ssl_r4_gpu_seed100_exploratory: wall_time_s 158 for two arms x 4 epochs (main epoch walls 8.5, 6.9 s, ...) plus three code passes (final codes 135,755 positions per s, young 1,370,350), peak GPU memory 9,540 MiB",
+   "probe": "results/20260924T220514Z_ssl_r4_probe_seed100_exploratory: wall_time_s 6,251 on 1 CPU slot; per LR cell code_main 62 to 66 s at 10 labels per class and 437 to 485 s at 100, code_young 3.7 to 4.1 s and 31 to 35 s",
+   "randbank": "results/20260926T225937Z_ssl_r1cf_randbank_seed1_confirmatory: 131 s wall for the text bank over 20M positions at 605 fired per position (R4 fires over 2.94M positions)"
+  },
+  "per_seed": {
+   "replay_gpu_s": "about 150 to 300 (one arm's training, 4 epochs, plus 4 code passes and 8 masked top-1 passes)",
+   "twin_gpu_s": "about 100 to 200",
+   "randbank_gpu_s": "about 60 to 180",
+   "diag_gpu_s": "about 120 to 400 (up to 7 banks, one forward pass over 490,000 dev positions each)",
+   "probe_cpu_s": "about 3,000 to 13,500: 6 reps x 2 budgets x 5 draws; a rep as dense as code_main costs about 2,700 s (5 x 64 + 5 x 470), one as sparse as C0y about 185 s; C0y is sparse, the other five reps are bounded by the dense cost",
+   "report_cpu_s": "about 60 (9 rows x 2 budgets, 10,000 two-level resamples each)"
+  },
+  "total": "per seed about 1 to 4 h wall on one CPU slot, dominated by the probe; the GPU share is about 10 to 20 min per seed under the shared lock; three seeds in three parallel lanes"
+ },
+ "launch": {
+  "order": "per seed, AFTER the registered ssl_r4_gpu_seedN run exists and exited 0: replay (GPU), twin (GPU), randbank (GPU), diag (GPU), then probe (CPU); the report after the probe runs of all three seeds AND the registered ssl_r4_probe_seedN runs exist",
+  "cpu_slot_first": "scripts/cpu_slot.sh 1 -- scripts/gpu_run.sh shared -- ... (docs/12 F25)",
+  "smoke": "experiments/cvtm/configs/ssl_r4_controls_smoke.json",
+  "lane_per_seed": "source env/env.sh && N=1 && CFG=experiments/cvtm/configs/ssl_r4_controls.json G=$(ls -d results/*_ssl_r4_gpu_seed$N | tail -1) TAG=seed$N EXTRA= EP= nohup scripts/cpu_slot.sh 1 -- bash -c 'set -e; PY=.venv-tm/bin/python; X=\"$PY -u experiments/ssl_r4_controls.py --config $CFG --gpu-run $G $EXTRA\"\ngpu() { s=$1; shift; scripts/gpu_run.sh shared -- $PY scripts/mem_guard.py --scope group --limit-gib 12 -- scripts/run_logged.py --name ssl_r4c_${s}_$TAG --config $CFG -- $X --stage $s \"$@\"; }\nlast() { ls -d results/*_ssl_r4c_$1_$TAG | tail -1; }\ngpu replay $EP; gpu twin $EP; gpu randbank\nR=$(last replay); T=$(last twin); B=$(last randbank); C=\"--replay-run $R --twin-run $T --randbank-run $B\"\ngpu diag $C\n$PY scripts/mem_guard.py --scope group --limit-gib 16 -- scripts/run_logged.py --no-gpu-sampler --name ssl_r4c_probe_$TAG --config $CFG -- $X --stage probe $C' > /dev/null 2>&1 &",
+  "lane_note": "one lane per seed: N=1, 2, 3 (three commands, each holds one CPU slot for its whole chain; the GPU stages replay, twin, randbank and diag take the shared GPU lock one at a time inside it, then the CPU probe runs in the same slot). set -e: a failed replay check (exit 1) or any failed stage stops the lane. The same command text ran as the smoke lane with CFG=ssl_r4_controls_smoke.json, TAG=lane_smoke, EXTRA=--data-root <scratch>, EP=--epochs 2",
+  "report": "source env/env.sh && CFG=experiments/cvtm/configs/ssl_r4_controls.json && RUNS=$(for N in 1 2 3; do for p in ssl_r4_gpu_seed$N ssl_r4_probe_seed$N ssl_r4c_replay_seed$N ssl_r4c_twin_seed$N ssl_r4c_randbank_seed$N ssl_r4c_diag_seed$N ssl_r4c_probe_seed$N; do ls -d results/*_$p | tail -1; done; done | paste -sd,) && scripts/cpu_slot.sh 1 -- .venv-tm/bin/python scripts/mem_guard.py --scope group --limit-gib 4 -- scripts/run_logged.py --no-gpu-sampler --name ssl_r4c_report --config $CFG -- .venv-tm/bin/python -u experiments/ssl_r4_controls.py --stage report --config $CFG --runs $RUNS"
+ }
+}

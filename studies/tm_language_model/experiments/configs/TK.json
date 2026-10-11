@@ -1,0 +1,38 @@
+{
+  "experiment": "TK",
+  "docs": "docs/05",
+  "milestone": "M3",
+  "lane": 1,
+  "status": "planned",
+  "prereg": [],
+  "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "script": "experiments/tk_tokenization_ablation.py",
+  "venv": ".venv-tm",
+  "gpu_lock": "shared",
+  "engine": {
+    "mode": "masked",
+    "vocab": 2000,
+    "n_clauses": 65536,
+    "batch": 1024
+  },
+  "params": {
+    "tokenizers": [
+      "bpe_2000",
+      "word_2000_unk"
+    ],
+    "tokens": 5000000,
+    "source": "RDDLGN Table 2",
+    "metrics": [
+      "top1_subword",
+      "top1_wholeword",
+      "bits_per_byte",
+      "clauses_owned_per_class"
+    ]
+  }
+}

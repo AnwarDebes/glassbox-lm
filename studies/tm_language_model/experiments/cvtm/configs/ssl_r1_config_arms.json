@@ -1,0 +1,219 @@
+{
+ "experiment": "ssl_r1_config_arms",
+ "status": "EXPLORATORY configuration arms of docs/13 amendment A8 item 2 (seed 100 first, then 101; never confirmatory). They inform the DESIGN ONLY: no A7 threshold, no A8 item 1 label and no reading rule is applied to them. Every downstream number uses the train splits of the tasks (the R1 exploration dev carve); no test split and never SST-2 validation. Q_pred and the class-sum diagnostic read the frozen V 8000 VALIDATION targets only; the WikiText-103 test split is never loaded (the test-access counter is read before and after and must not change).",
+ "docs": "docs/13 amendment A8 items 2 and 6 (and A7 for R1, C0y and Q_pred); docs/11 sections 5.2 to 5.6 (literal paths, seeding) and section 8 item 5 (owned clauses per class against T); docs/12 F25 (CPU slot first, then the GPU lock)",
+ "script": "experiments/ssl_r1_config_arms.py (imports experiments/ssl_r1_controls.py as a module and reuses its stage functions; nothing of it is edited)",
+ "stages": [
+  "train",
+  "census",
+  "features",
+  "qpred",
+  "probe",
+  "report"
+ ],
+ "written_before_any_output": "2026-09-25: the arms, the twin assignment, the diagnostics and the report comparisons below were fixed before any run of these arms existed. No output of the configuration arms exists at this time.",
+ "why": [
+  "A8 item 2: the R1 settings (s = 128, T = 64, budget 12, neg_budget 1 in A2, 2 elsewhere) were tuned for the tiny-LM gate KB2, not for representations; the literature puts text optima at s of about 1 to 11 and 1 to 4 literals per clause (Tarasyuk et al. 2026; Abeyrathna et al. 2023, CSC-TM).",
+  "Arms on A3's data (F2) so that the young ladder, the census, the features, Q_pred and the LR probe pair exactly with the control study's A3 bank and its literal-frozen twin A3T."
+ ],
+ "arms": {
+  "A3s8": "R1 arm A3 (same data: F2, at most 2,000 targets per class per epoch, redrawn per epoch; same seeds) with EngineConfig s = 8; every other value as A3",
+  "A3s32": "as A3s8 with s = 32",
+  "A3pos": "R1 arm A3 with budget = 3, p_neg = 0 and neg_budget = 0 (positive short clauses, the slide-11 setting); every other value as A3"
+ },
+ "twin": {
+  "arm": "A3T",
+  "source": "the literal-frozen twin of the control study (experiments/cvtm/configs/ssl_r1_controls.json, arm A3T: A3 with p_ins = 0, p_neg = 0, s = 2^62), train runs results/<timestamp>_ssl_r1c_train_A3T_seed<S>_exploratory for the same seeds; its probe and qpred runs are the twin rows of every configuration arm. No separate twin is trained for these arms.",
+  "why_valid": "The twin of an arm is that arm's EngineConfig with the twin overrides p_ins = 0, p_neg = 0, s = 2^62. In a twin, clauses keep their seed literals whatever the arm's s is: the override replaces s, so the Type Ia false-literal decrement (inv_s_q32 = 0) and the owned-class decay (n_q16 = floor(owed / 2^62) = 0 while sum(G) < 2^62, checked by the control study) never fire, and with p_ins = p_neg = 0 no literal is ever inserted.",
+  "s_arms": "A3s8 and A3s32: the twin EngineConfig is IDENTICAL to A3T's (the only override of the arm, s, is itself overridden). Checked in every train run (check twin.A3T_serves_as_twin, field exact = true) and in tests/test_ssl_r1_config_arms.py.",
+  "A3pos": "the twin EngineConfig differs from A3T's only in budget (3 vs 12) and neg_budget (0 vs 2); p_neg is 0 in both. Both fields are read ONLY at a 127 to 128 crossing of a literal state (src/tmlm/engine/oracle/oracle.py _state_up; src/tmlm/engine/core/tm_core.h lines 348 and 349, used by the CPU engine and the CUDA kernels) and in the oracle's invariant check. In a twin no tracked literal is ever below 128: seeds enter at STATE_SEED = 136 (docs/11 5.6), nothing is inserted (at STATE_INSERT = 123) and no state ever decreases, so the crossing is never reached; seeding draws at most 3 literals (oracle _seed_literals) without reading budget, and 3 <= budget. So the A3pos twin has the same trajectory as A3T (state hash for state hash). Checked in every train run (twin.A3T_serves_as_twin, field equivalent = true) and bit for bit on tiny runs of the oracle and the CPU engine in tests/test_ssl_r1_config_arms.py."
+ },
+ "controls_config": "experiments/cvtm/configs/ssl_r1_controls.json",
+ "params_equal_controls_note": "params below, without config_arms and diagnostics, must equal the control study's params (checked by every stage), so data, young ladder, doc set, Q_pred and probes are those of the control study; r1_config, params_shared_with_r1 and doc_set_reference are copied from it as well",
+ "diagnostics_item6": {
+  "literals": "per checkpoint: histogram of included literals per clause, negated share (of literals and of clauses), bag share (of literals and of clauses); from ssl_r1_controls.census_of",
+  "owned_per_class": "per checkpoint: m_c = number of alive clauses owning class c (a vote slot for c with w > 0, docs/11 section 2), quantiles and log2 histogram over the V classes, the fraction of classes with m_c = 0, at least T, at least 2T (T <= floor(m/2)) and at least the smallest m with floor(m/e) >= T (docs/11 section 8 item 5, Zhang, Jiao, Granmo, ICLR 2026), and the share of validation targets whose class meets each bound",
+  "include_crossings": "between consecutive checkpoints (young rungs, c0y, epoch1 to epoch4), over clause incarnations alive at both (same birth step): literals that crossed the include boundary (same literal, included status changed; included then freed; inserted then included). The engine does not count TA transitions, so these are NET crossings, a LOWER BOUND on crossing transitions; per epoch 2 to 4 also normalised by the Type I plus Type II feedback events of that epoch (train run metrics)",
+  "class_sums": "per checkpoint on a fixed sample of params.diagnostics.class_sum_rows frozen V 8000 validation targets (frozen hidden mask, CPU engine): histograms of the target class sum S_y, of the largest other class sum and of all class sums, clamped to [-T, T] in bins of class_sum_bin_width; fractions S_y >= T (target gate mass 0), S_y <= 0, S_y above every other class; fired clauses per row and cover (fired clauses owning y) against K_COVER; S_y rebuilt from the fired lists must equal predict_scores (check)"
+ },
+ "report": {
+  "status": "descriptive, derived; no verdict row. Fixed before any output.",
+  "unit": "Q_text points (1.0 point = 0.010 of Q_text: mean accuracy over AG News, SST-2 and TREC-6 of the L2 LR probe, averaged over the 5 label draws; identical draws and folds in every run)",
+  "per": "configuration arm x seed x code (all, dim) x probe budget (8, 32, 128)",
+  "comparisons": [
+   "d_ladder: epoch4 of the arm minus max(young ladder of the same run, c0y included), paired over draws, bootstrap interval",
+   "d_twin: epoch4 of the arm minus epoch4 of A3T (the control study, same seed)",
+   "d_vs_A3: epoch4 of the arm minus epoch4 of A3 (the control study bank with the R1 settings, same seed)",
+   "d_vs_A3_ladder: epoch4 of the arm minus max(young ladder of A3)",
+   "d_epoch4_vs_epoch1 of the arm",
+   "Q_pred of the arm (c0y, epoch4), of A3T and of A3 (epoch4)"
+  ]
+ },
+ "r1_config": "experiments/cvtm/configs/ssl_r1_pretext.json",
+ "params_shared_with_r1": [
+  "vocab",
+  "n_clauses",
+  "n_tokens",
+  "epochs",
+  "f1_t",
+  "f2_m",
+  "young_fraction",
+  "dim_matched",
+  "tasks",
+  "budgets",
+  "draws",
+  "folds",
+  "c_grid",
+  "lr_max_iter",
+  "forward_chunk"
+ ],
+ "params_shared_note": "these params must equal those of r1_config at run time (checked by every stage); budgets are the R1 budgets because they define the labelled union of the document set, the probe runs only probe_budgets",
+ "doc_set_reference": {
+  "rule": "the downstream document set (tokens, document starts, layout and labels) must equal the one of an R1 features run, so that label draws, folds and dev rows pair exactly across R1 and this study",
+  "run": "results/20260924T212145Z_ssl_r1_features_A0_seed100_exploratory"
+ },
+ "params": {
+  "smoke": false,
+  "vocab": 8000,
+  "n_clauses": 65536,
+  "n_tokens": 20000000,
+  "epochs": 4,
+  "f1_t": 0.0001,
+  "f2_m": 2000,
+  "young_fraction": 0.01,
+  "dim_matched": 8192,
+  "tasks": [
+   "agnews",
+   "sst2",
+   "trec"
+  ],
+  "budgets": [
+   8,
+   32,
+   128,
+   512
+  ],
+  "draws": [
+   0,
+   1,
+   2,
+   3,
+   4
+  ],
+  "folds": 4,
+  "c_grid": [
+   0.01,
+   0.1,
+   1.0,
+   10.0,
+   100.0
+  ],
+  "lr_max_iter": 1000,
+  "forward_chunk": 8192,
+  "seeds": [
+   100,
+   101
+  ],
+  "young_ladder": {
+   "abs_batches": [
+    77,
+    196,
+    255
+   ],
+   "percent_of_epoch1": [
+    5,
+    10
+   ],
+   "rounding": "round half up of the exact value nb x percent / 100, computed as (nb x percent + 50) // 100 in integers (at least 1); nb = batches of epoch 1 of the arm; an absolute rung beyond nb is skipped",
+   "note": "77 and 196 are the C0y batch counts of A3 and A0 (seed 100), 255 is the last batch before the first sweep (docs/11 5.7, SWEEP_PERIOD 256, oracle N1); for A3 nb = 7,639 gives rungs 382 and 764, for A0 nb = 19,531 gives 977 and 1,953 [derived from the logged epoch-1 target counts]"
+  },
+  "twin_overrides": {
+   "p_ins": 0.0,
+   "p_neg": 0.0,
+   "s_log2": 62
+  },
+  "probe_budgets": [
+   8,
+   32,
+   128
+  ],
+  "probe_classifier": "lr",
+  "lr_backend": "cpu",
+  "qpred": {
+   "readout": "docs/11 11.5 T1 stand-alone count-vote read-out (loglin), the H8.1 masked flow of experiments/cvtm_t1_readout.py run_masked applied to a V 8000 R1 bank; its helpers and the reference kernels of experiments/ckm_posthoc_probe.py are imported unchanged; the wrapper exists because run_masked is bound to the V 2000 tiny-LM task",
+   "counting_positions": "every position of the 20M-token training prefix outside the fit documents, only the target hidden (all-zero bitmap, as R1 features and H8.1)",
+   "fit_documents": "prefix documents i (index in the train split) with splitmix64(i XOR 0xC0FFEE) mod 100 == 0 (docs/11 11.6); never counted",
+   "fit_rows": "every position of the fit documents inside the prefix, only the target hidden",
+   "validation": "the frozen V 8000 validation eval set, subword variant (42,213 targets under its frozen hidden mask), the target set of H8.11",
+   "metric": "Q_pred = loglin top-1 (ties toward the lowest class id); also top-5, bits per token, and the bank's own signed-vote top-1 (secondary, argmax of the vote sums, ties toward the lowest id)",
+   "fit_source": "experiments/cvtm/configs/H8_1_masked.json fit.loglin, copied unchanged (checked equal at run time)",
+   "fit": {
+    "optimizer": "scipy L-BFGS-B, mean negative log-likelihood (nats per row), GPU objective and gradient; the objective at the solution is recomputed by the CPU float64 reference (must agree within 1e-6)",
+    "precondition": "empirical_fisher_diagonal_at_init",
+    "maxiter": 1000,
+    "maxfun": 1500,
+    "ftol": 1e-10,
+    "gtol": 1e-06,
+    "maxcor": 30,
+    "alpha_bounds": [
+     -20,
+     20
+    ],
+    "beta0_bounds": [
+     -5,
+     5
+    ],
+    "init": "alpha = 1 / (mean counted fired clauses per fit row) for every group, beta0 = 1"
+   },
+   "checks": {
+    "cross_engine_count_rows": 500,
+    "cross_engine_fit_rows": 200,
+    "validation_api_rows": 200,
+    "validation_bruteforce_rows": 5,
+    "signed_predict_scores_rows": 512
+   },
+   "gpu_pool_limit_gib": 10.5
+  },
+  "chain_checkpoints": {
+   "features": "ladder,c0y,epoch1,epoch4",
+   "qpred": "c0y,epoch4",
+   "probe_sets": "auto (every featurised checkpoint, codes all and dim)"
+  },
+  "config_arms": {
+   "A3s8": {
+    "data_arm": "A3",
+    "engine_overrides": {
+     "s": 8.0
+    },
+    "description": "A3 with s = 8 (R1: s = 128)"
+   },
+   "A3s32": {
+    "data_arm": "A3",
+    "engine_overrides": {
+     "s": 32.0
+    },
+    "description": "A3 with s = 32 (R1: s = 128)"
+   },
+   "A3pos": {
+    "data_arm": "A3",
+    "engine_overrides": {
+     "budget": 3,
+     "p_neg": 0.0,
+     "neg_budget": 0
+    },
+    "description": "A3 with budget = 3, p_neg = 0, neg_budget = 0: positive short clauses (R1: budget 12, p_neg 1/16, neg_budget 2)"
+   }
+  },
+  "diagnostics": {
+   "class_sum_rows": 4096,
+   "class_sum_sample_seed": 6,
+   "class_sum_bin_width": 8,
+   "fired_chunk_rows": 256,
+   "engine": "cpu"
+  }
+ },
+ "gpu_lock": "shared (train, features, qpred); none (census, probe, report)",
+ "cpu_slots": 1,
+ "memory_guard": "scripts/mem_guard.py --scope group, about twice the measured resident peaks: train 8 GiB (the control study's A3 training peaked at 2.87 GiB [measured: results/20260925T072256Z_ssl_r1c_train_A3_seed100_exploratory, train.epoch4.memory]), census 8 GiB (not measured with the item 6 diagnostics; the control study's census alone ran in 3.4 s, results/20260925T072836Z_ssl_r1c_census_A3_seed100_exploratory, without a memory metric), features 12 GiB (the control study's features c0y, ladder, epoch1, epoch4 at 3.51 GiB, results/20260925T081210Z_ssl_r1c_features_A3_seed100_exploratory; the R1 features run with G+ at 5.65 GiB, results/20260924T223250Z_ssl_r1_features_A3_seed100_exploratory), probe 16 GiB (the R1 LR probe of A3 at 10.09 GiB, results/20260924T230745Z_ssl_r1_probe_A3_seed100_exploratory), qpred 16 GiB (unverified: no V 8000 Q_pred run had finished when this limit was set, the control study's first one, results/20260925T081814Z_ssl_r1c_qpred_A3_seed100_exploratory, was still running), report 8 GiB (not measured; it reads cells.jsonl and metrics.json files only). A step killed by its limit is a failed step of the chain, never a result.",
+ "venv": ".venv-tm"
+}

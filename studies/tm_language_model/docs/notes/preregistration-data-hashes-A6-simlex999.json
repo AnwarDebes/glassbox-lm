@@ -1,0 +1,23 @@
+{
+ "dataset": "SimLex-999 (Hill, Reichart and Korhonen 2015, Computational Linguistics 41(4))",
+ "files": {
+  "data/concept_eval/simlex999/SimLex-999.zip": {
+   "bytes": 16805,
+   "sha256": "30f40eb18f41b08b65dfbc328f473e8b69ba444b1c9d053c1adde2324fc76315"
+  },
+  "data/concept_eval/simlex999/SimLex-999/README.txt": {
+   "bytes": 2766,
+   "sha256": "9a5137f54986b4ef42099225885f086da60a55f387db01e661c3a59679be9131"
+  },
+  "data/concept_eval/simlex999/SimLex-999/SimLex-999.txt": {
+   "bytes": 44050,
+   "sha256": "ca00ff8515a36cde32d13c2b83def23f5a167b67db93ebfcfb7dae039ba22c0b"
+  }
+ },
+ "licence": "no licence is stated on the dataset page or in README.txt (checked 2026-09-24); the authors ask for a citation. Treated as research use with citation; not redistributed by this repository.",
+ "provenance_check": "re-downloaded 2026-09-24 about 15:04 UTC from the source URL into a scratch directory: identical sha256 of the zip [measured]",
+ "source": "https://fh295.github.io/SimLex-999.zip (page https://fh295.github.io/simlex.html)",
+ "splits": "none: SimLex-999 has no official train/dev/test split. Every exploratory evaluation reads all 999 pairs; each run that reads it is an access to be counted (protocol rule 14).",
+ "used_by": "experiments/ssl_concepts_early.py (exploratory, docs/12 F23)",
+ "written": "2026-09-24, once, before any evaluation run read the scores (write-once: never edit)"
+}

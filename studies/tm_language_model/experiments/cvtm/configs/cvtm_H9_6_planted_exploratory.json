@@ -1,0 +1,29 @@
+{
+ "experiment": "cvtm_H9_6_planted_exploratory",
+ "mode": "planted",
+ "status": "EXPLORATORY (seeds of 100 or more; docs/13 A4 'Seeds'): a check of the H9.6 derivation on the real CPU engine in a planted world where its assumptions hold by construction. It supports no registered verdict and does not change the H9.6 statistic, threshold or reading, which were fixed in experiments/cvtm/configs/cvtm_H9_6_vote_equilibrium.json before this config was written.",
+ "prereg": [],
+ "docs": "docs/13 A4 (H9.6); docs/11 sections 5.2, 5.3, 6 (tabular input) and 8c; the derivation is the constant DERIVATION of the script",
+ "script": "experiments/cvtm_vote_equilibrium.py",
+ "venv": ".venv-tm",
+ "lane": "B2",
+ "gpu_lock": "none (CPU engine)",
+ "run_names": ["cvtm_H9_6_planted_exploratory"],
+ "launch": "CUDA_VISIBLE_DEVICES= scripts/cpu_slot.sh 1 -- .venv-tm/bin/python scripts/mem_guard.py -- scripts/run_logged.py --no-gpu-sampler --name cvtm_H9_6_planted_exploratory --config experiments/cvtm/configs/cvtm_H9_6_planted_exploratory.json -- .venv-tm/bin/python -u experiments/cvtm_vote_equilibrium.py --config experiments/cvtm/configs/cvtm_H9_6_planted_exploratory.json",
+ "planted": {
+  "world": "tabular mode (docs/11 section 6, default engine, not dense-equivalent): F binary features iid Bernoulli(0.5); labels iid from a Zipf(a) distribution p over V classes, independent of the features. Every context therefore has the same p(c), so A2 (representability) and A5 (known p) hold exactly; A1 holds for V <= v_slots = 64 and is broken on purpose at V = 256 (slot pressure); B = 16 against B = 1024 shows the effect of batch staleness (A4)",
+  "n_features": 16,
+  "n_train": 50000,
+  "n_test": 2000,
+  "epochs": 4,
+  "n_clauses": 512,
+  "T": 64,
+  "Q": 1.0,
+  "zipf_a": 1.0,
+  "vocab": [32, 256],
+  "batch": [16, 1024],
+  "seeds": [100, 101, 102],
+  "snapshots_last_epoch": 10,
+  "measure": "mean over 10 evenly spaced snapshots of the last epoch and over the 2,000 test rows of S_c/T (raw) and clamp(S_c, -T, T)/T, per class, against tanh(x_c/2) with x_c = ln(p_c / ((1 - p_c) Q / (V - 1))); per run: R^2 over the classes (unweighted, no fitted parameter), max |deviation|, Spearman(mean S, ln p) over the classes with p > 20 b"
+ }
+}

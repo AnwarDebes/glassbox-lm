@@ -1,0 +1,65 @@
+{
+  "experiment": "cvtm_H8_1_masked",
+  "status": "PRE-REGISTERED confirmatory runs of docs/13 amendment A3, hypothesis H8.1 (masked arm). Validation split only; the test split is never loaded.",
+  "prereg": ["H8.1"],
+  "docs": "docs/11 section 11.5 (T1, the stand-alone count-vote read-out) and 11.6 (fit documents); docs/13 amendment A3",
+  "script": "experiments/cvtm_t1_readout.py",
+  "venv": ".venv-tm",
+  "gpu_lock": "shared",
+  "mode": "masked",
+  "run_names": ["cvtm_H8_1_masked_seed2", "cvtm_H8_1_masked_seed3", "cvtm_H8_1_masked_seed4", "cvtm_H8_1_masked_seed5"],
+  "launch": "scripts/gpu_run.sh shared -- nice -n 19 .venv-tm/bin/python scripts/mem_guard.py --limit-gib 25 -- scripts/run_logged.py --name cvtm_H8_1_masked_seed<S> --config experiments/cvtm/configs/H8_1_masked.json -- .venv-tm/bin/python -u experiments/cvtm_t1_readout.py --config experiments/cvtm/configs/H8_1_masked.json --bank-seed <S>",
+  "banks": {
+    "1": "results/20260923T125642Z_H2_row_d/layer1_seed1.npz",
+    "2": "results/20260923T125642Z_H2_row_d/layer1_seed2.npz",
+    "3": "results/20260923T125642Z_H2_row_d/layer1_seed3.npz",
+    "4": "results/20260923T125642Z_H2_row_d/layer1_seed4.npz",
+    "5": "results/20260923T125642Z_H2_row_d/layer1_seed5.npz"
+  },
+  "bank_seeds_reported": [2, 3, 4, 5],
+  "bank_seed_smoke_only": [1],
+  "bank_seed_note": "the seed-1 bank was used by the exploratory probe results/20260924T001024Z_ckm_probe_masked_exploratory and is never counted for H8.1 (docs/13 A3 disclosure); the script refuses it without --smoke",
+  "engine_config": "experiments/configs/tiny_lm.json",
+  "engine_config_note": "the engine block of that file with seed = bank seed, the configuration the banks were trained with (masked, V 2000, C 65536, 4 epochs)",
+  "expected_signed_top1": {"source": "results/20260923T125642Z_H2_row_d/metrics.json", "key": "row_d.seed{seed}.layer1_top1",
+                           "rule": "the signed-vote top-1 recomputed here must equal the logged value exactly, and the vote sums rebuilt from our fired lists must equal predict_scores on every target, or the run stops"},
+  "data": {
+    "corpus": "wikitext103",
+    "vocab": 2000,
+    "train_tokens": 5000000,
+    "train_slice": "the first 5,000,000 tokens of the train split cut at a document boundary (experiments/m3_tiny_lm.py slice_train): 4,999,168 tokens, 813 documents",
+    "count_hiding": "all-zero bitmap: only the target position is hidden (as the exploratory probe)",
+    "validation": "the frozen validation eval set, subword variant (56,210 targets), under its frozen hidden mask"
+  },
+  "fit_documents": {"rule": "training document i (index in the train split) with splitmix64(i XOR 0xC0FFEE) mod 100 == 0 (docs/11 11.6); these documents are never counted", "salt": 12648430, "modulus": 100},
+  "readout": {
+    "class_score": "s(c) = beta0 ln P_uni(c) + sum over fired j with N_j > 0 of alpha_g(j) q_jc; P = softmax over V",
+    "vote": "q_jc = ln(1 + lam_j O_jc / (N_j (1 - lam_j) P_uni(c))), lam_j = N_j / (N_j + D_j) (Witten-Bell)",
+    "groups": "g(j) = min(n_inc_j, 12) * 24 + min(floor(log2 N_j), 23), n_inc = included literals of the alive clause",
+    "unigram": "add-one unigram of the counting positions",
+    "reference_kernels": "k_loglin, k_gval, k_lin_obj, k_dense_eval of experiments/ckm_posthoc_probe.py (imported unchanged; float64 CPU); every reported masked loglin and lin number comes from them",
+    "secondary_row": "lin: the probe's normalised linear mixture (group weights, add-one unigram with weight 1) on the same counts and fit rows"
+  },
+  "compute": {
+    "validation_fired_lists": "CPU engine (tm_fired_clauses), one thread, nice 19",
+    "counting_pass": "CUDA engine forward (bit-exact with the CPU engine; cross-checked on samples below), shared GPU lock",
+    "forward_chunk": 32768,
+    "gpu_pool_limit_gib": 10.5,
+    "host_memory_guard": "scripts/mem_guard.py --limit-gib 25"
+  },
+  "checks": {"cross_engine_count_rows": 2000, "cross_engine_fit_rows": 500},
+  "fit": {
+    "rows": "every position of the fit documents of the slice (25,141 rows, only the target hidden)",
+    "loglin": {"optimizer": "scipy L-BFGS-B, mean negative log-likelihood (nats per row), GPU objective and gradient; the objective at the solution is recomputed by the CPU float64 reference (must agree within 1e-6)",
+               "precondition": "empirical_fisher_diagonal_at_init", "maxiter": 1000, "maxfun": 1500, "ftol": 1e-10, "gtol": 1e-6, "maxcor": 30,
+               "alpha_bounds": [-20, 20], "beta0_bounds": [-5, 5],
+               "init": "alpha = 1 / (mean counted fired clauses per fit row) for every group, beta0 = 1"},
+    "lin": {"optimizer": "scipy L-BFGS-B on the log group weights, mean negative log-likelihood, CPU", "maxiter": 3000, "maxfun": 4000, "ftol": 1e-10, "gtol": 1e-6,
+            "maxcor": 30, "log_weight_bounds": [-30, 30], "init": "log weights 0"},
+    "convergence_rule": "converged = scipy L-BFGS-B success: relative objective reduction per iteration below ftol, or projected gradient (in the optimizer's coordinates) below gtol, within maxiter and maxfun. The status, message, iterations, evaluations and the projected gradient in the original coordinates are recorded for every run.",
+    "preconditioner_note": "a fixed diagonal reparametrisation u = x * s with s = sqrt(mean over fit rows of the squared per-row gradient) at the initial point; the model and its optimum are unchanged",
+    "budget_calibration": "fixed on 2026-09-24 before the first logged run, from unlogged smoke runs on the seed-1 bank with validation scoring disabled (--skip-val), looking only at the fit objective: without preconditioning (maxcor 10) the objective was still falling after 2,775 evaluations (2.96312823 nats per row); with this preconditioner and maxcor 30 the fit converged by the ftol rule after 59 iterations at 2.96308282. No validation number was computed before this file was written."
+  },
+  "threshold": {"masked_top1_gain_min": 0.05, "rule": "H8.1 masked: loglin top-1 minus the same bank's signed-vote top-1 at least 0.05 on EACH of the 4 banks (docs/13 A3)"},
+  "bootstrap": {"resamples": 2000, "unit": "validation document (60 documents)", "statistic": "top-1 difference loglin minus signed, ratio of sums", "label": "derived"}
+}

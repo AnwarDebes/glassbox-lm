@@ -1,0 +1,81 @@
+{
+  "experiment": "H1",
+  "docs": "docs/05",
+  "milestone": "M9",
+  "lane": 2,
+  "status": "planned",
+  "prereg": [
+    "H4.1",
+    "H4.2"
+  ],
+  "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "script": "experiments/h1_hierarchical_pairs.py",
+  "venv": ".venv-tm",
+  "gpu_lock": "shared",
+  "params": {
+    "package": "PyHierarchicalTsetlinMachineCUDA.MultiClassTsetlinMachine",
+    "vocab": 8000,
+    "hierarchy": [
+      [
+        "AND_GROUP",
+        "features"
+      ],
+      [
+        "OR_ALTERNATIVES",
+        "alternatives"
+      ],
+      [
+        "AND_ALTERNATIVES",
+        "concepts"
+      ],
+      [
+        "AND_GROUP",
+        2
+      ]
+    ],
+    "append_negated": false,
+    "boost_true_positive_feedback": 0,
+    "number_of_state_bits": 8,
+    "grid": [
+      208,
+      1,
+      1
+    ],
+    "alternatives": [
+      10,
+      20
+    ],
+    "concepts": [
+      5,
+      10
+    ],
+    "clauses": [
+      1000,
+      2000
+    ],
+    "sweep_rule": "1 seed on validation, then 5 seeds at the chosen config (B2)",
+    "controls": [
+      "flat_coalesced_tm_tmu",
+      "logistic_bag"
+    ],
+    "task": "slide-11 pairs (E6 tier 1)",
+    "memory_envelope": "docs/02 V3",
+    "package_commits": {
+      "primary": "5b4a223075c1e621577d508bc7c3c061230e29d5 (HEAD 2026-09-22, third_party/ref/PyHierarchicalTsetlinMachineCUDA; installed into a separate .venv-htm by the H1 script, logged)",
+      "secondary": "c85ca4e70af90511d6b4f8e8eedccd23a7d7d0ec (the vendored install in .venv-tm; docs/02 V3 cites its lines)"
+    },
+    "switches_swept_on_validation": [
+      "and_group_normalization",
+      "constant_update_p",
+      "no_clipping",
+      "binary_inference"
+    ],
+    "signature_printout": "inspect.signature of every class used, written to the run dir before training (protocol rule 10)"
+  }
+}

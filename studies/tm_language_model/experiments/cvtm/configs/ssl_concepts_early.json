@@ -1,0 +1,84 @@
+{
+  "experiment": "ssl_concepts_early",
+  "status": "EXPLORATORY (docs/12 F23): early concept test of the self-supervised clause banks (conceptualization challenge C1). Not pre-registered; no docs/13 threshold is tested. The early verdict rule was fixed on 2026-09-24. Validation-free: no WikiText-103 validation or test data is read; the WikiText-103 test split is never loaded. Downstream sets: SimLex-999 and WordSim-353 have no official split (all pairs read, every run counted as an access), MEN: the dev split only.",
+  "docs": "docs/12 F23; docs/11 11.5 (count read-out); src/tmlm/ssl/concepts.py (definitions)",
+  "script": "experiments/ssl_concepts_early.py",
+  "venv": ".venv-tm",
+  "seed": 100,
+  "vocab": 8000,
+  "phases": {
+    "bank": "one run per bank (trained, young, epoch1): count pass over the prefix on the GPU, the three profiles, all variants, pair similarities and neighbour lists saved as reps_<bank>.npz",
+    "baselines": "one run: co-occurrence families on the same prefix (and one on the full train split), CBOW, exchange codes, a frequency control, saved as reps_baselines.npz",
+    "evaluate": "one run over the saved representations: Spearman with bootstrap intervals, the early verdict, WordNet purity, printouts"
+  },
+  "data": {
+    "corpus": "wikitext103",
+    "split": "train only",
+    "train_prefix_tokens": 20000000,
+    "train_prefix": "first 20,000,000 tokens of the train split cut at a document boundary (m3_tiny_lm.slice_train), as experiments/cvtm_t1_readout.py",
+    "counting_positions": "positions of the prefix outside the fit documents of docs/11 11.6 (splitmix64(i XOR 0xC0FFEE) mod 100 == 0), exactly the counting positions of the T1 read-out"
+  },
+  "banks": {
+    "trained": {
+      "checkpoint": "results/20260923T042350Z_CP_anchor/checkpoint_epoch4.npz",
+      "hash_metrics": "results/20260923T042350Z_CP_anchor/metrics.json",
+      "hash_key": "epoch4.checkpoint",
+      "note": "causal V 8000, C 1,048,576, 4 epochs of TA feedback on the 135M-token train split",
+      "expect_counts": {"events": 5660418664, "distinct_pairs": 1064284202, "source": "results/20260924T062704Z_cvtm_H8_1_causal_cp20M/metrics.json (counts.events, counts.distinct_pairs)"}
+    },
+    "young": {
+      "checkpoint": "results/20260924T022628Z_ckm_probe_causal_controls_exploratory/young_bank_checkpoint.npz",
+      "hash_metrics": "results/20260924T022628Z_ckm_probe_causal_controls_exploratory/metrics.json",
+      "hash_key": "young.checkpoint",
+      "note": "the same engine config and batch order, stopped when 98 percent of the clauses were alive: 10,487 batches, 0.079 epoch of TA feedback (the untrained control)"
+    },
+    "epoch1": {
+      "checkpoint": "results/20260923T042350Z_CP_anchor/checkpoint_epoch1.npz",
+      "hash_metrics": "results/20260923T042350Z_CP_anchor/metrics.json",
+      "hash_key": "epoch1.checkpoint",
+      "note": "optional learning-curve point (1 epoch of TA feedback); run only when the budget allows"
+    }
+  },
+  "compute": {
+    "forward_chunk": 16384,
+    "count_buffer_events": 134217728,
+    "count_range_bits": 16,
+    "gram_block_clauses": 32768,
+    "gpu_pool_limit_gib": 12.0,
+    "host_memory_guard": "scripts/mem_guard.py with its default limit"
+  },
+  "representations": {
+    "profiles": ["count", "lit", "litoff"],
+    "schemes": ["raw", "ppmi", "vote"],
+    "reductions": ["full", "svd100_p0", "svd100_p0.5", "svd300_p0", "svd300_p0.5"],
+    "primary": {"scheme": "ppmi", "reduction": "svd300_p0.5", "rule": "fixed before any number existed; the pre-declared single variant of every count-based family"},
+    "cds": 0.75
+  },
+  "baselines": {
+    "cooc_prefix_windows": {"left8": [-1, -2, -3, -4, -5, -6, -7, -8], "sym2": [-2, -1, 1, 2], "sym5": [-5, -4, -3, -2, -1, 1, 2, 3, 4, 5]},
+    "cooc_prefix_targets": "the counting positions of the prefix (contexts may be any position of the same document)",
+    "cooc_full_train_windows": {"sym5": [-5, -4, -3, -2, -1, 1, 2, 3, 4, 5]},
+    "ppmi_svd_reference": "family cooc20M_* with scheme ppmi and an svd reduction: the PPMI-SVD reference of the early verdict (same tokens as the bank counts)",
+    "cbow": {"dir": "results/20260922T210329Z_M2_baselines_cbow_knn_v8000", "files": ["cbow_w_in.npy", "cbow_w_out.npy"], "note": "in-house CBOW, dim 128, window 5, 1 epoch of the full train split"},
+    "exchange": "kind_map rows 1..3 of data/wikitext103/bpe8000/train (3-level 16-way exchange clustering of train bigrams); similarity = number of shared levels",
+    "frequency_control": "similarity = -|ln f(a) - ln f(b)| with f the train-split token frequency (sym_freq): how much of a score frequency alone explains"
+  },
+  "datasets": {
+    "simlex999": {"path": "data/concept_eval/simlex999/SimLex-999/SimLex-999.txt", "parser": "simlex", "hashes": "docs/notes/preregistration-data-hashes-A6-simlex999.json"},
+    "ws353": {"path": "data/concept_eval/wordsim353/combined.csv", "parser": "ws353", "hashes": "docs/notes/preregistration-data-hashes-A6-ws353.json"},
+    "men_dev": {"path": "data/concept_eval/men/MEN/MEN_dataset_lemma_form.dev", "parser": "men_lemma", "hashes": "docs/notes/preregistration-data-hashes-A6-men.json"}
+  },
+  "coverage_rule": "a pair counts when both words are ONE BPE-8k token in the mid-sentence form ' word' (as given; for WordSim-353 the lower-cased word is tried when the given case is not one token)",
+  "wordnet": {"nltk_data": "data/concept_eval/nltk_data", "hashes": "docs/notes/preregistration-data-hashes-A6-wordnet.json",
+              "labels": "for every word-like token (' ' + lower-case ASCII letters, at least 3): the lexicographer file (supersense) and the part of speech of its first synset, and the set of all its synsets; tokens without a synset are not eligible"},
+  "eval": {"bootstrap_resamples": 2000, "neighbours": 10, "kmeans_k": 100, "kmeans_iters": 50, "purity_permutations": 20, "print_clusters": 20, "print_clauses": 20},
+  "probe_words": ["king", "dog", "red", "three", "january", "france", "run", "happy", "car", "music", "war", "river", "said", "good", "church", "football", "city", "water", "army", "film"],
+  "verdict": {
+    "dataset": "simlex999",
+    "GO": "the trained bank's best representation beats the young bank's best by at least 0.05 Spearman AND is within 0.05 of, or above, the best PPMI-SVD (prefix co-occurrence, ppmi, svd)",
+    "NO_GO": "the trained bank's best representation does not beat the young bank's best",
+    "GREY": "otherwise",
+    "margins": {"vs_young": 0.05, "vs_ppmi_svd": 0.05},
+    "robustness_views": ["best over the same grid (the rule of the design; in-sample maximum, selection bias shared by both banks)", "the pre-declared primary variant (count profile, ppmi, svd300_p0.5)", "variant chosen per family on WordSim-353 + MEN dev (mean Spearman), then read on SimLex-999"]
+  }
+}

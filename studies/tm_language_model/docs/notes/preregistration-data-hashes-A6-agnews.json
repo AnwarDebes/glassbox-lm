@@ -1,0 +1,41 @@
+{
+ "files": {
+  "data/train-00000-of-00001.parquet": {
+   "bytes": 18585438,
+   "hub_lfs_sha256": "fc508d6d9868594e3da960a8cfeb63ab5a4746598b93428c224397080c1f52ee",
+   "hub_lfs_sha256_equal": true,
+   "sha256": "fc508d6d9868594e3da960a8cfeb63ab5a4746598b93428c224397080c1f52ee",
+   "split": "train"
+  }
+ },
+ "label_column": "label",
+ "n_classes": 4,
+ "preprocessing": "src/tmlm/ssl/features.py doc_text: wikitext_style (as tmlm.cvtm.crtm.wikitext_style) plus ' \\n' (END token), BPE 8000 of data/tokenizers/bpe_8000",
+ "purpose": "EXPLORATORY early transfer test (docs/12 F23): downstream data hashed before any use; train and validation/dev only, no test split downloaded",
+ "source": {
+  "access": "huggingface_hub.hf_hub_download of the named files only into data/hf_cache/hub, read with datasets.Dataset.from_parquet",
+  "license_dataset_card": "unknown (dataset card)",
+  "repo": "fancyzhx/ag_news",
+  "repo_type": "dataset",
+  "revision": "eb185aade064a813bc0b7f42de02595523103ca4"
+ },
+ "splits": {
+  "dev": {
+   "n": 7600,
+   "source": "carved from train",
+   "source_rows_sha256": "48b33fc4f08294b91e98a6f1e81ad34abb9a30abfb460664e24ee3437cdc49b5"
+  },
+  "dev_rule": "experiments/ssl_transfer_early.py dev_carve: stratified, class c gets round(n_dev * share_c) (largest remainders), chosen by numpy default_rng(SeedSequence([20260924, 622, 2])).permutation inside each class; source_rows_sha256 = sha256 of the int64 little-endian row indices into the train file",
+  "pool": {
+   "n": 112400,
+   "source_rows_sha256": "908ddc6925c6b63315ab9e85967c2f491d42b106e361d456f5267cb1664e09c9"
+  },
+  "row_index_format": "int64 little endian, ascending"
+ },
+ "text_columns": [
+  "text"
+ ],
+ "tokenizer_sha256": "a2a13a4e2888d17060f6779a3ca40a0f90a670ffb1d3a015441bf30a87de6b80",
+ "written_by": "experiments/ssl_transfer_early.py --stage data; write-once, never edited",
+ "written_utc": "2026-09-24T15:12:07Z"
+}

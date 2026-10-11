@@ -1,0 +1,70 @@
+{
+  "experiment": "cvtm_H8_5_energy",
+  "status": "PRE-REGISTERED confirmatory measurement of docs/13 amendment A3, hypothesis H8.5 (energy: at equal training joules the CVTM-core beats the from-scratch transformer), lane GX (exclusive GPU). Validation split only; the test split is never loaded. Every GPU job of this config runs alone on the GPU under scripts/gpu_run.sh exclusive, one job at a time.",
+  "prereg": ["H8.5", "H8.6"],
+  "docs": "docs/13 amendment A3 (H8.5, H8.6) and section 5 (energy: median of at least 5 repeats under the exclusive lock, idle subtracted); docs/11 section 11.6 (the fit); src/tmlm/cvtm/energy.py (NVML method, the method of src/tmlm/eval/baselines/transformer_small.py)",
+  "scripts": {
+    "fit_energy": "experiments/cvtm_energy.py (.venv-tm), mode fit_energy",
+    "transformer": "experiments/cvtm_transformer_tuned.py (.venv-dl), mode m2",
+    "verdict": "experiments/cvtm_energy.py (.venv-tm), mode verdict"
+  },
+  "cvtm_fit": {
+    "call": "tmlm.cvtm.model.CVTMCore.fit(train tok, train doc_start, vocab=8000, prefix_tokens=None, window=None, min_counts=None, components='full', backend='cupy', max_device_bytes=9 GiB): the frozen fit of results/20260924T085728Z_cvtm_cache_build/ (same call, same CuPy pool limit), without the cache callbacks",
+    "frozen_state_hash": "97052edf2f983dbc4fe6992e0037b104d7c322bc414a77d954c22105a7cc3bc3",
+    "frozen_validation_bits_per_byte": 1.240880320113308,
+    "frozen_run": "results/20260924T085728Z_cvtm_cache_build/",
+    "gpu_pool_limit_gib": 9.0,
+    "repeats": 5,
+    "gpu_steps": "the four steps of the fit that run on the GPU: kn_gpu.fit_kn without H, SuffixClauses.from_kn of it (CuPy suffix-link search), kn_gpu.fit_kn on all training documents, SuffixClauses.from_kn of it. Each is wrapped (timing and energy only, the call itself is unchanged) and measured with tmlm.cvtm.energy.EnergyMeter.measure; a device synchronise closes every step",
+    "cpu_steps": "ln P_S on H (suffix_gold) and the document clauses plus MAP-EM (fit_weights) run on the host; they are inside the whole-fit measurement only",
+    "whole_fit": "a second tmlm.cvtm.energy.NvmlPowerSampler over the whole CVTMCore.fit call (reported next to the GPU steps; the CPU steps' GPU energy is whole minus GPU steps, derived)",
+    "idle": "10 s with the CUDA context created (CuPy) and nothing running, once at the start of the process (the transformer_small method); a 10 s idle sample after every repeat is logged as a diagnostic and not used",
+    "check_each_repeat": "state hash equal to frozen_state_hash (the measured work is the frozen fit)",
+    "check_once": "validation bits per byte of the refitted core equal to frozen_validation_bits_per_byte exactly (after the last repeat, outside the measurement)",
+    "host_cpu": "process CPU seconds (time.process_time, all threads) per step and per fit; CPU energy is not readable in this container (no RAPL)",
+    "reported_joules": "median over the 5 repeats of the idle-subtracted joules of the GPU steps (docs/13 A3 H8.5 'GPU steps'); min and max reported; the whole-fit joules reported the same way",
+    "peak_gib": 14,
+    "memory_rule": "before each repeat: memory.current + 14 GiB < 0.80 memory.max, else wait (poll 2 minutes). 14 GiB = the measured peak RSS of this driver over three full-data repeats, 12.48 GiB (results/20260924T104118Z_cvtm_H8_5_fit_energy/, stopped by its owner with exit 143 while it waited on page cache with a conservative 24 GiB bound and held the exclusive lock; not used), plus margin",
+    "cpu_slots": 2
+  },
+  "transformer_m2_settings": {
+    "source": "results/20260922T172902Z_M2_baselines_transformer/ run.json command '.venv-dl/bin/python experiments/m2_baselines.py --family transformer --vocab 8000' and metrics args; the L6 W256 member of the sweep",
+    "vocab": 8000,
+    "layers": 6,
+    "width": 256,
+    "heads": 4,
+    "seq_len": 256,
+    "batch_seqs": 64,
+    "lr": 0.001,
+    "warmup_steps": 200,
+    "seed": 1,
+    "train_tokens": null,
+    "precision": "fp32 (tmlm.eval.baselines.transformer_small.train, unchanged)",
+    "determinism": "tmlm.eval.baselines.transformer_small.seed_everything(1) before the model is built, CUBLAS_WORKSPACE_CONFIG=:4096:8",
+    "evaluation": "tmlm.eval.baselines.transformer_small.bits_per_byte on the validation split (protocol CP, seq_len 256, stride 128, batch 64); per-token log2 P saved for the paired bootstrap and checked to reproduce the same total",
+    "energy": "tmlm.eval.baselines.transformer_small.NvmlPowerSampler over the training loop; idle 10 s after the CUDA context exists (torch), once at the start of the process",
+    "only_change": "the wall-clock cap"
+  },
+  "matched_run": {
+    "cap_rule": "time_cap_s = J_cvtm / 259.2 W, J_cvtm = reported_joules above, 259.2 W = 155,519.8 J / 600 s (docs/13 A3 H8.5, derived constant of the old shared-lock run)",
+    "rerun_rule": "if |J_transformer - J_cvtm| / J_cvtm > 0.10 (idle-subtracted joules of the training loop): rerun ONCE with time_cap_s = J_cvtm / P, P = J_transformer / span_s of the first matched run (its measured idle-subtracted mean power); the rerun is the reported matched run whatever its joules; the first run is reported too",
+    "names": ["cvtm_H8_5_transformer_matched", "cvtm_H8_5_transformer_matched_rerun"]
+  },
+  "remeasure_600s": {
+    "rule": "the L6 W256 run of transformer_m2_settings with time_cap_s = 600, once, under the exclusive lock; its joules are reported next to the old shared-lock 155,519.8 J",
+    "name": "cvtm_H8_5_transformer_600s_exclusive"
+  },
+  "verdict": {
+    "H8.5": "MET iff CVTM-core validation bits per byte (frozen_validation_bits_per_byte) < validation bits per byte of the reported matched transformer run; the paired document-block bootstrap of the difference (60 validation documents, 2,000 resamples, tmlm.cvtm.protocol.bootstrap_bpb, labelled derived) is reported with it; no other threshold",
+    "joule_ratio": "J_cvtm / 155,519.8 J (old, shared lock) and J_cvtm / J_600s_exclusive (new); no threshold",
+    "H8.6": "placement of the CVTM-core against the 600 s L6 W256 transformer: the frozen run's comparison with the old number, and the same comparison with the exclusive-lock re-measurement (paired bootstrap), no threshold"
+  },
+  "launch": {
+    "fit_energy": "scripts/gpu_run.sh exclusive -- scripts/cpu_slot.sh 2 -- .venv-tm/bin/python scripts/mem_guard.py -- scripts/run_logged.py --name cvtm_H8_5_fit_energy --config experiments/cvtm/configs/H8_5_energy.json -- .venv-tm/bin/python -u experiments/cvtm_energy.py --mode fit_energy --config experiments/cvtm/configs/H8_5_energy.json",
+    "matched": "scripts/gpu_run.sh exclusive -- scripts/cpu_slot.sh 1 -- .venv-tm/bin/python scripts/mem_guard.py -- scripts/run_logged.py --name cvtm_H8_5_transformer_matched --config experiments/cvtm/configs/H8_5_energy.json -- .venv-dl/bin/python -u experiments/cvtm_transformer_tuned.py --mode m2 --config experiments/cvtm/configs/H8_5_energy.json --cap-from results/<fit_energy run>",
+    "matched_rerun": "same with --name cvtm_H8_5_transformer_matched_rerun and --cap-from results/<fit_energy run> --rerun-of results/<matched run>",
+    "remeasure_600s": "scripts/gpu_run.sh exclusive -- scripts/cpu_slot.sh 1 -- .venv-tm/bin/python scripts/mem_guard.py -- scripts/run_logged.py --name cvtm_H8_5_transformer_600s_exclusive --config experiments/cvtm/configs/H8_5_energy.json -- .venv-dl/bin/python -u experiments/cvtm_transformer_tuned.py --mode m2 --config experiments/cvtm/configs/H8_5_energy.json --time-cap-s 600",
+    "verdict": "scripts/cpu_slot.sh 1 -- scripts/run_logged.py --name cvtm_GX_verdicts --config experiments/cvtm/configs/GX_verdicts.json -- .venv-tm/bin/python -u experiments/cvtm_energy.py --mode verdict --config experiments/cvtm/configs/GX_verdicts.json --fit-energy results/<...> --matched results/<...> [--matched-rerun results/<...>] --t600 results/<...> --tuned-lrsel results/<...> --tuned-600 results/<...>"
+  },
+  "venv": ".venv-tm for the fit and the verdict, .venv-dl for the transformer; the two exchange results through files only"
+}

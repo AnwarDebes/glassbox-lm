@@ -1,0 +1,44 @@
+{
+  "experiment": "parity_tmu",
+  "docs": "docs/04",
+  "milestone": "M3",
+  "lane": 1,
+  "status": "planned",
+  "prereg": [
+    "H1.4"
+  ],
+  "seeds": [
+    1,
+    2,
+    3
+  ],
+  "script": "experiments/m3_parity_tmu.py",
+  "venv": ".venv-tm",
+  "gpu_lock": "shared",
+  "params": {
+    "tasks": [
+      "NoisyXOR",
+      "one_multiclass"
+    ],
+    "tolerance_points": 2,
+    "kill": "KB1",
+    "protocol": "mean test accuracy over epochs 4 to 10, 3 runs each; band 2 points (docs/12)",
+    "clauses": 40,
+    "T": 15,
+    "s": 3.9,
+    "epochs": 10,
+    "tmu": "commit 5605ff07, TMCoalescedClassifier CPU weighted_clauses=True, unseeded"
+  },
+  "engine": {
+    "mode": "tabular",
+    "vocab": 2,
+    "n_features": 12,
+    "n_clauses": 100,
+    "l_slots": 32,
+    "v_slots": 16,
+    "batch": 1,
+    "dense_equivalent": true,
+    "neg_mode": "uniform_binomial",
+    "decay_mode": "eager_exact"
+  }
+}

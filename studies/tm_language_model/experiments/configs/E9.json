@@ -1,0 +1,32 @@
+{
+  "experiment": "E9",
+  "docs": "docs/05",
+  "milestone": "M9",
+  "lane": 3,
+  "status": "planned",
+  "prereg": [],
+  "seeds": [
+    1
+  ],
+  "script": "experiments/e9_concept_dictionary.py",
+  "venv": ".venv-tm",
+  "gpu_lock": "shared",
+  "params": {
+    "purity": [
+      "wordnet",
+      "ppdb_if_available"
+    ],
+    "variant_count_test": "216",
+    "near_included_states": [
+      120,
+      127
+    ],
+    "topic_metrics": [
+      "npmi_coherence",
+      "wmd_diversity",
+      "word_intruder"
+    ],
+    "frequent_itemsets": true,
+    "source": "SAE-TM (ICML 2026), Saha et al. 2023"
+  }
+}

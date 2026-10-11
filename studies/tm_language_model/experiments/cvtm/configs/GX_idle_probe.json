@@ -1,0 +1,17 @@
+{
+  "experiment": "cvtm_GX_idle_probe",
+  "status": "EXPLORATORY calibration of the measuring device, lane GX. No data, no hypothesis, no seed. It fixes the settle rule that every energy run of lane GX applies before its idle measurement and before every measured interval (docs/13 A3 H8.5 and A4 H9.7: idle subtracted; docs/13 section 5: idle power subtracted and reported).",
+  "reason": "results/20260924T151319Z_cvtm_H8_5_fit_energy/ measured an idle of 86.3 W one second after another lane's GPU job released the lock; both earlier attempts measured 72.1 W and its own post-repeat idle was 78.2 W; its repeat 1 GPU steps came out at -289.7 J idle-subtracted (8,436.7 J raw). The CVTM-core fit's GPU steps draw about 80 to 95 W, so the idle level decides their sign.",
+  "script": "experiments/cvtm_gx_idle_probe.py",
+  "venv": ".venv-tm",
+  "phases": [
+    {"name": "as_found", "kind": "rest", "seconds": 30},
+    {"name": "load_matmul", "kind": "matmul", "seconds": 60},
+    {"name": "rest1", "kind": "rest", "seconds": 420},
+    {"name": "load_sort", "kind": "sort", "seconds": 20, "host_pause_s": 0.5},
+    {"name": "rest2", "kind": "rest", "seconds": 240}
+  ],
+  "sampling": "pynvml at 10 Hz: board power, SM and memory clocks, GPU temperature, performance state; CuPy CUDA context held throughout",
+  "settle_rule_choice": "fixed before the probe runs: settle time T = the larger of the two rest phases' settle_s at tol 0.5 W (start of the first 10 s window after which every window mean is within 0.5 W of the mean of the phase's last 60 s), rounded up to a multiple of 30 s; if a phase never settles within its length the rule is not fixed and the lane stops and reports",
+  "launch": "scripts/gpu_run.sh exclusive -- scripts/cpu_slot.sh 1 -- .venv-tm/bin/python scripts/mem_guard.py -- scripts/run_logged.py --name cvtm_GX_idle_probe_exploratory --config experiments/cvtm/configs/GX_idle_probe.json -- .venv-tm/bin/python -u experiments/cvtm_gx_idle_probe.py --config experiments/cvtm/configs/GX_idle_probe.json"
+}

@@ -1,0 +1,44 @@
+{
+  "experiment": "cvtm_pilot_p2",
+  "script": "experiments/cvtm_pilot_p2.py",
+  "status": "EXPLORATORY pilot P2 of docs/13 amendment A5 (frozen 2026-09-24 10:24 UTC); counting only, no TM; supports no reported claim (A5). Validation and test are not used: P2 is judged on H' residue 2b.",
+  "registered_text": "Templates c2_1, c2_21, t1_c2_2, t1_c3_2, c3_321, t21_c2_3, t32_skip and t321_c2_4, counted over the training split without H'. Class maps: the repository's exchange clusters (243 and 2,497), PPMI-SVD k-means (256 and 2,048), and a random partition of equal size. Mixed into the frozen core with k*-by-count-bucket weights fitted on residue 2a, judged on residue 2b. G_best is the best real map's gain; R is G_best minus the random map's gain. NO-GO for this family on bits per byte: G_best below 0.005 or R below 0.003. GO to a TM concept-map step: G_best at least 0.010 with the CI excluding 0. In between: TM concepts enter only inside H9.3, as cluster literals. Prediction: NO-GO 0.8.",
+  "definitions": {
+    "templates": "src/tmlm/cvtm/templates.py docstring; names and six of the eight from experiments/tm_levers_feasibility_causal.py (part D); t1_c3_2 = (t[p-1], fine class of t[p-2]) and t321_c2_4 = (t[p-3], t[p-2], t[p-1], coarse class of t[p-4]) by the same naming rule (defined here)",
+    "estimator": "per template: P_T(gold) = #(context, gold) / #(context) over the counting positions (exact integer counts), fires when #(context) > 0; offsets before the document start read an EDGE symbol",
+    "counting_positions": "every position of the training documents whose residue is not in {0, 1, 2} (27,649 documents)",
+    "class_maps": {
+      "exchange": "kind_map rows 2 and 3 of data/wikitext103/bpe8000/train (243 and 2,497 classes in use); fitted on the whole train split (H' included, class level only)",
+      "ppmi": "positional PPMI over offsets -2, -1, +1, +2 inside documents on the counting documents, context distribution smoothing 0.75; truncated SVD k = 128 (ARPACK, seeded start vector), rows U sqrt(S) L2-normalised; k-means (scikit-learn Lloyd, k-means++, one initialisation, 300 iterations, one thread, random_state = seed) with 256 and 2,048 clusters",
+      "random": "for each real family, its coarse and fine labels permuted over the vocabulary (SeedSequence([seed, 1]) for exchange, [seed, 2] for ppmi): the same number of classes and class-size histogram"
+    },
+    "R": "primary: G_best minus the gain of the random partition of the same sizes as the best real map; also logged against the better of the two random partitions (conservative)",
+    "verdict_overlap": "A5 does not order its rules; if G_best >= 0.010 with the CI excluding 0 AND R < 0.003, NO-GO is returned and flagged",
+    "mixture": "normalized linear mixture with the frozen core (fit_mix / eval_mix of experiments/tm_levers_feasibility_causal.py, reimplemented and tested equal); bucket = (template, k* of the core base in 0..4, min(floor(log2 N), 23)), 960 weights for 8 templates; L-BFGS-B on residue 2a",
+    "base": "cache hprime core_p_gold (the frozen CVTM-core with its frozen EM weights over the KN-5 fitted without H'), k* = kstar_noHp",
+    "split_2a_2b": "residue-2 documents in ascending stable document ID; even ranks 2a (131), odd ranks 2b (130)",
+    "bits_per_byte": "summed -log2 P over the 2b positions / UTF-8 bytes of the 2b documents (data/wikitext103/raw/train/doc_bytes.npy)",
+    "bootstrap": "2b documents, 2,000 resamples, ratio of summed bits to summed bytes per resample (tmlm.cvtm.protocol.bootstrap_bpb); labelled derived"
+  },
+  "params": {
+    "cache_run": "results/20260924T085728Z_cvtm_cache_build",
+    "seed": 100,
+    "bootstrap_seed": [100, 20260924, 2],
+    "bootstrap_resamples": 2000,
+    "ppmi_sizes": [256, 2048],
+    "ppmi_dims": 128,
+    "lbfgs_iters": 1000,
+    "lbfgs_note": "the source script used 400; the smoke run (7M counting tokens) stopped at 400 without convergence for every 8-template fit, so the cap is 1000; nit and convergence are logged per fit",
+    "single_template_diagnostics": true,
+    "leave_one_out_diagnostics": false
+  },
+  "compute": {
+    "cpu_slots": 1,
+    "threads": 1,
+    "nice": 19,
+    "gpu": "none",
+    "memory_guard": "scripts/mem_guard.py default limit",
+    "expected_cpu_minutes": "about 15 plus the PPMI-SVD fit (to be measured by the smoke run)"
+  },
+  "venv": ".venv-tm"
+}

@@ -1,0 +1,66 @@
+{
+  "experiment": "s4",
+  "docs": "docs/05",
+  "milestone": "M3",
+  "lane": 1,
+  "status": "planned",
+  "prereg": [
+    "H1.4"
+  ],
+  "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "script": "experiments/s4_deviation_ladder.py",
+  "venv": ".venv-tm",
+  "gpu_lock": "shared",
+  "params": {
+    "rungs": [
+      "D0",
+      "D1",
+      "D2",
+      "D3",
+      "D4",
+      "D5",
+      "D6",
+      "D7"
+    ],
+    "kill": [
+      "KB1",
+      "KB2"
+    ],
+    "tokens": 5000000,
+    "epochs": 4,
+    "note": "engine = experiments/configs/tiny_lm.json (docs/12 F17) so the default rung / default batch replays the H1.4 runs; 4 epochs per docs/13 amendment A2; top-1 measured once after the last epoch (per-epoch curves cost more than the training and are the tiny-LM experiment's job)",
+    "rung_flags": {
+      "start": {
+        "decay_mode": "eager_exact",
+        "neg_mode": "uniform_binomial",
+        "p_ins": 0.0,
+        "p_neg": 0.0,
+        "batch": 1
+      },
+      "D1": "decay_mode -> default",
+      "D3": "p_ins, p_neg -> default",
+      "D5": "neg_mode -> default (binomial, docs/11 8c)",
+      "D7": "batch -> default"
+    }
+  },
+  "engine": {
+    "mode": "masked",
+    "vocab": 2000,
+    "n_clauses": 65536,
+    "batch": 1024,
+    "n_bag_k": 2,
+    "seg_weighting": "recency",
+    "neg_mode": "binomial",
+    "v_slots": 64,
+    "s": 128,
+    "k_cover": 8,
+    "seed_cap": 32,
+    "rho_seed": 1.0
+  }
+}

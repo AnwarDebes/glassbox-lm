@@ -1,0 +1,224 @@
+{
+ "experiment": "ssl_r2_hao",
+ "docs": "docs/13 A7 (phase R2, H-AO), docs/12 F23",
+ "prereg": [],
+ "status": "EXPLORATORY (seed 100, docs/13 section 3: seeds >= 100 are never reported); identical to ssl_r2_hao.json except the seed list",
+ "script": "experiments/ssl_r2_hao.py",
+ "venv": ".venv-tm",
+ "gpu_lock": "shared for --stage gpu and --stage control; none for --stage cpu and --stage report",
+ "cpu_slots": 1,
+ "params": {
+  "seeds": [
+   100
+  ],
+  "world": {
+   "vocab": 2000,
+   "n_groups": 4,
+   "group_size": 6,
+   "n_distractors": 24,
+   "train_fraction": 0.3,
+   "extra_probs": [
+    0.5,
+    0.3,
+    0.2
+   ],
+   "n_train": 10000,
+   "n_test": 10000,
+   "val_fraction": 0.2,
+   "n_fit": 8000,
+   "n_val": 4000
+  },
+  "models": {
+   "htm_hier_neg": {
+    "kind": "hier",
+    "append_negated": true,
+    "clauses": 16,
+    "alternatives": 8,
+    "n_concepts": 4,
+    "T": 100,
+    "state_bits": 8,
+    "boost": 0,
+    "epochs": 30,
+    "grid": [
+     {
+      "s": 5.0
+     },
+     {
+      "s": 20.0
+     }
+    ]
+   },
+   "htm_flat_neg": {
+    "kind": "flat",
+    "append_negated": true,
+    "clauses": 16,
+    "alternatives": 8,
+    "n_concepts": 4,
+    "T": 100,
+    "state_bits": 8,
+    "boost": 0,
+    "epochs": 30,
+    "grid": [
+     {
+      "s": 5.0
+     },
+     {
+      "s": 20.0
+     }
+    ]
+   },
+   "htm_hier_pos": {
+    "kind": "hier",
+    "append_negated": false,
+    "clauses": 16,
+    "alternatives": 8,
+    "n_concepts": 4,
+    "T": 100,
+    "state_bits": 8,
+    "boost": 0,
+    "epochs": 30,
+    "grid": [
+     {
+      "s": 5.0
+     },
+     {
+      "s": 20.0
+     }
+    ]
+   },
+   "htm_flat_pos": {
+    "kind": "flat",
+    "append_negated": false,
+    "clauses": 16,
+    "alternatives": 8,
+    "n_concepts": 4,
+    "T": 100,
+    "state_bits": 8,
+    "boost": 0,
+    "epochs": 30,
+    "grid": [
+     {
+      "s": 5.0
+     },
+     {
+      "s": 20.0
+     }
+    ]
+   },
+   "tmu_tm": {
+    "kind": "tmu_tm",
+    "clauses": 512,
+    "T": 100,
+    "epochs": 30,
+    "grid": [
+     {
+      "s": 5.0
+     },
+     {
+      "s": 20.0
+     }
+    ]
+   },
+   "tmu_ctm": {
+    "kind": "tmu_ctm",
+    "clauses": 512,
+    "T": 100,
+    "epochs": 30,
+    "grid": [
+     {
+      "s": 5.0
+     },
+     {
+      "s": 20.0
+     }
+    ]
+   },
+   "lr": {
+    "kind": "lr",
+    "c_grid": [
+     0.01,
+     0.1,
+     1.0,
+     10.0,
+     100.0
+    ],
+    "folds": 4,
+    "max_iter": 1000
+   },
+   "gbt": {
+    "kind": "gbt",
+    "max_iter": 300,
+    "learning_rate": 0.1,
+    "max_leaf_nodes": 31
+   },
+   "mlp": {
+    "kind": "mlp",
+    "hidden": [
+     256
+    ],
+    "alpha": 0.0001,
+    "max_iter": 100,
+    "batch_size": 200
+   }
+  },
+  "model_notes": {
+   "package": "PyHierarchicalTsetlinMachineCUDA.tm.TsetlinMachine of the installed git c85ca4e7 (log_scale off; by source diff its behaviour equals HEAD 5b4a223 with the four new switches off), weighted_clauses False, grid (208,1,1), block (128,1,1), seed = world seed. hier: ((AND_GROUP, 2000), (OR_ALTERNATIVES, alternatives), (AND_ALTERNATIVES, n_concepts)), 'clauses' clauses; flat: ((AND_GROUP, 2000), (AND_GROUP, 1)), clauses x alternatives x n_concepts clauses (equal leaf count, the package demos' --vanilla convention). T is the same for both, as in the demos.",
+   "selection": "a model with more than one grid point is selected on validation bags (val combinations carved from the training combinations, 20 percent) after fitting on bags of the other 80 percent, then refit on all training bags; ties to the first grid point. LR chooses C by 4-fold CV inside the training bags. The test bags are scored once per seed.",
+   "tmu": "tmu 0.8.3 line at git 5605ff07, CPU, feature_negation True; TMClassifier weighted_clauses False, TMCoalescedClassifier weighted_clauses True",
+   "sklearn": "sklearn 1.9.1; gbt = HistGradientBoostingClassifier(early_stopping=False, random_state=seed); mlp = MLPClassifier(adam, early_stopping=False, random_state=seed)"
+  },
+  "control": {
+   "seed": 1,
+   "n_train": 200000,
+   "n_test": 200000,
+   "noise": 0.2,
+   "clauses": 32,
+   "T": 250,
+   "s": 25.0,
+   "state_bits": 7,
+   "boost": 0,
+   "hierarchy": [
+    [
+     "AND_GROUP",
+     3
+    ],
+    [
+     "OR_ALTERNATIVES",
+     3
+    ],
+    [
+     "AND_GROUP",
+     2
+    ],
+    [
+     "OR_ALTERNATIVES",
+     3
+    ],
+    [
+     "AND_GROUP",
+     2
+    ]
+   ],
+   "max_epochs": 1000,
+   "eval_every": 5,
+   "wall_cap_s": 7200,
+   "pass_threshold": 0.9,
+   "note": "Granmo's examples/NoisyParityDemo.py and NoisyParityData.py of the package (200,000 examples each, noise on training labels only, the demo's argparse defaults: 32 clauses, T 250, s 25.0, 7 state bits, boost 0); pass = clean test accuracy >= 0.90 before 1,000 epochs or 7,200 s, whichever comes first (the package README shows 99.71 percent after 778 epochs); stops at the first evaluation that passes"
+  },
+  "verdict": {
+   "pairs": {
+    "primary_negated_literals": [
+     "htm_hier_neg",
+     "htm_flat_neg"
+    ],
+    "secondary_positive_literals_only": [
+     "htm_hier_pos",
+     "htm_flat_pos"
+    ]
+   },
+   "hier_min": 0.9,
+   "margin": 0.2,
+   "rule": "H17.5 (docs/13 A7): over seeds 1 to 5, the hierarchical package's mean held-out accuracy is at least 0.90 AND at least the flat package's mean plus 0.20; primary pair htm_hier_neg vs htm_flat_neg (append_negated=True, the package default), secondary pair htm_hier_pos vs htm_flat_pos (append_negated=False) reported next to it; paired per-seed differences with a Student-t interval and the one-sided Wilcoxon signed-rank p"
+  }
+ }
+}

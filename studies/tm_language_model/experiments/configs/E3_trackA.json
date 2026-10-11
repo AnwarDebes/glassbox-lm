@@ -1,0 +1,29 @@
+{
+  "experiment": "E3",
+  "docs": "docs/05",
+  "milestone": "M6",
+  "lane": 2,
+  "status": "planned",
+  "prereg": [],
+  "seeds": [
+    1
+  ],
+  "script": "experiments/e3_track_a.py",
+  "venv": ".venv-tm",
+  "gpu_lock": "shared",
+  "params": {
+    "vocab": 8000,
+    "clauses": 8192,
+    "depth": 3,
+    "hv": 2048,
+    "message": 1024,
+    "mask_rate": 0.15,
+    "grid": [
+      208,
+      1,
+      1
+    ],
+    "cap_gpu_hours": 72,
+    "stop_rule": "validation plateau or the cap, whichever first (docs/04, mechanism B10)"
+  }
+}

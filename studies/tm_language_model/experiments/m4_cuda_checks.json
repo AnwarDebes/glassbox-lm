@@ -1,0 +1,15 @@
+{
+  "experiment": "M4_cuda_checks",
+  "docs": "docs/04 M4",
+  "milestone": "M4",
+  "lane": 1,
+  "note": "Run definition for the logged M4 engine checks (compute-sanitizer, parity logs). Not a docs/05 experiment, hence outside experiments/configs/.",
+  "script": "experiments/m4_sanitizer.py",
+  "venv": ".venv-tm",
+  "gpu_lock": "shared",
+  "params": {
+    "sanitizer_tools": ["memcheck", "memcheck_baseline", "racecheck", "synccheck", "initcheck"],
+    "masked_config": {"mode": "masked", "vocab": 200, "n_clauses": 2048, "seed": 1, "batch": 256, "sweep_period": 4, "dead_sweeps": 1, "n_bag_k": 2, "p_neg": 0.25, "steps": 24},
+    "dense_config": {"n_features": 12, "n_classes": 2, "n_clauses": 24, "T": 15, "s": 3.9, "seed": 1, "steps": 50}
+  }
+}

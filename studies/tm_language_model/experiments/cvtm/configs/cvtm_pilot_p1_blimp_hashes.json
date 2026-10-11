@@ -1,0 +1,10 @@
+{
+  "experiment": "cvtm_pilot_p1_blimp_hashes",
+  "script": "experiments/cvtm_pilot_p1.py",
+  "status": "Data hashing before use (docs/13 A4, new data: BLiMP 67,000 pairs) for pilot P1 arm (ii) of A5. Downloads the pinned revision into the default Hugging Face cache, hashes every parquet file, checks each hash against the hub's LFS oid, and writes docs/notes/preregistration-data-hashes-A4-blimp.json ONCE with exclusive create (if the file exists it is read and verified, never rewritten). Also fixes the H9.4 dev/report split (crtm.blimp_dev_mask) and records the sha256 of both pair lists.",
+  "source": {"repo": "nyu-mll/blimp", "revision": "877fba0801ffb7cbd8c39c1ff314a46f053f6036", "license": "cc-by-4.0"},
+  "split_rule": "inside each paradigm (UID): order the pairs by mix64(first 8 bytes of sha256(UID), little endian, XOR pair_id XOR 0xB11A9D), ties by pair_id; the first floor(n / 2) are dev (500 of 1,000), the rest are the report half",
+  "compute": "no CPU slot (a few MB of download and hashing), single thread, nice 19",
+  "launch": "nice -n 19 .venv-tm/bin/python scripts/mem_guard.py -- scripts/run_logged.py --no-gpu-sampler --name cvtm_pilot_p1_blimp_hashes --config experiments/cvtm/configs/cvtm_pilot_p1_blimp_hashes.json -- .venv-tm/bin/python -u experiments/cvtm_pilot_p1.py blimp-hashes --config experiments/cvtm/configs/cvtm_pilot_p1_blimp_hashes.json --work <scratch>",
+  "venv": ".venv-tm"
+}

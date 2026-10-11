@@ -1,0 +1,31 @@
+{
+  "experiment": "E11",
+  "docs": "docs/05",
+  "milestone": "M8",
+  "lane": 3,
+  "status": "planned",
+  "prereg": [
+    "H2.2",
+    "H2.4",
+    "H6.4"
+  ],
+  "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "script": "experiments/e11_receipts_replay.py",
+  "venv": ".venv-tm",
+  "gpu_lock": "shared",
+  "params": {
+    "prompts": "first 20 test documents",
+    "checker": "src/tmlm/certify/checker_standalone.py",
+    "tamper_cases": true,
+    "incremental_reevaluation": [
+      false,
+      true
+    ]
+  }
+}

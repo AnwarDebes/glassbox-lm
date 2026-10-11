@@ -1,0 +1,41 @@
+{
+ "files": {
+  "default/train/0000.parquet": {
+   "bytes": 213208,
+   "hub_lfs_sha256": null,
+   "hub_lfs_sha256_equal": false,
+   "sha256": "5ffb07b1cbd45e47b4dd1dd113dadd19e44eb260721114c6147e0ce6c1e47590",
+   "split": "train"
+  }
+ },
+ "label_column": "coarse_label",
+ "n_classes": 6,
+ "preprocessing": "src/tmlm/ssl/features.py doc_text: wikitext_style (as tmlm.cvtm.crtm.wikitext_style) plus ' \\n' (END token), BPE 8000 of data/tokenizers/bpe_8000",
+ "purpose": "EXPLORATORY early transfer test (docs/12 F23): downstream data hashed before any use; train and validation/dev only, no test split downloaded",
+ "source": {
+  "access": "huggingface_hub.hf_hub_download of the named files only into data/hf_cache/hub, read with datasets.Dataset.from_parquet",
+  "license_dataset_card": "unknown (dataset card)",
+  "repo": "CogComp/trec",
+  "repo_type": "dataset",
+  "revision": "65752bf53af25bc935a0dce92fb5b6c930728450"
+ },
+ "splits": {
+  "dev": {
+   "n": 500,
+   "source": "carved from train",
+   "source_rows_sha256": "65d75db088be8ddb1885ec6e99268dce33f34dc4cb938c9ee9d68f07bf98f337"
+  },
+  "dev_rule": "experiments/ssl_transfer_early.py dev_carve: stratified, class c gets round(n_dev * share_c) (largest remainders), chosen by numpy default_rng(SeedSequence([20260924, 622, 3])).permutation inside each class; source_rows_sha256 = sha256 of the int64 little-endian row indices into the train file",
+  "pool": {
+   "n": 4952,
+   "source_rows_sha256": "a55553c63a6fc1e6785946cb507cbdddf43bb8295aba52ccd29dac510717f2be"
+  },
+  "row_index_format": "int64 little endian, ascending"
+ },
+ "text_columns": [
+  "text"
+ ],
+ "tokenizer_sha256": "a2a13a4e2888d17060f6779a3ca40a0f90a670ffb1d3a015441bf30a87de6b80",
+ "written_by": "experiments/ssl_transfer_early.py --stage data; write-once, never edited",
+ "written_utc": "2026-09-24T15:12:07Z"
+}

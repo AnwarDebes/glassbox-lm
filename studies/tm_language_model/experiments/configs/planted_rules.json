@@ -1,0 +1,44 @@
+{
+  "experiment": "planted_rules",
+  "docs": "docs/04",
+  "milestone": "M3",
+  "lane": 1,
+  "status": "planned",
+  "prereg": [],
+  "seeds": [
+    1,
+    2,
+    3
+  ],
+  "script": "experiments/m3_planted_rules.py",
+  "venv": ".venv-tm",
+  "gpu_lock": "shared",
+  "params": {
+    "n_rules": 200,
+    "recover_target": 0.8,
+    "n_tokens": 200000,
+    "epochs": 10,
+    "noise": 0.0,
+    "recovery_rule": "superset: some alive clause with top vote on y includes both premise literals; strict: that clause also fires on all of up to 64 sampled premise positions. Both reported; the gate reads the superset definition (CHANGELOG 'planted rules, second round')",
+    "tuning_note": "engine settings chosen from exploratory runs on seed 101 (not cited); the docs/13 seeds 1, 2, 3 are used here",
+    "defaults_note": "engine values spelled out on 2026-09-22 when the text-tuned defaults (docs/12 F17) replaced the ones this config's logged runs used"
+  },
+  "engine": {
+    "mode": "causal",
+    "vocab": 500,
+    "n_clauses": 8192,
+    "batch": 64,
+    "n_bag_k": 0,
+    "seg_weighting": "uniform",
+    "neg_budget": 2,
+    "s": 32,
+    "dead_sweeps": 32,
+    "p_ins": 0.25,
+    "p_neg": 0.0625,
+    "k_cover": 8,
+    "v_slots": 16,
+    "seed_cap": 4,
+    "rho_seed": 0.25,
+    "neg_mode": "focused"
+  }
+}

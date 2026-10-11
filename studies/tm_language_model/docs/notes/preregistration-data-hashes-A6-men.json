@@ -1,0 +1,35 @@
+{
+ "dataset": "MEN Test Collection (Bruni, Tran and Baroni 2014, JAIR 49:1-47)",
+ "files": {
+  "data/concept_eval/men/MEN.tar.gz": {
+   "bytes": 90373,
+   "sha256": "fc216962e8fa6514e5caa47bc32f361e550a8b7478c3a7dde9e4fa62ee75b579"
+  },
+  "data/concept_eval/men/MEN/MEN_dataset_lemma_form.dev": {
+   "bytes": 53807,
+   "sha256": "d7b1b92001d901dc152fa6ab019f061e6494115141f96215ed0bc88dd98f65c1"
+  },
+  "data/concept_eval/men/MEN/MEN_dataset_lemma_form.test": {
+   "bytes": 26786,
+   "sha256": "8ed8355642271c67f6f4be26ada5192faff54093651d486f0620bbd9ccfeeeda"
+  },
+  "data/concept_eval/men/MEN/MEN_dataset_lemma_form_full": {
+   "bytes": 80593,
+   "sha256": "d13c9c666691944c29aa4bdee7128fa69eb5f9734603f8c6048d1bc2ca08465a"
+  },
+  "data/concept_eval/men/MEN/MEN_dataset_natural_form_full": {
+   "bytes": 69858,
+   "sha256": "4596e169dd237228ca7701dde33585ca93263506ce7fca9de0f951aaab1aae36"
+  },
+  "data/concept_eval/men/MEN/licence.txt": {
+   "bytes": 809,
+   "sha256": "d8d7416e8adbba39f5eeabf2876a98293c4ac2ce2f25f7446d6a435f8e7b67b6"
+  }
+ },
+ "licence": "Creative Commons Attribution 2.0 (licence.txt inside the archive)",
+ "provenance_check": "UNVERIFIED: the local copy was downloaded 2026-09-24 about 11:20 UTC by an earlier step whose log was not found; re-downloads on 2026-09-24 about 15:05 UTC (Wayback, staff.fnwi.uva.nl) returned error pages, so the archive could not be compared with a source",
+ "source": "MEN.tar.gz of http://clic.cimec.unitn.it/~elia.bruni/MEN (page captured from the Wayback Machine, snapshot 20161201080439, MEN_page_wayback.html)",
+ "splits": "official dev (2,000 pairs) and test (1,000 pairs). ONLY MEN_dataset_lemma_form.dev is read for evaluation; the test file and the *_full files (which contain the test pairs) are hashed here only (bytes read for sha256, no scores used) and are never parsed by the experiment.",
+ "used_by": "experiments/ssl_concepts_early.py (exploratory, docs/12 F23)",
+ "written": "2026-09-24, once, before any evaluation run read the scores (write-once: never edit)"
+}

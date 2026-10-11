@@ -1,0 +1,17 @@
+{
+  "experiment": "cvtm_pilot_p1_arm2",
+  "script": "experiments/cvtm_pilot_p1.py",
+  "status": "EXPLORATORY pilot P1 of docs/13 amendment A5, arm (ii), seed 100: the frozen gates of the arm (i) run (TM, LR, LR2, HGB, C0 and the two TM ablations, each with its per-bucket read-out fitted on H' residue 2a) scored on the BLiMP dev half (A4 H9.4 split, docs/notes/preregistration-data-hashes-A4-blimp.json). Supports no claim. Validation and test are NOT used.",
+  "docs": "docs/13 A5 (P1 arm ii, GO / NO-GO / grey), A4 H9.4; model src/tmlm/cvtm/crtm.py",
+  "seed": 100,
+  "cache_run": "results/20260924T085728Z_cvtm_cache_build",
+  "base": "the frozen CVTM-core of the cache run (KN-5 on all training documents, CPU backend); each sentence is one document; per position the core's top-64, P_S top-64 (KN on all documents), k*, bucket and document features come from the frozen core (the validation-group semantics of the cache)",
+  "scoring": "sentence log-probability = sum over its tokens of ln P (core, or core tilted by the gate with the arm (i) read-out); a pair is correct when the good sentence has the strictly larger log-probability; accuracy in points",
+  "statistics": "paired bootstrap over the dev pairs, 2,000 resamples (SeedSequence([20260924, 0xB1, 1])), percentile 95 percent interval",
+  "verdict_arm_ii": "GO(ii): TM minus core >= 2.0 points with the CI excluding 0 AND TM minus the best control >= 1.0 point; best control = the highest dev accuracy among {LR, LR2, HGB} (conservative; the control chosen on 2a in arm (i) is reported too). NO-GO part: TM minus core < 1.0 point or TM minus the best control < 0",
+  "verdict_P1": "GO if arm (i) or arm (ii) is GO; NO-GO if both arms meet their NO-GO condition; grey otherwise (crtm.verdict_p1)",
+  "compute": {"cpu_slots": 1, "memory": "about 7 to 10 GiB (the frozen core)", "gpu": "none (numpy backend for the suffix clauses)"},
+  "launch": "scripts/cpu_slot.sh 1 -- nice -n 19 .venv-tm/bin/python scripts/mem_guard.py -- scripts/run_logged.py --no-gpu-sampler --name cvtm_pilot_p1_arm2_seed100_exploratory --config experiments/cvtm/configs/cvtm_pilot_p1_arm2_seed100.json -- .venv-tm/bin/python -u experiments/cvtm_pilot_p1.py arm2 --config experiments/cvtm/configs/cvtm_pilot_p1_arm2_seed100.json --arm1-run <arm1 run dir> --work <scratch>",
+  "smoke": {"blimp_pairs": 150, "core": "SMOKE ONLY: a CVTM-core fitted on the first 3M training tokens (numpy backends), never reported"},
+  "venv": ".venv-tm"
+}

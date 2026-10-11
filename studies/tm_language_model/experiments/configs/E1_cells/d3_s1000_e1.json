@@ -1,0 +1,55 @@
+{
+  "cell": "d3_s1000_e1",
+  "docs": "docs/05",
+  "experiment": "E1",
+  "gpu_lock": "shared",
+  "lane": 2,
+  "milestone": "M1",
+  "note": "E1 stage 2: depth 1 and 3 at the two best s of the depth-2 epoch-1 sweep, then max_included_literals in {4, 32} at those s (docs/12 F7); epoch 1 of 3, sequential",
+  "params": {
+    "T": 1000,
+    "block": [
+      128,
+      1,
+      1
+    ],
+    "clauses": 4000,
+    "depth": 3,
+    "epochs": 1,
+    "eval_subset": null,
+    "eval_subset_seed": 1,
+    "grid": [
+      208,
+      1,
+      1
+    ],
+    "hypervector_bits": 2,
+    "hypervector_size": 512,
+    "init_model": null,
+    "kn_orders": [
+      2,
+      5
+    ],
+    "mask_rate": 0.15,
+    "max_included_literals": null,
+    "max_train_examples": null,
+    "message_bits": 2,
+    "message_size": 256,
+    "number_of_state_bits": 8,
+    "q": 1.0,
+    "s": 1000.0,
+    "save_model": true,
+    "seed": 1,
+    "shard": 100000,
+    "span": 8,
+    "start_epoch": 0,
+    "tokens": 5000000,
+    "vocab": 2000,
+    "window": 24
+  },
+  "prereg": [
+    "H5.1"
+  ],
+  "script": "experiments/p0_masked_depth2.py",
+  "venv": ".venv-tm"
+}

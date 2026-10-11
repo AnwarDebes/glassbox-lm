@@ -1,0 +1,57 @@
+{
+ "experiment": "ssl_r2_hao_head",
+ "stage": "controls",
+ "docs": "docs/12 F27; docs/13 A7 (H17.5): positive controls of the hierarchical package at HEAD 5b4a223 before the H-AO pilot",
+ "status": "EXPLORATORY (docs/12 F27; no seed of this file feeds a reported number)",
+ "script": "experiments/ssl_r2_hao_head.py --stage controls",
+ "venv": ".venv-htm",
+ "gpu_lock": "shared",
+ "cpu_slots": 1,
+ "params": {
+  "andxor": {
+   "source": "examples/ANDOfXORsDemo.py at 5b4a223 (argparse defaults), data generator ported statement for statement with one seeded RandomState; runs 1 instead of 10",
+   "data_seed": 100,
+   "tm_seed": 100,
+   "n_ands": 4,
+   "irrelevant": 1,
+   "n_train": 100000,
+   "n_test": 1000,
+   "noise": 0.01,
+   "clauses": 2,
+   "alternatives": 10,
+   "T": 40,
+   "s": 2.5,
+   "state_bits": 8,
+   "epochs": 10,
+   "wall_cap_s": 420,
+   "learn_threshold": 0.95,
+   "variants": [
+    {"name": "demo_default", "note": "the demo as shipped: all four switches off"},
+    {"name": "binary", "binary_inference": 1},
+    {"name": "binary_constp", "binary_inference": 1, "constant_update_p": 1},
+    {"name": "andnorm", "and_group_normalization": 1},
+    {"name": "vanilla_default", "vanilla": true, "note": "the demo's --vanilla: 2 clauses, ((AND_GROUP, 12), (OR_ALTERNATIVES, 10))"}
+   ]
+  },
+  "parity": {
+   "source": "examples/NoisyParityDemo.py at 5b4a223 (argparse defaults) on the data of the c85ca4e7 control (hao_world.noisy_parity, seed 1, streams 11 and 12, 200,000 + 200,000 examples, 20 percent training label noise)",
+   "reference_run": "results/20260924T221350Z_ssl_r2_hao_control_exploratory",
+   "seed": 1,
+   "n_train": 200000,
+   "n_test": 200000,
+   "noise": 0.2,
+   "clauses": 32,
+   "T": 250,
+   "s": 25.0,
+   "state_bits": 7,
+   "boost": 0,
+   "hierarchy": [["AND_GROUP", 3], ["OR_ALTERNATIVES", 3], ["AND_GROUP", 2], ["OR_ALTERNATIVES", 3], ["AND_GROUP", 2]],
+   "eval_every": 5,
+   "wall_cap_s": 900,
+   "variants": [
+    {"name": "demo_default", "epochs": 30, "compare_to_c85": true, "check_print": true,
+     "note": "switches off; reduced from 1,000 epochs to 30; expected to equal the c85ca4e7 control curve at epochs 1, 5, ..., 30 (that run reached 0.9175 clean test accuracy at epoch 95)"}
+   ]
+  }
+ }
+}

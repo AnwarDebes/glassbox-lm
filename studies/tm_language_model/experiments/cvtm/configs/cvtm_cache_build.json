@@ -1,0 +1,52 @@
+{
+  "experiment": "cvtm_cache_build",
+  "mode": "cache_build",
+  "script": "experiments/cvtm_lm.py",
+  "lane": "L0 FREEZE AND CACHE",
+  "status": "Frozen CVTM-core (docs/11 section 11.6) and the shared cache of the docs/13 A3 and A4 lanes. Validation split only; the test split is never loaded. The core is deterministic given the data (no seed). Validation rows are logged from the frozen implementation; no threshold is decided by this run except the pipeline checks listed under reference.",
+  "docs": "docs/11 sections 11.2 to 11.6; docs/12 F19 and F20 (b) residues via the docs/11 section 3 mix64, (c) pooled EM of src/tmlm/cvtm/mixture.py, (d) pruning estimator; docs/13 A3 and A4 (H' roles)",
+  "params": {
+    "corpus": "wikitext103",
+    "vocab": 8000,
+    "kn_order": 5,
+    "kn": "KNModel(5, 8000, discount_mode='modified', pad=True, unk_interp=True) fitted by tmlm.cvtm.kn_gpu.fit_kn (array-identical to KNModel.fit); suffix clauses tmlm.cvtm.suffix.SuffixClauses.from_kn; P_KN(gold) = exp of the float64 vote sum (docs/11 11.2 reference form), checked against KNModel.prob at every position",
+    "fit_documents": "H = training documents i with mix64(i XOR 0xC0FFEE) mod 100 == 0 (304 documents, 1,397,702 tokens, asserted)",
+    "held_out_documents": "H' = residues {0, 1, 2}: 0 core_em, 1 t2_train, 2 selection (docs/13 A4)",
+    "document_clauses": {"orders": [0, 1, 2, 3, 4], "window": "whole document", "pointer_min": 5, "pointer_max": 64},
+    "combination": {"components": "full (S, D0..D4, P)", "buckets": "(k*, m*, c, l), 520", "em_iterations": 50, "prior_pseudocounts": 16, "pooled_weights": "plain EM of tmlm.cvtm.mixture (docs/12 F20 c)"},
+    "kn_variants": {"all": "every training document", "noH": "without H", "noHp": "without H'"},
+    "cache_groups": {"hprime": "every position of the H' documents; KN top-64 and core arrays over the KN without H' with the frozen EM weights", "validation": "every position of the validation split; KN top-64 of the KN on all documents and the frozen core"},
+    "topk": 64,
+    "rows": ["kn5 (components S)", "kn5_D0 (components S, D0: the H8.4 comparator)", "cvtm_core (full)"],
+    "bootstrap": {"unit": "validation document", "n_documents": 60, "resamples": 2000, "seed": [20260924, 1106, 1], "statistic": "per resample: sum of bits / sum of UTF-8 bytes of the drawn documents", "label": "derived"}
+  },
+  "reference": {
+    "kn5_validation_bpb": 1.3501314033898424,
+    "kn5_validation_top1": 0.3512758902568059,
+    "kn5_run": "results/20260922T180823Z_M2_baselines_ngram_v8000/",
+    "cvtm_core_exploratory_bpb": 1.2408831796986637,
+    "cvtm_core_exploratory_top1": 0.3953578897826156,
+    "cvtm_core_exploratory_run": "results/20260924T054225Z_cvtm_early_fulldata_exploratory/",
+    "cvtm_core_mixcheck_bpb": 1.240880320113308,
+    "kn5_D0_mixcheck_bpb": 1.3338053432747112,
+    "cvtm_core_mixcheck_run": "results/20260924T060608Z_cvtm_early_fulldata_mixcheck_exploratory/",
+    "transformer_600s_validation_bpb": 1.2340551926476289,
+    "transformer_600s_run": "results/20260922T172902Z_M2_baselines_transformer/ (transformer_L6_W256)",
+    "pipeline_checks": "the KNModel path equals 1.3501314033898424 exactly; the vote-form KN-5 row within 1e-9 of it; the CVTM-core within 1e-4 of 1.2408831796986637; vote form within 1e-9 of KNModel.prob in ln P at every position; k* equal to mixture.kn_gold_and_depth; streaming document features equal batch; EM objectives non-decreasing; every full-distribution row sums to one within 1e-9 and its gold entries equal the gold pass exactly; the saved core reloads with the same state hash and bit-identical validation log2 P; every KN file reloads with identical array hashes"
+  },
+  "compute": {
+    "kn_backend": "cupy",
+    "gpu_lock": "shared",
+    "gpu_pool_limit_gib": 9.0,
+    "gpu_note": "CuPy pool capped at 9 GiB during each KN fit (docs rule for the shared lock: under 10 GB); the suffix-link search of SuffixClauses.from_kn uses about 2 GB more at most",
+    "cpu_slots": 3,
+    "dense_workers": 3,
+    "dense_chunk": 2048,
+    "dense_note": "full-distribution passes in 3 forked processes over disjoint position ranges; every per-row result is independent of the split",
+    "kn_peak_gib": 30,
+    "memory_rule": "before each KN fit: memory.current + 30 GiB < 0.80 memory.max, else wait (poll 2 minutes); mem_guard at its default limit",
+    "expected_disk_gib": 45
+  },
+  "launch": "scripts/gpu_run.sh shared -- scripts/cpu_slot.sh 3 -- nice -n 10 .venv-tm/bin/python scripts/mem_guard.py -- scripts/run_logged.py --name cvtm_cache_build --config experiments/cvtm/configs/cvtm_cache_build.json -- .venv-tm/bin/python -u experiments/cvtm_lm.py --config experiments/cvtm/configs/cvtm_cache_build.json",
+  "venv": ".venv-tm"
+}

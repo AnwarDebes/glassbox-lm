@@ -1,0 +1,85 @@
+{
+  "experiment": "cvtm_H8_11_masked",
+  "status": "PRE-REGISTERED confirmatory run of docs/13 amendment A3, hypothesis H8.11 (masked CVTM, the Gate 1 amendment row). Validation split only; the test split is never loaded. The model is deterministic given the data (no seed, docs/13 A3); uncertainty is a document-block bootstrap, labelled derived.",
+  "prereg": ["H8.11"],
+  "docs": "docs/11 section 11.8 (masked variant) and 11.6 (fit documents); docs/12 F20 b (residues) and c (plain EM); docs/13 amendment A3",
+  "script": "experiments/cvtm_masked.py",
+  "library": "src/tmlm/cvtm/masked.py",
+  "tests": "tests/test_cvtm_masked.py",
+  "venv": ".venv-tm",
+  "gpu_lock": "shared",
+  "run_name": "cvtm_H8_11_masked",
+  "launch": "scripts/gpu_run.sh shared -- scripts/cpu_slot.sh 1 -- nice -n 10 .venv-tm/bin/python scripts/mem_guard.py -- scripts/run_logged.py --name cvtm_H8_11_masked --config experiments/cvtm/configs/H8_11_masked.json -- .venv-tm/bin/python -u experiments/cvtm_masked.py --config experiments/cvtm/configs/H8_11_masked.json",
+  "data": {
+    "corpus": "wikitext103",
+    "vocab": 8000,
+    "counting": "every position of every document of the full V 8000 train split (135,246,414 tokens, 28,472 documents), only the target itself hidden",
+    "validation": "the frozen validation eval set, subword variant (data/wikitext103/bpe8000/evalsets/validation_subword.npz, loaded with tmlm.data.evalsets.load_evalset, as experiments/e3_wikitext_masked.py and experiments/m2_baselines.py do), under its frozen hidden mask: a hidden token is not visible context",
+    "evalset_sha256_combined": "315ad6e81bd0a5897c09480dab2f6bca6d4fde5325d373bb36c1a582667cc14e",
+    "evalset_hash_source": "results/20260922T180823Z_M2_baselines_ngram_v8000/dataset_hashes.json (the set the comparators were measured on)",
+    "n_targets": 42213,
+    "dataset_hashes": "as results/20260923T042350Z_CP_anchor/dataset_hashes.json via tmlm.cvtm.protocol.write_dataset_hashes (train and validation tokens, document starts, validation text and document bytes) plus evalset_validation_subword_V8000 (the key name of the M2 run)"
+  },
+  "patterns": {
+    "names": ["L1", "L2", "L3", "R1", "R2", "R3", "L1R1", "L2R1", "L1R2", "L2R2"],
+    "offsets": [[-1], [-2, -1], [-3, -2, -1], [1], [1, 2], [1, 2, 3], [-1, 1], [-2, -1, 1], [-1, 1, 2], [-2, -1, 1, 2]],
+    "source": "NGRAM_TYPES of experiments/ckm_posthoc_probe.py (asserted equal by tests/test_cvtm_masked.py)",
+    "edge": "a position outside the document reads EDGE = V (8000)",
+    "cut": "a pattern with any hidden in-document position does not fire (all or nothing, as the context levels of KNModel.contexts)"
+  },
+  "fit_documents": {
+    "rule": "training document i with mix64(i XOR 0xC0FFEE) mod 100 == 0 (docs/11 11.6, docs/12 F20 b; tmlm.cvtm.protocol)",
+    "residues": [0],
+    "expected": {"n_docs": 304, "n_tokens": 1397702},
+    "fit_rows": "every position of H (1,397,702 rows), only the row's own target hidden; S read-outs from the counts WITHOUT H (all training counts minus the H counts, exact), unigram without H; the fitted weights are then applied with the counts over ALL training documents (the protocol of docs/11 11.6)"
+  },
+  "model": {
+    "s_clauses": "S(pattern, u): fires iff the pattern is not cut and its key u occurs at a counting position; read-out the exact successor distribution O(u, c) / N(u) (maximum likelihood, no smoothing, as the probe's lin)",
+    "d_clauses": "D(pattern): fires iff an earlier position q of the same document has the same key, is visible, and its pattern is not cut; the most recent such q votes for tok[q] (point mass); whole-document window. In a fit row, q with 1 <= p - q <= right extent of the pattern is cut (its span covers the hidden target)",
+    "combination": "P(c) = [a0 P_uni(c) + sum over fired S of alpha[pattern, floor(log2 N)] P_u(c) + sum over fired D of beta[pattern] [c = tok[q]]] / (a0 + sum of the fired weights); the normalised linear mixture lin of experiments/ckm_posthoc_probe.py",
+    "buckets": "alpha per (pattern, floor(log2 N)) as docs/11 11.8 states (the probe script grouped by pattern length instead; the spec is followed); N = the context count without H for fit rows and over all training documents for validation; 32 levels per pattern (N < 2**32 asserted)",
+    "unigram": "add-one unigram of the counting positions (without H for the fit rows), weight a0 fitted like every other weight; the mixture is scale free, so the weights are reported scaled so that the largest is 1",
+    "d_confidence": "beta per pattern (10 weights), fitted by the same EM on H as the alpha weights: the reading of 'confidence per pattern from the fit documents' fixed before any run (one fitting procedure for every weight; document clauses also fire where the pattern context never occurs in training, which a per-component hit rate attached to an S clause, as in the probe's induction rows, cannot)",
+    "unfitted_bucket_rule": "an alpha bucket without fit rows takes the weight of the nearest fitted level of the same pattern (the lower level on a tie); a unigram weight without fit rows is an error; a D weight without fit rows is undefined and scoring a row that uses it is an error"
+  },
+  "em": {
+    "method": "plain minorise-maximise EM (the pooled-weights step of src/tmlm/cvtm/mixture.py, docs/12 F20 c): w_b <- n_b / c_b, then every weight divided by the largest (scale free; keeps the weights finite when the supremum lies on the boundary); float64, single thread, fixed order",
+    "init": "every weight 1",
+    "max_iter": 20000,
+    "tol_mean_nats_per_row": 1e-10,
+    "stop_rule": "stop when the mean log-likelihood per fit row gains less than tol in one iteration, or at max_iter; the trace must never decrease (check, 1e-12)",
+    "budget_calibration": "fixed on 2026-09-24 before the logged run from an unlogged smoke on TRAINING documents only (the first 30M training tokens without the documents of residues 7 and 8; 71 fit documents, 312,492 fit rows; the pseudo-evaluation documents are training documents under a synthetic mask), looking only at the EM trace: MM converges linearly with a slow tail; run to 20,000 iterations, the first iteration gaining less than 1e-10 nats per row was 5,200, where the remaining gain to iteration 20,000 was 3.6e-7 nats per row (1e-9: 1,865 iterations, 1.4e-6 remaining) [unverified: scratch smoke, not logged]. max_iter 20,000 is a safety cap. No validation number was computed before this file was fixed."
+  },
+  "scoring": "the full distribution over V per target: top-1 = argmax with ties to the lowest id, top-5 = rank of the gold token below 5, bits per token of the gold token; every row must sum to one within 1e-9 and its gold entry must equal the sparse formula within 1e-12 (relative)",
+  "secondary_rows": {"s_only": "the same pipeline without the document clauses (diagnostic ablation, fitted by the same EM, no threshold)"},
+  "comparators": {
+    "rows": {
+      "left_bigram_truectx": {"value_cited": 0.1687, "source_run": "results/20260922T180823Z_M2_baselines_ngram_v8000/", "metric_key": "left_bigram.validation_subword.top1_truectx"},
+      "cbow_knn_visible": {"value_cited": 0.0936, "source_run": "results/20260922T210329Z_M2_baselines_cbow_knn_v8000/", "metric_key": "cbow_knn.validation_subword.top1_visible"},
+      "kn5_both_visible": {"value_cited": 0.4419, "source_run": "results/20260922T180823Z_M2_baselines_ngram_v8000/", "metric_key": "kn5_both.validation_subword.top1_visible"}
+    },
+    "cited_in": "docs/13 A3 H8.11 and results/20260923T203943Z_E3_v8k_slice_exploratory/metrics.json (comparator rows)",
+    "recomputed": "the left bigram (tmlm.eval.baselines.ngram.left_bigram_top1 on the full train split) and KN-5 both sides (tmlm.cvtm.kn_gpu.fit_kn forward and on the reversed documents, BidirectionalKN.predict with the frozen hidden mask) are recomputed per target; their top-1 must equal the logged values exactly (pipeline checks). CBOW-kNN is not recomputed (its trained model is not stored) and enters as the logged number."
+  },
+  "threshold": {
+    "rule": "H8.11 MET iff the masked CVTM's validation top-1 is above the left bigram (true context) AND above CBOW-kNN, both at their exact logged values (0.16876317722028758 and 0.09362044867694785; cited as 0.1687 and 0.0936 in docs/13 A3). KN-5 both sides (0.44190178381067446) is reported with the paired difference; the prediction of beating it is 0.7 (no threshold)."
+  },
+  "bootstrap": {"resamples": 2000, "unit": "validation document (60 documents)", "seed": "tmlm.cvtm.protocol.BOOT_SEED via bootstrap_index", "statistics": "top-1 of the masked CVTM; paired top-1 differences to the recomputed left bigram, KN-5 both sides and the S-only ablation; top-1 minus the logged CBOW-kNN number", "label": "derived"},
+  "compute": {
+    "backend": "cupy",
+    "gpu_pool_limit_gib": 9.0,
+    "kn_host_peak_gib": 20,
+    "cpu_slots": 1,
+    "memory_note": "the counting runs one pattern at a time on the GPU (sort based, about 5 GB of device memory at 135M positions); only the queried contexts come back to the host. The KN-5 comparator fits (forward and backward, about 6.5 GB of host memory each) wait for the memory rule (memory.current + 20 GiB < 0.80 memory.max)"
+  },
+  "checks": {
+    "prefix_tokens": 2000000,
+    "direct_noH_patterns": ["L1", "L2R2"],
+    "key_sample": 200000
+  },
+  "smoke": {
+    "train_tokens": 3000000,
+    "eval_residues": [7, 8],
+    "note": "not logged: counts on the first 3M training tokens without the documents of residues 7 and 8, which form a pseudo-evaluation set with a synthetic 15 percent mask (SeedSequence([20260924, 1108, 1])); no validation number is computed"
+  }
+}

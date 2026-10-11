@@ -1,0 +1,44 @@
+{
+  "experiment": "H2",
+  "docs": "docs/05",
+  "milestone": "M3 (row d), M9",
+  "lane": 3,
+  "status": "planned",
+  "prereg": [
+    "H4.2",
+    "H4.3"
+  ],
+  "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "script": "experiments/h2_layer2_greedy.py",
+  "venv": ".venv-tm",
+  "gpu_lock": "shared",
+  "params": {
+    "rows": {
+      "a": "layer-1 bits -> logistic",
+      "b": "layer-1 bits -> engine tabular (layer 2)",
+      "c": "second greedy layer",
+      "d": "LM: layer 2 over layer-1 bits at the target position"
+    },
+    "layer1_frozen": true,
+    "test": "paired one-sided Wilcoxon",
+    "row_d": {
+      "layer1_config": "tiny_lm.json",
+      "epochs2": 4,
+      "n_train_positions": 65536,
+      "note": "layer 1 = the tiny-LM engine of tiny_lm.json (docs/12 F17), 4 epochs, replayed per seed; layer 2 = this engine block with n_features = layer-1 clause count; delta = layer-2 top-1 minus layer-1 top-1 on the frozen validation targets; per-seed layer-1 states saved into the run dir"
+    }
+  },
+  "engine": {
+    "mode": "tabular",
+    "vocab": 2,
+    "n_features": 65536,
+    "n_clauses": 4096,
+    "batch": 256
+  }
+}
