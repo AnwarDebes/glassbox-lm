@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>glassbox-lm: every next word, a sum of votes you can read</title>
+<meta name="description" content="The count floor of the glassbox-lm programme, counted in your browser from ten public-domain books: a Kneser-Ney 5-gram written as clause votes, a memory of your own text, every probability traced to the passages it was counted from.">
+<meta name="theme-color" content="#0a1120">
+<meta property="og:type" content="website">
+<meta property="og:title" content="glassbox-lm: every next word, a sum of votes you can read">
+<meta property="og:description" content="Ten public-domain books, counted in your tab. Type a sentence and read every clause that votes for the next word, and where it was counted.">
+<meta property="og:image" content="https://anwardebes.github.io/glassbox-lm/og.jpg">
+<meta property="og:url" content="https://anwardebes.github.io/glassbox-lm/">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="logo.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/literata.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/schibsted-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="app.css">
+<script type="module" src="app.js"></script>
+</head>
+<body>
+<a class="skip" href="#box">Skip to the glass box</a>
+<div class="pages" aria-hidden="true"><div class="pages-in" id="pages"></div></div>
+
+<header class="top">
+  <a class="brand" href="./" aria-label="glassbox-lm, home">
+    <img src="logo.svg" alt="" width="34" height="34">
+    <span class="name">glassbox-lm</span>
+    <span class="tag">the floor, readable</span>
+  </a>
+  <nav aria-label="Project links">
+    <a href="https://github.com/AnwarDebes/glassbox-lm" target="_blank" rel="noopener">Code</a>
+    <a href="https://github.com/AnwarDebes/glassbox-lm/blob/main/docs/results-overview.md" target="_blank" rel="noopener">Results</a>
+    <a href="https://anwardebes.github.io/" target="_blank" rel="noopener">Anwar Debes</a>
+  </nav>
+</header>
+
+<main>
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero-copy">
+      <p class="eyebrow">Tsetlin Machine research · the count floor</p>
+      <h1 id="hero-title">Every next word,<br><em>a sum of votes</em> you can read.</h1>
+      <p class="lede">Before a language model made of logical clauses can matter, it has to beat a model that only counts. This page builds that model in your tab: it reads ten public-domain books, counts every pattern of up to five words, and predicts the next word as an exact sum of clause votes, each one traced back to the pages it was counted from.</p>
+      <div class="hero-row">
+        <a class="go" href="#box">Open the glass box</a>
+        <p class="status" id="status"><span class="dot" aria-hidden="true"></span><span id="status-t">Reading ten books…</span></p>
+      </div>
+    </div>
+    <figure class="ticker" id="ticker" aria-label="The model completing famous first lines">
+      <div class="tk-book" id="tk-book">&nbsp;</div>
+      <p class="tk-text"><span id="tk-text"></span><span class="tk-next" id="tk-next"></span><span class="caret" aria-hidden="true"></span></p>
+      <div class="tk-clause" id="tk-clause">&nbsp;</div>
+    </figure>
+  </section>
+
+  <section class="box" id="box" aria-labelledby="box-title">
+    <header class="sec-head">
+      <p class="kicker">1 · the glass box</p>
+      <h2 id="box-title">Write, and read why it guesses what it guesses</h2>
+      <p>Each guess is a vote. A pattern it counted in the books, like “the last two words were <i>best of</i>”, is a clause: it fires when your text ends that way and votes for the words that came next. Your own text is a second source: a memory of what you have written so far.</p>
+    </header>
+    <div class="grid">
+      <article class="panel paper" aria-labelledby="t-title">
+        <h3 id="t-title"><span class="n">1</span>Your text</h3>
+        <textarea id="text" spellcheck="false" aria-label="Your text" rows="6">It is a truth universally</textarea>
+        <div class="ctx" id="ctx" aria-label="The last four words, the context the clauses read"></div>
+        <div class="actions">
+          <button type="button" class="btn" id="accept" title="Tab">Take <b id="accept-w">the guess</b></button>
+          <button type="button" class="btn ghost" id="write">Write 12 words</button>
+          <button type="button" class="btn ghost" id="undo" disabled>Undo</button>
+        </div>
+        <div class="examples" id="examples" aria-label="Openings to try"></div>
+      </article>
+
+      <article class="panel" aria-labelledby="c-title">
+        <h3 id="c-title"><span class="n">2</span>The next word</h3>
+        <ol class="cands" id="cands" aria-label="The most likely next words"></ol>
+        <div class="legend"><span><i class="lg books"></i>counted in the books</span><span><i class="lg mem"></i>remembered from your text</span></div>
+        <p class="note" id="cand-note"></p>
+      </article>
+
+      <article class="panel ledger" aria-labelledby="l-title">
+        <h3 id="l-title"><span class="n">3</span>Why <b id="why-w" class="why-w"></b></h3>
+        <div id="ledger" class="rows"></div>
+        <div class="source" id="source"></div>
+      </article>
+    </div>
+  </section>
+
+  <section class="copy" id="copy" aria-labelledby="copy-title">
+    <header class="sec-head">
+      <p class="kicker">2 · where the words come from</p>
+      <h2 id="copy-title">A glass box shows how much it copies</h2>
+      <p>Let the model write on its own, sampling each word from its votes. Every word is shaded by the longest stretch of the books it continues, so you can see at a glance which parts are new and which are copied.</p>
+    </header>
+    <div class="copy-grid">
+      <div class="panel paper gen-panel">
+        <div class="gen-top">
+          <button type="button" class="btn" id="gen">Let it write 60 words</button>
+          <span class="seed">seed <b id="seed">1</b> · temperature 0.8</span>
+        </div>
+        <p class="gen" id="gen-text" aria-live="polite"></p>
+        <div class="gen-legend"><span><i class="sh s5"></i>continues 5 words of a book</span><span><i class="sh s4"></i>4</span><span><i class="sh s3"></i>3</span><span><i class="sh s2"></i>2</span><span><i class="sh s1"></i>new here</span><span><i class="sh sm"></i>from memory</span></div>
+      </div>
+      <div class="gen-stats" id="gen-stats"></div>
+    </div>
+  </section>
+
+  <section class="measure" id="measure" aria-labelledby="m-title">
+    <header class="sec-head">
+      <p class="kicker">3 · the floor, measured in this tab</p>
+      <h2 id="m-title">How surprised is it by chapters it never counted?</h2>
+      <p id="m-intro">Nineteen chapters were held out and never counted. The page scores every word of them, once with each amount of context and once with the memory of the chapter so far. Lower is better: perplexity is the number of words it is, on average, choosing between.</p>
+    </header>
+    <div class="m-grid">
+      <div class="panel chart-panel"><svg class="chart" id="chart" viewBox="0 0 720 330" aria-label="Held-out perplexity by model"></svg></div>
+      <div class="m-text">
+        <p id="m-read" class="m-read"></p>
+        <div class="checks" id="checks"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="study" id="study" aria-labelledby="s-title">
+    <header class="sec-head">
+      <p class="kicker">4 · what the programme measured</p>
+      <h2 id="s-title">Ninety-one claims, written down before the runs</h2>
+      <p>The first study of glassbox-lm wrote down 91 hypotheses with thresholds before the runs they govern, and reports each one as it came out: 12 met, 11 not met, 7 not judged, 61 never run. Writing them down first is what makes a negative result count.</p>
+    </header>
+    <div class="s-grid">
+      <div class="panel ids-panel">
+        <div class="ids" id="ids" role="img" aria-label="The 91 registered hypotheses of tm_language_model by status"></div>
+        <div class="ids-legend"><span><i class="st met"></i>12 met</span><span><i class="st notmet"></i>11 not met</span><span><i class="st nj"></i>7 not judged</span><span><i class="st nr"></i>61 not run</span></div>
+        <p class="id-tip" id="id-tip">Point at a square to read the hypothesis.</p>
+      </div>
+      <div class="results">
+        <article class="res bad">
+          <p class="res-k">H1.1 not met · kill criterion KB7 triggered</p>
+          <p class="res-v"><b>2.2193</b> vs <b>1.3719</b></p>
+          <p class="res-t">bits per byte on the WikiText-103 test split: the Tsetlin Machine language model against the Kneser-Ney 5-gram on the same tokens. One seed; seeds 2 and 3 were not run.</p>
+          <p class="res-r">run <code>20260923T042350Z_CP_anchor</code></p>
+        </article>
+        <article class="res good">
+          <p class="res-k">H8.2 met</p>
+          <p class="res-v"><b>5.3 × 10<sup>−15</sup></b></p>
+          <p class="res-t">largest difference in ln P between Kneser-Ney and its clause-vote form over 282,587 validation positions. Kneser-Ney is exactly a clause-vote machine; this page repeats the check above.</p>
+          <p class="res-r">run <code>20260924T102203Z_cvtm_a3_H8_2</code></p>
+        </article>
+        <article class="res mixed">
+          <p class="res-k">H8.1 met, against its own signed votes</p>
+          <p class="res-v"><b>1.8280</b> vs <b>2.1749</b></p>
+          <p class="res-t">bits per byte when the learned clauses vote by counts instead of their trained votes: counting beat the trained votes, and still sat at the level of a bigram model (1.8073).</p>
+          <p class="res-r">run <code>20260924T062704Z_cvtm_H8_1_causal_cp20M</code></p>
+        </article>
+        <article class="res good">
+          <p class="res-k">H8.7 met · validation</p>
+          <p class="res-v"><b>1.3501</b> → <b>1.2409</b></p>
+          <p class="res-t">bits per byte when document clauses add a memory of the article so far, at constant cost per word. The same memory runs on this page.</p>
+          <p class="res-r">run <code>20260924T102454Z_cvtm_a3_H8_7</code></p>
+        </article>
+      </div>
+    </div>
+    <p class="s-foot">The second study, hierarchical_tm, ended mostly negative as well: its single final test scored AUC 0.735 on same-article pairs, below 0.817 for plain word overlap. Every id, qualifier and run is in the <a href="https://github.com/AnwarDebes/glassbox-lm/blob/main/docs/results-overview.md" target="_blank" rel="noopener">results overview</a>.</p>
+  </section>
+
+  <section class="scope" aria-labelledby="scope-title">
+    <h2 id="scope-title">Read this before quoting a number</h2>
+    <ul>
+      <li><b>A reimplementation, checked.</b> The model on this page is the CVTM-core of the study (section 11 of its engine specification) written again in JavaScript. A test runs the study's own Python code on the same tokens: every probability agrees to within 4 × 10<sup>−15</sup>.</li>
+      <li><b>A different corpus.</b> Ten public-domain books, lowercase words, 678,041 counted tokens. The study used WikiText-103 with byte-level subwords. Perplexities here are per word and are not comparable with its bits per byte.</li>
+      <li><b>No Tsetlin Machine runs here.</b> This is the floor the study measured its Tsetlin Machine language model against. That model stayed above it, which here means worse.</li>
+      <li><b>Fitted the study's way.</b> The weights of the memory come from the study's MAP-EM on 14 training chapters, chosen by the study's residue rule (10 percent instead of 1, because there are 208 chapters instead of 28,472 articles).</li>
+      <li><b>New words.</b> A word the books never use gets one of 64 slots: the counts have never seen it, the memory can learn it from your text.</li>
+    </ul>
+  </section>
+</main>
+
+<footer class="foot">
+  <p><b>glassbox-lm</b> by <a href="https://anwardebes.github.io/" target="_blank" rel="noopener">Anwar Debes</a> · CC BY-NC 4.0 · the ten books are in the public domain, downloaded from gutenberg.org by <code>live/export.py</code> with headers and licence text removed · fonts: Literata, Schibsted Grotesk, JetBrains Mono (OFL)</p>
+</footer>
+</body>
+</html>

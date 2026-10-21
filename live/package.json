@@ -1,0 +1,10 @@
+{
+  "name": "glassbox-lm-glass-box",
+  "private": true,
+  "type": "module",
+  "description": "The count floor of glassbox-lm, counted in the browser: Kneser-Ney 5-gram clause votes, document clauses and their sources.",
+  "scripts": {
+    "test": "node --test tests/model.test.mjs"
+  },
+  "license": "CC-BY-NC-4.0"
+}
