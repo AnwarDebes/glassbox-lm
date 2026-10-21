@@ -17,10 +17,19 @@
 - Three studies (19 Sep to 3 Oct 2026) toward a language model whose knowledge is a set of logical clauses that can be read.
 - 91 hypotheses were registered in the first study: 12 are met (six of them with a qualifier), 11 are not met, 7 are not judged and 61 were not run. The [results overview](docs/results-overview.md) lists every id.
 - Most of what was measured is negative and is reported as measured: see [Results](#results) and the [known limitations](docs/known-limitations.md).
-- A clone holds the code, the configs, the registrations and the results pages. Run folders, datasets and saved models are not distributed.
+- A [glass box page](https://anwardebes.github.io/glassbox-lm/) runs the count floor of the programme in the browser and shows every vote. It reimplements the CVTM-core of the first study and holds no Tsetlin Machine ([live/](live/README.md)).
+- A clone holds the code, the configs, the registrations and the results pages. Run folders, datasets and saved models are not distributed; the glass box page is the one exception (see [Data](#data)).
 - The ideas behind the programme, what the literature says about each of them and the open work are in [research/](research/README.md).
 
 This repository, `glassbox-lm`, holds a research programme that takes measured steps toward a language model built from Tsetlin Machines, in which what the model knows is a set of readable logical clauses. Its three studies date from 19 Sep to 3 Oct 2026. The first built a token-level Tsetlin Machine language model on a sparse engine written for it and compared it with an in-house Kneser-Ney 5-gram model on the same tokens. The second tested the hierarchical Tsetlin Machine procedure of the supervisor's project proposal (unpublished) on artificial data, on two sentence families, on news topics and on Wikipedia paragraph pairs. The third prepares a word-level clause language model; so far it has produced count baselines, one evaluator run without a Tsetlin Machine, and a reproduction of the author's earlier Tsetlin Machine router, Clause-Driven-LLM, that did not meet its first gate. Most of what was measured is negative: the main accuracy goal of the first study was missed, no learned rule of the second study captured either of the two sentence families of the proposal, its single final test is below word overlap, and the third study has not trained a Tsetlin Machine on its language data. The first two studies registered hypotheses or pass rules with thresholds before the runs they govern, and their results pages say where a rule was added, not kept or read after results were known; in the third study one step has a registration so far. The name of the repository states the goal of the programme, a language model that can be read like a glass box. It is not a claim about a model in the repository, and no model here is called a large language model.
+
+## The glass box
+
+**[Open the glass box](https://anwardebes.github.io/glassbox-lm/)**: the count floor of [research/design.md](research/design.md), counted in the browser from ten public-domain books.
+
+https://github.com/user-attachments/assets/5b06241d-a0be-4f2a-89bf-f9d824464df2
+
+The page counts the books in the browser tab and predicts the next word with the CVTM-core of tm_language_model (section 11 of its [engine specification](studies/tm_language_model/docs/11-engine-spec.md)): Kneser-Ney 5-gram suffix clauses in their exact vote form, the document clauses, the pointer clause and the bucketed mixture, with weights fitted by the study's MAP-EM. For every candidate word it shows the clauses that vote, the memory of the text typed so far and the passages where the voting pattern was counted, and it scores 19 held-out chapters when it loads. No Tsetlin Machine runs on the page. A test checks the JavaScript against the study's own Python code on the same tokens, and every probability agrees to within 4e-15. The page, its data and the test are in [live/](live/README.md); its numbers belong to its corpus and are not comparable with those of the studies.
 
 ## Status per study
 
@@ -82,6 +91,8 @@ studies/
                         scripts/, env/, launch/, docs/, third_party/
   hierarchical_tm/      README.md, gates.md, frozen_settings_hashes.json, src/, queue/, docs/
   clause_lm/            README.md, src/, docs/
+live/                   the glass box page: the count floor in the browser, its data and its test
+.github/workflows/      the test and the deployment of the page
 ```
 
 Each study keeps its registration, its results page and its data cards in its own folder. The folders `results/` (run folders) and `data/` (datasets) of a study are local and are ignored by git, as are the virtual environments.
@@ -100,6 +111,8 @@ make -C studies/tm_language_model <target>
 
 No dataset is distributed, and neither are derived data or saved models. [docs/data.md](docs/data.md) names the source and the version of each dataset and says how to obtain it. The data cards of hierarchical_tm are in `studies/hierarchical_tm/docs/`.
 
+The one exception is the glass box page: [live/](live/README.md) holds the token ids of ten public-domain books (`tokens.u16.gz`) and the mixture weights fitted on them (`core.json`), which the page needs. `live/export.py` downloads the books and rebuilds both.
+
 ## What a clone allows
 
 A clone holds the code, the configs, the registrations, the results pages and the [run index](docs/run-index.md). The registrations are [docs/13](studies/tm_language_model/docs/13-preregistration.md) of tm_language_model, [gates.md](studies/hierarchical_tm/gates.md) and the [registrations page](studies/hierarchical_tm/docs/registrations.md) of hierarchical_tm, and the [registration of M5 step 1](studies/clause_lm/docs/prereg_M5_step1.md) of clause_lm. A reader can compare a status or a number on a results page with the registered rule, read the code that the page names, and look up a cited run id in the run index.
@@ -107,6 +120,8 @@ A clone holds the code, the configs, the registrations, the results pages and th
 A clone holds no run folder, no dataset, no saved model, no compiled engine binary and no virtual environment, so no number can be recomputed or inspected from the clone alone. Reproducing a number means obtaining the data, building an environment from the lock files and running the experiment again on comparable hardware. The sentence files of the slide-6 and slide-10 tests of hierarchical_tm are not distributed either, because they carry sentences of the project proposal, so those checks cannot be rerun from a clone.
 
 The numbers check of tm_language_model needs the run folders: `make lint` accepts a number that is labelled as measured in the study's documents only when the cited folder exists under `results/`, so without the run folders `make lint` and `make smoke` fail, and two tests of `make test` depend on run folders as well.
+
+The glass box page is the part that a clone can rerun: `python live/export.py` rebuilds its data with the study's code on a CPU, and `npm test` in `live/` checks the page against it.
 
 The published tree was not run: the tests, the experiments and the installs were last run on the working copies. The published files are copies of those, edited for publication: references to unpublished working notes and plans, paths of the workstation and remarks on day-to-day work were removed or reworded in documents, comments and docstrings. The edits were not exercised by a run; the page of [known limitations](docs/known-limitations.md) says what follows from this.
 

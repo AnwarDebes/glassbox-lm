@@ -83,3 +83,15 @@ the pages of the writing board, the findings of a literature search of 2026-10-1
 design that follows from them and the list of open work. Nothing in that folder has been run. The
 repository was given the licence CC BY-NC 4.0, and the upstream `setup.py` of the vendored package
 was added to it.
+
+## 21 Oct 2026: the glass box page
+
+The folder [live/](live/README.md) holds a page that runs the count floor of
+[research/design.md](research/design.md) in the browser, published at
+https://anwardebes.github.io/glassbox-lm/. It reimplements the CVTM-core of tm_language_model in
+JavaScript and fits it on ten public-domain books in the browser tab. `live/export.py` fits the same
+model with the study's code (`tmlm.cvtm`, numpy backend) and writes the reference values that
+`live/tests/model.test.mjs` checks; a workflow runs that test before each deployment. On 19 held-out
+chapters the page measures a perplexity per token of 193.20 for the Kneser-Ney 5-gram and 165.91
+for the CVTM-core, and the vote form and the recursion differ by at most 4.4e-15 in ln P. These are
+numbers of the page's corpus, not results of a study, and no Tsetlin Machine runs on the page.

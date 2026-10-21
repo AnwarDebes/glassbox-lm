@@ -22,8 +22,8 @@ authors:
   - given-names: Anwar
     family-names: Debes
     affiliation: "University of Agder, Centre for Artificial Intelligence Research (CAIR)"
-version: "0.0.1"
-date-released: "2026-10-11"
+version: "0.1.0"
+date-released: "2026-10-21"
 repository-code: "https://github.com/AnwarDebes/glassbox-lm"
 license: CC-BY-NC-4.0
 keywords:
