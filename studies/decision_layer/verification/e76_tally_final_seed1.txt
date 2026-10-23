@@ -1,0 +1,8 @@
+tag e76 seed 1: 579 (state, group) pairs over 200 states; duplicates ignored 0; zero-edit not exact 0; replay problems 0
+pairs: {'certified at k = 2': 518, 'certified at k = 1; a 2-word edit breaks the rule': 44, 'a 1-word edit breaks the rule': 11, 'own choice breaks the rule': 6}
+u in the last 3 turns        states 197: certified at k = 1 180 (91.4%), at k = 2 150 (76.1%); own choice breaks a rule 6; some 1-word edit breaks a rule 11
+u outside the last 3 turns   states   3: certified at k = 1 3 (100.0%), at k = 2 3 (100.0%); own choice breaks a rule 0; some 1-word edit breaks a rule 0
+all                          states 200: certified at k = 1 183 (91.5%), at k = 2 153 (76.5%); own choice breaks a rule 6; some 1-word edit breaks a rule 11
+by rule family:
+  P_first    {'certified at k = 2': 48, 'certified at k = 1; a 2-word edit breaks the rule': 8, 'a 1-word edit breaks the rule': 2, 'own choice breaks the rule': 2}
+  P_prec     {'certified at k = 2': 470, 'certified at k = 1; a 2-word edit breaks the rule': 36, 'a 1-word edit breaks the rule': 9, 'own choice breaks the rule': 4}

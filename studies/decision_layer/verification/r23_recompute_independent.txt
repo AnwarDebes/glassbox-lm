@@ -1,0 +1,9 @@
+tm_mem_bge_s24         seeds [1, 2, 3, 4, 5]  acc 84.56  per seed [84.2, 84.7, 84.42, 84.78, 84.7]
+tm_mem_bge_s8_R9b      seeds [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]  acc 84.01  per seed [83.68, 84.04, 84.12, 84.04, 83.84, 84.12, 84.09, 84.12, 84.34, 83.76]
+tm_mem_c4_s16          seeds [1, 2, 3, 4, 5]  acc 83.64  per seed [83.79, 83.54, 83.12, 83.87, 83.9]
+tm_mem_c4_s8_R21       seeds [1, 2, 3, 4, 5]  acc 82.72  per seed [82.87, 82.71, 82.59, 82.93, 82.51]
+tm_mem_c4_s16 - tm_mem_bge_s24               -0.92 [-1.60, -0.25]  (1004 dialogues, 3608 turns)  point >= -2.0: MET; lower end >= -2.0 (strong): yes
+tm_mem_c4_s16 - tm_mem_c4_s8_R21             +0.92 [+0.52, +1.33]  (1004 dialogues, 3608 turns)
+tm_mem_bge_s24 - tm_mem_bge_s8_R9b           +0.55 [+0.16, +0.93]  (1004 dialogues, 3608 turns)
+tm_mem_c4_s16 - tm_mem_bge_s8_R9b            -0.37 [-1.00, +0.25]  (1004 dialogues, 3608 turns)
+problems: none

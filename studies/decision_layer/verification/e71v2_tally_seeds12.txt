@@ -1,0 +1,10 @@
+tag e71v2 seed 1: 579 (state, group) pairs over 200 states; duplicates ignored 0; zero-edit not exact 0; replay problems 0
+pairs: {'certified at k = 2': 512, 'certified at k = 1; a 2-word edit breaks the rule': 52, 'own choice breaks the rule': 4, 'a 1-word edit breaks the rule': 11}
+u in the last 3 turns        states 197: certified at k = 1 183 (92.9%), at k = 2 148 (75.1%); own choice breaks a rule 4; some 1-word edit breaks a rule 10
+u outside the last 3 turns   states   3: certified at k = 1 3 (100.0%), at k = 2 3 (100.0%); own choice breaks a rule 0; some 1-word edit breaks a rule 0
+all                          states 200: certified at k = 1 186 (93.0%), at k = 2 151 (75.5%); own choice breaks a rule 4; some 1-word edit breaks a rule 10
+tag e71v2 seed 2: 579 (state, group) pairs over 200 states; duplicates ignored 0; zero-edit not exact 0; replay problems 0
+pairs: {'certified at k = 1; a 2-word edit breaks the rule': 44, 'certified at k = 2': 519, 'a 1-word edit breaks the rule': 13, 'own choice breaks the rule': 3}
+u in the last 3 turns        states 197: certified at k = 1 182 (92.4%), at k = 2 149 (75.6%); own choice breaks a rule 3; some 1-word edit breaks a rule 12
+u outside the last 3 turns   states   3: certified at k = 1 3 (100.0%), at k = 2 3 (100.0%); own choice breaks a rule 0; some 1-word edit breaks a rule 0
+all                          states 200: certified at k = 1 185 (92.5%), at k = 2 152 (76.0%); own choice breaks a rule 3; some 1-word edit breaks a rule 12
