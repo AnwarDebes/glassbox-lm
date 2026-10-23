@@ -1,6 +1,6 @@
 # clause_lm: preparation for a logic-based language model
 
-This study prepares a word-level language model whose knowledge is a set of readable clauses. The model it aims at has Tsetlin Machine clauses that are AND-rules over the preceding word positions, where each position holds an OR-group of words, and it lets smoothed counts vote, so that the output is a probability distribution that can be scored with perplexity. The study started on 2026-10-02 and is the third study of the programme. What exists so far is groundwork: n-gram baselines on Penn Treebank, an evaluator that adds clause votes to a trigram model, data and statistical baselines for a word-pair task, a pair model that was written and not run, and the first step of a bridge to query routing, a reproduction of the Clause-Driven-LLM router on CLINC150.
+This study prepares a word-level language model whose knowledge is a set of readable clauses. The model it aims at has Tsetlin Machine clauses that are AND-rules over the preceding word positions, where each position holds an OR-group of words, and it lets smoothed counts vote, so that the output is a probability distribution that can be scored with perplexity. The study started on 2026-10-02 and is the third study of the programme. What exists so far is groundwork: n-gram baselines on Penn Treebank, an evaluator that adds clause votes to a trigram model, data and statistical baselines for a word-pair task, a pair model that was written and not run, and the first step of a bridge to query routing: a reproduction of the Clause-Driven-LLM router on CLINC150 and a registered test of the specificity s on that router, whose verdict is negative.
 
 All results are on the results page, [docs/results.md](docs/results.md).
 
@@ -20,15 +20,17 @@ Only M5 step 1 has a registration, [docs/prereg_M5_step1.md](docs/prereg_M5_step
 
 ## Status
 
-Running, as preparation. Every run of the study dates from 2026-10-02. The n-gram baselines, the pair data, the statistical pair baselines and the clause evaluator each ran once; the evaluator ran with k-means word groups, and no Tsetlin Machine took part in it. In M5 step 1, Gate 0 of the registration, the reproduction of the lexical router, was not met in its one completed run, and the cause is not confirmed. A post hoc retry with a different label order was stopped without a score. The registration was then amended, after the Gate 0 result was known, to repeat Gate 0 on a GPU; that rerun did not take place, and the grid of M5 step 1 was not run. The pair model of M1 was written and not run. M3, M4 and M5 step 2 have no code in the tree and no runs. No Tsetlin Machine has been trained on Penn Treebank in this study.
+Running, as preparation. The runs of the study date from 2026-10-02 and 2026-10-14. The n-gram baselines, the pair data, the statistical pair baselines and the clause evaluator each ran once; the evaluator ran with k-means word groups, and no Tsetlin Machine took part in it. In M5 step 1, Gate 0 of the registration, the reproduction of the lexical router, was not met in its one completed run with the numba CPU backend, and the cause is not confirmed. A post hoc retry with a different label order was stopped without a score. The registration was then amended, after the Gate 0 result was known, to repeat Gate 0 with the torch backend on a GPU. That amended Gate 0 ran on 2026-10-14 and was met, and the registered grid of M5 step 1 followed; by the registered rules its verdict is negative. The pair model of M1 was written and not run. M3, M4 and M5 step 2 have no code in the tree and no runs. No Tsetlin Machine has been trained on Penn Treebank in this study.
 
 ## What was found
 
-The results so far are bars for later work and one failed reproduction. None of them is a result about a Tsetlin Machine language model.
+The results so far are bars for later work, a reproduction that met its gate only under a post hoc amendment, and one negative registered result on the router. None of them is a result about a Tsetlin Machine language model.
 
 On the validation split of Penn Treebank, the interpolated Kneser-Ney trigram model is the strongest of the three n-gram baselines. On the pair task, a word-bigram count model carries no information about pairs that are absent from the training text, which holds by construction, while statistical word classes and similarity smoothing do carry some. The best of them is the bar that the pair model of M1 has to beat. Adding the count votes of k-means word groups to the trigram model lowers validation perplexity by a small amount and changes top-1 and top-5 accuracy only marginally; this is the bar for M2.
 
-The reproduction of the lexical Clause-Driven-LLM router used the numba CPU backend, the backend fixed in the registration. It reached a test accuracy far below the value recorded in the upstream repository, with clauses that carry very many literals. The working notes of the same day, summarised on the [results page](docs/results.md#diagnosis-notes-of-2026-10-02), attribute this to a difference between the numba backend and the torch GPU backend of Clause-Driven-LLM, on the basis of reading both training kernels. No run of this study tests that explanation: a timing probe put the torch backend on the CPU beyond the time limit set for the diagnosis, and the GPU rerun did not take place. The registered question about s has no answer yet.
+The reproduction of the lexical Clause-Driven-LLM router first used the numba CPU backend, the backend fixed in the registration. It reached a test accuracy far below the value recorded in the upstream repository, with clauses that carry very many literals. The working notes of the same day, summarised on the [results page](docs/results.md#diagnosis-notes-of-2026-10-02), attribute this to a difference between the numba backend and the torch GPU backend of Clause-Driven-LLM, on the basis of reading both training kernels. A timing probe put the torch backend on the CPU beyond the time limit set for the diagnosis. The amended Gate 0, the same settings with the torch backend on a GPU, was met on 2026-10-14 in run `20261014T221527Z_m5_gate0_s8_seed42_sorted_torchgpu`, with clauses of a median of 1 literal. This is consistent with the backend explanation and does not isolate the difference between the kernels; the amended gate is post hoc.
+
+The registered question about s has a negative answer by the registered rules. Over s in {8, 25, 50, 100} and seeds 42, 123 and 456, the mean validation accuracy is highest at s = 8, so s* = 8; the mean test accuracy at s* is 0.8201, below the 0.848 that the success rule needs, and the mean test accuracy falls as s grows (report run `20261014T222730Z_m5_summary_sorted_torchgpu`). One grid run did not have the GPU to itself for about 40 s; the results page gives the note next to that run.
 
 ## What the study needs from other studies
 
@@ -38,7 +40,7 @@ The Penn Treebank text comes from the tm_language_model study: `src/ptb.py` read
 
 GPU jobs start through scripts of the tm_language_model study. `src/launch_gpu.sh` changes into `../tm_language_model`, sources its `env/env.sh`, and starts the job through its `scripts/mem_guard.py` and `scripts/gpu_run.sh exclusive`, with the interpreter of its `.venv-htm` environment (lock file `../tm_language_model/env/htm.lock`). `src/m5_run.py` puts the same `scripts/mem_guard.py` and `scripts/gpu_run.sh exclusive` in front of its training command when it is called with `--backend torch_gpu`, with the interpreter of this study's `.venv-cdllm-gpu` environment and without sourcing `env/env.sh`, and `src/m5_gpu_all.sh` takes the GPU lock through the same `gpu_run.sh`. `src/pair_tm.py` imports the package PyHierarchicalTsetlinMachineCUDA, which that environment provides.
 
-`src/m5_gpu_all.sh` waits on queue files of the hierarchical_tm study. It reads `../hierarchical_tm/queue/jobs.txt`, `started.txt` and `queue.log`, which are local queue state and are not distributed, checks that no process with the name of one of that study's drivers or queue runners is alive, and requires the last line of `queue.log` to contain `QUEUE EMPTY` or `MPS daemon stopped`.
+`src/m5_gpu_all.sh` waits on queue files of the hierarchical_tm study. It reads `../hierarchical_tm/queue/jobs.txt`, `started.txt` and `queue.log`, which are local queue state and are not distributed, checks that no process with the name of one of that study's drivers or queue runners is alive, and requires the last line of `queue.log` to contain `QUEUE EMPTY` or `MPS daemon stopped`. The runs of 2026-10-14 were started by a launcher that runs the same steps without this wait, because the hierarchical_tm study had finished and the wait could not end ([results page](docs/results.md#amended-gate-0-and-the-grid)).
 
 These launchers describe one workstation with a single GPU that the studies share through a lock. On another machine they document how the jobs were ordered; they are not a portable tool.
 
@@ -62,8 +64,8 @@ clause_lm/
     m5_setup.py             M5 step 1: setup record
     m5_run.py               M5 step 1: one training run inside a run folder
     m5_setup_torch.py       M5 step 1: setup and timing probe, torch backend on the CPU
-    m5_grid.sh              M5 step 1: the grid after Gate 0; not run
-    m5_report.py            M5 step 1: aggregation and the registered rules; not run
+    m5_grid.sh              M5 step 1: the grid after Gate 0
+    m5_report.py            M5 step 1: aggregation and the registered rules
     m5_gpu_all.sh           M5 step 1: launcher for the amended Gate 0 and the grid on a GPU
     launch_gpu.sh           wrapper for one GPU job (study rule 3)
     pdftext.py              PDF text extractor, used to check quotations against their sources
@@ -75,7 +77,7 @@ clause_lm/
 
 The code also reads and writes four local folders inside the study folder: `results/` (run folders), `data/` (the pair data), `work/` (the work copy of Clause-Driven-LLM and the outputs of M5) and `references/` (the reference copy of Clause-Driven-LLM). The repository ignores all four, and none is distributed.
 
-`src/m5_run.py` as published is a later revision than the one that produced the two Gate 0 run folders: the backends `torch` and `torch_gpu` were added after those runs, as the dates in its docstring show, and the first paragraph of the docstring still describes the earlier state. The copies of the script inside the two run folders are the earlier revision. No other file in `src/` imports `src/pdftext.py`.
+`src/m5_run.py` as published is a later revision than the one that produced the two Gate 0 run folders of 2026-10-02: the backends `torch` and `torch_gpu` were added after those runs, as the dates in its docstring show, and the first paragraph of the docstring still describes the earlier state. The copies of the script inside those two run folders are the earlier revision. The copies inside the run folders of 2026-10-14 are byte identical to the published `src/m5_run.py`, and the copy of `src/m5_report.py` in the report run of that day to the published file. No other file in `src/` imports `src/pdftext.py`.
 
 ## Upstream dependency: Clause-Driven-LLM
 
@@ -93,11 +95,13 @@ A reader who wants the code path of the runs therefore needs two steps: place th
 
 Package versions are known only for the environments of M5 step 1, from the freeze files that were stored with the runs. The run folders of the four Penn Treebank runs hold no environment record, so the interpreter and the package versions of those runs are not known from the run files.
 
-M5 step 1 used a CPU environment named `.venv-cdllm` with Python 3.11.16. Its freeze was stored three times, and a fourth freeze belongs to a GPU environment that was prepared and not used:
+M5 step 1 used a CPU environment named `.venv-cdllm` with Python 3.11.16. Its freeze was stored three times, and a fourth freeze belongs to the GPU environment of the runs of 2026-10-14:
 
 - A: `results/20261002T195152Z_m5_setup_sorted/pip_freeze.txt`, stored by the setup run that preceded the completed Gate 0 run. The file of the same name in `results/20261002T205115Z_m5_setup_first_appearance` holds the same list.
 - B: `results/20261002T210555Z_m5_setup_torchcpu/pip_freeze.txt`, the same environment after torch was added for the timing probe.
-- C: `results/m5_gpu_env_freeze.txt`, the environment `.venv-cdllm-gpu` that was prepared for the GPU rerun of Gate 0. That rerun did not run. The file belongs to no run folder and records no Python version.
+- C: `results/m5_gpu_env_freeze.txt`, the environment `.venv-cdllm-gpu` that was prepared on 2026-10-02 for the GPU rerun of Gate 0. The file belongs to no run folder and records no Python version.
+
+For the amended Gate 0 and the grid of 2026-10-14, `.venv-cdllm` was rebuilt from freeze A and `.venv-cdllm-gpu` from freeze C; the package lists of the rebuilt environments are identical to the recorded ones. The training ran in `.venv-cdllm-gpu`, and each of these run folders records torch 2.6.0+cu124 (`config.json`).
 
 Each freeze also lists Clause-Driven-LLM itself, as an editable install of the work copy.
 
@@ -163,8 +167,8 @@ The scripts of M5 step 1 read three more local folders: the reference copy of Cl
 
 ## What a clone contains
 
-A clone holds the code, the registration and the results page. It does not hold the nine run folders, the Penn Treebank text, the pair data, the CLINC150 file, the copies of Clause-Driven-LLM, the virtual environments or the queue files of the hierarchical_tm study. No number on the results page can therefore be checked from a clone alone; the run ids can be compared with [../../docs/run-index.md](../../docs/run-index.md).
+A clone holds the code, the registration and the results page. It does not hold the 23 run folders, the Penn Treebank text, the pair data, the CLINC150 file, the copies of Clause-Driven-LLM, the virtual environments or the queue files of the hierarchical_tm study. No number on the results page can therefore be checked from a clone alone; the run ids can be compared with [../../docs/run-index.md](../../docs/run-index.md).
 
-Recomputing the Penn Treebank numbers needs the Penn Treebank text at the place `src/ptb.py` expects. Recomputing the Gate 0 run needs the two copies of Clause-Driven-LLM prepared as described above, the CLINC150 file, and environment A. Whether such a rerun gives the recorded numbers has not been tested. Two known reasons for a difference are that the published `src/m5_run.py` is a later revision than the one that ran, and that the feature vocabulary has ties at its cut-off, which the setup script notes can resolve differently across numpy versions and CPUs.
+Recomputing the Penn Treebank numbers needs the Penn Treebank text at the place `src/ptb.py` expects. Recomputing the Gate 0 run needs the two copies of Clause-Driven-LLM prepared as described above, the CLINC150 file, and environment A. The amended Gate 0 and the grid need in addition environment C, a GPU, and a `python3` first on the search path, which the memory guard of tm_language_model starts under; without it the first attempt of 2026-10-14 ended at its start. Whether such a rerun gives the recorded numbers has not been tested. Two known reasons for a difference are that the published `src/m5_run.py` is a later revision than the one that ran, and that the feature vocabulary has ties at its cut-off, which the setup script notes can resolve differently across numpy versions and CPUs.
 
 The study has no tests.
