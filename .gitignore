@@ -7,6 +7,16 @@
 /studies/*/references
 /studies/*/third_party/ref
 
+# Run logs, job lists and process files stay local as well. In decision_layer
+# the folder logs/ also holds the dev plans and dated notes, their freeze
+# records, the driver scripts and one frozen sample; these are tracked.
+/studies/decision_layer/logs/*
+!/studies/decision_layer/logs/*.md
+!/studies/decision_layer/logs/*.frozen.json
+!/studies/decision_layer/logs/*.sh
+!/studies/decision_layer/logs/e71_k35_sample.json
+/studies/tally/logs
+
 # Virtual environments are built inside the study folders.
 .venv*
 
