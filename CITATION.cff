@@ -3,27 +3,40 @@ message: "Please cite this repository with the metadata below."
 title: "Measured steps toward a logic-based language model with Tsetlin Machines"
 abstract: >-
   This repository holds the code, the registrations and the results pages of
-  three studies (19 Sep to 3 Oct 2026) that take measured steps toward a
-  language model built from Tsetlin Machine clauses; run folders and datasets
-  are not distributed. The first study built a token-level Tsetlin Machine
-  language model on a sparse event-driven engine and compared it with a
-  Kneser-Ney 5-gram model on the same tokens: its reproducibility hypotheses
-  were met at the scale tested, and its main accuracy goal was missed on the
-  one seed that was run, which triggered the registered kill criterion. The
-  second study tested the hierarchical Tsetlin Machine procedure of an
-  unpublished project proposal on artificial data, two sentence
-  families, news topics and Wikipedia paragraph pairs and ended mostly
-  negative: its single final test is below word overlap on both Wikipedia
-  tasks. The third study is preparation for a word-level clause language
-  model: count baselines and one evaluator ran without a Tsetlin Machine, and
-  the reproduction of an existing Tsetlin Machine router did not meet its
-  first gate in its one completed run.
+  five studies (19 Sep to 23 Oct 2026) that take measured steps toward a
+  language model built from Tsetlin Machine clauses; run folders, result
+  files and datasets are not distributed. The first study built a
+  token-level Tsetlin Machine language model on a sparse event-driven engine
+  and compared it with a Kneser-Ney 5-gram model on the same tokens: its
+  reproducibility hypotheses were met at the scale tested, and its main
+  accuracy goal was missed on the one seed that was run, which triggered the
+  registered kill criterion. The second study tested the hierarchical
+  Tsetlin Machine procedure of an unpublished project proposal on artificial
+  data, two sentence families, news topics and Wikipedia paragraph pairs and
+  ended mostly negative: its single final test is below word overlap on both
+  Wikipedia tasks. The third study is preparation for a word-level clause
+  language model: count baselines and one evaluator ran without a Tsetlin
+  Machine, the reproduction of an existing Tsetlin Machine router met its
+  first gate only under a post hoc amendment, and the registered test of its
+  specificity s that followed is negative. The fourth study tested the
+  Tsetlin Machine as the decision layer over language encoders, from intent
+  routing to agents that choose the next action in dialogues: a single
+  Tsetlin Machine router trails logistic regression on the same embedding,
+  memory literals lift the next-action accuracy on ABCD by 18.65 points, and,
+  with the same tuning, an agent with no neural network at any stage is not
+  worse, within the registered margin, than an agent that runs a
+  transformer encoder per decision on three dialogue test splits, two of
+  which had been read many times before, while the registered test of
+  superiority in that comparison, on the third split, is not met. The fifth study holds the first steps of a
+  count-based language model with places where a Tsetlin Machine must beat a
+  twin that only counts; its registered test has finished its runs and has
+  no verdict yet.
 authors:
   - given-names: Anwar
     family-names: Debes
     affiliation: "University of Agder, Centre for Artificial Intelligence Research (CAIR)"
-version: "0.1.0"
-date-released: "2026-10-21"
+version: "0.2.0"
+date-released: "2026-10-23"
 repository-code: "https://github.com/AnwarDebes/glassbox-lm"
 license: CC-BY-NC-4.0
 keywords:
@@ -33,4 +46,5 @@ keywords:
   - interpretable machine learning
   - propositional logic
   - pre-registration
+  - dialogue agents
   - negative results

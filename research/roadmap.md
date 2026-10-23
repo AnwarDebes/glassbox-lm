@@ -4,20 +4,28 @@ What was registered, prepared or designed and has not been completed, with the i
 
 ## Order
 
-1. **Week 0 of the design.** Read the three unread papers on teams of Tsetlin Machines and the 2026 symposium papers; measure the free CPU; install a reference n-gram toolkit.
-2. **The amended Gate 0 of clause_lm.** One run of the router reproduction with the torch backend on a GPU. It is registered, it has not been run, and it is the test of the backend explanation on the [results page](../studies/clause_lm/docs/results.md#diagnosis-notes-of-2026-10-02). The upstream record gives 48.9 s of training for such a run.
-3. **Line T of the design.** T0 (counted votes against learned votes with the CAIR library), B1 (the synthetic team game) and B6 (team margin on composites). These are the tests in which a positive Tsetlin result is most likely.
-4. **Step A1 of the count floor**, then A2 to A4.
-5. **Line B**, the slots, after the count floor stands.
+1. **Week 0 of the design.** Read the three unread papers on teams of Tsetlin Machines and the 2026 symposium papers; measure the free CPU. The reference n-gram toolkit, KenLM, is installed outside the repository and used by A1 in tally (its version is not recorded).
+2. **Line T of the design.** T0 (counted votes against learned votes with the CAIR library), B1 (the synthetic team game) and B6 (team margin on composites). These are the tests in which a positive Tsetlin result is most likely. In the study [tally](../studies/tally/README.md), T0 was registered on 2026-10-15 and its 30 final runs (both machines and the logistic-regression arm, seeds 1 to 10) have finished; its verdict, `studies/tally/src/tally/t0/report.py` over those runs, has not been drawn. B1 and B6 have code and smoke or timing runs there and no registration.
+3. **Step A1 of the count floor**, then A2 to A4. A1 and A2 have code in tally, with a baseline check and a smoke run; A3 and A4 have no code.
+4. **Line B**, the slots, after the count floor stands.
 
 ## Open in the studies
 
-### clause_lm (running as preparation)
+### decision_layer (running)
 
 | Item | State | What it needs |
 |---|---|---|
-| Amended Gate 0 | registered, not run | a GPU; the launcher `studies/clause_lm/src/m5_gpu_all.sh` |
-| s-test grid of M5 step 1 (12 runs with the Gate 0 run) | not run | Gate 0 met first; `src/m5_grid.sh` and `src/m5_report.py` are written and were never run |
+| R25, an agent on the teacher-refined table | draft, never frozen; its dev go-bars failed (e82) | a stack that passes the go-bars on dev |
+| A registered superiority test of the agents with no neural network | R24.2 not met on MultiWOZ, the study's only fresh test split; rev 0 of R24 was never frozen | a fresh test split |
+| R20.4 on STAR, the customer-only agent | not run: stopped at its dev gate | a view that passes the gate on dev |
+| e86 and e87, dev plans frozen on 2026-10-23 | e86 ran 8 of its 14 dev jobs and was stopped; e87 has no run; neither has a result | their runs and their analyses |
+
+### clause_lm (running as preparation)
+
+M5 step 1 is complete: the amended Gate 0 and the s-test grid ran on 2026-10-14, and by the registered rules the verdict is negative ([results page](../studies/clause_lm/docs/results.md#amended-gate-0-and-the-grid)).
+
+| Item | State | What it needs |
+|---|---|---|
 | M1, pair model | written (`src/pair_tm.py`), not run | 3 seeds against the statistical class baseline on unseen pairs |
 | M2, clause-count language model with the OR-groups of M1 | evaluator ran once with k-means groups and no Tsetlin Machine | M1 first |
 | M3, M4, M5 step 2 | no code | M2 first |

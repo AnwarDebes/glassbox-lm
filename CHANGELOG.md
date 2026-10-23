@@ -1,7 +1,8 @@
 # Changelog
 
 History of the programme, oldest first: one entry per week of the tm_language_model study, one for
-each of the two later studies and one for the publication, which also covers the research notes. The three studies are listed in
+each of hierarchical_tm and clause_lm, one for the publication of 10 and 11 Oct 2026, which also
+covers the research notes, and one for each later step, phase of a study or publication. The studies are listed in
 [studies/README.md](studies/README.md). A run id names a run folder and starts with the UTC time of
 the run; run folders are not distributed. Every number and status below is repeated from the results
 page that its entry links, where the file of the run and the full qualifiers are given.
@@ -84,6 +85,122 @@ design that follows from them and the list of open work. Nothing in that folder 
 repository was given the licence CC BY-NC 4.0, and the upstream `setup.py` of the vendored package
 was added to it.
 
+## 14 Oct 2026: clause_lm, the amended Gate 0 and the grid of M5 step 1
+
+The amended Gate 0 of [M5 step 1](studies/clause_lm/docs/prereg_M5_step1.md), the locked settings
+with the torch backend on a GPU, was met in `20261014T221527Z_m5_gate0_s8_seed42_sorted_torchgpu`
+(test accuracy 0.8293, inside the band of 0.005 around 0.82778). The amendment was written after
+the Gate 0 result was known, so the pass is post hoc, and a first attempt ended at its start
+without a score. The registered grid over s in {8, 25, 50, 100} with seeds 42, 123 and 456
+followed. By the registered rules the question about s has a negative answer: s* = 8, and the mean
+test accuracy at s* is 0.8201, below the 0.848 that the success rule needs
+(`20261014T222730Z_m5_summary_sorted_torchgpu`). One grid run did not have the GPU to itself for
+about 40 s. [Results page](studies/clause_lm/docs/results.md).
+
+## 15 and 16 Oct 2026: decision_layer, phase 1: the router, the readable layer and learning from reward
+
+The study decision_layer asks where Tsetlin Machines fail on language, part by part, and what works
+instead when an LLM encoder does the language and a Tsetlin Machine makes the decision. Each of its
+registered tests was frozen before its confirmatory runs. Phase 1 gave 17 verdicts on CLINC150,
+Banking77 and HWU64, 9 met and 8 not met. A single Tsetlin Machine router trails logistic regression
+on the same frozen embedding in every cell, by 0.56 to 2.41 points with 4,000 clauses (R4 not met)
+and by 0.07 to 1.46 with 16,000 (R4b not met); after one temperature it is calibrated, and it is at least as good at flagging
+out-of-scope queries (R1 met). The readable layer, whose inputs have names, comes within 0.3 points
+of logistic regression on the same inputs (R7 met), and post hoc it restates the rule "route to the
+nearest whitened centre". The literal budget lifts the word router by 4 to 6 points on the three
+datasets; R2, R2c and R7b failed only their length rules, by one literal, through a tie in the
+budget code, and the re-runs R2e, R2d and R7c are met. A policy learned with TD from delayed reward
+met R6 and R8, with gains over the tuned rule (R6) and over always asking (R8) that come from the
+out-of-scope episodes. Routing learned from reward alone met R5c and R5d with Boltzmann exploration
+and 30 passes, after R5 and R5b were not met. [README](studies/decision_layer/README.md), [results
+page](studies/decision_layer/docs/results.md).
+
+## 15 to 17 Oct 2026: tally, the registration T0 and the first steps of the design
+
+The study tally holds the first steps of the lines T, A and C of the [design](research/design.md).
+Its one registration, T0 (counted votes against learned votes on the same clauses, with the Tsetlin
+Machine library tmu, on Penn Treebank), was frozen on 2026-10-15 together with its tuning rule. Two
+amendments of the same day fixed the settings by that rule, s = 20 and 9 epochs for the coalesced
+machine and s = 5 and 1 epoch for the flat machine, and the final runs of seeds 1 to 10 for both
+machines and the logistic-regression arm finished by 17 Oct. The verdict of T0 has not been drawn.
+B1 and B6 ran as smoke and timing runs, A1 and A2 as a baseline check and a smoke run, and C3 as
+LSTM preparation runs on the validation split. [README](studies/tally/README.md),
+[results page](studies/tally/docs/results.md).
+
+## 16 and 17 Oct 2026: decision_layer, phase 2: a dialogue workflow (ABCD, STAR) and a related dataset (MASSIVE)
+
+Phase 2 used data that no test of phase 1 had read: ABCD (customer-service conversations; which of
+30 action buttons the human agent presses next), STAR (wizard-of-oz dialogues, 187 actions) and
+MASSIVE 1.1, a related dataset that shares about a third of its test texts with HWU64 train, with
+different labels. On ABCD, memory literals lift the next-action accuracy of the Tsetlin Machine from
+65.4% to 84.0% (R9b, +18.65 [+17.20, +20.10]). R9 itself is not met, because the control of its
+memory rule read the history as words, a design error; its rules against logistic regression and an
+MLP on the same named inputs, and against an opaque MLP on the raw embeddings, are met, and the rule
+that the Tsetlin Machine beats logistic regression is not. From a 0/1 reward per press the Tsetlin
+Machine reaches 0.988 of its supervised twin (R10). After the 15 registered passes it ends above
+LinUCB (R10c, +5.51 and +3.00; registered when the results of R10 were known, as R14, R15, R16b and
+R17 were registered after the results they build on), although LinUCB is ahead for the first 7 to 11 passes and earns more
+reward while learning; it ends within the registered margin of a small neural bandit, judged on the
+point estimate (R14, -0.45 [-1.04, +0.16]); and replay closes most of its slow-learning gap (R15).
+With its own presses as memory and the text still replayed from the log, the supervised model keeps
+80.7% (R13) and the reward-learned one 79.1% (R17). The hierarchical Tsetlin Machine of the package
+PyHierarchicalTsetlinMachineCUDA, with 2 times the clauses and 16 times the automata, is 9.4 points
+above the flat machine of the same package (R16) and 7.0 above a flat machine with as many automata
+(R16b; T, s and the vote still differ), and 2.3 points below this study's coalesced flat machine. On
+STAR the memory result replicates (R18, +15.43), and there the Tsetlin Machine is 3.3 points behind
+logistic regression on the same bits. R11 (MASSIVE) and R12 (trained in English, scored in Norwegian
+at 82.2%) are not met as a whole; R11.2, R12.1 and R12.3 are met.
+[README](studies/decision_layer/README.md), [results page](studies/decision_layer/docs/results.md).
+
+## 17 to 19 Oct 2026: decision_layer, phase 3: an agent with no neural network at run time, then at any stage
+
+R19 replaced bge-large-en-v1.5, run per decision, by a fixed word table (potion-base-32M, distilled
+once, offline, from bge-base-en-v1.5 via Model2Vec), lookups and a bitwise OR. With no neural
+network at run time, an agent is level with the bge-large agent on STAR test (+0.06 [-0.63, +0.74])
+and 1.0 point below it on ABCD (-1.00 [-1.62, -0.40]), inside the registered 2-point margin; R19.1
+is met in the strong form on both datasets
+(`studies/decision_layer/results/confirm/R19star/report_R19star.json`,
+`studies/decision_layer/results/confirm/R19abcd/report_R19abcd.json`). One decision takes a median
+of 29.5 ms on one CPU thread against 806 ms, a rough timing on a shared machine; the bge-large agent
+would be faster on a GPU, which was not measured. R20 put the word-table agent in a closed loop on
+STAR: memory still pays (R20.1 met), its own mistakes cost 7.51 points (R20.2 not met, as expected
+from dev), and it is not worse than the bge-large agent in the same loop (R20.3 met, strong). The
+question named as the headline of R20, an agent that reads only the customer, stopped at its dev
+gate on STAR; on ABCD that agent, with no text written by the human agent, gives supporting evidence
+(R20.4 met: memory +23.94 [+22.20, +25.67] points, at 72.6% in the closed loop). R21 replaced the table by one counted from C4 text, so that the C4 agent has no
+neural network at any stage: it is within 0.10 (STAR) and 0.29 (ABCD) points of the potion agent,
+met in the strong form on both datasets. With the Tsetlin Machine's s tuned on dev for both agents,
+the C4 agent is +1.64 [+0.94, +2.35] against the bge-large agent on STAR (R22, all three rules met)
+and -0.92 [-1.61, -0.26] on ABCD (R23.1 met, strong), both under non-inferiority rules. On dev,
+under frozen plans and notes and with no registration, the raw TM policy of the ABCD agent had a
+counterexample for every one of 50 guideline-derived order rules over a superset of real inputs, and
+50 veto clauses made all 50 hold by construction; the STAR agent produced its replies from the
+task's templates, equal to the wizard's word for word in 45.5% of the template turns against a
+ceiling of 79.6%. [README](studies/decision_layer/README.md), [results
+page](studies/decision_layer/docs/results.md).
+
+## 19 to 23 Oct 2026: decision_layer, phase 4: a third dataset, MultiWOZ 2.2
+
+On MultiWOZ 2.2 dev, with the training rule's hardest negative classes, the C4 agent, with no neural
+network at any stage, fell 3.21 points behind the bge-large agent against a gate of -1.0 (e77b);
+further stacks on dev did not pass the gate (e78, e79, e82), and lower vote thresholds T did not
+help the reader (e81). Random negative classes, chosen on MultiWOZ dev (e83), lift the network-free
+agents far more than bge-large but cost STAR -11.9 and ABCD -4.0 points on dev (measured on the refined agent), so the rule is a
+MultiWOZ setting; with it both gates were met on dev (e84, e84b). R24, frozen before MultiWOZ's test
+split was read, used that split for the first time: R24.1 is met in the strong form for the C4 agent
+(+0.53 [-0.18, +1.23]) and for the refined-table agent, network-free at run time with bge-base-en-v1.5
+as teacher at training time (+0.05 [-0.65, +0.72]), and R24.2,
+superiority, is not met for either, so the study's only fresh split for a registered "better than"
+is spent without one (`studies/decision_layer/logs/R24_report.out`, a run log, not distributed). On the
+same bits logistic regression is ahead of the Tsetlin Machine for all three agents (C4 -1.55, refined
+-2.49, bge-large -1.89; no rule). Two
+independent recomputes agree, and a three-part review (leakage, selection and registration,
+integrity; judged by an AI model, not a person) found no blocker. Two registration drafts were never
+frozen: R25 (an agent on the teacher-refined table), whose dev go-bars failed, and rev 0 of R24, a
+superiority test on MultiWOZ written on 2026-10-19, which the frozen R24 superseded. The dev plans
+e86 and e87 were stopped before their analyses.
+[README](studies/decision_layer/README.md), [results page](studies/decision_layer/docs/results.md).
+
 ## 21 Oct 2026: the glass box page
 
 The folder [live/](live/README.md) holds a page that runs the count floor of
@@ -95,3 +212,17 @@ model with the study's code (`tmlm.cvtm`, numpy backend) and writes the referenc
 chapters the page measures a perplexity per token of 193.20 for the Kneser-Ney 5-gram and 165.91
 for the CVTM-core, and the vote form and the recursion differ by at most 4.4e-15 in ln P. These are
 numbers of the page's corpus, not results of a study, and no Tsetlin Machine runs on the page.
+
+## 23 Oct 2026: publication of decision_layer and tally
+
+The studies decision_layer and tally were added to the repository, each as a folder under
+`studies/`, and the pages that span the studies, among them the roadmap in `research/`, were
+brought up to date for five studies. The documents, comments and docstrings of the two studies were
+edited for publication in wording and paths only. The registrations, dev plans and dated notes whose
+wording was edited were published as copies with a publication note, the others as written; their
+freeze records are unchanged, and the
+[hash table](docs/hash-table.md) gives the registered and the published values. Independent
+recomputations of results of decision_layer were added in `studies/decision_layer/verification/`,
+and each was rerun on the published scripts. The tests of both studies were run on the published
+files; those that need the GPU were not. Run folders, result files, run logs and datasets are not
+distributed ([known limitations](docs/known-limitations.md)).

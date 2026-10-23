@@ -1,6 +1,6 @@
 # Data
 
-No dataset, no derived data file and no model file is distributed with this repository. The folders `data/`, `results/` and `work/` of the studies are local and ignored by git, and so are the download caches and the models saved inside the run folders. What the repository holds is the code that downloads or builds each dataset, the records that pin the hashes of the files, and two data cards. For each dataset this page says what it is, where it comes from, which version a file on disk records, which script obtains it, where the code expects it, which record pins its hashes, and what is known about its licence.
+No dataset, no derived data file and no model file of the studies is distributed with this repository; the one exception is the glass box page, whose folder [live/](../live/README.md) holds the token ids of ten public-domain books and the mixture weights fitted on them. The folders `data/`, `results/` and `work/` of the studies are local and ignored by git, and so are the download caches and the models saved inside the run folders. What the repository holds is the code that downloads or builds each dataset, the records that pin the hashes of the files, and the data cards of the studies: two of hierarchical_tm and one each of decision_layer and tally, which this page points to rather than repeats. For each dataset of the first three studies this page says what it is, where it comes from, which version a file on disk records, which script obtains it, where the code expects it, which record pins its hashes, and what is known about its licence.
 
 Three conventions hold on this page. Scripts, records and documents are cited from the repository root, while data locations are cited relative to the folder of the study that owns them, because that is how the code builds them. "Not recorded" means that no file of the repository and no run record gives the value. A licence is named only where a file on disk states one; otherwise the entry reads "licence to be confirmed".
 
@@ -116,9 +116,17 @@ The study has no hash record in the repository. Its run logger writes the SHA-25
 
 The CLINC150 file sits inside the work copy of Clause-Driven-LLM, which is not distributed; the page of [upstream repositories](upstream-repositories.md) says how that copy relates to the public repository. Banking77, a second dataset that Clause-Driven-LLM supports, was not downloaded (`pytest_test_data.txt` of run `20261002T195152Z_m5_setup_sorted` reports its test as skipped for that reason).
 
+## studies/decision_layer
+
+The study keeps its own data card, [studies/decision_layer/docs/data.md](../studies/decision_layer/docs/data.md). It covers the intent sets CLINC150, Banking77 and HWU64, MASSIVE 1.1 (en-US and nb-NO), the conversation datasets ABCD, STAR and MultiWOZ 2.2, the RouterBench file of one exploration, the pretrained sentence encoders and the Model2Vec table potion-base-32M, and the two word tables from C4 that the study reads, each with the record that pins it and what is known about its licence. No script of the repository downloads the datasets, and only MultiWOZ 2.2 has a written download record; the encoders are loaded by hub id into the Hugging Face cache.
+
+## studies/tally
+
+The study keeps its own data card, [studies/tally/docs/data.md](../studies/tally/docs/data.md). It covers the Penn Treebank text, which the study reads from the raw store of tm_language_model and cuts into its own splits (`studies/tally/src/tally/ptb.py`); WordNet 3.0, SimLex-999, WordSim-353, the Brown corpus and the universal tagset mapping that A2 reads; the OR-groups of a run of hierarchical_tm; Fashion-MNIST and AG News for B6; and the KenLM files that A1 writes. Its run logger writes the SHA-256 of the data files of a run into `data_hashes.json` in the run folder. The Penn Treebank runs hold the value of the validation text only, because the training and the validation file have the same name; the data card gives both values and where each is recorded.
+
 ## Model files
 
-Trained models are run outputs. The clause-bank checkpoints and baseline checkpoints of the tm_language_model study and the saved models of the hierarchical_tm study sit in the run folders, and the training outputs of M5 step 1 of the clause_lm study sit under `work/m5`. None of them is distributed. The [run index](run-index.md) lists every run folder with its size.
+Trained models are run outputs. The clause-bank checkpoints and baseline checkpoints of the tm_language_model study and the saved models of the hierarchical_tm study sit in the run folders, the training outputs of M5 step 1 of the clause_lm study sit under `work/m5`, the models and predictions of decision_layer sit in its folders `results/explore/` and `results/confirm/`, and the trained machines of tally sit in its run folders. None of them is distributed. The [run index](run-index.md) lists every run folder with its size.
 
 ## Known problems of the data
 
@@ -143,7 +151,7 @@ For the hierarchical_tm study:
 - The pair data in use is the third build. The first two builds did not pass Check 1b of [gates.md](../studies/hierarchical_tm/gates.md) for every version; the data card and the [results page](../studies/hierarchical_tm/docs/results.md) give the history with the runs.
 - The check script prints FAIL for `ns_all`, the main synonym data, on its count of skewed words. The addendum of gates.md of 1 Oct 2026 (about 20:10 CEST) accepts the count, makes `ns_all` the main synonym data and adds the safeguard that the verdict of Check 4b leaves out every word group that contains one of the skewed words. The results page gives the numbers.
 - The version `ns` is not a random sample of the next-paragraph pairs: pairs that share many words rarely find a swap partner (data card). It is a side variant.
-- The splits are disjoint by article id. An internal audit of 2026-10-03 nevertheless found duplicate articles across the splits of the Wikipedia pair data; its count is 2.1% of the test paragraphs (from an internal audit of 2026-10-03, not recomputed).
+- The splits are disjoint by article id. An internal audit of 2026-10-03 (judged by an AI model, not a person) nevertheless found duplicate articles across the splits of the Wikipedia pair data; its count is 2.1% of the test paragraphs (from an internal audit of 2026-10-03, not recomputed).
 - The sentence files of the slide-6 and slide-10 tests are not distributed, so these two tests cannot be rerun from a clone. The results page carries the disclosures that the records attach to results on this data.
 
 For the clause_lm study:
@@ -152,5 +160,7 @@ For the clause_lm study:
 - CLINC150 is pinned by a branch name and by the hash of the downloaded file, not by a commit.
 - The data module of Clause-Driven-LLM that loads CLINC150 is absent from the public repository and was rebuilt for this study; the rebuilt file is published, and the study README describes it.
 - The feature vocabulary of the lexical features has ties at its cut-off, which the setup script notes can resolve differently across numpy versions and CPUs (study README).
+
+For the decision_layer study the [data card](../studies/decision_layer/docs/data.md) lists the known problems. Among them: most sources are pinned by content hashes only; MASSIVE en-US shares source texts with HWU64, so it is a related dataset and not a fresh one; and the C4 counting table matches 2.47% of the MultiWOZ dev and 2.61% of the MultiWOZ test utterances verbatim or by a shared 8-gram.
 
 The page of [known limitations](known-limitations.md) collects the limits that concern the programme as a whole, and the [hash table](hash-table.md) lists the pinned files that are in the repository.
