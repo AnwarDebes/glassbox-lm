@@ -1,0 +1,26 @@
+{
+ "registration": "registrations/R2_sparse_input_fix.md",
+ "sha256": "42d1625355391a4f6d7ba94460f4c750d0b9ca52d00d9d627e673f50b95de0ca",
+ "frozen_utc": "2026-10-15T22:18:42Z",
+ "sources": {
+  "src/dl/bandit.py": "6482d916126cf30694f7f386a019dcd6c62e3f08120f61a897df2ebc71dab0fe",
+  "src/dl/boolean.py": "9040cebd2790ac627401160aa54476efa565e3b8df8b8bfe72c3888e4706c8aa",
+  "src/dl/calib.py": "7ae28025edf41e6688bebff759382ed530ee1a3c528494fc93b92c8dc2511a9c",
+  "src/dl/data.py": "87c6c556f015be4c29c7dd7b8f5984291d55ef8b21769e655c4c94c7b87c116b",
+  "src/dl/explain.py": "514a900965f86b25cf1009b32d720cec9f0add050eae5b18ab1752ef5fc3382f",
+  "src/dl/linear.py": "58079974e1d33dc7d3fa30e191ff840047e1c3f36afc45eb08b279ac9b4176eb",
+  "src/dl/mdp.py": "fb4aad4f60273b88df7afeabfaaa39b5cd60c7c317f1539cb8f0278fd33df4ff",
+  "src/dl/tm.py": "8a9034223e3d77106c3e6a3b39cbb81c4496f2b822ae7ed6aae94d2ec1ed26f1",
+  "scripts/bandit_run.py": "e271c7d53adce392829750405948cedeae2e563ae52b468df35b113051603271",
+  "scripts/baselines.py": "4c933d5db8914f254cf4fa2114a44688627c3f62dc4e865b3ec73ec6797b279b",
+  "scripts/confirm_router.py": "8d73045ca4c877677a9937bf583a0940b97001c3daddadab4989a206befc9ad8",
+  "scripts/convert_routerbench.py": "7c30f9e04bc037e8c86abaf8f070c0c3a9b228931632eccb87b4331f25df8870",
+  "scripts/embed.py": "fb5018407ece5da1b557156cd11b7c4df529cc25f238055d41acfcf0b9f24bb5",
+  "scripts/freeze.py": "0217b57029985db8c735bd404aac4897cdd0257236bf801096794ce65a23ed6d",
+  "scripts/r6_run.py": "e27de1fec5a06da02aa43c3faf2bb7d25e52acb9b4596ee262ab8e99edbb4479",
+  "scripts/summ.py": "78394148d5b2123adf6a5d5d47b59ae0ab51400ccdff271770be5bc68bbf4807",
+  "scripts/tm_explore.py": "ccb9fe9ab1071476d49398bd74a224c38bad8ab395d8e0577c278bb407eee8e0",
+  "scripts/master_queue.sh": "a529c42b16ac09c8d8e08c34f79744ea165c0b0bc919628620a7243f483287da",
+  "scripts/queue.sh": "5d375ed169039f5391134fee39b98f7dd7e335a8e388f0349a2d0722de9f6229"
+ }
+}

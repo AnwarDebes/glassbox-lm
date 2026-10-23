@@ -1,0 +1,32 @@
+{
+ "registration": "registrations/R4b_router_capacity.md",
+ "sha256": "35a88fa9ec5bab73681a3f734eca99725529133b2603d756b9f0754d0adbe98c",
+ "frozen_utc": "2026-10-15T22:44:02Z",
+ "sources": {
+  "src/dl/bandit.py": "6482d916126cf30694f7f386a019dcd6c62e3f08120f61a897df2ebc71dab0fe",
+  "src/dl/boolean.py": "9040cebd2790ac627401160aa54476efa565e3b8df8b8bfe72c3888e4706c8aa",
+  "src/dl/calib.py": "7ae28025edf41e6688bebff759382ed530ee1a3c528494fc93b92c8dc2511a9c",
+  "src/dl/data.py": "87c6c556f015be4c29c7dd7b8f5984291d55ef8b21769e655c4c94c7b87c116b",
+  "src/dl/explain.py": "514a900965f86b25cf1009b32d720cec9f0add050eae5b18ab1752ef5fc3382f",
+  "src/dl/linear.py": "e3ef06b96ef60740af7757c9f8c0672d7c6258404d67936bd4106723d3a0a65d",
+  "src/dl/mdp.py": "0b0852a9338f1d994cffbd5d0d90890094aa7e282b6d08e17e1d1aea8954a536",
+  "src/dl/tm.py": "5fb23e2ac2cb72982171f448e7963bc1f76f3d099b7ad1cd02c270aa0e41ae96",
+  "scripts/bandit_run.py": "e271c7d53adce392829750405948cedeae2e563ae52b468df35b113051603271",
+  "scripts/baselines.py": "4c933d5db8914f254cf4fa2114a44688627c3f62dc4e865b3ec73ec6797b279b",
+  "scripts/confirm_router.py": "62a98ae17b6a412a480698a80bddde1979bb39243778d26cc928c5f1018b2705",
+  "scripts/convert_routerbench.py": "7c30f9e04bc037e8c86abaf8f070c0c3a9b228931632eccb87b4331f25df8870",
+  "scripts/diff_frozen.py": "1573c39a989310caa1ed2c84ecafcf529ad4627061a6cc4d68a4320d83311343",
+  "scripts/embed.py": "fb5018407ece5da1b557156cd11b7c4df529cc25f238055d41acfcf0b9f24bb5",
+  "scripts/freeze.py": "0217b57029985db8c735bd404aac4897cdd0257236bf801096794ce65a23ed6d",
+  "scripts/r6_run.py": "6e9c07366ce83a13325a0e2c4d3a2056e44b96ad351453132c6b29f362a6b0f7",
+  "scripts/rb_run.py": "835d2700826ba1d615baad867411a188d62894d212a3dc2618cea94712325d16",
+  "scripts/report_agent.py": "19f23ed7a132a720a593afaf656f63008a62b8df5dba0023fa3e46d1942814b0",
+  "scripts/report_router.py": "bcb0fc9a3ac6e3ffea43809babd57e41a952da76163138bcd0f75e4efc6d9c69",
+  "scripts/show_rules.py": "ac3b7236e464d98a4787c00c1dd8f166f1f68f3eb69899423d9c6f8ad66c5d3d",
+  "scripts/summ.py": "78394148d5b2123adf6a5d5d47b59ae0ab51400ccdff271770be5bc68bbf4807",
+  "scripts/tm_explore.py": "10f9d21e2fc6a2e7af40d9dfdebbe614f11d05ce47a546c890382dc27a2daba0",
+  "scripts/watch_results.py": "2a87927d400e5f11658a42bb38bfcf0d1a09a11ace6824a5fd9ed1dece0dca62",
+  "scripts/master_queue.sh": "a529c42b16ac09c8d8e08c34f79744ea165c0b0bc919628620a7243f483287da",
+  "scripts/queue.sh": "5d375ed169039f5391134fee39b98f7dd7e335a8e388f0349a2d0722de9f6229"
+ }
+}

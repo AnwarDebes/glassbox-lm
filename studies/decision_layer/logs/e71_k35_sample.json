@@ -1,0 +1,258 @@
+{
+ "what": "e71 v2 step 2 sample (10:17 UTC): 50 of the 512 (state, group) pairs certified at k = 2 for TM seed 1, sorted by (state, group), drawn with numpy default_rng(0).choice(512, 50, replace=False), indices sorted",
+ "n_population": 512,
+ "indices": [
+  1,
+  2,
+  4,
+  7,
+  10,
+  14,
+  16,
+  19,
+  35,
+  40,
+  44,
+  62,
+  82,
+  86,
+  125,
+  131,
+  133,
+  143,
+  149,
+  191,
+  202,
+  212,
+  237,
+  239,
+  241,
+  260,
+  267,
+  269,
+  271,
+  288,
+  295,
+  302,
+  307,
+  315,
+  325,
+  330,
+  340,
+  348,
+  358,
+  375,
+  383,
+  393,
+  394,
+  417,
+  418,
+  428,
+  432,
+  450,
+  463,
+  497
+ ],
+ "sample": [
+  [
+   18,
+   "P_first"
+  ],
+  [
+   31,
+   "P_first"
+  ],
+  [
+   51,
+   "P_prec(log-out-in, *)"
+  ],
+  [
+   57,
+   "P_prec(log-out-in, *)"
+  ],
+  [
+   87,
+   "P_first"
+  ],
+  [
+   101,
+   "P_prec(verify-identity, *)"
+  ],
+  [
+   119,
+   "P_first"
+  ],
+  [
+   169,
+   "P_prec(enter-details, *)"
+  ],
+  [
+   258,
+   "P_first"
+  ],
+  [
+   293,
+   "P_prec(enter-details, *)"
+  ],
+  [
+   316,
+   "P_prec(enter-details, *)"
+  ],
+  [
+   452,
+   "P_first"
+  ],
+  [
+   534,
+   "P_prec(log-out-in, *)"
+  ],
+  [
+   538,
+   "P_prec(search-faq, *)"
+  ],
+  [
+   832,
+   "P_prec(log-out-in, *)"
+  ],
+  [
+   842,
+   "P_prec(enter-details, *)"
+  ],
+  [
+   842,
+   "P_prec(search-faq, *)"
+  ],
+  [
+   968,
+   "P_prec(log-out-in, *)"
+  ],
+  [
+   1005,
+   "P_prec(log-out-in, *)"
+  ],
+  [
+   1416,
+   "P_prec(search-faq, *)"
+  ],
+  [
+   1483,
+   "P_prec(search-faq, *)"
+  ],
+  [
+   1554,
+   "P_prec(log-out-in, *)"
+  ],
+  [
+   1747,
+   "P_prec(enter-details, *)"
+  ],
+  [
+   1747,
+   "P_prec(pull-up-account, *)"
+  ],
+  [
+   1747,
+   "P_prec(verify-identity, *)"
+  ],
+  [
+   1896,
+   "P_prec(log-out-in, *)"
+  ],
+  [
+   1964,
+   "P_prec(search-faq, *)"
+  ],
+  [
+   2006,
+   "P_prec(enter-details, *)"
+  ],
+  [
+   2006,
+   "P_prec(verify-identity, *)"
+  ],
+  [
+   2198,
+   "P_first"
+  ],
+  [
+   2227,
+   "P_prec(log-out-in, *)"
+  ],
+  [
+   2252,
+   "P_prec(log-out-in, *)"
+  ],
+  [
+   2373,
+   "P_prec(enter-details, *)"
+  ],
+  [
+   2395,
+   "P_prec(verify-identity, *)"
+  ],
+  [
+   2548,
+   "P_prec(search-faq, *)"
+  ],
+  [
+   2618,
+   "P_prec(verify-identity, *)"
+  ],
+  [
+   2668,
+   "P_prec(search-faq, *)"
+  ],
+  [
+   2683,
+   "P_prec(verify-identity, *)"
+  ],
+  [
+   2773,
+   "P_prec(log-out-in, *)"
+  ],
+  [
+   2906,
+   "P_prec(enter-details, *)"
+  ],
+  [
+   2969,
+   "P_prec(log-out-in, *)"
+  ],
+  [
+   3082,
+   "P_prec(search-faq, *)"
+  ],
+  [
+   3082,
+   "P_prec(verify-identity, *)"
+  ],
+  [
+   3270,
+   "P_prec(log-out-in, *)"
+  ],
+  [
+   3270,
+   "P_prec(verify-identity, *)"
+  ],
+  [
+   3305,
+   "P_prec(log-out-in, *)"
+  ],
+  [
+   3319,
+   "P_prec(search-faq, *)"
+  ],
+  [
+   3369,
+   "P_prec(pull-up-account, *)"
+  ],
+  [
+   3394,
+   "P_first"
+  ],
+  [
+   3550,
+   "P_prec(enter-details, *)"
+  ]
+ ]
+}
