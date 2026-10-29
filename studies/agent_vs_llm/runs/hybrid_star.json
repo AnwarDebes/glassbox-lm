@@ -1,0 +1,56 @@
+{
+ "plan": "PLAN_hybrid_dev.md",
+ "dataset": "star",
+ "n": 500,
+ "fallbacks": {
+  "k3": 7,
+  "k5": 7,
+  "alone": 0
+ },
+ "acc": {
+  "hybrid_k3": 0.646,
+  "hybrid_k5": 0.642,
+  "llm_alone": 0.528,
+  "agent": 0.666,
+  "ft:ft_star_bgebase_s1": 0.752,
+  "tfidf_lr_C4": 0.672
+ },
+ "gold_in_agent_top3": 0.85,
+ "gold_in_agent_top5": 0.902,
+ "k3_minus_agent": {
+  "diff": -0.02,
+  "ci95": [
+   -0.052,
+   0.012
+  ]
+ },
+ "k3_minus_llm": {
+  "diff": 0.118,
+  "ci95": [
+   0.076,
+   0.158
+  ]
+ },
+ "k5_minus_agent": {
+  "diff": -0.024,
+  "ci95": [
+   -0.058,
+   0.01
+  ]
+ },
+ "agent_minus_llm": {
+  "diff": 0.138,
+  "ci95": [
+   0.09,
+   0.186
+  ]
+ },
+ "k3_minus_ft:ft_star_bgebase_s1": {
+  "diff": -0.106,
+  "ci95": [
+   -0.146,
+   -0.066
+  ]
+ },
+ "rule_met_this_dataset": false
+}

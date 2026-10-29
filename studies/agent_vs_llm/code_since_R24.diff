@@ -1,0 +1,46 @@
+=== abcd.py
+167c167
+<       customer's last 3 utterances only, so that a view can leave out everything the human agent wrote.
+---
+>       customer's last 3 utterances only, so that a view can leave out all of the human agent's text.
+=== count_bits.py
+3,5c3,5
+< Spec: the text-understanding line's studies/text_understanding/PLAN_text_understanding.md, "P7 result and the 2d block
+< definition", with the text-understanding line's amendment (f8f552fd, its study log 2026-10-20 00:23:53Z, decided before any 2d-a run: count at
+< level 3, not at the lowest level, which saturates in long texts). Ported here; nothing from research/ is imported. The
+---
+> Spec: PLAN_text_understanding.md of the text-understanding line (project notes, not published), "P7 result and the 2d block
+> definition", with its amendment (f8f552fd, logged 2026-10-20 00:23:53Z, decided before any 2d-a run: count at
+> level 3, not at the lowest level, which saturates in long texts). Ported here; nothing from the project notes is imported. The
+35c35
+< COUNT_AT = 3  # the thermometer level counted (the text-understanding line's amendment); a concept with fewer levels uses its highest
+---
+> COUNT_AT = 3  # the thermometer level counted (the spec's amendment); a concept with fewer levels uses its highest
+=== count_text.py
+1c1
+< """Text to bits with no neural network at any stage: the text-understanding line's C4-word table and existsT (added 2026-10-19 for e72).
+---
+> """Text to bits with no neural network at any stage: the C4 word table and existsT (added 2026-10-19 for e72).
+6,7c6,7
+< - The table: data/tables/c4words_S1000_v1/table.npz, a copy of the text-understanding line's frozen export
+<   (glassbox-lm/studies/text_understanding/w1/export/c4words_S1000_v1; its README.md is the handover note). 63,091 C4 words x 500
+---
+> - The table: data/tables/c4words_S1000_v1/table.npz, a copy of the frozen export c4words_S1000_v1 of the
+>   text-understanding line (project notes, not published). 63,091 C4 words x 500
+=== static_text.py
+4,7c4,7
+< 512 floats and a rule-based tokenizer. A port, not an import, of the recipe in glassbox-lm/studies/text_understanding
+< (speed_exists.py lines 27 to 61, exists_tm.py lines 46 to 102, graph_feats.py lines 42 to 70: the text-understanding line's existsT);
+< nothing there is imported or edited. Added 2026-10-17 for the no-network agent
+< (plan kept outside the repository).
+---
+> 512 floats and a rule-based tokenizer. A port, not an import, of the recipe in the project notes (not published)
+> (speed_exists.py lines 27 to 61, exists_tm.py lines 46 to 102, graph_feats.py lines 42 to 70: the existsT of the
+> text-understanding line); nothing there is imported or edited. Added 2026-10-17 for the no-network agent
+> (the plan in the project notes, not published).
+15,16c15,16
+<   and one thread: the same recipe as the text-understanding line's existsT with a CPU draw (the text-understanding line drew on the GPU,
+<   so the concepts differ). sim_k(text) = max over the text's tokens of cos(token, concept k); bits
+---
+>   and one thread: the same recipe as the text-understanding line's existsT with a CPU draw (that line drew on
+>   the GPU, so the concepts are not the same). sim_k(text) = max over the text's tokens of cos(token, concept k); bits

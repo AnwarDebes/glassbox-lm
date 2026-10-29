@@ -1,0 +1,147 @@
+{
+ "note": "NOTE_cascade_dev.md",
+ "dataset": "star",
+ "agent": "runs/agent_star_c4_tm_s1/tm.npz",
+ "partner": "runs/ft_star_bgebase_s1/dev_preds.npz",
+ "n": 6908,
+ "agent_acc": 0.6544585987261147,
+ "partner_acc": 0.7408801389693109,
+ "agent_right_partner_wrong": 0.04400694846554719,
+ "partner_right_agent_wrong": 0.1304284887087435,
+ "readings": [
+  {
+   "coverage_fit": 32,
+   "threshold": 13369.0,
+   "n_score": 3459,
+   "coverage_score": 0.3070251517779705,
+   "cascade_acc": 0.7406764960971379,
+   "partner_acc": 0.7415437987857763,
+   "diff": -0.0008673026886383273,
+   "ci95": [
+    -0.004304182747709803,
+    0.0018304123169894655
+   ]
+  },
+  {
+   "coverage_fit": 37,
+   "threshold": 11235.0,
+   "n_score": 3449,
+   "coverage_score": 0.37112206436648304,
+   "cascade_acc": 0.732966077123804,
+   "partner_acc": 0.7402145549434619,
+   "diff": -0.0072484778196578725,
+   "ci95": [
+    -0.012103780431876746,
+    -0.00316451146810696
+   ]
+  }
+ ],
+ "claim_holds": false,
+ "curve_all_dev": [
+  {
+   "coverage": 0,
+   "acc": 0.7408801389693109,
+   "agent_acc_on_covered": null
+  },
+  {
+   "coverage": 5,
+   "acc": 0.7398668210770122,
+   "agent_acc_on_covered": 0.9217391304347826
+  },
+  {
+   "coverage": 10,
+   "acc": 0.7398668210770122,
+   "agent_acc_on_covered": 0.9421128798842258
+  },
+  {
+   "coverage": 15,
+   "acc": 0.7391430225825131,
+   "agent_acc_on_covered": 0.9382239382239382
+  },
+  {
+   "coverage": 20,
+   "acc": 0.7389982628836133,
+   "agent_acc_on_covered": 0.9377713458755427
+  },
+  {
+   "coverage": 25,
+   "acc": 0.7391430225825131,
+   "agent_acc_on_covered": 0.9264620729588883
+  },
+  {
+   "coverage": 30,
+   "acc": 0.7387087434858135,
+   "agent_acc_on_covered": 0.916988416988417
+  },
+  {
+   "coverage": 35,
+   "acc": 0.7353792704111175,
+   "agent_acc_on_covered": 0.8937138130686518
+  },
+  {
+   "coverage": 40,
+   "acc": 0.73335263462652,
+   "agent_acc_on_covered": 0.8834600072385088
+  },
+  {
+   "coverage": 45,
+   "acc": 0.731615518239722,
+   "agent_acc_on_covered": 0.8687680926342876
+  },
+  {
+   "coverage": 50,
+   "acc": 0.7292993630573248,
+   "agent_acc_on_covered": 0.8511870295309786
+  },
+  {
+   "coverage": 55,
+   "acc": 0.7262594093804284,
+   "agent_acc_on_covered": 0.8328507501974204
+  },
+  {
+   "coverage": 60,
+   "acc": 0.7235089751013318,
+   "agent_acc_on_covered": 0.8159227985524728
+  },
+  {
+   "coverage": 65,
+   "acc": 0.7190214244354372,
+   "agent_acc_on_covered": 0.7982182628062361
+  },
+  {
+   "coverage": 70,
+   "acc": 0.7114939200926462,
+   "agent_acc_on_covered": 0.7746071133167908
+  },
+  {
+   "coverage": 75,
+   "acc": 0.7061378112333526,
+   "agent_acc_on_covered": 0.7539085118702953
+  },
+  {
+   "coverage": 80,
+   "acc": 0.6964389114070643,
+   "agent_acc_on_covered": 0.7332609482446616
+  },
+  {
+   "coverage": 85,
+   "acc": 0.6878980891719745,
+   "agent_acc_on_covered": 0.7132152588555858
+  },
+  {
+   "coverage": 90,
+   "acc": 0.6757382744643892,
+   "agent_acc_on_covered": 0.693421264275374
+  },
+  {
+   "coverage": 95,
+   "acc": 0.6656050955414012,
+   "agent_acc_on_covered": 0.6722535425872315
+  },
+  {
+   "coverage": 100,
+   "acc": 0.6544585987261147,
+   "agent_acc_on_covered": 0.6544585987261147
+  }
+ ]
+}

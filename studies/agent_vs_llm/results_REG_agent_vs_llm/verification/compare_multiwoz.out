@@ -1,0 +1,32 @@
+ok  n_rows: 4000 / 4000
+ok  n_dialogues: 981 / 981
+ok  llm_invalid: 0 / 0
+ok  point acc_agent: registered 0.354750 recompute 0.354750
+ok  point acc_llm: registered 0.366000 recompute 0.366000
+ok  point acc_ft: registered 0.426750 recompute 0.426750
+ok  point agent_minus_llm: registered -0.011250 recompute -0.011250
+ok  point ft_minus_agent: registered 0.072000 recompute 0.072000
+ok  ci agent_minus_llm 95: registered [-2.78, +0.57] recompute [-2.78, +0.57] points; max end difference 0.00
+ok  ci agent_minus_llm 90: registered [-2.52, +0.30] recompute [-2.52, +0.30] points; max end difference 0.00
+ok  ci ft_minus_agent 95: registered [+5.51, +8.78] recompute [+5.54, +8.81] points; max end difference 0.03
+ok  point acc_tfidf: registered 0.354000 recompute 0.354000
+ok  point tfidf_minus_llm: registered -0.012000 recompute -0.012000
+ok  point agent_minus_tfidf: registered 0.000750 recompute 0.000750
+ok  ci tfidf_minus_llm 95: registered [-2.69, +0.27] recompute [-2.71, +0.30] points; max end difference 0.03
+ok  ci agent_minus_tfidf 95: registered [-1.32, +1.47] recompute [-1.34, +1.46] points; max end difference 0.02
+ok  rule NI_met: registered True recompute True (registered end -2.78 within 0.3 points of -3.0)
+ok  rule NI2_met: registered False recompute False
+ok  rule SUP_met: registered False recompute False
+ok  rule FT_met: registered True recompute True
+ok  rule EQ_inside_no_rule: registered True recompute True
+ok  point two_level agent_minus_llm_mean: registered -0.017000 recompute -0.017000
+ok  point two_level seed 1 acc: registered 0.354750 recompute 0.354750
+ok  point two_level seed 2 acc: registered 0.343750 recompute 0.343750
+ok  point two_level seed 3 acc: registered 0.348500 recompute 0.348500
+ok  point two_level seed 4 acc: registered 0.352500 recompute 0.352500
+ok  point two_level seed 5 acc: registered 0.345500 recompute 0.345500
+ok  ci two_level agent_minus_llm 95: registered [-3.21, -0.14] recompute [-3.24, -0.17] points; max end difference 0.03
+ok  ci two_level ft_minus_agent 95: registered [+6.27, +9.23] recompute [+6.29, +9.23] points; max end difference 0.02
+ok  ci two_level agent_minus_tfidf 95: registered [-1.76, +0.74] recompute [-1.77, +0.77] points; max end difference 0.03
+MATCH
+exit 0

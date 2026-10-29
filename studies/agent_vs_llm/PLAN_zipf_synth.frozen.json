@@ -1,0 +1,10 @@
+{
+ "plan": "PLAN_zipf_synth.md",
+ "sha256": "d9d082dbb51a7ff7fdfbcd3868fa3a2dcb2529c8175a649bc315a8f381e64d83",
+ "frozen_utc": "2026-10-27T00:44:17Z",
+ "sources": {
+  "zipf_synth.py": "63187702cf16d82425d1cf610169ffd8bad1ccc2c1e684c4f5e2de88727782ad",
+  "test_zipf_synth.py": "d9d87e83f1181aee2e568b97fde63c331ae95bf9b6d25e34194d6e1c02191336",
+  "test_zipf_synth.out": "13d99e5d10281d56e18294c8daf29eb3b38e976e204e1eae096bf7f0e719571a"
+ }
+}

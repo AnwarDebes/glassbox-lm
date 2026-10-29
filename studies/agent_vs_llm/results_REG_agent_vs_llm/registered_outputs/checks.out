@@ -1,0 +1,48 @@
+426 of 426 pins EQUAL; 0 changed
+ok    freeze record exists
+ok    all pins unchanged
+ok    star: agent seed files 1-5 exist
+ok    star: agent seed 1 dev accuracy equals the reference
+ok    star: LLM rows are the registered draw
+ok    star: LLM rows hold no request error
+ok    star: LLM result.json with n = rows
+ok    star: LLM ran LLM*'s registered settings
+ok    star: ft test predictions exist (not a dry run)
+ok    star: FT ran the registered settings
+ok    star: tfidf test predictions exist (not a dry run)
+ok    star: TFIDF ran the registered C
+ok    star: the queue ran its job lines exactly as pinned
+ok    abcd: agent seed files 1-5 exist
+ok    abcd: agent seed 1 dev accuracy equals the reference
+ok    abcd: LLM rows are the registered draw
+ok    abcd: LLM rows hold no request error
+ok    abcd: LLM result.json with n = rows
+ok    abcd: LLM ran LLM*'s registered settings
+ok    abcd: ft test predictions exist (not a dry run)
+ok    abcd: FT ran the registered settings
+ok    abcd: tfidf test predictions exist (not a dry run)
+ok    abcd: TFIDF ran the registered C
+ok    abcd: the queue ran its job lines exactly as pinned
+ok    multiwoz: agent seed files 1-5 exist
+ok    multiwoz: agent seed 1 dev accuracy equals the reference
+ok    multiwoz: LLM rows are the registered draw
+ok    multiwoz: LLM rows hold no request error
+ok    multiwoz: LLM result.json with n = rows
+ok    multiwoz: LLM ran LLM*'s registered settings
+ok    multiwoz: ft test predictions exist (not a dry run)
+ok    multiwoz: FT ran the registered settings
+ok    multiwoz: tfidf test predictions exist (not a dry run)
+ok    multiwoz: TFIDF ran the registered C
+ok    multiwoz: the queue ran its job lines exactly as pinned
+ok    star: LLM invalid answers at most 0.5% of rows
+ok    star: FT dev accuracy within 0.5 points of 0.7409
+ok    star: TFIDF dev accuracy within 0.5 points of tfidf_lr.py's
+ok    abcd: LLM invalid answers at most 0.5% of rows
+ok    abcd: FT dev accuracy within 0.5 points of 0.8727
+ok    abcd: TFIDF dev accuracy within 0.5 points of tfidf_lr.py's
+ok    multiwoz: LLM invalid answers at most 0.5% of rows
+ok    multiwoz: FT dev accuracy within 0.5 points of 0.4327
+ok    multiwoz: TFIDF dev accuracy within 0.5 points of tfidf_lr.py's
+gate star: open (reported)
+gate abcd: open (reported)
+gate multiwoz: open (reported)

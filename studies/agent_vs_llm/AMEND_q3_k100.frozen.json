@@ -1,0 +1,10 @@
+{
+ "amendment": "AMEND_q3_k100.md",
+ "sha256": "694a75eb0cf587408e5064160d98beb5959683126ab761bcde4651b755d44e69",
+ "frozen_utc": "2026-10-27T05:55:40Z",
+ "sources": {
+  "llm_q3_job4.sh": "90ca9d01358d264886c41892c0eca5546763f34d07289f28c77a505f4bbbeb0a",
+  "llm_next_action.py": "4fca5acb58c9c0ec82cdb7b1adcf1b477d016591846a4895a0fd317e9f1a092b",
+  "select_llm_star.py": "7c207a9b84d72bad2c7dbab4eb844420851bdc78c0d50cdc2dde418f9cfb949c"
+ }
+}

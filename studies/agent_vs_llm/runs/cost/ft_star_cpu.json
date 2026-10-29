@@ -1,0 +1,16 @@
+{
+ "dataset": "star",
+ "model": "BAAI/bge-base-en-v1.5",
+ "n_params": 109626043,
+ "n_labels": 187,
+ "dev_sha256": "e562736dd9afa1b781d48bf78f43f23b1b8ceda17b3ddbf01557c59f0c8efb18",
+ "n": 300,
+ "threads": 1,
+ "max_len": 256,
+ "median_tokens": 145.0,
+ "total_median_ms": 256.1472598463297,
+ "total_p90_ms": 382.4167877435684,
+ "label": "rough: shared machine, one CPU thread, batch 1; pretrained weights with a new head (same compute)",
+ "torch": "2.6.0+cu124",
+ "utc_end": "2026-10-27T07:40:29Z"
+}

@@ -1,0 +1,44 @@
+{
+ "rule": "per dataset, d = AGENT minus LLM* per row on LLM*'s 500 dev rows (agent seed 1's dev predictions); with se(n) = sd(d) * 1.1 / sqrt(n) (1.1 for dialogue clustering) and the planning difference D = min(mean(d), 0) (no credit for a dev lead; a dev deficit is kept), NI power(n) = Phi((D + 0.03) / se(n) - 1.96). A test split of at most 4,000 rows is used whole (ABCD: 3,608; it costs the same test use). Otherwise the rows are the smallest n in 2,000, 3,000, 4,000 with power >= 0.90; if none reaches it, 4,000, and the power is reported.",
+ "datasets": {
+  "star": {
+   "llm_star": "L35k50",
+   "dev_rows": 500,
+   "dev_agent_minus_llm": 0.028,
+   "sd": 0.4771491828405145,
+   "planning_difference": 0.0,
+   "n_test_split": 6988,
+   "rows": 4000,
+   "power_at_planning_difference": 0.9510344409013878,
+   "power_at_dev_estimate": 0.9999997533966809,
+   "power_at_zero": 0.9510344409013878,
+   "target_met": true
+  },
+  "abcd": {
+   "llm_star": "L35k50",
+   "dev_rows": 500,
+   "dev_agent_minus_llm": -0.006,
+   "sd": 0.3608662479337678,
+   "planning_difference": -0.006,
+   "n_test_split": 3608,
+   "rows": 3608,
+   "power_at_planning_difference": 0.9527046157383772,
+   "power_at_dev_estimate": 0.9527046157383772,
+   "power_at_zero": 0.9950539572605323,
+   "target_met": true
+  },
+  "multiwoz": {
+   "llm_star": "L35k50",
+   "dev_rows": 500,
+   "dev_agent_minus_llm": -0.002,
+   "sd": 0.5315647864978351,
+   "planning_difference": -0.002,
+   "n_test_split": 7355,
+   "rows": 4000,
+   "power_at_planning_difference": 0.8573706566968589,
+   "power_at_dev_estimate": 0.8573706566968589,
+   "power_at_zero": 0.9005877481285862,
+   "target_met": false
+  }
+ }
+}

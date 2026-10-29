@@ -1,0 +1,105 @@
+{
+ "dataset": "abcd",
+ "split": "test",
+ "n_rows": 3608,
+ "n_dialogues": 1004,
+ "seed": 20261028,
+ "draws": 10000,
+ "checks": {
+  "rows_unique": true,
+  "llm_errors": 0,
+  "llm_gold_matches_split": true,
+  "rows_are_rebuilt_draw": true,
+  "rows_file_n": true,
+  "rows_file_split_size": true,
+  "agent_gold_matches_split": true,
+  "ft_gold_matches_split": true,
+  "tfidf_gold_matches_split": true
+ },
+ "acc": {
+  "llm": 0.8378603104212861,
+  "agent": 0.8378603104212861,
+  "ft": 0.8786031042128604,
+  "tfidf": 0.8472838137472284
+ },
+ "llm_invalid": 1,
+ "files": {
+  "llm": "05d17abdd550a5fd8e5cd32c82293a309d61e0d5e216c01f23bcdf49aa126876",
+  "agent": "b60aed23ec13ed8886c204c543405c2b3078f596f0ad78c44f3dd480925f8a70",
+  "ft": "5b039ca37cba7eacd714c75aa7055311e06f3a523db5d1da6eefb95e31de74bc",
+  "tfidf": "48370cf440b473c4530425e4309eec291884d8780a64ec0fc8b6bff04bcc3c00"
+ },
+ "agent_minus_llm": {
+  "mean": 0.0,
+  "ci95": [
+   -0.011885512911632314,
+   0.011463038607294555
+  ],
+  "ci90": [
+   -0.009652642790573825,
+   0.009615781180601081
+  ]
+ },
+ "ft_minus_agent": {
+  "mean": 0.04074279379157428,
+  "ci95": [
+   0.031046867977988616,
+   0.05069885805788471
+  ],
+  "ci90": [
+   0.03249279667814262,
+   0.04899216125419933
+  ]
+ },
+ "tfidf_minus_llm": {
+  "mean": 0.009423503325942351,
+  "ci95": [
+   -0.001369487811558477,
+   0.020027944272521445
+  ],
+  "ci90": [
+   0.0005415577928714254,
+   0.018406593406593407
+  ]
+ },
+ "agent_minus_tfidf": {
+  "mean": -0.009423503325942351,
+  "ci95": [
+   -0.01920401733747643,
+   0.0
+  ],
+  "ci90": [
+   -0.017528991160934985,
+   -0.00138730891848153
+  ]
+ },
+ "rules": {
+  "NI_met": true,
+  "NI2_met": true,
+  "SUP_met": false,
+  "FT_met": true,
+  "EQ_inside_no_rule": true
+ },
+ "two_level": {
+  "agent_acc_per_seed": [
+   0.8378603104212861,
+   0.8353658536585366,
+   0.8312084257206208,
+   0.8386917960088692,
+   0.8389689578713969
+  ],
+  "agent_minus_llm_mean": -0.0014412416851441456,
+  "ci_agent_minus_llm": [
+   -0.012454843207908687,
+   0.009540222040222045
+  ],
+  "ci_ft_minus_agent": [
+   0.03333263830970263,
+   0.050959956116291893
+  ],
+  "ci_agent_minus_tfidf": [
+   -0.01957703325953672,
+   -0.002358000948156724
+  ]
+ }
+}

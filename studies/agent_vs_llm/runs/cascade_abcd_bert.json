@@ -1,0 +1,147 @@
+{
+ "note": "NOTE_cascade_dev.md",
+ "dataset": "abcd",
+ "agent": "runs/agent_abcd_c4_tm_s1/tm.npz",
+ "partner": "runs/ft_abcd_bert_s1/dev_preds.npz",
+ "n": 3684,
+ "agent_acc": 0.8417480998914224,
+ "partner_acc": 0.8716069489685125,
+ "agent_right_partner_wrong": 0.02035830618892508,
+ "partner_right_agent_wrong": 0.0502171552660152,
+ "readings": [
+  {
+   "coverage_fit": 76,
+   "threshold": 2348.0,
+   "n_score": 1806,
+   "coverage_score": 0.7591362126245847,
+   "cascade_acc": 0.8698781838316723,
+   "partner_acc": 0.8704318936877077,
+   "diff": -0.0005537098560354226,
+   "ci95": [
+    -0.005373455131649663,
+    0.003961516694963252
+   ]
+  },
+  {
+   "coverage_fit": 87,
+   "threshold": 1074.0,
+   "n_score": 1878,
+   "coverage_score": 0.8690095846645367,
+   "cascade_acc": 0.8567625133120341,
+   "partner_acc": 0.8727369542066028,
+   "diff": -0.015974440894568676,
+   "ci95": [
+    -0.024780799563899978,
+    -0.007383868933626013
+   ]
+  }
+ ],
+ "claim_holds": false,
+ "curve_all_dev": [
+  {
+   "coverage": 0,
+   "acc": 0.8716069489685125,
+   "agent_acc_on_covered": null
+  },
+  {
+   "coverage": 5,
+   "acc": 0.8716069489685125,
+   "agent_acc_on_covered": 0.9891304347826086
+  },
+  {
+   "coverage": 10,
+   "acc": 0.8716069489685125,
+   "agent_acc_on_covered": 0.9891304347826086
+  },
+  {
+   "coverage": 15,
+   "acc": 0.8716069489685125,
+   "agent_acc_on_covered": 0.9891500904159132
+  },
+  {
+   "coverage": 20,
+   "acc": 0.8716069489685125,
+   "agent_acc_on_covered": 0.9796472184531886
+  },
+  {
+   "coverage": 25,
+   "acc": 0.8718783930510315,
+   "agent_acc_on_covered": 0.9782844733984799
+  },
+  {
+   "coverage": 30,
+   "acc": 0.8718783930510315,
+   "agent_acc_on_covered": 0.9800904977375565
+  },
+  {
+   "coverage": 35,
+   "acc": 0.8718783930510315,
+   "agent_acc_on_covered": 0.9759503491078355
+  },
+  {
+   "coverage": 40,
+   "acc": 0.8713355048859935,
+   "agent_acc_on_covered": 0.9735413839891451
+  },
+  {
+   "coverage": 45,
+   "acc": 0.8710640608034745,
+   "agent_acc_on_covered": 0.9722557297949337
+  },
+  {
+   "coverage": 50,
+   "acc": 0.8705211726384365,
+   "agent_acc_on_covered": 0.9663409337676439
+  },
+  {
+   "coverage": 55,
+   "acc": 0.8702497285559175,
+   "agent_acc_on_covered": 0.9619940769990128
+  },
+  {
+   "coverage": 60,
+   "acc": 0.8694353963083605,
+   "agent_acc_on_covered": 0.9588235294117647
+  },
+  {
+   "coverage": 65,
+   "acc": 0.8702497285559175,
+   "agent_acc_on_covered": 0.9532359081419625
+  },
+  {
+   "coverage": 70,
+   "acc": 0.8699782844733985,
+   "agent_acc_on_covered": 0.9472663823187282
+  },
+  {
+   "coverage": 75,
+   "acc": 0.8686210640608035,
+   "agent_acc_on_covered": 0.935577271082157
+  },
+  {
+   "coverage": 80,
+   "acc": 0.8664495114006515,
+   "agent_acc_on_covered": 0.9273837801153716
+  },
+  {
+   "coverage": 85,
+   "acc": 0.8634636264929425,
+   "agent_acc_on_covered": 0.9112104758862983
+  },
+  {
+   "coverage": 90,
+   "acc": 0.8585776330076005,
+   "agent_acc_on_covered": 0.8896260554885405
+  },
+  {
+   "coverage": 95,
+   "acc": 0.8515200868621065,
+   "agent_acc_on_covered": 0.8651428571428571
+  },
+  {
+   "coverage": 100,
+   "acc": 0.8417480998914224,
+   "agent_acc_on_covered": 0.8417480998914224
+  }
+ ]
+}

@@ -1,0 +1,14 @@
+{
+ "plan": "PLAN_mwoz_dev.md",
+ "sha256": "9051886f03869ba8cec57b355350560d047a58635b18dccec7aae8b59aba5e02",
+ "frozen_utc": "2026-10-26T23:55:25Z",
+ "sources": {
+  "llm_next_action.py": "fc7eae6da8bbd0122149f5da5a3cebd2f47ae5cf1cd5a3acb389f39facce16de",
+  "test_llm_next_action.out": "62cfd4a2903f60bf5f3f313f5326f2b5859ca36b2a1b822b48482e7d9986a17b",
+  "llm_mwoz_job.sh": "6d299ed1f5389a71b87b9a30156b40c70879ae6ec2d0a482ccbd67200ac56be5",
+  "serve_headline.sh": "2d0765e2338813743e86e944d0134508fd854aae479a6ecdfffcf2afee32479b",
+  "ft_baseline.py": "a8dbcc5b180fcddc02238f1966d8394168a6779672b70175e838525b2249a18f",
+  "runs/agent_multiwoz_c4_tm_s1/tm.npz": "547d1564a414a0e8a9f7b2f90746a16468d9774d00cc05568e2f39adff9d0c95",
+  "studies/decision_layer/results/explore/e84_preds/e84_multiwoz_C4_c16000_s8_nrand_seed1.npz": "20a3325f3b25101d3d4ca93d81b30c86560189d4dd606b24ef421f39058e059a"
+ }
+}

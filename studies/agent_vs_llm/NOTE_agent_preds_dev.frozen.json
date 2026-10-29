@@ -1,0 +1,8 @@
+{
+ "note": "NOTE_agent_preds_dev.md",
+ "sha256": "d247ca08ce05ad408debf328700b8849f82dde4d44f8801a4f67c087f74d5f22",
+ "frozen_utc": "2026-10-26T20:58:54Z",
+ "sources": {
+  "agent_preds.py": "e52adcd1d7df3239619b339ba472f7d8a0c9550edea63a680ee21478dbc72d4b"
+ }
+}

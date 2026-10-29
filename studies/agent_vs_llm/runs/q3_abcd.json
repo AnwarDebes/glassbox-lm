@@ -1,0 +1,48 @@
+{
+ "plan": "PLAN_llm_q3_dev.md",
+ "dataset": "abcd",
+ "n_rows": 500,
+ "arms": {
+  "L9": {
+   "n": 500,
+   "partial": false,
+   "llm_acc": 0.818,
+   "agent_acc": 0.858,
+   "ft_acc": 0.892,
+   "agent_minus_llm": 0.04,
+   "ci95": [
+    0.004,
+    0.076
+   ]
+  },
+  "L9t": {
+   "n": 42,
+   "partial": true,
+   "llm_acc": 0.7142857142857143,
+   "agent_acc": 0.8333333333333334,
+   "ft_acc": 0.8571428571428571,
+   "agent_minus_llm": 0.11904761904761904,
+   "ci95": [
+    -0.023809523809523808,
+    0.2619047619047619
+   ]
+  },
+  "L35": {
+   "n": 500,
+   "partial": false,
+   "llm_acc": 0.84,
+   "agent_acc": 0.858,
+   "ft_acc": 0.892,
+   "agent_minus_llm": 0.018,
+   "ci95": [
+    -0.014,
+    0.05
+   ]
+  }
+ },
+ "claim_open_on_complete_arms": false,
+ "complete_arms": [
+  "L9",
+  "L35"
+ ]
+}

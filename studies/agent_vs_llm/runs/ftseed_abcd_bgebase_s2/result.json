@@ -1,0 +1,69 @@
+{
+ "plan": "PLAN_ft_dev.md",
+ "dataset": "abcd",
+ "model": "BAAI/bge-base-en-v1.5",
+ "lr": 5e-05,
+ "seed": 2,
+ "epochs": 4,
+ "batch": 32,
+ "max_len": 256,
+ "n_train": 29190,
+ "n_dev": 3684,
+ "n_labels": 30,
+ "limit_train": null,
+ "limit_dev": null,
+ "train_sha256": "c9e0f9b58a13a3dd9eff5821177cd74373cd1816465445a32bb6cc131933835f",
+ "dev_sha256": "5ccc737f5be9086060de4c28f560f1aa9b94566ed9599a98f44212c0e6cf2f17",
+ "truncated_share_train": 0.0067,
+ "tokenize_s": 8.3,
+ "history": [
+  {
+   "epoch": 1,
+   "dev_acc": 0.8526058631921825,
+   "train_loss": 1.2094080173589465,
+   "train_s": 96.4,
+   "eval_s": 3.6
+  },
+  {
+   "epoch": 2,
+   "dev_acc": 0.8650922909880565,
+   "train_loss": 0.4938987856074203,
+   "train_s": 95.4,
+   "eval_s": 3.6
+  },
+  {
+   "epoch": 3,
+   "dev_acc": 0.8667209554831705,
+   "train_loss": 0.35959329123201333,
+   "train_s": 95.6,
+   "eval_s": 3.5
+  },
+  {
+   "epoch": 4,
+   "dev_acc": 0.8713355048859935,
+   "train_loss": 0.2586516389304867,
+   "train_s": 95.3,
+   "eval_s": 3.5
+  }
+ ],
+ "best_epoch": 4,
+ "best_dev_acc": 0.8713355048859935,
+ "final_dev_acc": 0.8713355048859935,
+ "torch": "2.6.0+cu124",
+ "cuda": "12.4",
+ "gpu": "Tesla V100-SXM3-32GB",
+ "argv": [
+  "studies/agent_vs_llm/ft_baseline.py",
+  "--dataset",
+  "abcd",
+  "--model",
+  "bge-base",
+  "--lr",
+  "5e-5",
+  "--seed",
+  "2",
+  "--out",
+  "studies/agent_vs_llm/runs/ftseed_abcd_bgebase_s2"
+ ],
+ "utc_end": "2026-10-27T18:15:19Z"
+}

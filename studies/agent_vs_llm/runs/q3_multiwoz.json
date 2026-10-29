@@ -1,0 +1,36 @@
+{
+ "plan": "PLAN_llm_q3_dev.md",
+ "dataset": "multiwoz",
+ "n_rows": 500,
+ "arms": {
+  "L9": {
+   "n": 500,
+   "partial": false,
+   "llm_acc": 0.3,
+   "agent_acc": 0.374,
+   "ft_acc": 0.454,
+   "agent_minus_llm": 0.074,
+   "ci95": [
+    0.024,
+    0.124
+   ]
+  },
+  "L35": {
+   "n": 500,
+   "partial": false,
+   "llm_acc": 0.348,
+   "agent_acc": 0.374,
+   "ft_acc": 0.454,
+   "agent_minus_llm": 0.026,
+   "ci95": [
+    -0.024,
+    0.074
+   ]
+  }
+ },
+ "claim_open_on_complete_arms": false,
+ "complete_arms": [
+  "L9",
+  "L35"
+ ]
+}

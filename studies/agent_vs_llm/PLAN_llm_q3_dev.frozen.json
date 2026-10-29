@@ -1,0 +1,13 @@
+{
+ "plan": "PLAN_llm_q3_dev.md",
+ "sha256": "1c0454fa545a5264dc572b6e69d3d84517aff67620ba89315d02cbc0b5c3eb49",
+ "frozen_utc": "2026-10-26T22:22:07Z",
+ "sources": {
+  "llm_next_action.py": "fed9291a0996d5e336ff04c4edb9c4bed165cf17d5258db408a0d7d120b4abbc",
+  "test_llm_next_action.py": "15dbb18c54389e1b3d1675aed9ef158d419b6fc43eaead993a822a534a3df602",
+  "test_llm_next_action.out": "caebd8a229bfd499f5e5a4d34d59d33efecf758309e6b6411bf5b358821669da",
+  "serve_headline.sh": "2d0765e2338813743e86e944d0134508fd854aae479a6ecdfffcf2afee32479b",
+  "llm_q3_job.sh": "478c96277173e7e0038bcb94df87e91bf7af0aab3362fe176a0b94b92a72661a",
+  "convert_qwen36_35b.sh": "403aac9434fd4bb90c4a3beddf64dbef25f0a86e6679e04e5c106de8395e8065"
+ }
+}

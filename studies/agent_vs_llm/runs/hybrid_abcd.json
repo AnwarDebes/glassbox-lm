@@ -1,0 +1,56 @@
+{
+ "plan": "PLAN_hybrid_dev.md",
+ "dataset": "abcd",
+ "n": 500,
+ "fallbacks": {
+  "k3": 10,
+  "k5": 5,
+  "alone": 0
+ },
+ "acc": {
+  "hybrid_k3": 0.838,
+  "hybrid_k5": 0.84,
+  "llm_alone": 0.818,
+  "agent": 0.858,
+  "ft:ft_abcd_bert_s1": 0.892,
+  "tfidf_lr_C16": 0.866
+ },
+ "gold_in_agent_top3": 0.948,
+ "gold_in_agent_top5": 0.968,
+ "k3_minus_agent": {
+  "diff": -0.02,
+  "ci95": [
+   -0.048,
+   0.008
+  ]
+ },
+ "k3_minus_llm": {
+  "diff": 0.02,
+  "ci95": [
+   -0.01,
+   0.05
+  ]
+ },
+ "k5_minus_agent": {
+  "diff": -0.018,
+  "ci95": [
+   -0.048,
+   0.012
+  ]
+ },
+ "agent_minus_llm": {
+  "diff": 0.04,
+  "ci95": [
+   0.004,
+   0.076
+  ]
+ },
+ "k3_minus_ft:ft_abcd_bert_s1": {
+  "diff": -0.054,
+  "ci95": [
+   -0.084,
+   -0.024
+  ]
+ },
+ "rule_met_this_dataset": false
+}

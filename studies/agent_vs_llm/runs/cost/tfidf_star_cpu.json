@@ -1,0 +1,12 @@
+{
+ "dataset": "star",
+ "C": 4.0,
+ "dev_acc": 0.6528662420382165,
+ "dev_acc_equals_dry_run": true,
+ "n": 1000,
+ "n_features": 98999,
+ "total_median_ms": 0.9038802236318588,
+ "total_p90_ms": 1.0716764256358147,
+ "label": "rough: shared machine, one CPU thread, batch 1",
+ "utc_end": "2026-10-27T09:12:52Z"
+}

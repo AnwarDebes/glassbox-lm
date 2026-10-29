@@ -1,0 +1,16 @@
+{
+ "plan": "PLAN_hybrid_dev.md",
+ "sha256": "74832d536689e125adff5803ba3f6066498bec1150e610802c1805264bed7a79",
+ "frozen_utc": "2026-10-26T21:51:56Z",
+ "sources": {
+  "llm_next_action.py": "3b0fba48332a0a76879114bbab9fc2c57f8162842c09bb98ba6f5e3b51f87048",
+  "test_llm_next_action.py": "788a0eb0ced0072eeccd5d9e110c238698f3d2ba48b7d6207d8b78ddfa3f2a87",
+  "test_llm_next_action.out": "1541d5424c6c67b9c102ab9c7999e6a2b6aab19a2b361392b6f99e67ed47e29f",
+  "llm_hybrid_job.sh": "561213eebaabb44a75a392e4e13a46afab39c6bdb6ecf276c0d90db07f7bbb62",
+  "q1_table.py": "ae0bf4028bde918b762d0a07f918010f14c02eebce8e75e0192ca7d1630d67c4",
+  "runs/agent_abcd_c4_tm_s1/tm.npz": "8a13745e7974c3022342739134376a6f2d5a1c3e447daf5cf47dddb3363d1c0e",
+  "runs/agent_star_c4_tm_s1/tm.npz": "0e6ef66324987bcd989d03482b6663433cf40da4859ae0962c3a879a9e71a62e",
+  "runs/llm_q1_dev/abcd/preds.jsonl": "b582708108bf7a1768f1b0febe1eb2a87eb6ea50de7e3afa8711fe0cf478e004",
+  "runs/llm_q1_dev/star/preds.jsonl": "76305a0620b1cd888de58851e165c96c2a21cf6cfe1964a5192f80474db4cf42"
+ }
+}

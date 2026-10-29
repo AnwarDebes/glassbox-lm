@@ -1,0 +1,13 @@
+{
+ "plan": "PLAN_llm_dev.md",
+ "sha256": "8d67ce118ae21edf962df3c2fd412dd8c3375dc6879d2b9275e097116184aca0",
+ "frozen_utc": "2026-10-26T20:57:19Z",
+ "sources": {
+  "llm_next_action.py": "38869e8476d95487dbb85d6dd8c0ed40122823818fd3c0218d17cc080d81254c",
+  "test_llm_next_action.py": "38703d68cf1dd252478b2e398b9219f9eb6609813bef66790720fc032b58a1ff",
+  "test_llm_next_action.out": "e2bb3cb65eb5c71a3b988fa731e30f61e5dcb54ffb3dfaa0f35ecc9232643c57",
+  "ft_baseline.py": "339acf4a03e858f15fe60c825bcd5d17f88e6620e1a443e9149684e3777242a5",
+  "tfidf_lr.py": "22acf2e0de7304652a9555f819b3ca840eadf0d819a1494d9b9d0ab120573dc3",
+  "studies/agent_guards/llm/serve_qwen_agent.sh": "9ddf902075c0471541702cc1e3f8a8755774459221bb0328d0454a68245fc439"
+ }
+}

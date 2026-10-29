@@ -1,0 +1,113 @@
+{
+ "dataset": "abcd",
+ "model": "runs/dry/agent_abcd_s1/tm_model.npz",
+ "table": {
+  "table": "c4words-S1000-v1",
+  "table_file_sha256": "e1771d9eaf4a07f71c532fe4f3ef91909334cbdcb4d7785ff0bb7ed0e51c5c0a",
+  "table_sha256": "46311c47aee71a003126836f5b955f2a8fa5cdb786cdcbb926188c3c6c4f671a",
+  "tokenizer": "port of tokenize_ref.py 2c3c1aff44ed34e0 (words; a token not in the list is dropped)",
+  "n_words": 63091,
+  "dim": 500
+ },
+ "n_dev": 3684,
+ "dev_acc": 0.8417480998914224,
+ "dev_acc_equals_run": true,
+ "n_clauses_kept": 3995,
+ "n_features": 6684,
+ "literals_per_clause": {
+  "median": 8.0,
+  "p90": 32.0,
+  "max": 118
+ },
+ "fired_per_decision": {
+  "median": 251.0,
+  "p10": 187.0,
+  "p90": 314.0
+ },
+ "receipt_found_within_20": 1.0,
+ "receipt_share": {
+  "<= 1 clauses": 0.8740499457111836,
+  "<= 3 clauses": 0.9790988056460369,
+  "<= 5 clauses": 0.995114006514658,
+  "<= 10 clauses": 0.998642779587405,
+  "<= 20 clauses": 1.0
+ },
+ "receipt_literals_median": 12.0,
+ "receipt_literals_p90": 42.0,
+ "examples": [
+  {
+   "row": 1872,
+   "decision": "verify-identity",
+   "runner_up": "make-password",
+   "n_fired": 328,
+   "receipt": [
+    {
+     "clause": 3058,
+     "weight_margin": 414,
+     "literals": [
+      "done(pull-up-account)",
+      "some word of the customer's words so far is close to concept 126 (net|gross|income|https) at level 3 (cos >= 0.301)",
+      "some word of the customer's words so far is close to concept 139 (methods|algorithm|method|model) at level 2 (cos >= 0.157)",
+      "some word of the customer's words so far is close to concept 171 (512|intel|amd|memory) at level 3 (cos >= 0.291)",
+      "some word of the customer's words so far is close to concept 260 (119|123|133|124) at level 1 (cos >= 0.147)",
+      "some word of the customer's words so far is close to concept 311 (mw|btu|electricity|bc) at level 0 (cos >= 0.064)",
+      "some word of the customer's words so far is close to concept 347 (retry|default|error|restart) at level 2 (cos >= 0.404)",
+      "some word of the last 3 turns is close to concept 11 (error|fix|restart|restarted) at level 2 (cos >= 0.326)",
+      "some word of the last 3 turns is close to concept 281 (collar|collars|dog|snap) at level 0 (cos >= 0.134)",
+      "NOT done(verify-identity)",
+      "NOT done(validate-purchase)",
+      "NOT last 3 turns contain \"you could\"",
+      "NOT some word of the last 3 turns is close to concept 277 (cart|box|checkout|items) at level 5 (cos >= 0.559)"
+     ]
+    }
+   ]
+  },
+  {
+   "row": 2344,
+   "decision": "log-out-in",
+   "runner_up": "enter-details",
+   "n_fired": 236,
+   "receipt": [
+    {
+     "clause": 2934,
+     "weight_margin": 460,
+     "literals": [
+      "some word of the last 3 turns is close to concept 60 (login|password|username|authenticate) at level 4 (cos >= 0.641)",
+      "some word of the last 3 turns is close to concept 416 (accidently|accidentally|stuck|messed) at level 4 (cos >= 0.414)",
+      "NOT done(log-out-in)"
+     ]
+    }
+   ]
+  },
+  {
+   "row": 3121,
+   "decision": "validate-purchase",
+   "runner_up": "pull-up-account",
+   "n_fired": 306,
+   "receipt": [
+    {
+     "clause": 3095,
+     "weight_margin": 622,
+     "literals": [
+      "at least 1 actions so far",
+      "some word of the customer's words so far is close to concept 131 (personalization|messaging|marketing|advertising) at level 1 (cos >= 0.222)",
+      "some word of the customer's words so far is close to concept 219 (page|link|webpage|click) at level 3 (cos >= 0.427)",
+      "some word of the customer's words so far is close to concept 354 (username|password|login|authenticate) at level 4 (cos >= 0.880)",
+      "some word of the customer's words so far is close to concept 371 (phone|cellphone|phones|landline) at level 3 (cos >= 0.278)",
+      "some word of the customer's words so far is close to concept 402 (facebook|gmail|yahoo|hotmail) at level 0 (cos >= 0.217)",
+      "some word of the last 3 turns is close to concept 100 (any|or|otherwise|agree) at level 0 (cos >= 0.291)",
+      "NOT done(validate-purchase)",
+      "NOT last 3 turns contain \"agent are\"",
+      "NOT last 3 turns contain \"change the\"",
+      "NOT last 3 turns contain \"question customer\"",
+      "NOT last 3 turns contain \"to find\"",
+      "NOT last 3 turns contain \"understand\"",
+      "NOT some word of the customer's words so far is close to concept 458 (generally|usually|typically|normally) at level 4 (cos >= 0.524)"
+     ]
+    }
+   ]
+  }
+ ],
+ "seconds": 17.5,
+ "utc_end": "2026-10-27T08:06:37Z"
+}

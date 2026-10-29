@@ -1,0 +1,9 @@
+{
+ "note": "NOTE_tfidf_dev.md",
+ "sha256": "bd510a4f77d4538953d5a6c13e73b5a8bf7636fa0ec9658bf02d22569c93c180",
+ "frozen_utc": "2026-10-26T20:48:43Z",
+ "sources": {
+  "tfidf_lr.py": "22acf2e0de7304652a9555f819b3ca840eadf0d819a1494d9b9d0ab120573dc3",
+  "ft_baseline.py": "8c328b8afc719f29075e702cad7edac2b0189a42e713ec011936ca310914313f"
+ }
+}

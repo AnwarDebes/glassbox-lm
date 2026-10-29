@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"  # published copy: the repository root
+# REG_agent_vs_llm: checks, registered reports and the independent recompute (written by make_reg_jobs.py). A dataset is reported only when check_reg.py opens its gate.
+set -uo pipefail
+cd ${REPO_ROOT}/studies/agent_vs_llm
+mkdir -p runs/reg
+CUDA_VISIBLE_DEVICES= ${HOME}/.local/share/uv/python/cpython-3.12-linux-x86_64-gnu/bin/python3.12 -I check_reg.py --reg ${REPO_ROOT}/studies/agent_vs_llm/REG_agent_vs_llm.md --rows ${REPO_ROOT}/studies/agent_vs_llm/runs/reg_rows.json --choice ${REPO_ROOT}/studies/agent_vs_llm/runs/llm_star_choice.json --jobs ${REPO_ROOT}/studies/agent_vs_llm/jobs_reg.txt --out runs/reg/checks.json > runs/reg/checks.out 2>&1
+[ -f runs/reg/checks.json ] || { echo 'check_reg.py wrote no checks.json: no report'; exit 1; }
+gate() { ${HOME}/.local/share/uv/python/cpython-3.12-linux-x86_64-gnu/bin/python3.12 -I -c 'import json, sys; sys.exit(0 if json.load(open("runs/reg/checks.json"))["gate"][sys.argv[1]] else 1)' "$1"; }
+rc=0
+if gate star; then
+  CUDA_VISIBLE_DEVICES= OMP_NUM_THREADS=2 nice -n 19 ${REPO_ROOT}/studies/decision_layer/.venv-dl/bin/python -I reg_report.py --dataset star --split test --n 4000 --reg ${REPO_ROOT}/studies/agent_vs_llm/REG_agent_vs_llm.md --agent ${REPO_ROOT}/studies/decision_layer/results/confirm/R22star/tm_mem_c4_s16/seed1.npz --llm runs/reg/llm_star/preds.jsonl --ft runs/reg/ft_star/test_preds.npz --tfidf runs/reg/tfidf_star/test_preds.npz --agent-seeds ${REPO_ROOT}/studies/decision_layer/results/confirm/R22star/tm_mem_c4_s16/seed1.npz ${REPO_ROOT}/studies/decision_layer/results/confirm/R22star/tm_mem_c4_s16/seed2.npz ${REPO_ROOT}/studies/decision_layer/results/confirm/R22star/tm_mem_c4_s16/seed3.npz ${REPO_ROOT}/studies/decision_layer/results/confirm/R22star/tm_mem_c4_s16/seed4.npz ${REPO_ROOT}/studies/decision_layer/results/confirm/R22star/tm_mem_c4_s16/seed5.npz --out runs/reg/report_star.json > runs/reg/report_star.out 2>&1 || rc=1
+  nice -n 19 ${HOME}/.local/share/uv/python/cpython-3.12-linux-x86_64-gnu/bin/python3.12 -I verify_reg.py --dataset star --split test --n 4000 --reg ${REPO_ROOT}/studies/agent_vs_llm/REG_agent_vs_llm.md --agent ${REPO_ROOT}/studies/decision_layer/results/confirm/R22star/tm_mem_c4_s16/seed1.npz --llm runs/reg/llm_star/preds.jsonl --ft runs/reg/ft_star/test_preds.npz --tfidf runs/reg/tfidf_star/test_preds.npz --report runs/reg/report_star.json > runs/reg/verify_star.out 2>&1 || rc=1
+else
+  echo 'star: gate closed (a hard check failed; runs/reg/checks.out): no report for star'; rc=1
+fi
+if gate abcd; then
+  CUDA_VISIBLE_DEVICES= OMP_NUM_THREADS=2 nice -n 19 ${REPO_ROOT}/studies/decision_layer/.venv-dl/bin/python -I reg_report.py --dataset abcd --split test --n 3608 --reg ${REPO_ROOT}/studies/agent_vs_llm/REG_agent_vs_llm.md --agent ${REPO_ROOT}/studies/decision_layer/results/confirm/R23abcd/tm_mem_c4_s16/seed1.npz --llm runs/reg/llm_abcd/preds.jsonl --ft runs/reg/ft_abcd/test_preds.npz --tfidf runs/reg/tfidf_abcd/test_preds.npz --agent-seeds ${REPO_ROOT}/studies/decision_layer/results/confirm/R23abcd/tm_mem_c4_s16/seed1.npz ${REPO_ROOT}/studies/decision_layer/results/confirm/R23abcd/tm_mem_c4_s16/seed2.npz ${REPO_ROOT}/studies/decision_layer/results/confirm/R23abcd/tm_mem_c4_s16/seed3.npz ${REPO_ROOT}/studies/decision_layer/results/confirm/R23abcd/tm_mem_c4_s16/seed4.npz ${REPO_ROOT}/studies/decision_layer/results/confirm/R23abcd/tm_mem_c4_s16/seed5.npz --out runs/reg/report_abcd.json > runs/reg/report_abcd.out 2>&1 || rc=1
+  nice -n 19 ${HOME}/.local/share/uv/python/cpython-3.12-linux-x86_64-gnu/bin/python3.12 -I verify_reg.py --dataset abcd --split test --n 3608 --reg ${REPO_ROOT}/studies/agent_vs_llm/REG_agent_vs_llm.md --agent ${REPO_ROOT}/studies/decision_layer/results/confirm/R23abcd/tm_mem_c4_s16/seed1.npz --llm runs/reg/llm_abcd/preds.jsonl --ft runs/reg/ft_abcd/test_preds.npz --tfidf runs/reg/tfidf_abcd/test_preds.npz --report runs/reg/report_abcd.json > runs/reg/verify_abcd.out 2>&1 || rc=1
+else
+  echo 'abcd: gate closed (a hard check failed; runs/reg/checks.out): no report for abcd'; rc=1
+fi
+if gate multiwoz; then
+  CUDA_VISIBLE_DEVICES= OMP_NUM_THREADS=2 nice -n 19 ${REPO_ROOT}/studies/decision_layer/.venv-dl/bin/python -I reg_report.py --dataset multiwoz --split test --n 4000 --reg ${REPO_ROOT}/studies/agent_vs_llm/REG_agent_vs_llm.md --agent ${REPO_ROOT}/studies/decision_layer/results/confirm/R24mwoz/tm_mem_c4_nrand/seed1.npz --llm runs/reg/llm_multiwoz/preds.jsonl --ft runs/reg/ft_multiwoz/test_preds.npz --tfidf runs/reg/tfidf_multiwoz/test_preds.npz --agent-seeds ${REPO_ROOT}/studies/decision_layer/results/confirm/R24mwoz/tm_mem_c4_nrand/seed1.npz ${REPO_ROOT}/studies/decision_layer/results/confirm/R24mwoz/tm_mem_c4_nrand/seed2.npz ${REPO_ROOT}/studies/decision_layer/results/confirm/R24mwoz/tm_mem_c4_nrand/seed3.npz ${REPO_ROOT}/studies/decision_layer/results/confirm/R24mwoz/tm_mem_c4_nrand/seed4.npz ${REPO_ROOT}/studies/decision_layer/results/confirm/R24mwoz/tm_mem_c4_nrand/seed5.npz --out runs/reg/report_multiwoz.json > runs/reg/report_multiwoz.out 2>&1 || rc=1
+  nice -n 19 ${HOME}/.local/share/uv/python/cpython-3.12-linux-x86_64-gnu/bin/python3.12 -I verify_reg.py --dataset multiwoz --split test --n 4000 --reg ${REPO_ROOT}/studies/agent_vs_llm/REG_agent_vs_llm.md --agent ${REPO_ROOT}/studies/decision_layer/results/confirm/R24mwoz/tm_mem_c4_nrand/seed1.npz --llm runs/reg/llm_multiwoz/preds.jsonl --ft runs/reg/ft_multiwoz/test_preds.npz --tfidf runs/reg/tfidf_multiwoz/test_preds.npz --report runs/reg/report_multiwoz.json > runs/reg/verify_multiwoz.out 2>&1 || rc=1
+else
+  echo 'multiwoz: gate closed (a hard check failed; runs/reg/checks.out): no report for multiwoz'; rc=1
+fi
+exit "${rc}"

@@ -1,0 +1,55 @@
+{
+ "dataset": "abcd",
+ "n": 500,
+ "llm_invalid": 0,
+ "arms": {
+  "llm": {
+   "acc": 0.83,
+   "minus_llm": 0.0,
+   "ci95": [
+    0.0,
+    0.0
+   ]
+  },
+  "nearest_demo": {
+   "acc": 0.64,
+   "minus_llm": -0.19,
+   "ci95": [
+    -0.236,
+    -0.144
+   ]
+  },
+  "demo_majority": {
+   "acc": 0.692,
+   "minus_llm": -0.138,
+   "ci95": [
+    -0.182,
+    -0.096
+   ]
+  },
+  "agent_tm_c4": {
+   "acc": 0.85,
+   "minus_llm": 0.02,
+   "ci95": [
+    -0.01,
+    0.048
+   ]
+  },
+  "ft:ft_abcd_bert_s1": {
+   "acc": 0.87,
+   "minus_llm": 0.04,
+   "ci95": [
+    0.014,
+    0.066
+   ]
+  },
+  "tfidf_lr_C16": {
+   "acc": 0.826,
+   "minus_llm": -0.004,
+   "ci95": [
+    -0.034,
+    0.026
+   ]
+  }
+ }
+}

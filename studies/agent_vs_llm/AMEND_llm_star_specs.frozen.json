@@ -1,0 +1,11 @@
+{
+ "amendment": "AMEND_llm_star_specs.md",
+ "sha256": "35a911082e7da54c04744fc4ffb34ebfb2ab6a5d94e136be642ac887352703e9",
+ "frozen_utc": "2026-10-26T21:04:13Z",
+ "sources": {
+  "llm_next_action.py": "d2c39eb558140e1124c4fdd1d61dc6d473294d1b4ca55fb89e738b22209c1028",
+  "test_llm_next_action.py": "a78e137688829ffaae72fe163d23474a897755168b4826e205c9f395ae575f09",
+  "test_llm_next_action.out": "24ef93d29246235b9e4d78719e6252bbed61518cc4244d9f514e40dd09379a8e",
+  "llm_job.sh": "cd74cf574a8f494b4b57f36bc301a749bc62cee77d9e007b099277cc48df5ddb"
+ }
+}

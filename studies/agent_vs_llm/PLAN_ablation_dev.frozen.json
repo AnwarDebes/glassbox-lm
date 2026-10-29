@@ -1,0 +1,11 @@
+{
+ "plan": "PLAN_ablation_dev.md",
+ "sha256": "91636d2c7e1bd8973443918f589ec66f2292dee2cab38efc3fbbf5b8e69007dd",
+ "frozen_utc": "2026-10-26T23:56:30Z",
+ "sources": {
+  "llm_next_action.py": "fc7eae6da8bbd0122149f5da5a3cebd2f47ae5cf1cd5a3acb389f39facce16de",
+  "test_llm_next_action.out": "62cfd4a2903f60bf5f3f313f5326f2b5859ca36b2a1b822b48482e7d9986a17b",
+  "llm_abl_job.sh": "abe54bd9e9461feda2f80aedc58522196dd61501c8ba20a13ed842fdfea74267",
+  "serve_headline.sh": "2d0765e2338813743e86e944d0134508fd854aae479a6ecdfffcf2afee32479b"
+ }
+}

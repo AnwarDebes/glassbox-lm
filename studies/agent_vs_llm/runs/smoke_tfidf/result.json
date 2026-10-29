@@ -1,0 +1,38 @@
+{
+ "note": "NOTE_tfidf_dev.md",
+ "dataset": "abcd",
+ "n_train": 2000,
+ "n_dev": 300,
+ "n_features": 11795,
+ "train_sha256": "c9e0f9b58a13a3dd9eff5821177cd74373cd1816465445a32bb6cc131933835f",
+ "dev_sha256": "5ccc737f5be9086060de4c28f560f1aa9b94566ed9599a98f44212c0e6cf2f17",
+ "rows": [
+  {
+   "C": 1.0,
+   "dev_acc": 0.65,
+   "fit_s": 1.4,
+   "n_iter": 71
+  }
+ ],
+ "best": {
+  "C": 1.0,
+  "dev_acc": 0.65,
+  "fit_s": 1.4,
+  "n_iter": 71
+ },
+ "seconds": 1.7,
+ "argv": [
+  "tfidf_lr.py",
+  "--dataset",
+  "abcd",
+  "--out",
+  "runs/smoke_tfidf",
+  "--limit-train",
+  "2000",
+  "--limit-dev",
+  "300",
+  "--C",
+  "1"
+ ],
+ "utc_end": "2026-10-26T20:48:42Z"
+}

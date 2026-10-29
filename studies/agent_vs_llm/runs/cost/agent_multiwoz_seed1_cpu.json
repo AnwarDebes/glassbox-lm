@@ -1,0 +1,24 @@
+{
+ "dataset": "multiwoz",
+ "model": "studies/decision_layer/results/confirm/R24mwoz/tm_mem_c4_nrand/model_seed1.npz",
+ "table": {
+  "table": "c4words-S1000-v1",
+  "table_file_sha256": "e1771d9eaf4a07f71c532fe4f3ef91909334cbdcb4d7785ff0bb7ed0e51c5c0a",
+  "table_sha256": "46311c47aee71a003126836f5b955f2a8fa5cdb786cdcbb926188c3c6c4f671a",
+  "tokenizer": "port of tokenize_ref.py 2c3c1aff44ed34e0 (words; a token not in the list is dropped)",
+  "n_words": 63091,
+  "dim": 500
+ },
+ "n": 1000,
+ "cpu_dev_acc": 0.35004756080989263,
+ "run_dev_acc": 0.35004756080989263,
+ "acc_equal": true,
+ "n_clauses_kept": 16000,
+ "n_literals": 936967,
+ "view_median_ms": 0.36541419103741646,
+ "tm_median_ms": 2.6098606176674366,
+ "total_median_ms": 2.981900703161955,
+ "total_p90_ms": 3.2911958172917366,
+ "label": "rough: shared machine, one CPU thread, batch 1",
+ "utc_end": "2026-10-27T08:54:26Z"
+}

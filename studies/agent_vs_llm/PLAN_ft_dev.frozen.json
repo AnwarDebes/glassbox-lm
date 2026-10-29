@@ -1,0 +1,10 @@
+{
+ "plan": "PLAN_ft_dev.md",
+ "sha256": "ddd97a79a5224f75329a3307f53d3af23844a2ecae6d312911dd6d7876da5cd7",
+ "frozen_utc": "2026-10-26T20:39:22Z",
+ "sources": {
+  "ft_baseline.py": "8c328b8afc719f29075e702cad7edac2b0189a42e713ec011936ca310914313f",
+  "test_ft_baseline.py": "dba35d8acba7239a370e674ed4c162c8ed1eca64216d61cb2124877fccc9d9fa",
+  "test_ft_baseline.out": "2036c76f371c4f3080f94ceaa1b17b7a2781ff08d83da3208e11d48724252d13"
+ }
+}

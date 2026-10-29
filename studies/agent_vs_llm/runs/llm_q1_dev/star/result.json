@@ -1,0 +1,27 @@
+{
+ "dataset": "star",
+ "n": 500,
+ "k": 10,
+ "guidelines": true,
+ "accuracy": 0.544,
+ "invalid": 0,
+ "errors": 0,
+ "nearest_demo_label_accuracy": 0.504,
+ "demo_majority_accuracy": 0.516,
+ "seconds": 445.8,
+ "seed": 1,
+ "argv": [
+  "studies/agent_vs_llm/llm_next_action.py",
+  "--dataset",
+  "star",
+  "--n",
+  "500",
+  "--k",
+  "10",
+  "--seed",
+  "1",
+  "--out",
+  "studies/agent_vs_llm/runs/llm_q1_dev/star"
+ ],
+ "utc_end": "2026-10-26T21:46:13Z"
+}

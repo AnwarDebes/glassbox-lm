@@ -1,0 +1,61 @@
+{
+ "plan": "PLAN_ft_dev.md",
+ "dataset": "abcd",
+ "model": "bert-base-uncased",
+ "lr": 5e-05,
+ "seed": 1,
+ "epochs": 2,
+ "batch": 32,
+ "max_len": 256,
+ "n_train": 512,
+ "n_dev": 256,
+ "n_labels": 30,
+ "limit_train": 512,
+ "limit_dev": 256,
+ "train_sha256": "c9e0f9b58a13a3dd9eff5821177cd74373cd1816465445a32bb6cc131933835f",
+ "dev_sha256": "5ccc737f5be9086060de4c28f560f1aa9b94566ed9599a98f44212c0e6cf2f17",
+ "truncated_share_train": 0.0,
+ "tokenize_s": 0.2,
+ "history": [
+  {
+   "epoch": 1,
+   "dev_acc": 0.23828125,
+   "train_loss": 3.1447791010141373,
+   "train_s": 2.0,
+   "eval_s": 0.4
+  },
+  {
+   "epoch": 2,
+   "dev_acc": 0.30859375,
+   "train_loss": 2.9315890073776245,
+   "train_s": 1.5,
+   "eval_s": 0.2
+  }
+ ],
+ "best_epoch": 2,
+ "best_dev_acc": 0.30859375,
+ "final_dev_acc": 0.30859375,
+ "torch": "2.6.0+cu124",
+ "cuda": "12.4",
+ "gpu": "Tesla V100-SXM3-32GB",
+ "argv": [
+  "ft_baseline.py",
+  "--dataset",
+  "abcd",
+  "--model",
+  "bert-base-uncased",
+  "--lr",
+  "5e-5",
+  "--seed",
+  "1",
+  "--epochs",
+  "2",
+  "--limit-train",
+  "512",
+  "--limit-dev",
+  "256",
+  "--out",
+  "runs/smoke_preds_abcd"
+ ],
+ "utc_end": "2026-10-26T20:57:51Z"
+}

@@ -1,0 +1,10 @@
+{
+ "note": "NOTE_cascade_dev.md",
+ "sha256": "a83899cddb06454f35302db46cf9e57ea29a46c806d997b2d3f006a9b0558a3d",
+ "frozen_utc": "2026-10-26T21:01:27Z",
+ "sources": {
+  "cascade.py": "45f2562c8ef37e6e25fb8db9e8f0f25ccbff4d530617bb1108edc6919ab874cf",
+  "test_cascade.py": "c9be4be2050c60b5de61e3fb1aecfb8a43d6c6a8146caeddc2367aa51bcb9f0b",
+  "test_cascade.out": "75368ef2b2bd7863477fa4383ae6591b893c69b828299bf5e48fb45b1c453c07"
+ }
+}

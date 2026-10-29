@@ -1,0 +1,105 @@
+{
+ "dataset": "star",
+ "split": "test",
+ "n_rows": 4000,
+ "n_dialogues": 595,
+ "seed": 20261028,
+ "draws": 10000,
+ "checks": {
+  "rows_unique": true,
+  "llm_errors": 0,
+  "llm_gold_matches_split": true,
+  "rows_are_rebuilt_draw": true,
+  "rows_file_n": true,
+  "rows_file_split_size": true,
+  "agent_gold_matches_split": true,
+  "ft_gold_matches_split": true,
+  "tfidf_gold_matches_split": true
+ },
+ "acc": {
+  "llm": 0.634,
+  "agent": 0.649,
+  "ft": 0.735,
+  "tfidf": 0.6455
+ },
+ "llm_invalid": 1,
+ "files": {
+  "llm": "cbf6d2d235b87e32b338c4a8df45444ff90a560e1ca2a5b143ed64de1cf6abc4",
+  "agent": "4a6941d7045e37695917c59bbb85e8f94483dab356e3879104248b43efec099b",
+  "ft": "0f24c9d7b31e428199b0db750f984a08202a7850c709001acebba54778286de1",
+  "tfidf": "07e22da5407df3f7a89211dcd0fa03168450d45b3e83becf23b269f5ece3bd2e"
+ },
+ "agent_minus_llm": {
+  "mean": 0.015,
+  "ci95": [
+   -0.0005213797953263264,
+   0.03064370946974589
+  ],
+  "ci90": [
+   0.002010897100225015,
+   0.028102856929801513
+  ]
+ },
+ "ft_minus_agent": {
+  "mean": 0.086,
+  "ci95": [
+   0.07259063696170474,
+   0.09951280205166042
+  ],
+  "ci90": [
+   0.07472512420909053,
+   0.09745149028942081
+  ]
+ },
+ "tfidf_minus_llm": {
+  "mean": 0.0115,
+  "ci95": [
+   -0.004723285531844588,
+   0.028277836644923685
+  ],
+  "ci90": [
+   -0.0022201666731040074,
+   0.02535723460278723
+  ]
+ },
+ "agent_minus_tfidf": {
+  "mean": 0.0035,
+  "ci95": [
+   -0.009899380729787122,
+   0.017151820520689812
+  ],
+  "ci90": [
+   -0.00788245946130037,
+   0.0148589987475669
+  ]
+ },
+ "rules": {
+  "NI_met": true,
+  "NI2_met": true,
+  "SUP_met": false,
+  "FT_met": true,
+  "EQ_inside_no_rule": true
+ },
+ "two_level": {
+  "agent_acc_per_seed": [
+   0.649,
+   0.64225,
+   0.6545,
+   0.643,
+   0.64525
+  ],
+  "agent_minus_llm_mean": 0.012800000000000034,
+  "ci_agent_minus_llm": [
+   -0.0025202640541809513,
+   0.02865410399087579
+  ],
+  "ci_ft_minus_agent": [
+   0.07561956326469763,
+   0.10109568590341582
+  ],
+  "ci_agent_minus_tfidf": [
+   -0.010526450984898595,
+   0.013833077134133497
+  ]
+ }
+}

@@ -1,0 +1,98 @@
+2026-10-26T20:42:01Z queue start: jobs_ft.txt
+2026-10-26T20:42:11Z ft_star_bert_s1 start: --dataset star --model bert-base-uncased --lr 5e-5 --seed 1 (gate: 2026-10-26T20:42:11Z cores 0.16 over 10.0 s; throttled 0 of 100 periods)
+2026-10-26T20:57:27Z ft_star_bert_s1 exit 0
+2026-10-26T20:57:38Z ft_abcd_bert_s1 start: --dataset abcd --model bert-base-uncased --lr 5e-5 --seed 1 (gate: 2026-10-26T20:57:38Z cores 1.61 over 10.0 s; throttled 0 of 100 periods)
+2026-10-26T21:05:00Z ft_abcd_bert_s1 exit 0
+2026-10-26T21:05:10Z agent_abcd_c4_tm_s1 start: cmd:cd studies/agent_vs_llm && DL_GPU_FRAC=0.5 studies/decision_layer/.venv-dl/bin/python -I agent_preds.py --dataset abcd --encoder none --table c4words-S1000-v1 --parts mem,words,xcust,xrecent --arms tm --clauses 4000 --s 16 --seed 1 --out runs/agent_abcd_c4_tm_s1 (gate: 2026-10-26T21:05:10Z cores 0.25 over 10.0 s; throttled 0 of 100 periods)
+2026-10-26T21:07:58Z agent_abcd_c4_tm_s1 exit 0
+2026-10-26T21:08:08Z agent_star_c4_tm_s1 start: cmd:cd studies/agent_vs_llm && DL_GPU_FRAC=0.5 studies/decision_layer/.venv-dl/bin/python -I agent_preds.py --dataset star --encoder none --table c4words-S1000-v1 --parts mem,words,xcust,xrecent --arms tm --clauses 16000 --s 16 --seed 1 --out runs/agent_star_c4_tm_s1 (gate: 2026-10-26T21:08:08Z cores 0.27 over 10.0 s; throttled 0 of 100 periods)
+2026-10-26T21:28:49Z agent_star_c4_tm_s1 exit 0
+2026-10-26T21:28:59Z llm_q1_dev start: cmd:bash studies/agent_vs_llm/llm_job.sh studies/agent_vs_llm/runs/llm_q1_dev (gate: 2026-10-26T21:28:59Z cores 0.19 over 10.0 s; throttled 0 of 100 periods)
+2026-10-26T21:46:14Z llm_q1_dev exit 0
+2026-10-26T21:46:24Z ft_star_bgebase_s1 start: --dataset star --model bge-base --lr 5e-5 --seed 1 (gate: 2026-10-26T21:46:24Z cores 0.16 over 10.0 s; throttled 0 of 100 periods)
+2026-10-26T22:01:34Z ft_star_bgebase_s1 exit 0
+2026-10-26T22:01:44Z llm_hybrid_dev start: cmd:bash studies/agent_vs_llm/llm_hybrid_job.sh studies/agent_vs_llm/runs/llm_hybrid_dev (gate: 2026-10-26T22:01:44Z cores 0.13 over 10.0 s; throttled 0 of 100 periods)
+2026-10-26T22:52:07Z llm_hybrid_dev exit 0
+2026-10-26T22:52:18Z llm_q3_L9t start: cmd:bash studies/agent_vs_llm/llm_q3_job.sh L9t studies/agent_vs_llm/runs/llm_q3_L9t (gate: 2026-10-26T22:52:18Z cores 2.50 over 10.0 s; throttled 0 of 100 periods)
+2026-10-26T23:07:07Z llm_q3_L9t exit 143
+2026-10-26T23:07:17Z llm_q3_L35 start: cmd:bash studies/agent_vs_llm/llm_q3_job.sh L35 studies/agent_vs_llm/runs/llm_q3_L35 (gate: 2026-10-26T23:07:17Z cores 0.39 over 10.0 s; throttled 0 of 100 periods)
+2026-10-26T23:51:34Z llm_q3_L35 exit 0
+2026-10-26T23:51:44Z llm_q3_L9t_resume start: cmd:bash studies/agent_vs_llm/llm_q3_job.sh L9t studies/agent_vs_llm/runs/llm_q3_L9t (gate: 2026-10-26T23:51:44Z cores 0.20 over 10.0 s; throttled 0 of 100 periods)
+2026-10-26T23:52:13Z llm_q3_L9t_resume exit 143
+2026-10-26T23:52:23Z ft_abcd_bgebase_s1 start: --dataset abcd --model bge-base --lr 5e-5 --seed 1 (gate: 2026-10-26T23:52:23Z cores 0.86 over 10.0 s; throttled 0 of 100 periods)
+2026-10-27T00:05:37Z ft_abcd_bgebase_s1 exit 0
+2026-10-27T00:05:47Z llm_mwoz_dev start: cmd:bash studies/agent_vs_llm/llm_mwoz_job.sh studies/agent_vs_llm/runs/llm_mwoz_dev (gate: 2026-10-27T00:05:47Z cores 0.14 over 10.0 s; throttled 0 of 100 periods)
+2026-10-27T00:40:41Z llm_mwoz_dev exit 0
+2026-10-27T00:40:51Z ft_mwoz_bgebase_s1 start: --dataset multiwoz --model bge-base --lr 5e-5 --seed 1 (gate: 2026-10-27T00:40:51Z cores 0.23 over 10.0 s; throttled 0 of 100 periods)
+2026-10-27T00:56:15Z ft_mwoz_bgebase_s1 exit 0
+2026-10-27T00:56:25Z llm_abl_dev start: cmd:bash studies/agent_vs_llm/llm_abl_job.sh studies/agent_vs_llm/runs/llm_abl (gate: 2026-10-27T00:56:25Z cores 0.30 over 10.0 s; throttled 0 of 100 periods)
+2026-10-27T01:14:07Z llm_abl_dev exit 3
+2026-10-27T01:14:17Z llm_q3_L35t start: cmd:Q3_DATASETS='star' bash studies/agent_vs_llm/llm_q3_job2.sh L35t studies/agent_vs_llm/runs/llm_q3_L35t (gate: 2026-10-27T01:14:17Z cores 1.14 over 10.0 s; throttled 0 of 100 periods)
+2026-10-27T01:14:17Z llm_q3_L35t exit 3
+2026-10-27T01:14:28Z llm_q3_L35k50 start: cmd:Q3_DATASETS='star abcd multiwoz' bash studies/agent_vs_llm/llm_q3_job3.sh L35k50 studies/agent_vs_llm/runs/llm_q3_L35k50 (gate: 2026-10-27T01:14:28Z cores 1.13 over 10.0 s; throttled 0 of 100 periods)
+2026-10-27T01:14:28Z llm_q3_L35k50 exit 3
+2026-10-27T01:14:38Z llm_q3_L9t_star start: cmd:Q3_DATASETS='star' bash studies/agent_vs_llm/llm_q3_job2.sh L9t studies/agent_vs_llm/runs/llm_q3_L9t (gate: 2026-10-27T01:14:38Z cores 1.16 over 10.0 s; throttled 0 of 100 periods)
+2026-10-27T01:14:38Z llm_q3_L9t_star exit 3
+2026-10-27T01:14:48Z llm_q3_L35t_mwoz start: cmd:Q3_DATASETS='multiwoz' bash studies/agent_vs_llm/llm_q3_job3.sh L35t studies/agent_vs_llm/runs/llm_q3_L35t (gate: 2026-10-27T01:14:48Z cores 1.14 over 10.0 s; throttled 0 of 100 periods)
+2026-10-27T01:14:48Z llm_q3_L35t_mwoz exit 3
+2026-10-27T01:14:58Z ft_star_roberta_s1 start: --dataset star --model roberta-base --lr 3e-5 --seed 1 (gate: 2026-10-27T01:14:58Z cores 0.83 over 10.0 s; throttled 0 of 100 periods)
+2026-10-27T01:29:52Z ft_star_roberta_s1 exit 0
+2026-10-27T01:30:02Z llm_abl_dev_r2 start: cmd:bash studies/agent_vs_llm/llm_abl_job.sh studies/agent_vs_llm/runs/llm_abl (gate: 2026-10-27T01:30:02Z cores 1.13 over 10.0 s; throttled 0 of 100 periods)
+2026-10-27T02:15:07Z llm_abl_dev_r2 exit 0
+2026-10-27T02:15:17Z llm_q3_L35t_r2 start: cmd:Q3_DATASETS='star' bash studies/agent_vs_llm/llm_q3_job2.sh L35t studies/agent_vs_llm/runs/llm_q3_L35t (gate: 2026-10-27T02:15:17Z cores 1.23 over 10.0 s; throttled 0 of 100 periods)
+2026-10-27T04:13:04Z llm_q3_L35t_r2 exit 0
+2026-10-27T04:13:15Z dry_agent_abcd start: cmd:cd studies/agent_vs_llm && DL_GPU_FRAC=0.5 studies/decision_layer/.venv-dl/bin/python -I agent_preds.py --dataset abcd --encoder none --table c4words-S1000-v1 --parts mem,words,xcust,xrecent --arms tm --clauses 4000 --s 16 --seed 1 --test-registration studies/agent_vs_llm/REG_agent_vs_llm.md --dry-run-dev --save-model --out runs/dry/agent_abcd_s1 (gate: 2026-10-27T04:13:15Z cores 0.25 over 10.0 s; throttled 0 of 100 periods)
+2026-10-27T04:16:15Z dry_agent_abcd exit 0
+2026-10-27T04:16:25Z dry_ft_abcd start: cmd:cd studies/agent_vs_llm && studies/decision_layer/.venv-dl/bin/python -I ft_baseline.py --dataset abcd --model bge-base --lr 5e-5 --seed 1 --test-registration studies/agent_vs_llm/REG_agent_vs_llm.md --dry-run-dev --out runs/dry/ft_abcd (gate: 2026-10-27T04:16:25Z cores 0.20 over 10.0 s; throttled 0 of 100 periods)
+2026-10-27T04:23:51Z dry_ft_abcd exit 0
+2026-10-27T04:24:01Z llm_q3_L35k50_r2 start: cmd:Q3_DATASETS='star abcd multiwoz' bash studies/agent_vs_llm/llm_q3_job3.sh L35k50 studies/agent_vs_llm/runs/llm_q3_L35k50 (gate: 2026-10-27T04:24:01Z cores 0.18 over 10.0 s; throttled 0 of 100 periods)
+2026-10-27T09:06:49Z llm_q3_L35k50_r2 exit 0
+2026-10-27T09:06:59Z ft_abcd_roberta_s1 start: --dataset abcd --model roberta-base --lr 3e-5 --seed 1 (gate: 2026-10-27T09:06:59Z cores 0.09 over 10.0 s; throttled 0 of 100 periods)
+2026-10-27T09:14:06Z ft_abcd_roberta_s1 exit 0
+2026-10-27T09:14:16Z llm_q3_L35k100_star start: cmd:Q3_DATASETS='star' bash studies/agent_vs_llm/llm_q3_job4.sh L35k100 studies/agent_vs_llm/runs/llm_q3_L35k100 (gate: 2026-10-27T09:14:16Z cores 1.14 over 10.0 s; throttled 0 of 100 periods)
+2026-10-27T12:23:12Z llm_q3_L35k100_star exit 0
+2026-10-27T12:23:22Z llm_q3_L35t16_star_reask start: cmd:REASK=1 Q3_DATASETS='star' bash studies/agent_vs_llm/llm_q3_job5.sh L35t16 studies/agent_vs_llm/runs/llm_q3_L35t16 (gate: 2026-10-27T12:23:22Z cores 0.05 over 10.0 s; throttled 0 of 100 periods)
+2026-10-27T14:50:34Z llm_q3_L35t16_star_reask exit 0
+2026-10-27T14:50:44Z llm_q3_L35t16_mwoz start: cmd:Q3_DATASETS='multiwoz' bash studies/agent_vs_llm/llm_q3_job5.sh L35t16 studies/agent_vs_llm/runs/llm_q3_L35t16 (gate: 2026-10-27T14:50:44Z cores 0.06 over 10.0 s; throttled 0 of 100 periods)
+2026-10-27T16:20:00Z llm_q3_L35t16_mwoz exit 0
+2026-10-27T16:20:10Z llm_q3_L35t16_abcd start: cmd:Q3_DATASETS='abcd' bash studies/agent_vs_llm/llm_q3_job5.sh L35t16 studies/agent_vs_llm/runs/llm_q3_L35t16 (gate: 2026-10-27T16:20:10Z cores 0.05 over 10.0 s; throttled 0 of 100 periods)
+2026-10-27T17:49:17Z llm_q3_L35t16_abcd exit 0
+2026-10-27T17:49:27Z agent_abcd_bge_raw_s1 start: cmd:cd studies/agent_vs_llm && DL_GPU_FRAC=0.5 studies/decision_layer/.venv-dl/bin/python -I agent_preds.py --dataset abcd --encoder bge-large --arms lr_raw,mlp_raw --seed 1 --out runs/agent_abcd_bge_raw_s1 (gate: 2026-10-27T17:49:27Z cores 0.05 over 10.0 s; throttled 0 of 100 periods)
+2026-10-27T17:49:57Z agent_abcd_bge_raw_s1 exit 0
+2026-10-27T17:50:07Z agent_star_bge_raw_s1 start: cmd:cd studies/agent_vs_llm && DL_GPU_FRAC=0.5 studies/decision_layer/.venv-dl/bin/python -I agent_preds.py --dataset star --encoder bge-large --arms lr_raw,mlp_raw --seed 1 --out runs/agent_star_bge_raw_s1 (gate: 2026-10-27T17:50:07Z cores 0.14 over 10.0 s; throttled 0 of 100 periods)
+2026-10-27T17:51:06Z agent_star_bge_raw_s1 exit 0
+2026-10-27T17:53:16Z ftseed_star_bgebase_s2 start: --dataset star --model bge-base --lr 5e-5 --seed 2 (gate: 2026-10-27T17:53:16Z cores 0.10 over 10.0 s; throttled 0 of 100 periods)
+2026-10-27T18:08:16Z ftseed_star_bgebase_s2 exit 0
+2026-10-27T18:08:27Z ftseed_abcd_bgebase_s2 start: --dataset abcd --model bge-base --lr 5e-5 --seed 2 (gate: 2026-10-27T18:08:27Z cores 0.08 over 10.0 s; throttled 0 of 99 periods)
+2026-10-27T18:15:20Z ftseed_abcd_bgebase_s2 exit 0
+2026-10-27T18:15:30Z ftseed_mwoz_bgebase_s2 start: --dataset multiwoz --model bge-base --lr 5e-5 --seed 2 (gate: 2026-10-27T18:15:30Z cores 0.06 over 10.0 s; throttled 0 of 98 periods)
+2026-10-27T18:30:52Z ftseed_mwoz_bgebase_s2 exit 0
+2026-10-27T18:56:33Z reg_ft_star start: cmd:mkdir -p studies/agent_vs_llm/runs/reg && ~/.local/share/uv/python/cpython-3.12-linux-x86_64-gnu/bin/python3.12 -I studies/agent_vs_llm/freeze_reg.py --check studies/agent_vs_llm/REG_agent_vs_llm.frozen.json > studies/agent_vs_llm/runs/reg/pincheck_reg_ft_star.out 2>&1 && cd studies/agent_vs_llm && studies/decision_layer/.venv-dl/bin/python -I ft_baseline.py --dataset star --model bge-base --lr 5e-5 --seed 1 --test-registration studies/agent_vs_llm/REG_agent_vs_llm.md --out runs/reg/ft_star (gate: 2026-10-27T18:56:33Z cores 0.06 over 10.0 s; throttled 0 of 100 periods)
+2026-10-27T19:13:21Z reg_ft_star exit 0
+2026-10-27T19:13:31Z reg_tfidf_star start: cmd:mkdir -p studies/agent_vs_llm/runs/reg && ~/.local/share/uv/python/cpython-3.12-linux-x86_64-gnu/bin/python3.12 -I studies/agent_vs_llm/freeze_reg.py --check studies/agent_vs_llm/REG_agent_vs_llm.frozen.json > studies/agent_vs_llm/runs/reg/pincheck_reg_tfidf_star.out 2>&1 && cd studies/agent_vs_llm && CUDA_VISIBLE_DEVICES= OMP_NUM_THREADS=2 nice -n 19 studies/decision_layer/.venv-dl/bin/python -I tfidf_reg.py --dataset star --test-registration studies/agent_vs_llm/REG_agent_vs_llm.md --out runs/reg/tfidf_star (gate: 2026-10-27T19:13:31Z cores 0.04 over 10.0 s; throttled 0 of 100 periods)
+2026-10-27T19:17:41Z reg_tfidf_star exit 0
+2026-10-27T19:17:51Z reg_ft_abcd start: cmd:mkdir -p studies/agent_vs_llm/runs/reg && ~/.local/share/uv/python/cpython-3.12-linux-x86_64-gnu/bin/python3.12 -I studies/agent_vs_llm/freeze_reg.py --check studies/agent_vs_llm/REG_agent_vs_llm.frozen.json > studies/agent_vs_llm/runs/reg/pincheck_reg_ft_abcd.out 2>&1 && cd studies/agent_vs_llm && studies/decision_layer/.venv-dl/bin/python -I ft_baseline.py --dataset abcd --model bge-base --lr 5e-5 --seed 1 --test-registration studies/agent_vs_llm/REG_agent_vs_llm.md --out runs/reg/ft_abcd (gate: 2026-10-27T19:17:51Z cores 0.05 over 10.0 s; throttled 0 of 100 periods)
+2026-10-27T19:26:28Z reg_ft_abcd exit 0
+2026-10-27T19:26:38Z reg_tfidf_abcd start: cmd:mkdir -p studies/agent_vs_llm/runs/reg && ~/.local/share/uv/python/cpython-3.12-linux-x86_64-gnu/bin/python3.12 -I studies/agent_vs_llm/freeze_reg.py --check studies/agent_vs_llm/REG_agent_vs_llm.frozen.json > studies/agent_vs_llm/runs/reg/pincheck_reg_tfidf_abcd.out 2>&1 && cd studies/agent_vs_llm && CUDA_VISIBLE_DEVICES= OMP_NUM_THREADS=2 nice -n 19 studies/decision_layer/.venv-dl/bin/python -I tfidf_reg.py --dataset abcd --test-registration studies/agent_vs_llm/REG_agent_vs_llm.md --out runs/reg/tfidf_abcd (gate: 2026-10-27T19:26:38Z cores 0.05 over 10.0 s; throttled 0 of 100 periods)
+2026-10-27T19:29:08Z reg_tfidf_abcd exit 0
+2026-10-27T19:29:18Z reg_ft_multiwoz start: cmd:mkdir -p studies/agent_vs_llm/runs/reg && ~/.local/share/uv/python/cpython-3.12-linux-x86_64-gnu/bin/python3.12 -I studies/agent_vs_llm/freeze_reg.py --check studies/agent_vs_llm/REG_agent_vs_llm.frozen.json > studies/agent_vs_llm/runs/reg/pincheck_reg_ft_multiwoz.out 2>&1 && cd studies/agent_vs_llm && studies/decision_layer/.venv-dl/bin/python -I ft_baseline.py --dataset multiwoz --model bge-base --lr 5e-5 --seed 1 --test-registration studies/agent_vs_llm/REG_agent_vs_llm.md --out runs/reg/ft_multiwoz (gate: 2026-10-27T19:29:18Z cores 0.05 over 10.0 s; throttled 0 of 100 periods)
+2026-10-27T19:46:35Z reg_ft_multiwoz exit 0
+2026-10-27T19:46:45Z reg_tfidf_multiwoz start: cmd:mkdir -p studies/agent_vs_llm/runs/reg && ~/.local/share/uv/python/cpython-3.12-linux-x86_64-gnu/bin/python3.12 -I studies/agent_vs_llm/freeze_reg.py --check studies/agent_vs_llm/REG_agent_vs_llm.frozen.json > studies/agent_vs_llm/runs/reg/pincheck_reg_tfidf_multiwoz.out 2>&1 && cd studies/agent_vs_llm && CUDA_VISIBLE_DEVICES= OMP_NUM_THREADS=2 nice -n 19 studies/decision_layer/.venv-dl/bin/python -I tfidf_reg.py --dataset multiwoz --test-registration studies/agent_vs_llm/REG_agent_vs_llm.md --out runs/reg/tfidf_multiwoz (gate: 2026-10-27T19:46:45Z cores 0.04 over 10.0 s; throttled 0 of 100 periods)
+2026-10-27T19:49:17Z reg_tfidf_multiwoz exit 0
+2026-10-27T19:49:27Z reg_llm_star start: cmd:mkdir -p studies/agent_vs_llm/runs/reg && ~/.local/share/uv/python/cpython-3.12-linux-x86_64-gnu/bin/python3.12 -I studies/agent_vs_llm/freeze_reg.py --check studies/agent_vs_llm/REG_agent_vs_llm.frozen.json > studies/agent_vs_llm/runs/reg/pincheck_reg_llm_star.out 2>&1 && bash studies/agent_vs_llm/reg_llm_job.sh star ../tools/models_untrusted/qwen3.6-35b-a3b/gguf-b11742/Qwen3.6-35B-A3B-Q4_K_M.gguf Q4_K_M 0 4000 studies/agent_vs_llm/runs/reg/llm_star studies/agent_vs_llm/REG_agent_vs_llm.md --k 50 (gate: 2026-10-27T19:49:27Z cores 0.05 over 10.0 s; throttled 0 of 100 periods)
+2026-10-28T07:42:43Z reg_llm_star exit 0
+2026-10-28T07:42:53Z reg_llm_abcd start: cmd:mkdir -p studies/agent_vs_llm/runs/reg && ~/.local/share/uv/python/cpython-3.12-linux-x86_64-gnu/bin/python3.12 -I studies/agent_vs_llm/freeze_reg.py --check studies/agent_vs_llm/REG_agent_vs_llm.frozen.json > studies/agent_vs_llm/runs/reg/pincheck_reg_llm_abcd.out 2>&1 && bash studies/agent_vs_llm/reg_llm_job.sh abcd ../tools/models_untrusted/qwen3.6-35b-a3b/gguf-b11742/Qwen3.6-35B-A3B-Q4_K_M.gguf Q4_K_M 0 3608 studies/agent_vs_llm/runs/reg/llm_abcd studies/agent_vs_llm/REG_agent_vs_llm.md --k 50 (gate: 2026-10-28T07:42:53Z cores 0.23 over 10.0 s; throttled 0 of 100 periods)
+2026-10-28T19:15:45Z reg_llm_abcd exit 0
+2026-10-28T19:15:55Z reg_llm_multiwoz start: cmd:mkdir -p studies/agent_vs_llm/runs/reg && ~/.local/share/uv/python/cpython-3.12-linux-x86_64-gnu/bin/python3.12 -I studies/agent_vs_llm/freeze_reg.py --check studies/agent_vs_llm/REG_agent_vs_llm.frozen.json > studies/agent_vs_llm/runs/reg/pincheck_reg_llm_multiwoz.out 2>&1 && bash studies/agent_vs_llm/reg_llm_job.sh multiwoz ../tools/models_untrusted/qwen3.6-35b-a3b/gguf-b11742/Qwen3.6-35B-A3B-Q4_K_M.gguf Q4_K_M 0 4000 studies/agent_vs_llm/runs/reg/llm_multiwoz studies/agent_vs_llm/REG_agent_vs_llm.md --k 50 (gate: 2026-10-28T19:15:55Z cores 0.17 over 10.0 s; throttled 0 of 100 periods)
+2026-10-29T08:02:34Z reg_llm_multiwoz exit 0
+2026-10-29T08:02:44Z reg_report_all start: cmd:bash studies/agent_vs_llm/reg_report_all.sh (gate: 2026-10-29T08:02:44Z cores 0.18 over 10.0 s; throttled 0 of 101 periods)
+2026-10-29T08:05:43Z reg_report_all exit 0
+2026-10-29T08:05:53Z logsize_agent_abcd_whole start: cmd:cd studies/agent_vs_llm && DL_GPU_FRAC=0.5 studies/decision_layer/.venv-dl/bin/python -I logsize_agent.py --size whole -- --dataset abcd --encoder none --table c4words-S1000-v1 --parts mem,words,xcust,xrecent --arms tm --seed 1 --clauses 4000 --s 16 --expect-dev-acc 0.8417480998914224 --out runs/logsize/agent_abcd_whole (gate: 2026-10-29T08:05:53Z cores 0.11 over 10.0 s; throttled 0 of 100 periods)
+2026-10-29T08:08:40Z logsize_agent_abcd_whole exit 0
+2026-10-29T08:08:50Z logsize_agent_abcd_N64 start: cmd:cd studies/agent_vs_llm && ~/.local/share/uv/python/cpython-3.12-linux-x86_64-gnu/bin/python3.12 -I logsize_gate.py && DL_GPU_FRAC=0.5 studies/decision_layer/.venv-dl/bin/python -I logsize_agent.py --size 64 -- --dataset abcd --encoder none --table c4words-S1000-v1 --parts mem,words,xcust,xrecent --arms tm --seed 1 --clauses 4000 --s 16 --out runs/logsize/agent_abcd_N64 (gate: 2026-10-29T08:08:50Z cores 0.14 over 10.0 s; throttled 0 of 100 periods)
+2026-10-29T08:09:03Z logsize_agent_abcd_N64 exit 0
+2026-10-29T08:09:13Z logsize_agent_abcd_N256 start: cmd:cd studies/agent_vs_llm && ~/.local/share/uv/python/cpython-3.12-linux-x86_64-gnu/bin/python3.12 -I logsize_gate.py && DL_GPU_FRAC=0.5 studies/decision_layer/.venv-dl/bin/python -I logsize_agent.py --size 256 -- --dataset abcd --encoder none --table c4words-S1000-v1 --parts mem,words,xcust,xrecent --arms tm --seed 1 --clauses 4000 --s 16 --out runs/logsize/agent_abcd_N256 (gate: 2026-10-29T08:09:13Z cores 0.12 over 10.0 s; throttled 0 of 100 periods)
+2026-10-29T08:09:30Z logsize_agent_abcd_N256 exit 0
+2026-10-29T08:09:41Z logsize_agent_abcd_N1024 start: cmd:cd studies/agent_vs_llm && ~/.local/share/uv/python/cpython-3.12-linux-x86_64-gnu/bin/python3.12 -I logsize_gate.py && DL_GPU_FRAC=0.5 studies/decision_layer/.venv-dl/bin/python -I logsize_agent.py --size 1024 -- --dataset abcd --encoder none --table c4words-S1000-v1 --parts mem,words,xcust,xrecent --arms tm --seed 1 --clauses 4000 --s 16 --out runs/logsize/agent_abcd_N1024 (gate: 2026-10-29T08:09:41Z cores 0.12 over 10.0 s; throttled 0 of 100 periods)
+2026-10-29T08:10:13Z logsize_agent_abcd_N1024 exit 0
+2026-10-29T08:10:23Z logsize_agent_abcd_N4096 start: cmd:cd studies/agent_vs_llm && ~/.local/share/uv/python/cpython-3.12-linux-x86_64-gnu/bin/python3.12 -I logsize_gate.py && DL_GPU_FRAC=0.5 studies/decision_layer/.venv-dl/bin/python -I logsize_agent.py --size 4096 -- --dataset abcd --encoder none --table c4words-S1000-v1 --parts mem,words,xcust,xrecent --arms tm --seed 1 --clauses 4000 --s 16 --out runs/logsize/agent_abcd_N4096 (gate: 2026-10-29T08:10:23Z cores 0.10 over 10.0 s; throttled 0 of 100 periods)

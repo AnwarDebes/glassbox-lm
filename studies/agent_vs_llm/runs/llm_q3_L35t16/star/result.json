@@ -1,0 +1,17 @@
+{
+ "composite": true,
+ "note": "NOTE_review_fixes.md",
+ "n": 500,
+ "accuracy": 0.558,
+ "errors": 0,
+ "reasked": 51,
+ "reasked_now_usable": 7,
+ "reasked_correct": 3,
+ "base_accuracy": 0.552,
+ "sources": {
+  "runs/llm_q3_L35t/star/preds.jsonl": "f67f34cd4a08d0051c97532a761cd53870ebd9ebee3c2e264bc3a9483a06b529",
+  "runs/llm_q3_L35t16/star_reask/preds.jsonl": "0ab3e9c19f04f3600bf960fbadd0592e4273e4b45226637b3b134078a676d3ea",
+  "runs/llm_q3_L35t16/star_reask_rows.json": "6ef61186c52c8a754e86851958cf8a7940a34d75682cc627a8393b112ca8a7cc"
+ },
+ "utc_end": "2026-10-27T14:51:18Z"
+}

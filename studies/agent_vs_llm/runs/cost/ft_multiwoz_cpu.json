@@ -1,0 +1,16 @@
+{
+ "dataset": "multiwoz",
+ "model": "BAAI/bge-base-en-v1.5",
+ "n_params": 109580672,
+ "n_labels": 128,
+ "dev_sha256": "3414cc8a6ecc64aafa0df070748b9d502a12e7996420b84a12df1b094a89fcd2",
+ "n": 300,
+ "threads": 1,
+ "max_len": 256,
+ "median_tokens": 152.0,
+ "total_median_ms": 262.62402115389705,
+ "total_p90_ms": 373.9806496538222,
+ "label": "rough: shared machine, one CPU thread, batch 1; pretrained weights with a new head (same compute)",
+ "torch": "2.6.0+cu124",
+ "utc_end": "2026-10-27T07:43:33Z"
+}

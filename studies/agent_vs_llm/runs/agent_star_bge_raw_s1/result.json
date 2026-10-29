@@ -1,0 +1,37 @@
+{
+ "dataset": "star",
+ "encoder": "bge-large",
+ "table": null,
+ "parts": "mem,words,xcust,xrecent",
+ "seed": 1,
+ "n_dev": 6908,
+ "arms": {
+  "lr_raw": {
+   "dev_acc": 0.6618413433700058,
+   "C": 3.0,
+   "dim": 3452
+  },
+  "mlp_raw": {
+   "dev_acc": 0.6806601042269832,
+   "best_val": 0.6806601285934448,
+   "best_epoch": 20,
+   "epochs_run": 30,
+   "dim": 3452
+  }
+ },
+ "argv": [
+  "agent_preds.py",
+  "--dataset",
+  "star",
+  "--encoder",
+  "bge-large",
+  "--arms",
+  "lr_raw,mlp_raw",
+  "--seed",
+  "1",
+  "--out",
+  "runs/agent_star_bge_raw_s1"
+ ],
+ "nn_modules_loaded": [],
+ "utc_end": "2026-10-27T17:51:05Z"
+}

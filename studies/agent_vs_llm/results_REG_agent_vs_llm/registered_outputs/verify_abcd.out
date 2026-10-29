@@ -1,0 +1,53 @@
+{
+ "rows_are_registered_draw": true,
+ "llm_errors": 0,
+ "n": 3608,
+ "acc_agent": 0.8378603104212861,
+ "acc_llm": 0.8378603104212861,
+ "acc_ft": 0.8786031042128604,
+ "agent_minus_llm": 0.0,
+ "ci_agent_minus_llm_seed7": [
+  -0.011335360796239978,
+  0.011452513966480447
+ ],
+ "ft_minus_agent": 0.040742793791574305,
+ "ci_ft_minus_agent_seed7": [
+  0.030973451327433628,
+  0.05057096247960848
+ ],
+ "ci90_agent_minus_llm_seed7": [
+  -0.009708737864077669,
+  0.009887393573194177
+ ],
+ "acc_tfidf": 0.8472838137472284,
+ "ci_tfidf_minus_llm_seed7": [
+  -0.0016533480297602646,
+  0.019956260251503554
+ ],
+ "ci_agent_minus_tfidf_seed7": [
+  -0.01885223177155531,
+  0.0002827254735651682
+ ],
+ "checks": {
+  "acc_agent": true,
+  "acc_llm": true,
+  "acc_ft": true,
+  "agent_minus_llm": true,
+  "ft_minus_agent": true,
+  "ci_agent_minus_llm_seed7 within 0.01 of the report": true,
+  "ci_ft_minus_agent_seed7 within 0.01 of the report": true,
+  "ci90_agent_minus_llm_seed7 within 0.01 of the report": true,
+  "acc_tfidf": true,
+  "ci_tfidf_minus_llm within 0.01": true,
+  "ci_agent_minus_tfidf within 0.01": true,
+  "margins are 0.03 and 0.02": true,
+  "no LLM request error": true,
+  "rule NI agrees": true,
+  "rule NI2 agrees": true,
+  "rule SUP agrees": true,
+  "rule FT agrees": true,
+  "equivalence reading agrees": true
+ },
+ "near_bound": [],
+ "verdict": "MATCH"
+}

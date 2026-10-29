@@ -1,0 +1,44 @@
+{
+ "note": "NOTE_tfidf_dev.md",
+ "dataset": "star",
+ "n_train": 54913,
+ "n_dev": 6908,
+ "n_features": 98999,
+ "train_sha256": "47735157f3e0035c59c8f88005ebe5457678083d60e653fbdca2f4df45c023df",
+ "dev_sha256": "e562736dd9afa1b781d48bf78f43f23b1b8ceda17b3ddbf01557c59f0c8efb18",
+ "rows": [
+  {
+   "C": 1.0,
+   "dev_acc": 0.6255066589461494,
+   "fit_s": 109.8,
+   "n_iter": 20
+  },
+  {
+   "C": 4.0,
+   "dev_acc": 0.6528662420382165,
+   "fit_s": 147.8,
+   "n_iter": 27
+  },
+  {
+   "C": 16.0,
+   "dev_acc": 0.6524319629415171,
+   "fit_s": 461.6,
+   "n_iter": 86
+  }
+ ],
+ "best": {
+  "C": 4.0,
+  "dev_acc": 0.6528662420382165,
+  "fit_s": 147.8,
+  "n_iter": 27
+ },
+ "seconds": 724.7,
+ "argv": [
+  "tfidf_lr.py",
+  "--dataset",
+  "star",
+  "--out",
+  "runs/tfidf_star"
+ ],
+ "utc_end": "2026-10-26T21:02:54Z"
+}

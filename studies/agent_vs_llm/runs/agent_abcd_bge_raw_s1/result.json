@@ -1,0 +1,37 @@
+{
+ "dataset": "abcd",
+ "encoder": "bge-large",
+ "table": null,
+ "parts": "mem,words,xcust,xrecent",
+ "seed": 1,
+ "n_dev": 3684,
+ "arms": {
+  "lr_raw": {
+   "dev_acc": 0.8479913137893594,
+   "C": 3.0,
+   "dim": 3138
+  },
+  "mlp_raw": {
+   "dev_acc": 0.8561346362649295,
+   "best_val": 0.8561346530914307,
+   "best_epoch": 36,
+   "epochs_run": 46,
+   "dim": 3138
+  }
+ },
+ "argv": [
+  "agent_preds.py",
+  "--dataset",
+  "abcd",
+  "--encoder",
+  "bge-large",
+  "--arms",
+  "lr_raw,mlp_raw",
+  "--seed",
+  "1",
+  "--out",
+  "runs/agent_abcd_bge_raw_s1"
+ ],
+ "nn_modules_loaded": [],
+ "utc_end": "2026-10-27T17:49:56Z"
+}

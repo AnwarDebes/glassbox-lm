@@ -1,0 +1,48 @@
+{
+ "dataset": "abcd",
+ "encoder": "none",
+ "table": {
+  "table": "c4words-S1000-v1",
+  "table_file_sha256": "e1771d9eaf4a07f71c532fe4f3ef91909334cbdcb4d7785ff0bb7ed0e51c5c0a",
+  "table_sha256": "46311c47aee71a003126836f5b955f2a8fa5cdb786cdcbb926188c3c6c4f671a",
+  "tokenizer": "port of tokenize_ref.py 2c3c1aff44ed34e0 (words; a token not in the list is dropped)",
+  "n_words": 63091,
+  "dim": 500
+ },
+ "parts": "mem,words,xcust,xrecent",
+ "seed": 1,
+ "n_dev": 3684,
+ "arms": {
+  "tm": {
+   "dev_acc": 0.8417480998914224,
+   "best_epoch": 26,
+   "n_bits": 6684,
+   "clauses": 4000,
+   "s": 16.0,
+   "train_s": 141.1,
+   "seconds": 159.1
+  }
+ },
+ "argv": [
+  "agent_preds.py",
+  "--dataset",
+  "abcd",
+  "--encoder",
+  "none",
+  "--table",
+  "c4words-S1000-v1",
+  "--parts",
+  "mem,words,xcust,xrecent",
+  "--arms",
+  "tm",
+  "--clauses",
+  "4000",
+  "--s",
+  "16",
+  "--seed",
+  "1",
+  "--out",
+  "runs/agent_abcd_c4_tm_s1"
+ ],
+ "utc_end": "2026-10-26T21:07:57Z"
+}

@@ -1,0 +1,44 @@
+{
+ "note": "NOTE_tfidf_dev.md",
+ "dataset": "multiwoz",
+ "n_train": 56581,
+ "n_dev": 7359,
+ "n_features": 69258,
+ "train_sha256": "0e20a31434de10a5248f0b10ab01e7474ceb5e020cd5cbc7048bfe8f5db69e9b",
+ "dev_sha256": "3414cc8a6ecc64aafa0df070748b9d502a12e7996420b84a12df1b094a89fcd2",
+ "rows": [
+  {
+   "C": 1.0,
+   "dev_acc": 0.3505911129229515,
+   "fit_s": 71.2,
+   "n_iter": 22
+  },
+  {
+   "C": 4.0,
+   "dev_acc": 0.3451555917923631,
+   "fit_s": 107.0,
+   "n_iter": 32
+  },
+  {
+   "C": 16.0,
+   "dev_acc": 0.3270824840331567,
+   "fit_s": 389.0,
+   "n_iter": 122
+  }
+ ],
+ "best": {
+  "C": 1.0,
+  "dev_acc": 0.3505911129229515,
+  "fit_s": 71.2,
+  "n_iter": 22
+ },
+ "seconds": 573.3,
+ "argv": [
+  "tfidf_lr.py",
+  "--dataset",
+  "multiwoz",
+  "--out",
+  "runs/tfidf_multiwoz"
+ ],
+ "utc_end": "2026-10-27T02:52:36Z"
+}
