@@ -71,7 +71,10 @@ def test_exists_or_equals_max():
 
 
 def test_view_blocks():
-    assert PARTS[-2:] == ("xcust", "xrecent")
+    # the full, fixed list of ABCDView's parts: the static parts (R19, 2026-10-17) after every earlier part, then R20's
+    # customer-only parts (2026-10-18; logs/pre_R20/diff_abcd.txt: additions only). Updated 2026-10-25: before, this
+    # line expected the list to end with the static parts, as it did before R20, and had failed since R20.
+    assert PARTS == ("mem", "intent", "step", "words", "mem2", "fstep", "fwords", "xcust", "xrecent", "cwords", "xcrecent")
     try:
         ABCDView(parts=("mem", "wrods"))
         raise AssertionError("an unknown part must raise")

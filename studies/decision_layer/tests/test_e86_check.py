@@ -14,6 +14,11 @@ LR rows, R22's and R23's seed-1 rows, and every cell's rows with preds files. It
 - the dry mode on tiny rows, and its refusal of a drop cell without dropout;
 - refusals: an e86 row before e86's freeze, a drop cell without dropout, an e84 reference row with dropout, other dev
   bits, a second row for one tag and seed, a preds file off the row's acc, an LR row on other bits.
+Added 2026-10-25 with the amendment (dated note logs/plan_e86_note_2026-10-25.md), before the STAR jobs ran again:
+- a STAR row written before the note's freeze (the stopped queue's) is set aside and printed, and the row written
+  after the note is used;
+- a STAR tag and seed with only a row from before the note, or with two rows after it, is refused;
+- the full check refuses when the note's freeze record is missing.
 """
 
 import gzip
@@ -31,8 +36,9 @@ sys.path.insert(0, str(ROOT / "scripts"))
 import e86_check as E  # noqa: E402
 
 N, K = 200, 5
-FROZEN = {E.E86: "2026-10-23T02:00:00Z", E.E84: "2026-10-22T10:37:12Z"}
+FROZEN = {E.E86: "2026-10-23T02:00:00Z", E.E84: "2026-10-22T10:37:12Z", E.NOTE: "2026-10-25T11:00:00Z"}
 WHEN = {E.E86: "2026-10-23T03:00:00Z", E.E84: "2026-10-22T12:30:00Z"}
+WHEN_STAR = "2026-10-25T12:00:00Z"  # the STAR jobs ran again after the note's freeze
 
 
 def labels(ds: str) -> np.ndarray:
@@ -81,7 +87,7 @@ class Case:
                     continue
                 best, last = counts[ds, cell]
                 for sd in E.SEEDS:
-                    self.add(ds, tag, sd, neg, drop, preds, WHEN[rec], best, last)
+                    self.add(ds, tag, sd, neg, drop, preds, WHEN_STAR if (ds == "star" and rec == E.E86) else WHEN[rec], best, last)
 
     def add(self, ds: str, tag: str, sd: int, neg: str, drop: float, preds: str, when: str, best: int, last: int, dry: bool = False) -> None:
         g, y = E.DS[ds], self.y[ds]
@@ -164,7 +170,7 @@ def main() -> None:
     c.done()
     print("ok dry mode: 7 tiny cells pass; a drop cell without dropout is refused")
     good = counts({"multiwoz": (61, 57), "star": (62, 58), "abcd": (62, 58)}, {"star": (59, 55), "abcd": (60, 56)})
-    cases = [("written before its plan's freeze", lambda c: c.pick("e86_star_C4_c16000_s16_drop50").update(time="2026-10-23T01:00:00Z")),
+    cases = [("written before its plan's freeze", lambda c: c.pick("e86_abcd_C4_c4000_s16_drop50").update(time="2026-10-23T01:00:00Z")),
              ("settings differ", lambda c: c.pick("e86_abcd_C4_c4000_s16_drop50")["cfg"].update(clause_drop=0.0)),
              ("settings differ", lambda c: c.pick("e84_multiwoz_C4_c16000_s8_nrand")["cfg"].update(clause_drop=0.5)),
              ("are not the C4 agent's on star", lambda c: c.pick("e86_star_C4_c16000_s16_ref")["bits_sha256"].update(dev="0" * 64)),
@@ -181,6 +187,33 @@ def main() -> None:
         c.done()
     print("ok refusals: before the freeze, a drop cell without dropout, an e84 reference with dropout, other dev bits, two rows, a preds file off"
           " the acc, an LR row on other bits")
+    # the amendment of 2026-10-25: the stopped queue's STAR row is set aside, the row after the note is used
+    c = Case(good)
+    early = dict(c.pick("e86_star_C4_c16000_s16_ref"), time="2026-10-23T02:26:20Z", acc=0.29)
+    c.rows.append(early)
+    p = c.run()
+    assert p.returncode == 0, p.stdout + p.stderr
+    assert ("Set aside (no rule; the queue stopped on 2026-10-23): e86_star_C4_c16000_s16_ref seed 1, written 2026-10-23T02:26:20Z, acc 0.2900;"
+            " the row written after the note: 0.3000, difference +1.00") in p.stdout, p.stdout
+    assert "minus R22's seed-1 dev row (0.2950): +0.50" in p.stdout, p.stdout
+    c.done()
+    c = Case(good)
+    c.pick("e86_star_C4_c16000_s16_drop50").update(time="2026-10-23T02:26:20Z")
+    p = c.run()
+    assert p.returncode == 1 and "e86_star_C4_c16000_s16_drop50 seed 1: 0 rows (need exactly 1)" in p.stderr, p.stdout + p.stderr
+    c.done()
+    c = Case(good)
+    c.rows.append(dict(c.pick("e86_star_C4_c16000_s16_nrand_drop50")))
+    p = c.run()
+    assert p.returncode == 1 and "e86_star_C4_c16000_s16_nrand_drop50 seed 1: 2 rows (need exactly 1)" in p.stderr, p.stdout + p.stderr
+    c.done()
+    c = Case(good)
+    (c.tmp / "logs" / f"{E.NOTE}.frozen.json").unlink()
+    p = c.run()
+    assert p.returncode == 1 and f"{E.NOTE}.frozen.json is missing" in p.stderr, p.stdout + p.stderr
+    c.done()
+    print("ok amendment of 2026-10-25: the stopped queue's STAR row is set aside and printed; only-early and two-late STAR rows refused;"
+          " the full check refuses without the note's freeze record")
     print("PASSED")
 
 

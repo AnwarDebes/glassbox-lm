@@ -4,7 +4,12 @@
 
 CPU only; train and dev only.
 0. The four files hashed by the e70 and e71 freezes (static_text.py, abcd.py, abcd_explore.py, abcd_confirm.py)
-   are untouched: their SHA-256 equal both freeze records.
+   equal e87's freeze record, the last one frozen before the rewording for publication of 2026-10-23, with
+   static_text.py and abcd.py at their published values (docs/hash-table.md); every record frozen after the
+   publication (the dated notes of 2026-10-25) holds today's values; and the e70 and e71 records hold the values
+   before e77's one-line change of abcd_explore.py and abcd_confirm.py (2026-10-19) and before the rewording. (Check 0
+   was updated on 2026-10-25: before, it compared the files with the e70 and e71 records and had failed since e77's
+   change.)
 1. The subclass changes only the table: ExistsTC given potion's own table equals ExistsT (info with the concept,
    threshold and code hashes, names, concepts, thresholds, codes, and the bits of transform and transform_max on
    every train and dev text), ABCD, fields cust and recent.
@@ -33,6 +38,19 @@ from dl.abcd import customer_recent, load_examples  # noqa: E402
 
 TABLE = "c4words-S1000-v1"
 FROZEN = {"src/dl/static_text.py", "src/dl/abcd.py", "scripts/abcd_explore.py", "scripts/abcd_confirm.py"}
+# Check 0 (updated 2026-10-25) compares the four files with the LAST freeze record that pins them:
+# - abcd_explore.py and abcd_confirm.py changed once after e70 and e71, for e77 (2026-10-19 21:26 UTC: "multiwoz" in
+#   --dataset, one line each; logs/plan_e77_multiwoz_dev.md; pristine copies in logs/pre_e77/, local); every record
+#   from e77 to e87 holds the new values;
+# - static_text.py and abcd.py were reworded for publication on 2026-10-23 (comments and docstrings only); the records
+#   up to e87 hold the value before that edit, and docs/hash-table.md maps it to the published one.
+LAST = "logs/plan_e87_receipts.frozen.json"
+PRE_E77 = {"scripts/abcd_explore.py": "d3c53f57f9ef1975182b6834ec7ed4cbb1f4123efff44c416aa78226058e8119",
+           "scripts/abcd_confirm.py": "0ae667721923aff9eb0fd3ba6c6d529e0306bc94409bf19104db3f5607a9f82b"}
+PUBLISHED = {"src/dl/static_text.py": ("ec89f28c7f96c4b21d0704588e5730fc909beaaf4391ce57c736cc4266c66c39",
+                                      "e7037dc6ac570487cc23dd84125166b10fb1677fa48edd88d44dab0d675b5a2a"),
+             "src/dl/abcd.py": ("a66c0c633ca227d24ec1f4b9ffcc97cf3b149c6fd6fc6e60919b9f9ed149cf63",
+                               "d8cf795ac26b1f0589ebfa4177f7196a6110e3ddcf9d43ad1c111bf6b60b96dc")}
 
 
 def log(*a):
@@ -46,11 +64,32 @@ def fields(rows):
 def test_frozen_files_untouched():
     from dl.static_text import _sha256
 
+    last = json.loads((ROOT / LAST).read_text())["sources"]
+    for f in sorted(FROZEN):
+        now = _sha256(ROOT / f)
+        if f in PUBLISHED:
+            assert last[f] == PUBLISHED[f][0] and now == PUBLISHED[f][1], (LAST, f, now)
+        else:
+            assert now == last[f], (LAST, f, now)
     for rec in ("logs/plan_e70_verify.frozen.json", "logs/plan_e71_v2_amendment.frozen.json"):
         src = json.loads((ROOT / rec).read_text())["sources"]
         for f in sorted(FROZEN):
-            assert _sha256(ROOT / f) == src[f], (rec, f)
-    log(f"0. the four frozen files equal both freeze records: {sorted(FROZEN)}")
+            assert src[f] == (PRE_E77[f] if f in PRE_E77 else PUBLISHED[f][0]), (rec, f)
+    for f, h in PRE_E77.items():  # local copies: the e70/e71 state differs from today's file by e77's one line only
+        p = ROOT / "logs" / "pre_e77" / Path(f).name
+        if p.exists():
+            old, new = p.read_text().splitlines(), (ROOT / f).read_text().splitlines()
+            diff = [i for i, (a, b) in enumerate(zip(old, new)) if a != b]
+            assert _sha256(p) == h and len(old) == len(new) and len(diff) == 1 and '"multiwoz"' in new[diff[0]], (f, diff)
+    later = []
+    for rec in sorted((ROOT / "logs").glob("*.frozen.json")):
+        r = json.loads(rec.read_text())
+        if r.get("frozen_utc", "") > "2026-10-23T12:00:00Z" and all(f in r.get("sources", {}) for f in FROZEN):
+            for f in sorted(FROZEN):
+                assert r["sources"][f] == _sha256(ROOT / f), (rec.name, f)
+            later.append(rec.name)
+    log(f"0. the four files equal {LAST} (static_text.py and abcd.py as published, docs/hash-table.md) and every later "
+        f"record ({', '.join(later) or 'none'}); the e70 and e71 records hold the values before e77's one-line change")
 
 
 def test_subclass_equals_existsT_on_potion():

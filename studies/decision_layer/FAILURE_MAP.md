@@ -1,6 +1,6 @@
 # Failure map: where Tsetlin Machines fail on language, part by part
 
-Status: written 2026-10-15 22:30 UTC to 2026-10-16 16:40 UTC; phase 2 (fresh data: ABCD, STAR; and MASSIVE, a related dataset (it shares about a third of its test texts with HWU64 train, with different labels)) 2026-10-16 21:31 UTC to 2026-10-17; phase 3 (the agent with no neural network at run time; its word table was distilled once, offline, from a transformer) 2026-10-17 20:47 UTC to 2026-10-19. Phase 1's registered tests (R2 to R8, R2c, R2d, R2e, R5c, R5d, R7b, R7c) have finished; phase 2's are R9, R9b, R10, R10c, R11, R12, R13, R14, R15, R16, R16b, R17, R18 (section "Phase 2" below); phase 3's are R19, R20, R21, R22 and R23 (section "Phase 3"), and phase 4's is R24 (section "Phase 4", 2026-10-19 evening to 2026-10-23, on MultiWOZ 2.2). Internal audits 1 to 9 are in the project notes (not published). Every registered test below gets its pass rule written and frozen (hash and UTC time in `registrations/`) BEFORE its confirmatory runs. Exploratory numbers are on validation splits only and are labelled as such.
+Status: written 2026-10-15 22:30 UTC to 2026-10-16 16:40 UTC; phase 2 (fresh data: ABCD, STAR; and MASSIVE, a related dataset (it shares about a third of its test texts with HWU64 train, with different labels)) 2026-10-16 21:31 UTC to 2026-10-17; phase 3 (the agent with no neural network at run time; its word table was distilled once, offline, from a transformer) 2026-10-17 20:47 UTC to 2026-10-19; phase 4 (a third dataset, MultiWOZ 2.2; Parts 18 to 21) 2026-10-19 evening to 2026-10-23; corrections on 2026-10-25 in Parts 14, 17, 20 and 21. Phase 1's registered tests (R2 to R8, R2c, R2d, R2e, R5c, R5d, R7b, R7c) have finished; phase 2's are R9, R9b, R10, R10c, R11, R12, R13, R14, R15, R16, R16b, R17, R18 (section "Phase 2" below); phase 3's are R19, R20, R21, R22 and R23 (section "Phase 3"), and phase 4's is R24 (section "Phase 4", 2026-10-19 evening to 2026-10-23, on MultiWOZ 2.2). Internal audits 1 to 9 are in the project notes (not published). Every registered test below gets its pass rule written and frozen (hash and UTC time in `registrations/`) BEFORE its confirmatory runs. Exploratory numbers are on validation splits only and are labelled as such.
 
 Evidence for every failure is in the project notes (not published): 19 failures F1 to F19 and 11 positive results P1 to P11, each with run ids. This page groups them by cause and attaches one test per cause.
 
@@ -264,7 +264,7 @@ The question: can the whole agent run with no neural network at run time, once t
 - **Failure (dev):** over a superset of all real inputs (only the constraints that real inputs satisfy; the text bits otherwise free), none of 50 rules taken from ABCD's written guidelines holds for the raw TM. All 250 checks (5 seeds) give a counterexample, in 0.5 to 6 s each. The counterexamples are far from any real conversation: their nearest dev row is about 1,500 text bits away. The superset is too loose for a proof about the raw policy, because a free text can be built to vote for any button.
 - **Fix tested (dev):** 50 veto clauses, one per rule, of which 15 to 20 change a decision on dev. All 50 rules then hold by construction, and the solver confirms it. Cost on dev: -0.27 to -0.43 points open loop, every right-to-wrong turn being a turn where the human agent broke the rule; -0.08 to -0.27 closed loop.
 - **Measured, no claim:** with the same generic MILP encoding and solver (600 s per check), the TM's 250 checks all resolved, with a median of 1.3 s. MLPs on the same bits resolved 41 of 50 checks (64 hidden units, median 151 s) and 1 of 50 (128 hidden units); the 512-unit twin was not run (budget). No dedicated neural-network verifier was tried.
-- **Next:** local proofs around real conversations, in word edits (e71; plan `logs/plan_e71_local.md`).
+- **Next, since run:** local proofs around real conversations, in word edits: e71 on R19's ABCD agent (plan `logs/plan_e71_local.md`) and e76 on R23's network-free agent, both on dev under frozen plans (`docs/results.md`, sections e71 and e76).
 - Prior art: TM verification by SAT (Przybysz et al. 2023); verify and repair with clauses (VERITAS, 2026). This is not a first TM verification.
 
 ### Part 15. The word table was distilled from a transformer (e72 dev, R21 test, e72d dev)
@@ -297,7 +297,7 @@ The question: can the whole agent run with no neural network at run time, once t
   - 12.9% of the wizard's replies are free text and cannot be matched.
 - **Wording:** "produces its replies from the task's templates", never "generates language". It does not compose sentences.
 
-### Part 17. The TM's s was never tuned (e74, e74c, e74d; dev; test next as R22)
+### Part 17. The TM's s was never tuned (e74, e74c, e74d: dev; R22 and R23: test)
 
 - **Failure.** Every agent run up to R21 used s 8, and on STAR the TM stayed 2.79 points behind LR on the same bits (R21, test).
 - **Fix tested (dev, frozen plans):** a screen of s on STAR dev for the C4 agent (2 to 24) and, for fairness, for the bge-large agent (8 to 24).
@@ -332,10 +332,13 @@ The question: can the whole agent run with no neural network at run time, once t
   - Attraction, Taxi, Restaurant and Train turns are 6.5 to 9.4 points behind.
   - Part of the exact-set target is a choice between near-equal variants ("general-bye" against
     "general-bye+general-welcome"; "X" against "X+general-reqmore") that the two agents resolve differently.
-- **Fixes tried (dev, bars fixed before their runs; both not taken):**
+- **Fixes tried (dev, bars fixed before their runs; none taken):**
   - e78, concept counts beside xcust (2d-a): STAR -0.78, ABCD -0.29; MultiWOZ +0.87 (one seed, no rule).
   - e79, intent and step prototype parts from C4 mean vectors (view A+B on the C4 table): MultiWOZ +0.95 against a bar
     of +1.0, so it fails narrowly; STAR +0.14 and ABCD +0.22.
+  - e80, the customer's last 3 utterances (2d-b, view B + xcrecent; frozen 2026-10-20, run 2026-10-25 under a dated
+    note): STAR -0.40 against a bar of +0.5, so not taken; ABCD -0.11 (bar -0.5, holds); MultiWOZ +1.62 at best-dev
+    but -1.18 at the final epoch (one seed, no rule). Tested at view B's s 16 only (docs/results.md, e80).
   - R24 returns only if a later stack passes the same -1.0 gate on fresh dev runs.
 - **Update 2026-10-23: on test, with the negative-class rule, the network-free agents are within the registered margin (R24, registered, MultiWOZ test's 1st use).** With
   random negatives for all three agents (Part 21) and each agent's s by e77's rule (e85: s 8 for all):
@@ -381,7 +384,7 @@ The question: can the whole agent run with no neural network at run time, once t
   - the negative-sampling rule. It is "hardest" in every run, while near-duplicate labels are the main losses, such as
     "general-bye" against "general-bye+general-welcome";
   - clause dropout;
-  - the literal budget.
+  - the literal budget (e83's arm was dropped, Part 21; it is the question of e87 Part B, which has not run).
 
 ### Part 21. The negative-class rule: random negatives lift the MultiWOZ reader but cost STAR and ABCD (e83, dev only)
 
@@ -389,7 +392,8 @@ The question: can the whole agent run with no neural network at run time, once t
   - the negative class drawn uniformly at random, instead of the "hardest" competitor used in every run so far;
   - a 50/50 mix of the two;
   - clause dropout 0.5.
-  - The literal-budget arm could not run: the exact budget is unsupported in tm.py's chunked update. A note frozen
+  - The literal-budget arm did not run. tm.py's own chunked update raises for the exact budget, and the arm did not
+    use src/dl/tm_chunkbudget.py, which keeps the exact budget in the chunked update (added 2026-10-17). A note frozen
     before any row was read dropped it.
 - **Result** (random negatives; 16k, 2 seeds):
   - C1 met: +4.23 at best-dev, +5.98 on the last-10 mean.
@@ -414,9 +418,19 @@ The question: can the whole agent run with no neural network at run time, once t
   -0.79], refined -2.49 [-3.33, -1.64], bge-large -1.89 [-2.69, -1.10] (LR's C at the grid's edge for the C4 and
   refined bits; e81x found C 0.001 LR's best on dev). Random negatives narrowed the dev gap from about -5 to about -1,
   but on test it is 1.6 to 2.5 points.
-  - Next (e86, dev, frozen 2026-10-23T00:58:18Z): clause dropout 0.5 on top, for the C4 agent on all three
-    datasets, and random negatives with dropout as one setting for all three. It was stopped after 8 of its 14 dev
-    runs, before its analysis (docs/results.md, e86 and e87).
+  - e86 (dev, frozen 2026-10-23T00:58:18Z; finished 2026-10-25 under a dated note): **dead end at its settings.**
+    Clause dropout 0.5 on top of the C4 agent is kept on no dataset (dropout cell minus reference at best-dev /
+    last-10: MultiWOZ -0.43 / -0.41, STAR -0.75 / -1.00, ABCD -1.03 / -1.29; the bar was +0.5 on both), and random
+    negatives with dropout as one setting for all three fails (STAR -19.69, ABCD -8.44 against each dataset's best
+    setting). Dropout stays off, and the negative-sampling rule stays per dataset. Limit: 7 of 10 dropout runs were
+    still rising at epoch 40, and T and s were not retuned for dropout, so this does not show that clause dropout
+    cannot help (docs/results.md, e86). TM minus LR on dev without dropout: MultiWOZ -0.86, STAR +0.04, ABCD +3.01.
+  - e87 Part B (dev, frozen 2026-10-23T01:55:38Z; run 2026-10-25 under a dated note, bar only): **short receipts
+    cost the agent its accuracy on MultiWOZ, STAR and ABCD** (the plan's line). With every clause at most 3 literals
+    (the exact budget in the chunked update; s, T and negatives not re-tuned), the agent's dev accuracy is more than
+    2.0 points below LR on the same bits on all nine runs (mean minus LR: MultiWOZ -2.81, STAR -3.92, ABCD -4.11). The
+    share of decisions readable from at most 3 such clauses reaches 0.90 only on MultiWOZ (0.94-0.96; STAR 0.70-0.77,
+    ABCD 0.76-0.85). The kill rule against L1-LR needs Part A, which has not run (docs/results.md, e87).
 
 ## Registered tests
 

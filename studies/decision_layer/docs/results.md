@@ -212,6 +212,12 @@ Registration `R2c_budget_trim_start.md` (frozen 2026-10-16T09:42:34Z); amendment
 - **R2c.1 (B minus A >= +3.0, interval above 0, both datasets): met.**
 - **R2c.2 (no clause over 32 literals): not met.** Banking77 seed 6 holds two clauses of 33 literals.
 - **R2c as registered: not met.**
+- **R2c.3 (reported separately; B minus C in each dataset, non-inferior if at least -0.5 points): not met** in both
+  datasets, -1.43 [-2.05, -0.80] (Banking77) and -5.19 [-6.50, -3.93] (HWU64). Read on 2026-10-25 from the output of
+  the registered rule check, `results/confirm/R2c/rules_R2c.json` (written 2026-10-16 by `scripts/rules_check.py R2c`,
+  which applies the bar to the point estimate; `R2c.3_noninferior_to_C` is false for both datasets). No verdict was
+  recorded on this page at the time. The registration did not expect non-inferiority (on val, B was 1.3 and 3.4 points
+  below C).
 - **Cause, found afterwards:** the exact budget keeps the crossing literals whose random key is at least the k-th largest. Float32 keys from `torch.rand` on the GPU tie (20 million draws gave 14.2 million distinct values), and a tie at the k-th place keeps k + 1. Every overshoot in R2, R2c and R7b is exactly one literal. `src/dl/tm.py` now has an exact selection (`budget_select="rank"`, test `tests/test_budget_exact.py`); the re-run R2d (registered 11:33:29Z) repeats arm B with it.
 - Reported with no rule: in B the median clause holds 32 literals and 98.8 to 99.8% of the clauses hold exactly 32; 95.3% (Banking77) and 99.3% (HWU64) are negation-only (A: 21% and 30%). Calibration error after one temperature falls on Banking77 (0.040 to 0.015) and rises on HWU64 (0.069 to 0.121; seeds 6, 8 and 10 reach 0.14, 0.19 and 0.26). The A and B folders also hold a logistic regression on the raw MiniLM embedding, a by-product of `confirm_router.py` that no rule uses.
 - **Reading:** on three datasets the budget lifts the word router by 4 to 6 points (CLINC150 +5.86 in R2). It matches LR on the same bits only on CLINC150; on Banking77 and HWU64 it stays 1.4 and 5.2 points below.
@@ -252,6 +258,8 @@ Registration `R2d_R7c_exact_budget_reruns.md` (frozen 2026-10-16T11:33:29Z); ame
 | HWU64 | 0.7465 | 0.7861 | 0.8392 | **+3.96 [+2.69, +5.27]** | -5.32 [-6.62, -4.05] | 32 |
 
 - **R2c.1: met in both datasets. R2c.2: met** (no clause of the 20 models holds more than 32 literals; all ran with `budget_select="rank"`). **R2d: met.**
+- R2c.3 again, reported separately: not met in both datasets, -1.34 [-1.95, -0.72] and -5.32 [-6.62, -4.05] (read on
+  2026-10-25 from `results/confirm/R2d/rules_R2d.json`, written 2026-10-16; no verdict was recorded here at the time).
 - What R2d adds: it checks the length fix, not the accuracy gain again. Only 4 of the 20 runs met a tie (Banking77 seeds 2, 6, 8; HWU64 seed 1); the other 16 models are bit-identical to R2c's. Banking77 seed 6, the seed with the 33-literal clauses, is one of the 4, which supports the tie explanation.
 - Calibration error after one temperature, as in R2c: Banking77 falls (0.040 to 0.016), HWU64 rises (0.069 to 0.120; 5 of 10 seeds above 0.10).
 - With R2 (CLINC150, +5.86, its accuracy rule met; R2 itself was not re-run), the literal budget lifts the word router by 4 to 6 points on all three datasets. Its limits are unchanged: 95% and 99% of the bounded clauses are negation-only, so the blacklists of Part 1 become short blacklists, and the TM stays below LR on the same bits on Banking77 and HWU64.
@@ -1393,12 +1401,12 @@ of these numbers is directly comparable to this study's**, and none is claimed a
   (CoDial, AnyTOD, TOD-Flow). The closest Tsetlin machine prior art is text classification (Findings of ACL 2026, arXiv
   2604.12223).
 
-## e77: a third dataset, MultiWOZ 2.2 (dev only; frozen plan; R24 waits at its gate)
+## e77: a third dataset, MultiWOZ 2.2 (dev only; frozen plan; its gate led to R24)
 
 Plan `logs/plan_e77_multiwoz_dev.md` (frozen 2026-10-19T21:43:42Z, 6410ca23; scope `logs/plan_e77_third_dataset_scope.md`);
 dated note `logs/plan_e77_note_2026-10-20.md` (the R24 gate, fixed at 18:51 UTC before any 16k number, and
 its outcome). MultiWOZ 2.2 (MIT): one example per system turn; the label is the turn's sorted domain-act set (128
-labels; OTHER for combinations under 20 train turns); majority label 7.16% on dev. Test split: unread.
+labels; OTHER for combinations under 20 train turns); majority label 7.16% on dev. Test split: unread by e77; R24 read it later (its 1st use; section R24).
 
 | MultiWOZ dev, seed 1 | 4k s 8 | 4k s 12 | 4k s 16 | 4k s 24 | 16k s 8 | 16k s 24 | s* |
 |---|---|---|---|---|---|---|---|
@@ -1460,7 +1468,8 @@ text-understanding line (project notes, not published; f8f552fd). The code was r
 - **Limit** (noted at 20:51 UTC): it was tested at view B's tuned s 16, as the stacking rule says. A
   view-specific s was not tried, and N8/N9 showed that a block can look worse at another view's s. So 2d-a is checked
   again only at the next milestone's re-tuning, labelled as such.
-- **Next** under the same rule: 2d-b (view B + xcrecent, the customer's last 3 utterances).
+- **Next** under the same rule: 2d-b (view B + xcrecent, the customer's last 3 utterances). It ran as e80 on
+  2026-10-25 and is not taken (section e80).
 
 ## e79: view A+B on the C4 table, prototype parts from C4 mean vectors (dev; frozen plan; not taken, narrowly)
 
@@ -1483,6 +1492,52 @@ additions made before the freeze; dated note `logs/plan_e79_note_2026-10-20.md`.
 - **Not taken** (`logs/e79_check.out`, 43 checks ok). The view helps on all three datasets but misses the fixed
   MultiWOZ bar by 0.05. That is reported as it is, and the bar is not moved after the fact.
 - The MultiWOZ gap to the tuned bge-large agent (0.3359) would still be about -2.1, well below R24's -1.0 gate.
+
+## e80: view B plus the customer's last 3 utterances (dev only; frozen plan): not taken
+
+Plan `logs/plan_e80_2d_recent.md` (frozen 2026-10-20T20:53:40Z, d045ad4a, record 47dd4cba): the text stack's step 2d-b
+in the agent, view B plus `xcrecent` against view B, on STAR and ABCD dev (taken only if STAR is at least +0.5 and ABCD
+no worse than -0.5, means of seeds 1 and 2), MultiWOZ reported with no rule.
+- It was deferred on 2026-10-21, when the GPU order put it last, after R3, the text line's step 3c and e82 (research
+  log, project notes).
+- **The dated note** (`logs/plan_e80_note_2026-10-25.md`, frozen 2026-10-25T15:10:31Z, before any e80 row) runs the
+  five frozen jobs unchanged (`logs/jobs_e80.txt`), after a dry run with its own check, and adds a report of readings
+  with no rule (`scripts/e80_report.py`).
+- **How it ran** (the finish pass's queue log, local): the dry run from 19:12:00Z to 19:16:40Z on 2026-10-25, ending
+  "all dry checks passed" (`logs/e80_dry_check.out`); the five jobs from 19:18:11Z to 21:01:38Z (`logs/e80_queue.log`),
+  each on its first try; then the plan's check (`logs/e80_check.out`) and the readings (`logs/e80_report.out`); exit 0
+  at 21:01:49Z.
+- **Result** (best-dev accuracy, seeds 1 / 2 and their mean; the rule's statistic):
+
+| Dataset | View B (reference rows) | View B + xcrecent | Difference (points) | Needs | Condition |
+|---|---|---|---|---|---|
+| STAR (16k, s 16, hardest negatives) | 0.6545 / 0.6579 (0.6562) | 0.6543 / 0.6501 (0.6522) | -0.40 | at least +0.5 | fails |
+| ABCD (4k, s 16, hardest negatives) | 0.8417 / 0.8423 (0.8420) | 0.8398 / 0.8420 (0.8409) | -0.11 | at least -0.5 | holds |
+
+  - **The rule: not taken** at view B's tuned s 16, mean of seeds 1-2; a view-specific s was not tried. It is a
+    measured failure of 2d-b in the agent at this setting. It does not show that xcrecent adds nothing. The note
+    estimates that the rule passes a true STAR +0.7 about 80% of the time (from a reviewer's standard deviation; not
+    checked).
+  - The plan's follow-ups for a taken rule (e80-R3, the re-tuning of s, and R5, the guards on the new view) are not
+    reached.
+- **Beside it, no rule** (`scripts/e80_report.py`): at the final epoch STAR -0.64 and ABCD -0.11; over the last 10
+  evaluations STAR -0.22 and ABCD -0.11. MultiWOZ (16k, s 8, the frozen hardest negatives, seed 1 only): +1.62 at
+  best-dev, -1.18 at the final epoch, +0.61 over the last 10. With one seed and a sign that changes between the
+  readings, this is no evidence either way. The random negatives that later work found better on MultiWOZ (e83, e84)
+  were not used, because the job lines are the frozen ones.
+  - The plan's checker prints the MultiWOZ line as "view B + xcustn" (and its docstring says xcustn): a label left from
+    e78. The row it reads is view B + xcrecent, as the settings line above it in the same output shows.
+  - The R4 protocol's breakdown (first and later actions, per-label lines) was not run: `scripts/e77_breakdown.py`
+    reads one row per tag, and each e80 candidate tag holds two seeds.
+- **Checks.** An independent recompute (finish-pass notes, not published), written from the plan's text without the
+  checker's or the report's code, rebuilds every best-dev value from the rows' 20-evaluation histories. It gives the
+  same ten rows, differences, readings and rule outcome. The note and the 47 files it pins are unchanged since its
+  freeze. The dev bits could not be rebuilt to rescore the saved models in this pass, because the view is built on
+  the GPU and the queue held it. The review by leakage, selection and registration, and integrity (judged by an AI
+  model, not a person) found no blocker.
+- **Limits.** Dev only; two seeds; selection is optimistic (each row's accuracy is the best of 20 dev evaluations on
+  the dev split the rule reads); s was not re-tuned for the new view; no multiplicity correction (one rule with two
+  conditions; MultiWOZ is a reading; no superiority claim).
 
 ## e82: the agent on the teacher-refined table (the text stack's 3a): R4, the s re-tune, the go-bars (dev only; frozen plan; no registered test by its rule)
 
@@ -1641,7 +1696,9 @@ declares e81x post hoc, before any e81 number.
 Plan `logs/plan_e83_learning_dynamics.md` (frozen 2026-10-21T14:36:33Z, 5ddfe717, record e16f0f52). Note
 `logs/plan_e83_note_2026-10-21.md` (frozen 15:09:42Z, b78b0018) drops the L8 arm before any screen row was read.
 - **Why L8 was dropped:** tm.py's chunked update raises NotImplementedError for an exact literal budget, and every
-  MultiWOZ view-B run at 4,000 clauses uses that update. L8 was not run.
+  MultiWOZ view-B run at 4,000 clauses uses that update. L8 was not run. (Correction of 2026-10-25: this holds for
+  tm.py alone. src/dl/tm_chunkbudget.py, added 2026-10-17, keeps the exact budget in the chunked update; e83's jobs
+  did not use it.)
 - **Data:** no test split was read.
 - **The arms:** the refined agent (a3B table, view B) on MultiWOZ dev. Every arm went through `scripts/knob_run.py`,
   which saves its dev predictions.
@@ -1819,16 +1876,108 @@ Registration `registrations/R24_multiwoz_random_negatives.md` (frozen 2026-10-22
   - rev 0's hash b19d8c4a is of its 2026-10-21T03:51Z edit;
   - draft 3cb1dff2 (19:39Z) is missing from its draft history.
 
-## e86 and e87: stopped before their analyses (dev only; frozen plans)
+## e86 and e87 (dev only; frozen plans)
 
-- **e86** (`logs/plan_e86_clause_drop.md`, frozen 2026-10-23T00:58:18Z): clause dropout 0.5 for the C4 agent on
-  MultiWOZ, STAR and ABCD dev, and random negatives with dropout as one negative-sampling setting for all three. The
-  dry runs passed, and the queue of 14 dev jobs started at 01:14:51Z. Eight jobs ended with exit 0: two MultiWOZ runs
-  (random negatives with dropout, seeds 1 and 2) and six ABCD runs (the reference, dropout, and random negatives with
-  dropout, seeds 1 and 2 each). The chain was stopped at 02:26:38Z during the ninth job, the first STAR run
-  (`logs/e86_queue.log`, `logs/e86_end.log`; run logs, local). The plan's check and report were not run, so e86 has no
-  result, and no number from its runs is used on this page or elsewhere.
+### e86: clause dropout 0.5 for the C4 agent, and one negative-sampling setting: not kept anywhere; a dead end at its settings
+
+- **The plan** (`logs/plan_e86_clause_drop.md`, frozen 2026-10-23T00:58:18Z): clause dropout 0.5 for the C4 agent (no
+  neural network at any stage) on MultiWOZ (random negatives, 16k, s 8), STAR (hardest, 16k, s 16) and ABCD (hardest,
+  4k, s 16) dev, and random negatives with dropout as one negative-sampling setting for all three; seeds 1-2; 40
+  epochs; the rules fixed before any e86 row. No test split was read. (The C4 table itself was built from C4 text
+  filtered against ABCD and STAR dev and test turns, by text only and with no labels; this holds for every C4 row.)
+- **How it ran.** The queue of 14 dev jobs started at 01:14:51Z on 2026-10-23; jobs 1-8 (MultiWOZ and ABCD) ended
+  with exit 0. The queue was ended at 02:26:38Z by a signal during the first STAR job (`logs/e86_chain.log`, local,
+  ends in "Terminated", although `logs/e86_end.log` says "exit 0"), after that job had written its row and before it
+  wrote its predictions file. A dated note (`logs/plan_e86_note_2026-10-25.md`, frozen 2026-10-25T10:52:22Z, before
+  any STAR dropout number existed) ran the six STAR job lines again, byte for byte (`logs/jobs_e86_star.txt`), from
+  10:53:53Z to 12:50:51Z (`logs/e86_star_queue.log`), and changed the checker in one point: a STAR row written before
+  the note's freeze is set aside and printed, and exactly one row written after it is used (`tests/test_e86_check.py`,
+  four added cases, passed). The frozen checker run on the rows without the set-aside row prints the same output. The
+  code on the job path is unchanged in behaviour since the plan's freeze (the files edited for publication on
+  2026-10-23 have the same code once docstrings and comments are removed). Correction to the note: its line "read
+  2026-10-25T10:53Z" for the chain hashes is wrong; they were read at 10:51:32Z (the time of the chain test's output
+  file, written in the same command), before the freeze at 10:52:22Z. The hashes themselves are right.
+- **Path checks (no rule):** the fresh STAR and ABCD references' seed 1 equal R22's and R23's seed-1 dev rows exactly
+  (0.6545 and 0.8417, difference +0.00), and the STAR job run again gives the same accuracy and the same 20-evaluation
+  history as the row of the stopped attempt.
+- **Result** (`logs/e86_check.out`; means of seeds 1-2 in points, best-dev / last-10 mean; the keep rule needs at least
+  +0.5 on both; the final-epoch difference is given beside, with no rule):
+
+| Dataset | Reference: best-dev / final / last-10 | Dropout cell minus reference: best-dev / last-10 (final) | Kept | Random + dropout minus the best setting (E86.3, needs >= -0.5) |
+|---|---|---|---|---|
+| MultiWOZ (random negatives) | 0.3500 / 0.3451 / 0.3431 | -0.43 / -0.41 (+0.03) | no | -0.43 / -0.41 (the dropout cell itself): holds |
+| STAR (hardest) | 0.6562 / 0.6540 / 0.6507 | -0.75 / -1.00 (-0.68) | no | -19.69 / -20.75: fails |
+| ABCD (hardest) | 0.8420 / 0.8373 / 0.8367 | -1.03 / -1.29 (-0.56) | no | -8.44 / -9.68: fails |
+
+  - E86.1 (dropout kept on all three datasets): **not met**; it is kept on none. E86.3 (random negatives with dropout
+    as one setting for all three): **not met**.
+  - By the plan's rule, e86 is closed as negative (FAILURE_MAP.md): dropout stays off for later C4 dev work on all
+    three datasets, and the negative-sampling rule stays per dataset (random on MultiWOZ, hardest on STAR and ABCD).
+  - **What the dead end covers:** dropout 0.5 at the plan's frozen settings. 7 of the 10 dropout runs had their best
+    dev score at the last evaluation (epoch 40), against 1 of the 6 reference runs, so the dropout cells were still
+    rising when training stopped. T and s were not retuned for dropout: the dropped clauses leave the class sums in
+    training while T stays at the full clause count (`src/dl/tm.py`, lines 180-197). On MultiWOZ the final-epoch
+    difference is +0.03, so there the reading is "no gain", not a loss. It does not show that clause dropout cannot
+    help the agent.
+  - The two seeds of the MultiWOZ dropout cell have the same best-dev accuracy, 0.34569914, with different histories
+    and predictions (they differ on 1,548 of 7,359 turns), so this is a tie, not a duplicated run.
+- **Beside it, no rule:** TM minus LR on the same bits at best-dev (the LR dev rows the plan names): MultiWOZ reference
+  -0.86, dropout -1.29; STAR reference +0.04, dropout -0.70, random + dropout -19.65; ABCD reference +3.01, dropout
+  +1.98, random + dropout -5.43.
+- **Checks.** An independent recompute from the rows and the prediction files, written from the plan text, gives the
+  same cells, differences and rule outcomes; a dialogue-level bootstrap there (post hoc, no rule; it leaves out the
+  variation between seeds and the best-epoch choice) is not used for any reading. The three-part review (leakage,
+  selection and registration, integrity; judged by an AI model, not a person) found no blocker; its one major point is
+  the limit stated above.
+- **Limits.** Two seeds per cell; on dev the +0.5 bar is about 1.5 standard deviations of a difference; best-dev is
+  the best of 20 evaluations on the dev split it reports, which favours the references here; the question and the
+  dropout rate came from earlier looks at MultiWOZ dev (R24's test gaps, e83); on STAR and ABCD the random + dropout
+  cells use s 16, tuned under hardest negatives.
+
+### e87 Part B: short receipts cost the agent its accuracy on all three datasets; Part A and the kill rule not run
+
 - **e87** (`logs/plan_e87_receipts.md`, frozen 2026-10-23T01:55:38Z): how short the receipts behind the C4 agent's dev
-  decisions are, and what short rules cost, against LR and L1-LR on the same bits. Its two chains started at 01:55:53Z,
-  waited for the e86 queue to end, and were stopped at 02:26:38Z before any run (`logs/e87_a0_end.log`,
+  decisions are, and what short rules cost, against LR and L1-LR on the same bits. Its two chains started at 01:55:53Z
+  on 2026-10-23, waited for the e86 queue to end, and were ended at 02:26:38Z before any run (`logs/e87_a0_end.log`,
   `logs/e87_a_end.log`; run logs, local).
+- **The dated note** (`logs/plan_e87_note_2026-10-25.md`, frozen 2026-10-25T15:10:31Z, before any e87 number) runs A0
+  and Part B's bar only. Part A (L1-LR's grid, about 330 CPU-hours by an extrapolation not checked at full size) and
+  with it the kill rule are left for a later pass. The note amends Part B's cells: the exact budget of 3 literals inside
+  the chunked update with the trim start, not the plan's tmu with the half start. s, T and the negative rule are the
+  unbudgeted agent's, not re-tuned for the budget: MultiWOZ 16k, T 16,000, s 8, random negatives; STAR 16k, T 16,000,
+  s 16, hardest; ABCD 4k, T 4,000, s 16, hardest. 40 epochs, seeds 1-3, the best-dev snapshot.
+- **How it ran** (the finish pass's queue log, local): A0 from 15:23:07Z to 15:27:25Z, exit 0; the dry run from
+  15:28:05Z to 15:40:30Z, ending "all dry checks passed" (`logs/e87b_dry_check.out`); the nine jobs and then the bar
+  check (`scripts/e87b_check.py --bar-only`; `logs/e87b_bar.out`, `results/explore/e87/partb_bar.json`) from 15:41:10Z
+  to 19:11:20Z, exit 0. No job started twice.
+- **The bar** (the plan's, per dataset): on at least 2 of 3 seeds, the pruned agent's dev accuracy is at least A0's L2
+  LR dev accuracy minus 2.0 points, and its S1 point (the share of dev decisions with a receipt of at most 3 clauses of
+  at most 3 literals) is at least 0.90.
+
+| Dataset | L2 LR dev (A0) / bound | Pruned dev accuracy, seeds 1 / 2 / 3 (mean) | S1 point, seeds 1 / 2 / 3 | Seeds meeting both | Bar |
+|---|---|---|---|---|---|
+| MultiWOZ | 0.3586 / 0.3386 | 0.3352 / 0.3288 / 0.3274 (0.3305) | 0.961 / 0.952 / 0.942 | 0 of 3 | not met |
+| STAR | 0.6558 / 0.6358 | 0.6162 / 0.6170 / 0.6167 (0.6166) | 0.697 / 0.766 / 0.709 | 0 of 3 | not met |
+| ABCD | 0.8119 / 0.7919 | 0.7652 / 0.7723 / 0.7750 (0.7708) | 0.804 / 0.762 / 0.849 | 0 of 3 | not met |
+
+  - By the plan, each bar not met gives the FAILURE_MAP line "short receipts cost the agent its accuracy on
+    <dataset>" (FAILURE_MAP.md). The accuracy condition fails on all nine runs (pruned mean minus LR: MultiWOZ -2.81,
+    STAR -3.92, ABCD -4.11 points; the bar allows -2.0). The coverage condition holds on MultiWOZ (3 of 3 seeds) and
+    fails on STAR and ABCD (0 of 3), so on MultiWOZ the cost is in the accuracy alone, on STAR and ABCD in both.
+  - **Not evaluated in this pass:** the kill rule (L1-LR at the same budget within 0.5 points of the pruned mean),
+    which needs Part A. The plan's second question (can the agent also stay clear of L1-LR at the same budget?) is
+    open, and no comparison of readability with LR exists.
+- **Beside it, no rule:** no clause has more than 3 literals (the exact budget), so the pruned and unpruned scores are
+  the same. Best-dev epochs: MultiWOZ 14, 30, 30; STAR 36, 36, 26; ABCD 26, 14, 28, so no run had its best evaluation
+  at epoch 40. STAR seed 1 repeats the dry run's full-size job at its first evaluation (epoch 2, the same dev
+  accuracy). e86's reference cells (the same s, T and negatives without the budget or the trim start, seeds 1-2,
+  best-dev: MultiWOZ 0.3500, STAR 0.6562, ABCD 0.8420) are about 2.0, 4.0 and 7.1 points above the budgeted means.
+- **Checks.** An independent recompute (finish-pass notes, not published), written from the plan's definitions and the
+  TM's inference rule (`src/dl/tm.py`) without the checker's code, gives the same LR accuracies, pruned accuracies, S1
+  points and bar outcomes for all nine runs. Its accuracies also equal the training rows, and the nine model files
+  match the sha256 in their run records. The note and the 41 files it pins are unchanged since its freeze. The review
+  by leakage, selection and registration, and integrity (judged by an AI model, not a person) found no blocker.
+- **Limits.** Dev only. Selection is optimistic on both sides: each model is the best of 20 dev evaluations on the dev
+  split the bar reads, and LR's C was picked on dev. The budgeted cells keep the unbudgeted agent's s, T and negative
+  rule, so this does not show that no setting with 3-literal clauses can meet the bar. Three seeds per dataset.
+

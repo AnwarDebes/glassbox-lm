@@ -23,6 +23,12 @@ Checks on every row: dataset, encoder, parts, dev bits, table, lex_k 1000, start
 and clause_drop as the cell's, the rest of the cfg as e84's; e86 rows written after e86's freeze and e84 rows after
 e84's; exactly one row per tag and seed; the preds file gives the dev labels, the history and the row's acc.
 Tested by tests/test_e86_check.py (made-up rows).
+
+Amendment of 2026-10-25 (dated note logs/plan_e86_note_2026-10-25.md, frozen before the six STAR jobs ran again):
+the e86 queue was stopped at 2026-10-23T02:26:38Z during its first STAR job, after that job had written its row and
+before it wrote its preds file. The six STAR jobs ran again after the note's freeze. For a STAR tag and seed, a row
+written at or before the note's freeze is set aside and printed (no rule), and the check needs exactly one row written
+after it. The note's freeze record must exist for the full check. Nothing else changes.
 """
 
 from __future__ import annotations
@@ -40,6 +46,8 @@ TABLE = "e1771d9eaf4a07f71c532fe4f3ef91909334cbdcb4d7785ff0bb7ed0e51c5c0a"
 BASE_CFG = {"n_states": 256, "epochs": 40, "batch_size": 128, "neg_sampling": "hardest", "negation": True, "max_literals": 0, "budget_mode": "exact",
             "max_negated": 0, "budget_select": "rank", "clause_drop": 0.0, "half": True, "eval_every": 2}
 E86, E84 = "plan_e86_clause_drop", "plan_e84_negatives_fair"
+NOTE = "plan_e86_note_2026-10-25"  # amendment: the STAR jobs ran again after the stop of 2026-10-23T02:26:38Z
+SET_ASIDE: list = []
 DS = {
     "multiwoz": {"clauses": 16000, "s": 8.0, "dev": "311e8933d2724bf8fc3ee1a5cef412010bd3a580c076217e3a964bcd286d68ba",
                  "lr": "dry_e77mwoz_lr_mem_c4", "earlier": None},
@@ -87,6 +95,9 @@ def labels(ds: str) -> np.ndarray:
 def get(rows: dict, frozen: dict, y: np.ndarray, ds: str, tag: str, seed: int, neg: str, drop: float, preds: str, rec: str,
         dry: bool = False) -> dict:
     got = rows.get((tag, seed), [])
+    if not dry and ds == "star":
+        SET_ASIDE.extend((tag, seed, r["time"], r["acc"]) for r in got if r["time"] <= frozen[NOTE])
+        got = [r for r in got if r["time"] > frozen[NOTE]]
     if len(got) != 1:
         raise SystemExit(f"{tag} seed {seed}: {len(got)} rows (need exactly 1)")
     d, g = got[0], DS[ds]
@@ -132,6 +143,10 @@ def main() -> None:
                 print(f"ok {t} seed 1: knobs neg_sampling {neg}, clause_drop {drop}; dev bits {d['bits_sha256']['dev'][:8]}; C4 table; preds file fits")
         print("all dry checks passed")
         return
+    note = ROOT / "logs" / f"{NOTE}.frozen.json"
+    if not note.exists():
+        raise SystemExit(f"{note.name} is missing: the STAR jobs of e86 run only after the dated note of 2026-10-25 is frozen")
+    frozen[NOTE] = json.loads(note.read_text())["frozen_utc"]
     res, lr = {}, {}
     for ds, cells in CELLS.items():
         y, g = labels(ds), DS[ds]
@@ -177,6 +192,10 @@ def main() -> None:
         print(f"  E86.3 {ds}: random + drop 0.5 minus the dataset's best setting ({NAME[best]}) best-dev {b:+.2f}, last-10 {l10:+.2f}"
               " (needs >= -0.5): " + ("holds" if one[-1] else "fails"))
     print("E86.3 (random + drop 0.5 as one setting for all three datasets): " + ("MET" if all(one) else "not met"))
+    for tag, seed, when, acc in SET_ASIDE:
+        after = [r for r in rows.get((tag, seed), []) if r["time"] > frozen[NOTE]]
+        print(f"Set aside (no rule; the queue stopped on 2026-10-23): {tag} seed {seed}, written {when}, acc {acc:.4f};"
+              f" the row written after the note: {after[0]['acc']:.4f}, difference {100 * (after[0]['acc'] - acc):+.2f}")
 
 
 if __name__ == "__main__":

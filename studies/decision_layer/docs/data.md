@@ -71,6 +71,28 @@ The models are loaded by hub id through `sentence-transformers`, and the two tok
 
 Beside the two file hashes, the R19 registration gives the SHA-256 of the potion table's array of floats (`5e33b584aad09dc4c80d8c8ece6dc98768af7a3f4fe3a0eabcf4895bba3e0487`), and it states that the table was distilled once, offline, from bge-base-en-v1.5 with Model2Vec.
 
+### What the local download cache shows (dated note of 2026-10-25)
+
+The Hugging Face cache of the machine is not a file of the study, so the tables above keep "not recorded" and "licence to be confirmed" by the conventions of this page. This note gives what that cache showed when it was read on 2026-10-25. For the encoders, the snapshot is the one that `refs/main` of the cache names; except for potion-base-32M, no file shows that a run loaded that snapshot, because `scripts/embed.py` passes no revision.
+
+| Model or dataset | Snapshot in the cache | Licence in the card of that snapshot |
+|---|---|---|
+| all-MiniLM-L6-v2 | `1110a243fdf4706b3f48f1d95db1a4f5529b4d41` | apache-2.0 |
+| all-mpnet-base-v2 | `e8c3b32edf5434bc2275fc9bab85f82640a19130` | apache-2.0 |
+| bge-base-en-v1.5 | `a5beb1e3e68b9ab74eb54cfd186867f64f240e1a` | mit |
+| bge-large-en-v1.5 | `d4aa6901d3a41ba39fb536a557fa166f842b0e09` | mit |
+| e5-large-v2 | `f169b11e22de13617baa190a028a32f3493550b6` | mit |
+| mxbai-embed-large-v1 | `b33106f585b9ce46904ad7443a3b52b7a63e231c` | apache-2.0 |
+| Qwen3-Embedding-0.6B | `97b0c614be4d77ee51c0cef4e5f07c00f9eb65b3` | apache-2.0 |
+| bge-m3 | `5617a9f61b028005a4858fdac845db406aefb181`; a second snapshot, `9a0624b896d81da7492a910ffa53731274b6cf3d`, holds no card | mit |
+| multilingual-e5-large | `3d7cfbdacd47fdda877c5cd8a79fbcc4f2a574f3` | mit |
+| potion-base-32M | `1e5a03f8eeb2c98b928fbbd846f22f816360919f`, the pinned revision | mit |
+| bert-base-uncased and roberta-base, tokenizers | `86b5e0934494bd15c9632b12f734a8a67f723594` and `e2da8e2f811d1448a5b465c236feacd80ffbac7b` | no card in the cache |
+| Banking77 | `f54121560de48f2852f90be299010d1d6dc612ec` of `legacy-datasets/banking77`; its two parquet files have the SHA-256 of `data/raw/banking77_train.parquet` and `data/raw/banking77_test.parquet` | no card in the cache |
+| HWU64 | `9fb5bff1e37c4c5a6d46c1ff6f286b6d3f362222` of `FastFit/hwu_64`; its three parquet files have the SHA-256 of `data/raw/hwu64_train.parquet`, `hwu64_val.parquet` and `hwu64_test.parquet` | no card in the cache |
+
+CLINC150, MASSIVE, ABCD, STAR and RouterBench have no copy in the cache, so the cache adds nothing for them.
+
 ## Word tables from C4
 
 Two static word tables were built outside the study and copied into `data/tables/`. Each folder holds `table.npz` (the words and their rows), `words.txt` and `vectors.npy` (the same words and rows as plain files), the reference tokenizer `tokenize_ref.py`, a README and `MANIFEST.sha256`. Their build code and records belong to the text-understanding line of the project and are in the project notes (not published). The study reads no C4 text itself.
