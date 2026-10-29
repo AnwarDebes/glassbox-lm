@@ -1,0 +1,5 @@
+ok both 4-seed gates hold (G-C4 at exactly -1.0)
+ok G-C4 does not hold at -1.5: the C4 arm leaves the R24 draft
+ok the last-10 reading has no rule (G-ref holds at -0.5 with last-10 -3.5)
+ok refusals: before the freeze, hardest negatives on an e84 row, other dev bits, two rows, a preds file off the acc
+PASSED

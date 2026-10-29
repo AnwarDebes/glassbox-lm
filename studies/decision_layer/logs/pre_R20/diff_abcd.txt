@@ -1,0 +1,70 @@
+--- logs/pre_R20/abcd.py	2026-10-17 20:50:45.405466586 +0000
++++ src/dl/abcd.py	2026-10-18 20:15:31.804384946 +0000
+@@ -143,6 +143,13 @@
+ # every part ABCDView knows, in the fixed order of its blocks (xcust and xrecent added 2026-10-17 for the
+ # no-network agent; before, an unknown part name was silently ignored)
+ PARTS = ("mem", "intent", "step", "words", "mem2", "fstep", "fwords", "xcust", "xrecent")
++# added 2026-10-18 for R20 (an agent that reads no human-agent text): two parts on the customer's last 3 utterances
++PARTS = PARTS + ("cwords", "xcrecent")
++
++
++def customer_recent(r: dict, n: int = RECENT_TURNS) -> str:
++    """The customer's last n utterances: the last n of the " | "-joined parts of ``r["cust"]`` (added 2026-10-18, R20)."""
++    return " | ".join(r["cust"].split(" | ")[-n:]) if r["cust"] else ""
+ 
+ 
+ class ABCDView:
+@@ -156,6 +163,8 @@
+     - ``xcust``, ``xrecent`` (no network at run time; src/dl/static_text.py): existsT bits of the
+       customer's words so far and of the last 3 turns, "some word of the <field> is close to concept k
+       at level j", a table lookup and a bitwise OR per text. Built only when asked for.
++    - ``cwords``, ``xcrecent`` (added 2026-10-18 for R20): the word bits and the existsT bits of the
++      customer's last 3 utterances only, so that a view can leave out everything the human agent wrote.
+     """
+ 
+     def __init__(self, parts=("mem", "intent", "step", "words"), lex_k: int = 1000, whiten: float = 0.001,
+@@ -178,6 +187,13 @@
+ 
+             self.xcust = ExistsT(seed=seed, what="customer's words so far") if "xcust" in parts else None
+             self.xrecent = ExistsT(seed=seed, what="last 3 turns") if "xrecent" in parts else None
++        # added 2026-10-18 for R20: the customer's last 3 utterances (customer_recent), words and existsT bits
++        self.clex = Lex(lex_k) if "cwords" in parts else None
++        self.xcrecent = None
++        if "xcrecent" in parts:
++            from dl.static_text import ExistsT
++
++            self.xcrecent = ExistsT(seed=seed, what="customer's last 3 utterances")
+ 
+     def fit(self, rows: list[dict], emb: dict, buttons_: list[str]) -> "ABCDView":
+         self.buttons = buttons_
+@@ -211,11 +227,19 @@
+         if self.xrecent is not None:
+             self.xrecent.fit([r["recent"] for r in rows])
+             names += self.xrecent.names
++        if self.clex is not None:
++            self.clex.fit(None, texts=[customer_recent(r) for r in rows])
++            names += [n.replace("contains", "customer's last 3 utterances contain") for n in self.clex.names]
++        if self.xcrecent is not None:
++            self.xcrecent.fit([customer_recent(r) for r in rows])
++            names += self.xcrecent.names
+         self.names = names
+         return self
+ 
+     def static_info(self) -> dict:
+         """Provenance of the no-network parts (concept, threshold and code hashes), empty without them."""
++        if getattr(self, "xcrecent", None) is not None:  # added 2026-10-18 for R20
++            return {k: v.info for k, v in (("xcust", self.xcust), ("xrecent", self.xrecent), ("xcrecent", self.xcrecent)) if v is not None}
+         return {k: v.info for k, v in (("xcust", self.xcust), ("xrecent", self.xrecent)) if v is not None}
+ 
+     def transform(self, rows: list[dict], emb: dict) -> np.ndarray:
+@@ -243,6 +267,10 @@
+             blocks.append(self.xcust.transform([r["cust"] for r in rows]))
+         if self.xrecent is not None:
+             blocks.append(self.xrecent.transform([r["recent"] for r in rows]))
++        if self.clex is not None:
++            blocks.append(self.clex.transform(None, texts=[customer_recent(r) for r in rows]))
++        if self.xcrecent is not None:
++            blocks.append(self.xcrecent.transform([customer_recent(r) for r in rows]))
+         return np.concatenate(blocks, 1).astype(np.uint8)
+ 
+ 

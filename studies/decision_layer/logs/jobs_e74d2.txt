@@ -1,0 +1,2 @@
+# e74d2 (plan logs/plan_e74cd.md): the follow-up of the pick s 16. Written by scripts/e74_pick2.py.
+HF_HUB_OFFLINE=1 OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 RAYON_NUM_THREADS=2 DL_GPU_FRAC=0.25 .venv-dl/bin/python scripts/abcd_explore.py --dataset star --encoder bge-large --parts mem,intent,step,words --arms tm --seed 1 --clauses 16000 --s 16 --save --tag e74d_star_bge_c16000_s16 >> logs/e74d_star_bge_c16000_s16.log 2>&1

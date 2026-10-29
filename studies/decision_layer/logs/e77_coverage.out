@@ -1,0 +1,5 @@
+multiwoz train cust    tokens  3,727,278  no vector 0.35%  texts with a drop 19.4%  texts with no known token 0  top: broxbourne, stortford, gastropub, gonville, addenbrookes, warkworth, cityroomz, allenbell, shaddai, lensfield
+multiwoz train recent  tokens  2,677,635  no vector 1.10%  texts with a drop 38.3%  texts with no known token 0  top: broxbourne, stortford, gonville, 01223, addenbrookes, allenbell, lensfield, gastropub, ditton, cityroomz
+multiwoz dev   cust    tokens    509,092  no vector 0.40%  texts with a drop 22.8%  texts with no known token 0  top: stortford, broxbourne, gastropub, allenbell, shaddai, alimentum, cityroomz, ballare, panasian, lensfield
+multiwoz dev   recent  tokens    359,129  no vector 1.10%  texts with a drop 40.0%  texts with no known token 0  top: stortford, broxbourne, allenbell, lensfield, gonville, cityroomz, shaddai, cotto, warkworth, hobsons
+port check: 0 mismatches on 127,880 texts; 9.0 s; wrote results/explore/count_table_coverage_multiwoz.json

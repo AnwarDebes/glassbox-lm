@@ -1,0 +1,3 @@
+64 {"max_abs_logit_diff": 6.666809566624465e-06, "argmax_equal": 500, "rows": 500, "winner_own_feasible": 50, "winner_other_infeasible": 50, "winner_rows": 50, "winner_max_seconds": 0.48}
+128 {"max_abs_logit_diff": 4.3997673895290745e-06, "argmax_equal": 500, "rows": 500, "winner_own_feasible": 50, "winner_other_infeasible": 50, "winner_rows": 50, "winner_max_seconds": 0.8}
+512 {"max_abs_logit_diff": 5.394149056314745e-06, "argmax_equal": 500, "rows": 500, "winner_own_feasible": 50, "winner_other_infeasible": 50, "winner_rows": 50, "winner_max_seconds": 3.55}

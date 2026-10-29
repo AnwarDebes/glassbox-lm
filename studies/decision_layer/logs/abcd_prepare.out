@@ -1,0 +1,15 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+train 29190 examples written
+dev 3684 examples written
+test 3608 examples written
+Loading weights:   0%|          | 0/391 [00:00<?, ?it/s]Loading weights:   6%|▌         | 22/391 [00:00<00:01, 219.36it/s]Loading weights:  12%|█▏        | 46/391 [00:00<00:01, 229.47it/s]Loading weights:  18%|█▊        | 69/391 [00:00<00:01, 225.54it/s]Loading weights:  24%|██▎       | 92/391 [00:00<00:01, 176.01it/s]Loading weights:  28%|██▊       | 111/391 [00:00<00:01, 175.58it/s]Loading weights:  33%|███▎      | 130/391 [00:00<00:01, 158.57it/s]Loading weights:  38%|███▊      | 147/391 [00:00<00:01, 135.55it/s]Loading weights:  41%|████▏     | 162/391 [00:01<00:01, 133.31it/s]Loading weights:  48%|████▊     | 189/391 [00:01<00:01, 160.52it/s]Loading weights:  53%|█████▎    | 206/391 [00:01<00:01, 147.85it/s]Loading weights:  57%|█████▋    | 224/391 [00:01<00:01, 152.61it/s]Loading weights:  61%|██████▏   | 240/391 [00:01<00:00, 153.23it/s]Loading weights:  66%|██████▌   | 258/391 [00:01<00:00, 142.25it/s]Loading weights:  70%|██████▉   | 273/391 [00:01<00:00, 138.71it/s]Loading weights:  74%|███████▍  | 291/391 [00:01<00:00, 136.50it/s]Loading weights:  79%|███████▉  | 309/391 [00:01<00:00, 145.65it/s]Loading weights:  85%|████████▍ | 331/391 [00:02<00:00, 158.77it/s]Loading weights: 100%|██████████| 391/391 [00:02<00:00, 178.75it/s]
+bge-large train cust 29190 texts, 21595 unique 73s
+bge-large train recent 29190 texts, 22835 unique 128s
+bge-large train full 29190 texts, 29186 unique 507s
+bge-large dev cust 3684 texts, 2749 unique 520s
+bge-large dev recent 3684 texts, 2955 unique 529s
+bge-large dev full 3684 texts, 3684 unique 568s
+bge-large test cust 3608 texts, 2694 unique 580s
+bge-large test recent 3608 texts, 2897 unique 590s
+bge-large test full 3608 texts, 3608 unique 627s
+{"encoder": "bge-large", "hf_id": "BAAI/bge-large-en-v1.5", "prefix": "", "max_seq_length": 512, "fields": ["cust", "recent", "full"], "normalized": true, "encode_seconds": 627.3, "sources": {"abcd_v1.1.json.gz": "2bdf53ac359543dcdc38d55bc6513e78df120363f8f44870716e909f4606de15", "ontology.json": "2e1c1d763518ba084ada7f7bc8b54f0b489c81da3b170875cf9340891e06524c", "guidelines.json": "9264557941df24fe075138a632a2345172971573124a354ccb2ceee2a12e4c2a"}}

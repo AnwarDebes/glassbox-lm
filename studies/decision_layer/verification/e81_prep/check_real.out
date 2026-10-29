@@ -1,0 +1,10 @@
+a3B  star     bits 5d3cd86e LR None
+a3B  abcd     bits 3222f78c LR None
+a3B  multiwoz bits 612b8f0b LR 0.3643
+bge  star     bits 65b2bb54 LR None
+bge  abcd     bits f5d86956 LR None
+bge  multiwoz bits b068b647 LR None
+C4   star     bits 3fc00b17 LR 0.6558
+C4   abcd     bits 56297e10 LR 0.8119
+C4   multiwoz bits 311e8933 LR 0.3586
+24 reference row reads passed every check; B2 constants equal the rows; B2 today -5.354, bar -2.677

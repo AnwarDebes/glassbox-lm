@@ -1,0 +1,170 @@
+ok  s* from logs/e85_pick_final.out: refined s 8, bge-large s 8, C4 s 8
+ok  dev row e83_multiwoz_a3B_c16000_s8_nrand seed 1: exactly one
+ok  dev row e84_multiwoz_C4_c16000_s8_nrand seed 1: exactly one
+ok  dev row e84_multiwoz_bge_c16000_s8_nrand seed 1: exactly one
+ok  registration text unchanged (4d675dde55a15860)
+ok  on R24's path, unchanged: scripts/knob_run.py (113cb74e)
+ok  on R24's path, unchanged: scripts/newtable_run.py (f98ce98e)
+ok  on R24's path, unchanged: scripts/table_run.py (0af00bd5)
+ok  on R24's path, unchanged: scripts/abcd_confirm.py (8c86665a)
+ok  on R24's path, unchanged: scripts/report_abcd.py (7d0ca5ca)
+ok  on R24's path, unchanged: scripts/seq_queue.sh (ca41d918)
+ok  on R24's path, unchanged: src/dl/count_text.py (5f201106)
+ok  on R24's path, unchanged: src/dl/static_text.py (ec89f28c)
+ok  on R24's path, unchanged: src/dl/abcd.py (a66c0c63)
+ok  on R24's path, unchanged: src/dl/tm.py (f649043f)
+ok  on R24's path, unchanged: src/dl/tm_init.py (557ff697)
+ok  on R24's path, unchanged: src/dl/boolean.py (b5f5917f)
+ok  on R24's path, unchanged: src/dl/linear.py (e3ef06b9)
+ok  other changes since the freeze: []
+ok  logs/jobs_R24.txt is e85_pick.py's r24_jobs at s*, line for line
+ok  seed files are exactly the 18 jobs of logs/jobs_R24.txt
+ok  data/multiwoz/examples_test.json.gz written after the freeze
+ok  examples_test uses train's label list
+ok  the bge-large dev-stage file has its frozen hash (324f6d62)
+ok  the bge-large file's 6 train/dev arrays equal the dev-stage file's (provenance aside)
+ok  R24mwoz/tm_mem_ref_nrand/seed1: registration, name, seed
+ok  R24mwoz/tm_mem_ref_nrand/seed1: encoder none, parts, random negatives
+ok  R24mwoz/tm_mem_ref_nrand/seed1: init half, as e83_multiwoz_a3B_c16000_s8_nrand
+ok  R24mwoz/tm_mem_ref_nrand/seed1: the arm's table (4a1ed2ae)
+ok  R24mwoz/tm_mem_ref_nrand/seed1: cfg equals e83_multiwoz_a3B_c16000_s8_nrand's but the seed
+ok  R24mwoz/tm_mem_ref_nrand/seed1: written 2026-10-22T20:58:56Z, after the freeze
+ok  R24mwoz/tm_mem_ref_nrand/seed1: train/dev bits equal the dry run's and the dev row's
+ok  R24mwoz/tm_mem_ref_nrand/seed1: dev accuracy 0.349776 equals e83_multiwoz_a3B_c16000_s8_nrand's exactly
+ok  R24mwoz/tm_mem_ref_nrand/seed1: npz gives the json's test accuracy
+ok  R24mwoz/tm_mem_ref_nrand/seed1: test rows equal the other arms' (y, convo_id, k, w_bert, w_roberta)
+ok  R24mwoz/tm_mem_ref_nrand/seed2: registration, name, seed
+ok  R24mwoz/tm_mem_ref_nrand/seed2: encoder none, parts, random negatives
+ok  R24mwoz/tm_mem_ref_nrand/seed2: init half, as e83_multiwoz_a3B_c16000_s8_nrand
+ok  R24mwoz/tm_mem_ref_nrand/seed2: the arm's table (4a1ed2ae)
+ok  R24mwoz/tm_mem_ref_nrand/seed2: cfg equals e83_multiwoz_a3B_c16000_s8_nrand's but the seed
+ok  R24mwoz/tm_mem_ref_nrand/seed2: written 2026-10-22T21:19:31Z, after the freeze
+ok  R24mwoz/tm_mem_ref_nrand/seed2: train/dev bits equal the dry run's and the dev row's
+ok  R24mwoz/tm_mem_ref_nrand/seed2: npz gives the json's test accuracy
+ok  R24mwoz/tm_mem_ref_nrand/seed2: test rows equal the other arms' (y, convo_id, k, w_bert, w_roberta)
+ok  R24mwoz/tm_mem_ref_nrand/seed3: registration, name, seed
+ok  R24mwoz/tm_mem_ref_nrand/seed3: encoder none, parts, random negatives
+ok  R24mwoz/tm_mem_ref_nrand/seed3: init half, as e83_multiwoz_a3B_c16000_s8_nrand
+ok  R24mwoz/tm_mem_ref_nrand/seed3: the arm's table (4a1ed2ae)
+ok  R24mwoz/tm_mem_ref_nrand/seed3: cfg equals e83_multiwoz_a3B_c16000_s8_nrand's but the seed
+ok  R24mwoz/tm_mem_ref_nrand/seed3: written 2026-10-22T21:40:06Z, after the freeze
+ok  R24mwoz/tm_mem_ref_nrand/seed3: train/dev bits equal the dry run's and the dev row's
+ok  R24mwoz/tm_mem_ref_nrand/seed3: npz gives the json's test accuracy
+ok  R24mwoz/tm_mem_ref_nrand/seed3: test rows equal the other arms' (y, convo_id, k, w_bert, w_roberta)
+ok  R24mwoz/tm_mem_ref_nrand/seed4: registration, name, seed
+ok  R24mwoz/tm_mem_ref_nrand/seed4: encoder none, parts, random negatives
+ok  R24mwoz/tm_mem_ref_nrand/seed4: init half, as e83_multiwoz_a3B_c16000_s8_nrand
+ok  R24mwoz/tm_mem_ref_nrand/seed4: the arm's table (4a1ed2ae)
+ok  R24mwoz/tm_mem_ref_nrand/seed4: cfg equals e83_multiwoz_a3B_c16000_s8_nrand's but the seed
+ok  R24mwoz/tm_mem_ref_nrand/seed4: written 2026-10-22T22:00:40Z, after the freeze
+ok  R24mwoz/tm_mem_ref_nrand/seed4: train/dev bits equal the dry run's and the dev row's
+ok  R24mwoz/tm_mem_ref_nrand/seed4: npz gives the json's test accuracy
+ok  R24mwoz/tm_mem_ref_nrand/seed4: test rows equal the other arms' (y, convo_id, k, w_bert, w_roberta)
+ok  R24mwoz/tm_mem_ref_nrand/seed5: registration, name, seed
+ok  R24mwoz/tm_mem_ref_nrand/seed5: encoder none, parts, random negatives
+ok  R24mwoz/tm_mem_ref_nrand/seed5: init half, as e83_multiwoz_a3B_c16000_s8_nrand
+ok  R24mwoz/tm_mem_ref_nrand/seed5: the arm's table (4a1ed2ae)
+ok  R24mwoz/tm_mem_ref_nrand/seed5: cfg equals e83_multiwoz_a3B_c16000_s8_nrand's but the seed
+ok  R24mwoz/tm_mem_ref_nrand/seed5: written 2026-10-22T22:21:18Z, after the freeze
+ok  R24mwoz/tm_mem_ref_nrand/seed5: train/dev bits equal the dry run's and the dev row's
+ok  R24mwoz/tm_mem_ref_nrand/seed5: npz gives the json's test accuracy
+ok  R24mwoz/tm_mem_ref_nrand/seed5: test rows equal the other arms' (y, convo_id, k, w_bert, w_roberta)
+ok  tm_mem_ref_nrand: one test-bit hash over seeds (89d59afe)
+ok  lr_mem_ref: bits of its TM arm; dev accuracy and C (0.001) equal dry_e82mwoz_lr_mem_a3B's
+ok  lr_mem_ref: the same test rows (y, convo_id, k, w_bert, w_roberta)
+ok  R24mwoz/tm_mem_c4_nrand/seed1: registration, name, seed
+ok  R24mwoz/tm_mem_c4_nrand/seed1: encoder none, parts, random negatives
+ok  R24mwoz/tm_mem_c4_nrand/seed1: init half, as e84_multiwoz_C4_c16000_s8_nrand
+ok  R24mwoz/tm_mem_c4_nrand/seed1: the arm's table (e1771d9e)
+ok  R24mwoz/tm_mem_c4_nrand/seed1: cfg equals e84_multiwoz_C4_c16000_s8_nrand's but the seed
+ok  R24mwoz/tm_mem_c4_nrand/seed1: written 2026-10-22T22:40:20Z, after the freeze
+ok  R24mwoz/tm_mem_c4_nrand/seed1: train/dev bits equal the dry run's and the dev row's
+ok  R24mwoz/tm_mem_c4_nrand/seed1: dev accuracy 0.350048 equals e84_multiwoz_C4_c16000_s8_nrand's exactly
+ok  R24mwoz/tm_mem_c4_nrand/seed1: npz gives the json's test accuracy
+ok  R24mwoz/tm_mem_c4_nrand/seed1: test rows equal the other arms' (y, convo_id, k, w_bert, w_roberta)
+ok  R24mwoz/tm_mem_c4_nrand/seed2: registration, name, seed
+ok  R24mwoz/tm_mem_c4_nrand/seed2: encoder none, parts, random negatives
+ok  R24mwoz/tm_mem_c4_nrand/seed2: init half, as e84_multiwoz_C4_c16000_s8_nrand
+ok  R24mwoz/tm_mem_c4_nrand/seed2: the arm's table (e1771d9e)
+ok  R24mwoz/tm_mem_c4_nrand/seed2: cfg equals e84_multiwoz_C4_c16000_s8_nrand's but the seed
+ok  R24mwoz/tm_mem_c4_nrand/seed2: written 2026-10-22T22:59:22Z, after the freeze
+ok  R24mwoz/tm_mem_c4_nrand/seed2: train/dev bits equal the dry run's and the dev row's
+ok  R24mwoz/tm_mem_c4_nrand/seed2: npz gives the json's test accuracy
+ok  R24mwoz/tm_mem_c4_nrand/seed2: test rows equal the other arms' (y, convo_id, k, w_bert, w_roberta)
+ok  R24mwoz/tm_mem_c4_nrand/seed3: registration, name, seed
+ok  R24mwoz/tm_mem_c4_nrand/seed3: encoder none, parts, random negatives
+ok  R24mwoz/tm_mem_c4_nrand/seed3: init half, as e84_multiwoz_C4_c16000_s8_nrand
+ok  R24mwoz/tm_mem_c4_nrand/seed3: the arm's table (e1771d9e)
+ok  R24mwoz/tm_mem_c4_nrand/seed3: cfg equals e84_multiwoz_C4_c16000_s8_nrand's but the seed
+ok  R24mwoz/tm_mem_c4_nrand/seed3: written 2026-10-22T23:18:24Z, after the freeze
+ok  R24mwoz/tm_mem_c4_nrand/seed3: train/dev bits equal the dry run's and the dev row's
+ok  R24mwoz/tm_mem_c4_nrand/seed3: npz gives the json's test accuracy
+ok  R24mwoz/tm_mem_c4_nrand/seed3: test rows equal the other arms' (y, convo_id, k, w_bert, w_roberta)
+ok  R24mwoz/tm_mem_c4_nrand/seed4: registration, name, seed
+ok  R24mwoz/tm_mem_c4_nrand/seed4: encoder none, parts, random negatives
+ok  R24mwoz/tm_mem_c4_nrand/seed4: init half, as e84_multiwoz_C4_c16000_s8_nrand
+ok  R24mwoz/tm_mem_c4_nrand/seed4: the arm's table (e1771d9e)
+ok  R24mwoz/tm_mem_c4_nrand/seed4: cfg equals e84_multiwoz_C4_c16000_s8_nrand's but the seed
+ok  R24mwoz/tm_mem_c4_nrand/seed4: written 2026-10-22T23:37:25Z, after the freeze
+ok  R24mwoz/tm_mem_c4_nrand/seed4: train/dev bits equal the dry run's and the dev row's
+ok  R24mwoz/tm_mem_c4_nrand/seed4: npz gives the json's test accuracy
+ok  R24mwoz/tm_mem_c4_nrand/seed4: test rows equal the other arms' (y, convo_id, k, w_bert, w_roberta)
+ok  R24mwoz/tm_mem_c4_nrand/seed5: registration, name, seed
+ok  R24mwoz/tm_mem_c4_nrand/seed5: encoder none, parts, random negatives
+ok  R24mwoz/tm_mem_c4_nrand/seed5: init half, as e84_multiwoz_C4_c16000_s8_nrand
+ok  R24mwoz/tm_mem_c4_nrand/seed5: the arm's table (e1771d9e)
+ok  R24mwoz/tm_mem_c4_nrand/seed5: cfg equals e84_multiwoz_C4_c16000_s8_nrand's but the seed
+ok  R24mwoz/tm_mem_c4_nrand/seed5: written 2026-10-22T23:56:27Z, after the freeze
+ok  R24mwoz/tm_mem_c4_nrand/seed5: train/dev bits equal the dry run's and the dev row's
+ok  R24mwoz/tm_mem_c4_nrand/seed5: npz gives the json's test accuracy
+ok  R24mwoz/tm_mem_c4_nrand/seed5: test rows equal the other arms' (y, convo_id, k, w_bert, w_roberta)
+ok  tm_mem_c4_nrand: one test-bit hash over seeds (33c393d7)
+ok  lr_mem_c4: bits of its TM arm; dev accuracy and C (0.001) equal dry_e77mwoz_lr_mem_c4's
+ok  lr_mem_c4: the same test rows (y, convo_id, k, w_bert, w_roberta)
+ok  R24mwoz/tm_mem_bge_nrand/seed1: registration, name, seed
+ok  R24mwoz/tm_mem_bge_nrand/seed1: encoder bge-large, parts, random negatives
+ok  R24mwoz/tm_mem_bge_nrand/seed1: init half, as e84_multiwoz_bge_c16000_s8_nrand
+ok  R24mwoz/tm_mem_bge_nrand/seed1: cfg equals e84_multiwoz_bge_c16000_s8_nrand's but the seed
+ok  R24mwoz/tm_mem_bge_nrand/seed1: written 2026-10-23T00:03:08Z, after the freeze
+ok  R24mwoz/tm_mem_bge_nrand/seed1: train/dev bits equal the dry run's and the dev row's
+ok  R24mwoz/tm_mem_bge_nrand/seed1: dev accuracy 0.348553 equals e84_multiwoz_bge_c16000_s8_nrand's exactly
+ok  R24mwoz/tm_mem_bge_nrand/seed1: npz gives the json's test accuracy
+ok  R24mwoz/tm_mem_bge_nrand/seed1: test rows equal the other arms' (y, convo_id, k, w_bert, w_roberta)
+ok  R24mwoz/tm_mem_bge_nrand/seed2: registration, name, seed
+ok  R24mwoz/tm_mem_bge_nrand/seed2: encoder bge-large, parts, random negatives
+ok  R24mwoz/tm_mem_bge_nrand/seed2: init half, as e84_multiwoz_bge_c16000_s8_nrand
+ok  R24mwoz/tm_mem_bge_nrand/seed2: cfg equals e84_multiwoz_bge_c16000_s8_nrand's but the seed
+ok  R24mwoz/tm_mem_bge_nrand/seed2: written 2026-10-23T00:09:51Z, after the freeze
+ok  R24mwoz/tm_mem_bge_nrand/seed2: train/dev bits equal the dry run's and the dev row's
+ok  R24mwoz/tm_mem_bge_nrand/seed2: npz gives the json's test accuracy
+ok  R24mwoz/tm_mem_bge_nrand/seed2: test rows equal the other arms' (y, convo_id, k, w_bert, w_roberta)
+ok  R24mwoz/tm_mem_bge_nrand/seed3: registration, name, seed
+ok  R24mwoz/tm_mem_bge_nrand/seed3: encoder bge-large, parts, random negatives
+ok  R24mwoz/tm_mem_bge_nrand/seed3: init half, as e84_multiwoz_bge_c16000_s8_nrand
+ok  R24mwoz/tm_mem_bge_nrand/seed3: cfg equals e84_multiwoz_bge_c16000_s8_nrand's but the seed
+ok  R24mwoz/tm_mem_bge_nrand/seed3: written 2026-10-23T00:16:31Z, after the freeze
+ok  R24mwoz/tm_mem_bge_nrand/seed3: train/dev bits equal the dry run's and the dev row's
+ok  R24mwoz/tm_mem_bge_nrand/seed3: npz gives the json's test accuracy
+ok  R24mwoz/tm_mem_bge_nrand/seed3: test rows equal the other arms' (y, convo_id, k, w_bert, w_roberta)
+ok  R24mwoz/tm_mem_bge_nrand/seed4: registration, name, seed
+ok  R24mwoz/tm_mem_bge_nrand/seed4: encoder bge-large, parts, random negatives
+ok  R24mwoz/tm_mem_bge_nrand/seed4: init half, as e84_multiwoz_bge_c16000_s8_nrand
+ok  R24mwoz/tm_mem_bge_nrand/seed4: cfg equals e84_multiwoz_bge_c16000_s8_nrand's but the seed
+ok  R24mwoz/tm_mem_bge_nrand/seed4: written 2026-10-23T00:23:11Z, after the freeze
+ok  R24mwoz/tm_mem_bge_nrand/seed4: train/dev bits equal the dry run's and the dev row's
+ok  R24mwoz/tm_mem_bge_nrand/seed4: npz gives the json's test accuracy
+ok  R24mwoz/tm_mem_bge_nrand/seed4: test rows equal the other arms' (y, convo_id, k, w_bert, w_roberta)
+ok  R24mwoz/tm_mem_bge_nrand/seed5: registration, name, seed
+ok  R24mwoz/tm_mem_bge_nrand/seed5: encoder bge-large, parts, random negatives
+ok  R24mwoz/tm_mem_bge_nrand/seed5: init half, as e84_multiwoz_bge_c16000_s8_nrand
+ok  R24mwoz/tm_mem_bge_nrand/seed5: cfg equals e84_multiwoz_bge_c16000_s8_nrand's but the seed
+ok  R24mwoz/tm_mem_bge_nrand/seed5: written 2026-10-23T00:29:52Z, after the freeze
+ok  R24mwoz/tm_mem_bge_nrand/seed5: train/dev bits equal the dry run's and the dev row's
+ok  R24mwoz/tm_mem_bge_nrand/seed5: npz gives the json's test accuracy
+ok  R24mwoz/tm_mem_bge_nrand/seed5: test rows equal the other arms' (y, convo_id, k, w_bert, w_roberta)
+ok  tm_mem_bge_nrand: one test-bit hash over seeds (620f453d)
+ok  lr_mem_bge: bits of its TM arm; dev accuracy and C (0.01) equal dry_e81multiwoz_lr_bge's
+ok  lr_mem_bge: the same test rows (y, convo_id, k, w_bert, w_roberta)
+ok  7355 test turns in 1000 dialogues, as in examples_test.json.gz (7355 in 1000)
+note: 5 of 12 e85 rows were written before the freeze (2026-10-22T19:50:27Z to 2026-10-22T20:12:17Z)
+all checks passed

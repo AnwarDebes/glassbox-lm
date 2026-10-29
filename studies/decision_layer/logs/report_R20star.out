@@ -1,0 +1,14 @@
+tm_mem_static_closed acc 0.5519 (sd 0.0052, 5 seeds)  AST-weighted 0.5519
+tm_nomem_static_R19 acc 0.4766 (sd 0.0024, 5 seeds)  AST-weighted 0.4766
+tm_mem_static_R19 acc 0.6271 (sd 0.0061, 5 seeds)  AST-weighted 0.6271
+tm_mem_closed    acc 0.5323 (sd 0.0032, 5 seeds)  AST-weighted 0.5323
+tm_mem_R18       acc 0.6265 (sd 0.0047, 5 seeds)  AST-weighted 0.6265
+lr_mem_static_closed acc 0.5894 (sd 0.0000, 1 seeds)  AST-weighted 0.5894
+lr_mem_static_R19 acc 0.6392 (sd 0.0000, 1 seeds)  AST-weighted 0.6392
+lr_mem_closed    acc 0.5767 (sd 0.0000, 1 seeds)  AST-weighted 0.5767
+tm_mem_static_closed:tm_nomem_static_R19 +7.53 [+6.51, +8.58]   AST +7.53 [+6.51, +8.58]
+tm_mem_static_closed:tm_mem_static_R19 -7.51 [-8.34, -6.72]   AST -7.51 [-8.34, -6.72]
+tm_mem_static_closed:tm_mem_closed +1.96 [+1.07, +2.85]   AST +1.96 [+1.07, +2.85]
+tm_mem_static_closed:lr_mem_static_closed -3.75 [-4.93, -2.60]   AST -3.75 [-4.93, -2.60]
+tm_mem_closed:tm_mem_R18     -9.42 [-10.37, -8.49]   AST -9.42 [-10.37, -8.49]
+lr_mem_static_closed:lr_mem_static_R19 -4.98 [-5.89, -4.07]   AST -4.98 [-5.89, -4.07]

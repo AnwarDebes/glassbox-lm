@@ -1,0 +1,4 @@
+ok full path: smoke, check, screens, pick, follow-ups, final, in order; every checker output saved
+ok no follow-ups: the follow-up queue is skipped and the final stage still runs
+ok failed smoke: the driver stops with exit 1 before any screen job
+PASSED

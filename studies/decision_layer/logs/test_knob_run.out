@@ -1,0 +1,5 @@
+ok refusals: no --, no script, 4 bad --neg-sampling, 3 bad --clause-drop, an existing --preds-out (the target did not run)
+ok knob-off identity: no knob (with and without --preds-out) and explicit default knobs print exactly the plain run; the preds file holds 2 evaluations + the final call, equal to the stub's predictions, labels and history
+ok knobs on: random + clause_drop 0.5 reach the cfg and change the machine; mix:0.5 reaches the cfg
+ok failing target: knob_run exits 3 and writes no preds file
+PASSED

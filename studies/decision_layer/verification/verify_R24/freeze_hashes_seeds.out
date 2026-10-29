@@ -1,0 +1,24 @@
+2026-10-23T00:40:43Z
+4d675dde55a158603fd0b6f9cb1dc780dac2f2fd5539564a695b121153991e20  registrations/R24_multiwoz_random_negatives.md
+78f1655182d41b4d9fcb4a9e255903ea65f808944116eb8bea9a251f8dfdad04  registrations/R24_multiwoz_random_negatives.frozen.json
+2026-10-22T20:16:52Z
+4d675dde55a158603fd0b6f9cb1dc780dac2f2fd5539564a695b121153991e20
+diff_frozen exit 0
+earliest result mtime:
+2026-10-22T20:58:55.5382005500Z results/confirm/R24mwoz/tm_mem_ref_nrand/model_seed1.npz
+latest:
+2026-10-23T00:36:31.8972419400Z results/confirm/R24mwoz/twolevel_R24mwoz.json
+18
+{"name":"tm_mem_ref_nrand","seed":1,"s":8.0,"clauses":null,"T":16000,"epochs":40,"init":"half","best_epoch":18,"dev_acc":0.34977578475336324,"test_acc":0.34248810333106733,"C":null}
+{"name":"tm_mem_c4_nrand","seed":1,"s":8.0,"clauses":null,"T":16000,"epochs":40,"init":"half","best_epoch":22,"dev_acc":0.35004756080989263,"test_acc":0.3460231135282121,"C":null}
+{"name":"tm_mem_bge_nrand","seed":1,"s":8.0,"clauses":null,"T":16000,"epochs":40,"init":"half","best_epoch":16,"dev_acc":0.34855279249898086,"test_acc":0.33868116927260367,"C":null}
+bit_names.json
+lr_weights_seed0.npz
+seed0.json
+seed0.npz
+{"k":"tm_mem_ref_nrand","seeds":[1,2,3,4,5]}
+{"k":"tm_mem_c4_nrand","seeds":[1,2,3,4,5]}
+{"k":"tm_mem_bge_nrand","seeds":[1,2,3,4,5]}
+{"k":"lr_mem_ref","seeds":[0]}
+{"k":"lr_mem_c4","seeds":[0]}
+{"k":"lr_mem_bge","seeds":[0]}

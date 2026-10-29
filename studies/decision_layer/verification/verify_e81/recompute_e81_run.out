@@ -1,0 +1,12 @@
+recompute b2 (-5.35, False)
+recompute ('C4', 'abcd', 'pick') 4000
+recompute ('C4', 'multiwoz', 'pick') 4000
+recompute ('C4', 'star', 'pick') 4000
+recompute ('a3B', 'abcd', 'pick') 4000
+recompute ('a3B', 'multiwoz', 'pick') 4000
+recompute ('a3B', 'star', 'pick') 4000
+recompute ('bge', 'abcd', 'pick') 4000
+recompute ('bge', 'multiwoz', 'pick') 4000
+recompute ('bge', 'star', 'b1') [0.14, -0.54, -0.33]
+recompute ('bge', 'star', 'pick') 1000
+MATCH

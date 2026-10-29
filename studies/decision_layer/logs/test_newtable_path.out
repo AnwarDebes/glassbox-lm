@@ -1,0 +1,2 @@
+ok: view B 7092 bits on the a3B table; CPU decisions on 300 dev rows; no network module imported; encoder caches opened ['studies/decision_layer/data/emb/abcd__none.npz']; tables opened ['c4words_a3B_v1']
+all checks passed

@@ -1,0 +1,26 @@
+{
+ "what": "e77 MultiWOZ 2.2 next system action (multiwoz_prepare.py)",
+ "min_train": 20,
+ "n_labels": 128,
+ "n_raw_combinations_train": 628,
+ "splits": {
+  "test": {
+   "dialogues": 1000,
+   "examples": 7355,
+   "system_turns_without_act": 17,
+   "share_without_act": 0.0023,
+   "share_OTHER": 0.03,
+   "sha256": "a839d869fd9e3219e2bc85c7b3efe34e0519954d55ccfb084b108e4761a14c45"
+  }
+ },
+ "majority_label_train": "general-bye",
+ "majority_accuracy_dev": 0.0716
+}
+top 25 labels (train): [('general-bye', 4354), ('Train-Request', 2613), ('general-bye+general-welcome', 2594), ('Attraction-Inform', 2121), ('Booking-Book+general-reqmore', 2107), ('Restaurant-Inform', 2045), ('Train-Inform+Train-OfferBook', 1755), ('OTHER', 1714), ('Hotel-Inform', 1707), ('Booking-Book', 1702), ('Attraction-Inform+general-reqmore', 1659), ('Train-Inform', 1548), ('Booking-Inform+Hotel-Inform', 1394), ('Hotel-Inform+Hotel-Request', 1371), ('general-reqmore', 1278), ('Train-Inform+Train-Request', 1216), ('Taxi-Request', 1171), ('Restaurant-Inform+Restaurant-Request', 1135), ('Booking-Request', 1085), ('Restaurant-Inform+general-reqmore', 1042), ('Booking-Inform+Restaurant-Inform', 996), ('Taxi-Inform', 904), ('Train-OfferBooked', 808), ('Hotel-Request', 792), ('Hotel-Inform+general-reqmore', 744)]
+labels with 20-50 train examples: 43 of 128
+Loading weights:   0%|          | 0/391 [00:00<?, ?it/s]Loading weights:  10%|▉         | 38/391 [00:00<00:01, 348.09it/s]Loading weights:  19%|█▊        | 73/391 [00:00<00:01, 235.12it/s]Loading weights:  25%|██▌       | 99/391 [00:00<00:01, 202.14it/s]Loading weights:  31%|███       | 121/391 [00:00<00:01, 184.49it/s]Loading weights:  38%|███▊      | 150/391 [00:00<00:01, 206.03it/s]Loading weights:  44%|████▍     | 172/391 [00:00<00:01, 186.04it/s]Loading weights:  49%|████▉     | 192/391 [00:00<00:01, 189.50it/s]Loading weights:  54%|█████▍    | 212/391 [00:01<00:01, 162.14it/s]Loading weights:  61%|██████    | 239/391 [00:01<00:00, 181.54it/s]Loading weights:  66%|██████▌   | 259/391 [00:01<00:00, 175.93it/s]Loading weights:  71%|███████   | 278/391 [00:01<00:00, 166.20it/s]Loading weights:  76%|███████▌  | 296/391 [00:01<00:00, 161.87it/s]Loading weights:  81%|████████▏ | 318/391 [00:01<00:00, 166.15it/s]Loading weights:  87%|████████▋ | 339/391 [00:01<00:00, 172.64it/s]Loading weights:  94%|█████████▍| 369/391 [00:01<00:00, 204.10it/s]Loading weights: 100%|██████████| 391/391 [00:02<00:00, 192.84it/s]
+bge-large test cust 7355 texts, 7320 unique 32s
+bge-large test recent 7355 texts, 7320 unique 56s
+bge-large test full 7355 texts, 1 unique 56s
+train and dev arrays byte-identical to multiwoz__bge-large.devstage.npz 324f6d626675c5a3600125561e12784d8b8df19519893644a74b4f3cc5ebe421
+wrote data/emb/multiwoz__bge-large.npz f391b050d89f478ca99e249b3ccf789863d1bf60e50f3a8e9cdfb9522d9b1055

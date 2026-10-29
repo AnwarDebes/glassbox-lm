@@ -1,0 +1,2 @@
+# post hoc, no rule (registrations/R19_amendment_2026-10-18.md, "Post-hoc LR refit at the dev-best C"): STAR's dev-best C is 0.01 (0.6555 against 0.6409 at C 0.1, +1.46 >= 0.5); ABCD's is 0.03 (+0.11 < 0.5), so ABCD is not refit and its test split is not read
+DL_GPU_FRAC=0.15 HF_HUB_OFFLINE=1 OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 RAYON_NUM_THREADS=2 .venv-dl/bin/python scripts/lr_refit_posthoc.py --dataset star --C 0.01

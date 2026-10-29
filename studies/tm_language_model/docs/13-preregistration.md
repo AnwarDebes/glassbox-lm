@@ -779,3 +779,453 @@ TREC train file (`hub_lfs_sha256: null`). No confirmatory output exists and the 
 the file size, written to the same write-once file with the field names saying so; every counted access recomputes the git
 blob SHA-1 of the downloaded bytes and checks it and the size before use, and logs the sha256 of the bytes as well. Files with a
 published LFS sha256 keep the A9 rule. Nothing else changes.
+
+### A11 (2026-10-25 15:04 UTC): re-check of H2.4 and Gate 3 on the saved E11 receipts
+**Reason.** H2.4 (docs/13 line 56: "Every receipt of the pre-registered generations passes the standalone checker;
+tampered receipts fail"; threshold "100% pass, 100% of tampered fail") and Gate 3 (docs/04 line 74: "the model
+generates with receipts that pass the standalone checker") were judged met on `results/20260922T232251Z_E11` (results
+page lines 72, 81 and 187).
+- Both carry the qualifier that the checker accepts a receipt with a forged random draw. The checker re-derived the
+  32-bit draw from the seed, stream and counters that the receipt itself recorded, and tied none of them to the run,
+  the decoding step or the position (bug TLM-B2 of the finish pass).
+- The same cause let two other forgeries through: a changed recorded temperature, under which the recorded draw
+  selects another token, and a sampled token declared greedy.
+- On 2026-10-25 the checker was changed to bind every decision to its generation run (item 6 of its docstring):
+  - draw counters = (seed of the run, stream SAMPLER, a = step, b = position, c = DRAW_TOKEN), as
+    `src/tmlm/decode/sampling.py` builds them;
+  - the steps follow the decoder: the token index for the any-order and elimination decoders; contiguous steps, one
+    window per step and the last iteration for diffusion;
+  - mode and temperature are the run's;
+  - with `--seed` and `--temperature`, the run's own values must equal the expected ones.
+- Three tamper modes were added: `forged_draw`, `temperature`, `mode_switch`.
+- What a passing receipt then shows: the receipt is bound to its run's seed, temperature, decoder mode and step order.
+  Windows are not chained: the window of a token is not checked against the prompt plus the earlier claims. The run's
+  final tokens are not compared with the claims (checker docstring, "What is not checked").
+
+This amendment fixes how H2.4 and Gate 3 are judged again, before the re-check runs. Nothing above is changed.
+
+**What was known when this revision was written.**
+- E11's own result [measured: `results/20260922T232251Z_E11/metrics.json`]:
+  - 11,400 of 11,400 receipts pass (9,600 generated tokens; the diffusion decoder's remasking adds receipts);
+  - 1,113 of 1,113 tampered receipts fail: 100/100 for ten modes, 88/88 for context, 25/25 for survivors;
+  - seeds 1 to 5, 20 prompts, 32 new tokens;
+  - E11's config has no temperature field. The decoders ran with their default, 1.0.
+- Code. E11 ran the checker whose copy is the HEAD blob of `checker_standalone.py` (sha256 954f9379...; the archived
+  copy is identical, mtime before E11). Its document checks and `check_token` (items 1 to 5) are unchanged in the
+  current checker and are exposed as `rederivation_errors`; the binding is `binding_only_errors`.
+- The decoders: `anyorder.py`, `diffusion.py` and `sampling.py` have mtimes before E11 and equal the archived copies.
+  `eliminate.py` and `incremental.py` were replaced on 2026-09-25 06:14:30 UTC, after E11, by the cleanup of docs/12
+  F28 item 4 ("the file versions it replaced are not part of the repository"). Whether E11's elimination receipts follow
+  the bound convention (seed, SAMPLER, step = index, position, DRAW_TOKEN) is therefore not known from the code. The
+  toy tests ran today's decoder.
+- The fixed checker and the new tamper modes pass their tests on toy runs built the way E11 builds them
+  (`tests/test_certify.py`, `tests/test_h2_4_recheck.py`). There, every forgery of the three new modes passes items 1
+  to 5, which is the whole checker before the fix, and fails only on the binding.
+- Every input of the re-check equals its literal pin and its E11 MANIFEST.json entry.
+- The selection-only pass (`--selection-only`, which never calls the checker), 13:07:29 to 13:11:28 UTC and again
+  13:15:17 to 13:19:07 UTC with this revision's driver:
+  - it reproduces E11's counts for the twelve old modes exactly;
+  - for the three new modes it gives: forged_draw 100 (any-order 30, diffusion 45, elimination 25), temperature 99
+    (30, 45, 24), mode_switch 100 (30, 45, 25);
+  - every file holds 20 runs;
+  - peak resident memory 18.27 GiB, selection 184.6 s.
+- One smoke after revision 1 and before this revision: `receipts_anyorder_seed1.json` only, 5 per mode, 11:43:45 to
+  11:45:15 UTC. Seen: 640 of 640 receipts pass; 65 of 65 tampered receipts fail. So the receipts half is partly known
+  for that one file.
+- No E11 diffusion or elimination file was checked, on purpose (the review advised against a dry run that would decide
+  their outcome before the freeze).
+
+**Predicted outcome per part** [a reading of what is known, not a measurement]:
+- Already decided, no new information:
+  - items 1 to 5 on the 11,400 receipts, which passed in E11;
+  - the twelve old tamper modes, whose tampered receipts are E11's again (selection reproduced) and fail items 1 to 5
+    by construction.
+- New information comes only from the binding on honest receipts and from the three new modes:
+  - any-order: predicted pass (the smoke and the code);
+  - diffusion: predicted pass (code reading; `diffusion.py` is older than E11 and meets the three diffusion rules by
+    construction);
+  - elimination: unknown (the decoder was replaced after E11);
+  - the new modes: predicted caught by the binding only (toy tests).
+
+**Test-split use.** None.
+- The re-check opens no data split and adds no row to `data/test_access_log.jsonl`.
+- The saved receipts contain the 20 registered prompts: the first 16 tokens of the first 20 WikiText-103 test
+  documents (docs/13 section 3), which E11 read under its counted accesses (rows 19 to 21 of the access log). The
+  re-check reads them again only as part of the saved receipts.
+
+**What runs.** Start from `studies/tm_language_model` after `source env/env.sh`. First the CPU gate:
+`../decision_layer/.venv-dl/bin/python -I ../decision_layer/scripts/cpu_load.py 10` must show at most 4.5 cores. Then
+run at 1 CPU slot, nice 19, no GPU, under the memory guard (peak about 19 GiB: the 18.27 GiB of the selection pass
+plus one checker process):
+
+```
+CUDA_VISIBLE_DEVICES= scripts/cpu_slot.sh 1 -- nice -n 19 .venv-tm/bin/python scripts/mem_guard.py --scope group \
+    --limit-gib 40 -- scripts/run_logged.py --no-gpu-sampler --name h2_4_recheck \
+    --config experiments/configs/h2_4_recheck.json -- \
+    .venv-tm/bin/python -u experiments/h2_4_recheck.py --run-dir results/20260922T232251Z_E11
+```
+
+The driver's steps, in order, each stopping the run when it fails:
+1. Integrity: the 17 inputs against the literal pins of the config (`params.input_sha256`, the values under "Pins")
+   and against MANIFEST.json; exit 3 on any difference.
+2. Selection without any checker call: the counts per mode must equal `params.tamper_counts`, the twelve E11 counts
+   and the three counts above. Exit 5 on any difference, before any receipt is checked.
+3. Receipts:
+   - the checker runs as a separate process per file with `--seed N` (from the file name; the registered seeds 1 to 5)
+     and `--temperature 1.0` (E11's code default, not a registered value);
+   - the per-file reports stay in the run folder;
+   - every failing receipt is classified as failing items 1 to 5 or the binding only.
+4. Tampering: each tampered receipt is checked for its tampered token. The run counts, per mode and per decoder: the
+   tampered receipts, the failed ones, those failing items 1 to 5, and those failing only the binding. Every accepted
+   one is listed by name.
+
+Time: about 30 to 40 min [derived from the smoke: 0.12 s per receipt, 11,400 receipts; 1,412 tampered
+receipts (1,113 of the old modes plus 299 of the new); plus about 3 min of loading and selection, measured].
+
+**Rules (fixed before the re-check).**
+1. Integrity: exit 3 means no re-check exists. H2.4 and Gate 3 stay as they stand, with the qualifier.
+2. Selection: exit 5 means the selection was not reproduced. The run is invalid and its outputs are kept and
+   reported. A fix may touch only the selection code, by a dated addendum with its diff, before the re-run.
+3. Validity, checked by the driver: 11,400 receipts checked; 20 runs in every file; `receipts_anyorder_seed1.json`
+   gives the smoke's "640/640 pass". If any fails, the run is invalid: it gets no verdict input and is reported.
+4. Crashes:
+   - a checker process killed by a signal (exit 4) is a resource problem: the run is repeated unchanged;
+   - a checker process that raises an exception counts every receipt of its file as failed. On the smoke's file, rule
+     3 makes the run invalid instead.
+5. H2.4 is re-judged MET when, in a valid run:
+   - every one of the 11,400 receipts passes the bound checker (`H2_4_recheck_all_receipts_pass`); and
+   - every tampered receipt of the fifteen modes fails (`H2_4_recheck_all_tampered_fail`).
+6. H2.4 is re-judged NOT MET when, in a valid run, any receipt fails or any tampered receipt passes.
+   - The failing receipts and the accepted tampered receipts are listed with the run id, with their kind (items 1 to
+     5, or binding only) and decoder.
+   - A failure confined to one decoder is reported as a mismatch between the checker's rule and that decoder's E11
+     convention. H2.4 NOT MET stands, and no checker rule is relaxed for it after the run.
+   - No receipt is regenerated or repaired. The E11 verdict is not kept beside the new one.
+7. Gate 3 follows the receipts half (rule 5 or 6, first bullet) of the same run.
+8. The forged-draw qualifier is lifted only when every tampered receipt of each new mode passes items 1 to 5 and fails
+   the binding (`new_modes_pass_items_1_to_5_and_fail_only_the_binding`; the verdict input
+   `H2_4_recheck_forged_draw_qualifier_lifted`). A new-mode forgery that fails items 1 to 5 is "not a forgery the E11
+   checker missed" and does not lift the qualifier.
+9. The re-check runs once, with the pinned checker, `receipt.py` and driver. A NOT MET stands. Any later checker is a new
+   amendment with its own run, reported beside this one and never replacing it.
+
+**Outcome table** (the reading of each case; "n" is the per-mode count above):
+
+| receipts | tampered receipts | H2.4 | Gate 3 | qualifier on the H2.4 and Gate 3 rows |
+|---|---|---|---|---|
+| all 11,400 pass | all fail, and each new-mode forgery fails only on the binding | met (re-checked) | met | "at tiny-LM scale; bound to the run's seed, temperature, mode and step order; windows not chained; 15 tamper modes, 0 of n accepted per mode (one-sided 95% bound 2.95% at n = 100, 2.98% at n = 99)" |
+| all pass | all fail, but some new-mode forgery fails items 1 to 5 | met | met | as above, and "the forged-draw qualifier stays: some new-mode forgeries were caught by items 1 to 5" |
+| all pass | some pass | not met | met | the accepted tampered receipts, by mode and decoder |
+| some fail | all fail | not met | not met | the failing receipts by kind and decoder |
+| some fail | some pass | not met | not met | both lists |
+| invalid (rules 2, 3, 4) | | unchanged, with the qualifier | unchanged | "re-check invalid", with the reason |
+
+**Report step.**
+1. Folder: `results/<UTC>_h2_4_recheck/`.
+2. Read first: run.json `exit_status` (0); `input_mismatches` (empty); `validity` (all true); run.json
+   `prereg_sha256`, equal to the docs/13 sha256 recorded at the freeze.
+3. Then the verdict inputs and the per-mode and per-decoder counts.
+4. Recompute the counts from the per-file reports kept in the folder before the verdict is written down.
+5. Then results.md: lines 72, 81 and 187, the date taken from run.json `started_utc`. Then the owner of
+   `docs/known-limitations.md` (repository root, line 133) updates that bullet.
+
+**Code since E11.**
+- `src/tmlm/certify/checker_standalone.py` and `receipt.py` against the E11-era HEAD blobs, as saved diffs; their
+  sha256 are in the block below.
+- `env/env.sh`: the PATH fix of SHR-1 (2026-10-25).
+- `eliminate.py` and `incremental.py`: replaced on 2026-09-25, as stated above.
+- The run records its `source_tree_hash`, and the value at writing is below. It must be recomputed at the freeze,
+  because any edit in `src`, `experiments`, `scripts`, `tests` or `env` changes it.
+
+| item | value |
+|---|---|
+| E11-era checker (HEAD blob of `checker_standalone.py`) | 954f9379e603eb597b48444283d77071a957d014605d9a0f994c0c8c033165dc |
+| E11-era `receipt.py` (HEAD blob) | 5bcf20d1b3f9170a40910edad843f6dd9fdc60a5615ad3605721b6b41cca1c91 |
+| diff of the checker, HEAD to now (saved) | 5c9606ba3c5f875f39f8885f9b4c1da4510c8836f0ac8eb11a857617e36ea003 |
+| diff of `receipt.py`, HEAD to now (saved) | 459dd088b9818ebbd127d9f8528bd4aef80f41c2447e2a7723c4d6bea52ff425 |
+| diff of `env/env.sh`, HEAD to now (saved; the SHR-1 PATH lines) | ab993a6bee9d020d7b9aecebca81777222ab5d29dc038accd74967cd234b833f |
+| `src/tmlm/decode/eliminate.py` now (replaced 2026-09-25 06:14:30 UTC, after E11) | 506a031d582ca130db456521b7c3c39b923f7c82bc5a6d39eaa2f43ff8e67ee2 |
+| `src/tmlm/decode/incremental.py` now (replaced the same minute) | 0ec1c4e1b6f5ce5a8d01c66981d54baa3313635b671b97d04c84a277c1b221ae |
+| source tree hash at writing (`tmlm.common.runlog.source_tree_hash`) | 0c335e2a538bc97ba288dc9734ef75400f915abe93fee6b0b0649a1e8be416df |
+
+### A12 (2026-10-25 15:32 UTC): the CVTM-core test read of H8.3 and H8.4
+**Reason.** Amendment A3 (docs/13 lines 150 to 192) registered two test-split rows for the frozen CVTM-core. Neither
+ran, because no test driver existed (`experiments/cvtm_lm.py` is validation-only). The rows, verbatim from the
+published docs/13:
+
+- line 178: "| H8.3 | P1 headline: the CVTM-core beats KN-5 on identical tokens | test bits per byte, once, after
+  freezing; KN-5 test 1.3719 | at most 1.3219 (KN-5 minus 0.05) | 0.9 |"
+- line 179: "| H8.4 | The CVTM-core beats the classical cache LM | test bits per byte vs KN-5 plus a document unigram
+  cache fitted by the same protocol (section 11.6) | lower | 0.95 |"
+
+The rules around them:
+
+- lines 166 to 168: "Confirmatory evidence for H8 is therefore only: fits on the full training split, the unseen
+  masked banks of seeds 2 to 5, new banks for H8.10, and the test split accessed once per model after the model is
+  frozen."
+- lines 95 and 96: "Test-set access budget: one access per reported configuration, after every choice has been frozen
+  on validation. The access counter of M2 is reported next to every test number."
+- lines 110 and 111: "Contamination: every test number is reported on the full test set and on the de-overlapped
+  subset (docs/06)."
+- line 385, decision row D15: "| D15 | H8.3 missed on test, or H9.9 or H9.10 missed after a fix | stop and diagnose
+  (protocol rule 18); no switch before the cause is known | as registered | 0.05 |".
+
+The comparator of H8.4 is the variant S+D0 of the frozen core (`CVTMCore.variant("S+D0")`). D0 is the document clause
+with the empty context (docs/11 11.3), so S+D0 is KN-5 plus a document unigram cache. Its mixture weights come from
+the EM of docs/11 11.4 on H, the fit documents of the core: train documents of residue 0 (304 documents, 1,397,702
+tokens; `src/tmlm/cvtm/protocol.py` lines 12 to 14). The cache build names this variant "the H8.4 comparator". This
+amendment fixes how the one test read is made and judged. Nothing above is changed: no threshold, comparator or claim
+of A3.
+
+**KB7, the archive, and why this row.**
+- KB7 does not cover H8.3 or H8.4. Its consequence is a reporting rule for H1.1 of the signed-vote engine (docs/08
+  line 21, docs/13 line 49), and A3 says that H1.1 is not re-judged by the CVTM, a different model (docs/13 lines 155
+  and 156).
+- The study was archived on 2026-10-01 with nothing cut (docs/12 F4 and F23; docs/known-limitations.md line 132). Two
+  texts read otherwise and are corrected together with the report of this read:
+  - the README status line ("archived ... not continued");
+  - research/roadmap.md line 41 ("stopped by its registered kill criterion KB7"; proposed fix S1 in the finish-pass
+    snippets).
+- The read is made in the finish pass of 2026-10-25. The row was chosen among the not-run rows for its low cost
+  and partly for its high predicted chance of a met result (finish-pass inventory A2). That is a selection caveat, and
+  the report states it with the outcome.
+- With the freeze, docs/12 gains this row, its time read from the clock at the freeze:
+  "| F30 | H8.3 and H8.4 of A3: registered for one test read after freezing, never run (no test driver) | one
+  registered test read of H8.3 and H8.4 in the archived study, by amendment A12; A3's rules unchanged | chosen in the
+  finish pass of 2026-10-25 among the not-run rows for its low cost and its high predicted chance; decided at
+  15:31 UTC on 2026-10-25 | docs/13 A12; the run folder of the read |"
+- The report states that choice. Beside the outcome it shows the status of the A3 rows still not run or not judged:
+  - H8.5 (no valid measurement);
+  - H8.6 (no threshold);
+  - H8.9 (a GPU request of the same pass);
+  - H8.10, the one A3 row that could credit Tsetlin learning, still not run.
+- D15 in an archived study means a dated diagnosis note, no re-read and no switch.
+
+**What was known when this revision was written.**
+- The validation numbers of the frozen core [measured: `results/20260924T085728Z_cvtm_cache_build/metrics.json`]:
+  - CVTM-core 1.240880320113308, KN-5+D0 1.3338053432747112 and KN-5 1.3501314033898424 bits per byte.
+  - Paired differences (document bootstrap, 60 documents, 2,000 resamples, seed 20260924, 1106, 1): core minus KN-5
+    -0.10925 [-0.13084, -0.08915]; core minus KN-5+D0 -0.09293 [-0.11103, -0.07581]; KN-5+D0 minus KN-5 -0.01633
+    [-0.02123, -0.01221].
+  - The 0.1093 of H8.8 part (a) is the same frozen core and the same number, not separate evidence.
+- KN-5 on the test split: 1.3718501779650507 bits per byte [measured: `results/20260923T042350Z_CP_anchor/metrics.json`,
+  key `kn5.test.bits_per_byte`], computed by `KNModel.logprob` and `bits_per_byte` (`experiments/cp_causal_perplexity.py`
+  lines 462 to 468). The driver makes the same call on the core's KN-5. That KN-5 gives 1.3501314033898424 on
+  validation bit for bit in M2, in the anchor, in the cache build and in every smoke, which is why exact equality on
+  test is expected and used as the identity check of rule 3. The test split has 322,929 tokens and 1,289,123 bytes
+  (anchor metrics).
+- Test 8-grams and 13-grams seen in train: 0.114 and 0.070 (docs/12 F16). The de-overlapped test set does not keep
+  every test document (docs/12 F16). How many documents it drops was not read for this plan. The rule (docs/06,
+  `src/tmlm/data/contamination.py`): a document is kept iff fewer than half of its 13-grams occur in train.
+- Other numbers on the test split, known and deciding no rule: the signed-vote engine's 2.2193 bits per byte (docs/13
+  line 151); the anchor's KN-5 test causal top-1 0.3490 [measured: `results/20260923T042350Z_CP_anchor/metrics.json`]
+  and its per-word perplexity 46.12 (derived, same file); E11 read 16-token prompts of the first 3 and the first 20 test
+  documents (access-log rows 19 to 21).
+- Smokes of the driver on VALIDATION, every one into a folder of the finish pass outside this repository (their hashes are
+  in this file's Pins, which are not appended); every frozen value reproduced bit for bit, the access log stayed at 112
+  rows, and all 60 validation documents are kept:
+  - revision 1 of the driver: 11:51:29 to 11:59:13 UTC (2 threads) and 12:06:38 to 12:14:02 UTC;
+  - revision 2, through the exact launch line (`cpu_slot.sh 1`, `mem_guard.py`, `run_logged.py`), `--split validation`,
+    13:04:51 to 13:12:09 UTC: exit 0, 438.4 s wall at 1 thread, peak resident memory 18.9 GiB, `checks_failed` empty;
+    its independent recompute: max difference 1.3e-15 bits per byte, "agrees" true. Its outer command line was not
+    saved; run.json records the inner command;
+  - revision 3 (this text), through the same launch line with `--split validation` and without
+    `--confirm-test-read`, its outer command saved in a launch script: 15:17:55 to 15:25:14 UTC, exit 0, 437.6 s
+    wall, peak resident memory 18.9 GiB, `checks_failed` empty, 56 metrics, `scores_validation.npz` 919966a5...
+- The driver's tests (`tests/test_cvtm_test_read.py`) run `main()` with `--split test` end to end on a synthetic store
+  and a synthetic access log:
+  - each of the seven refusal kinds exits 3 with the log byte for byte unchanged (end to end since revision 3, the
+    log-sha256 mismatch and the earlier row with this purpose included);
+  - an accepted read appends exactly one row, with this purpose and this process's pid, and the recompute agrees,
+    including the KN-5 identity and the split's size;
+  - a forced KN-5 mismatch makes both verdicts invalid;
+  - a forced de-overlap mismatch keeps them valid and labels the de-overlapped rows unverified;
+  - a forced failure of the vote-form check labels that row and the pairs that use it unverified;
+  - a crash after the read exits 4 with the full-split rows kept and both verdicts invalid;
+  - an empty kept set gives no rows.
+- Not known: any number of the CVTM-core, KN-5+D0 or the de-overlapped subset on the test split.
+
+**Predicted outcome** [derived; normal approximation, standard error from the validation paired interval, variance
+doubled for a new set of documents; it ignores selection and the shift between validation and test]:
+- H8.3 needs core minus KN-5 at most 1.3219 - 1.3718501779650507 = -0.04995.
+  - The validation gap is -0.10925 (standard error about 0.0106). The margin is 0.0593, about 3.9 predictive standard
+    deviations, so the chance of a miss is about 4e-5.
+  - If the gap transfers, the core scores about 1.2626 on test.
+  - A paired interval clear of the bar needs a test gap of about -0.071 or lower.
+  - To miss, the core must lose 0.081 against its own validation number. KN-5 lost 0.0217 from validation to test.
+  - Predicted: MET.
+- H8.4 needs core minus KN-5+D0 below 0. The validation gap is -0.09293 (standard error about 0.0090). The margin is
+  about 7.3 predictive standard deviations. An interval clear of 0 needs about -0.018. Predicted: MET.
+- Selection caveat. The core was designed after about 180 exploratory validation rows (A3's disclosure, docs/13 lines
+  158 to 166), so the validation gap is an optimistic forecast.
+- How to read the outcomes. A met H8.3 says that the validation gain transfers to the test split; it is not new
+  evidence of its size. A miss is the informative outcome (D15). No seen test number decides either rule, so both stay
+  rules.
+
+**Use of the test split.**
+- This is access number 113 on the study's access counter: the row count of `data/test_access_log.jsonl`, the counter
+  of results.md line 39, on which the CP anchor is 22.
+- It is the 22nd row of the WikiText-103 test split. Rows 1 to 17 are the M2 build, 19 to 21 the E11 prompts, 22 the
+  CP anchor; row 18 is PTB, so the anchor's row was the 21st WikiText-103 row. Rows 23 to 112 are 90 accesses of other
+  datasets.
+- Per configuration (docs/13 lines 95 and 96): the CVTM-core 1st, KN-5+D0 1st, KN-5 2nd. For KN-5, row 22 was the
+  first; its full-split number here is the identity check of rule 3, and its de-overlapped number is new. No choice
+  depends on this second KN-5 access; it adds the de-overlapped KN-5 row that the anchor never reported.
+- The log was read on 2026-10-25: 112 rows, sha256 4e406939e1bdf1864135b90bceb97056a9a2a3a56120f377ae8e2eb7f61819c2.
+- How the row is written: `protocol.load_eval_split("test", purpose=...)` calls `corpus_store.load_split`, which calls
+  `evalsets.record_test_access("corpus_store.load_split", purpose)`. That appends one JSON line `{"caller", "pid",
+  "purpose", "utc"}` before any array is read. The purpose string is the config's `test.purpose`.
+- The driver does not load the M2 test flags (`contamination.load_overlap` would write a second row). It recomputes
+  the 13-gram flags from the tokens of the same read and the train split, and compares them with the sha256 of
+  `doc_keep` in `test_13gram.meta.json` (a plain JSON read).
+- Reading this run's own output files (metrics.json and `scores_test.npz`) for the report and the verification is part
+  of this one use and adds no row. Any computation that needs the test tokens again is a new access and needs a new
+  amendment.
+
+**What runs.** Start from `studies/tm_language_model` after `source env/env.sh`, on the CPU only. First the CPU gate:
+`../decision_layer/.venv-dl/bin/python -I ../decision_layer/scripts/cpu_load.py 10` must show at most 4.5 cores. The
+container's memory must allow about 20 GiB more (the measured peak 18.9 GiB; `mem_guard` stops the job at 60 GiB of
+its own memory, and its container-wide cap of 90 GiB of non-reclaimable memory stops it whatever else runs). The run
+is detached, because a session that ends after row 113 has used the split.
+
+Right before the launch three things are checked, and each output is kept with its sha256: every pin of the
+freeze record still has its value (`sha256sum -c`); the source tree hash recomputed by
+`tmlm.common.runlog.source_tree_hash` equals the record's `source_tree_hash`; and `tmlm.common.hashing.config_hash` of
+the config equals 7174364e60f2483a2f9394f4725c12b5137843bcc040b26ef84d40d05b59e0ef, the value run.json records as
+`config_sha256`. The launch happens only if all three match; otherwise a dated note lists each changed file with its
+diff before any launch. The command:
+
+```
+env -u TMLM_DATA_DIR -u TMLM_RESULTS_DIR CUDA_VISIBLE_DEVICES= setsid nohup scripts/cpu_slot.sh 1 -- nice -n 19 \
+    .venv-tm/bin/python scripts/mem_guard.py --scope group --limit-gib 60 -- scripts/run_logged.py --no-gpu-sampler \
+    --name cvtm_a3_H8_3_H8_4_test --config experiments/cvtm/configs/cvtm_a3_H8_3_H8_4_test.json -- \
+    .venv-tm/bin/python -u experiments/cvtm_test_read.py --config experiments/cvtm/configs/cvtm_a3_H8_3_H8_4_test.json \
+    --split test --confirm-test-read > results/cvtm_a3_H8_3_H8_4_test_launch.log 2>&1 < /dev/null &
+```
+
+This line is the one in force; the config's `launch` string is a shorter form without `env -u`, `setsid nohup` and the
+redirections. The environment is `.venv-tm`: the logged smoke's env.json gives the same Python (3.11.16) and the same
+package versions as the cache build's env.json.
+
+Time: about 15 min at 1 thread [derived]. The whole driver took 430.3 s in the logged smoke of revision 2 (metric
+`wall_s`; run.json 438.4 s): core load, the train 13-gram set and the validation pass. The test pass scores 322,929
+tokens against 282,587. There are no seeds: the core is deterministic (docs/13 line 168). The only intervals
+are document bootstraps over the scored documents (2,000 resamples, seed 20260924, 1106, 1, labelled derived; the
+driver checks that the config's bootstrap block equals these).
+
+**Rules (fixed before the read), exactly as the driver codes them** (`experiments/cvtm_test_read.py` docstring):
+1. Checks before the read. Each one must pass, or the test split is not opened:
+   - `code.cvtm_sources_published`: the sha256 of the nine `src/tmlm/cvtm` files pinned by the cache build (of 14 .py
+     files in the folder) equal the published pins;
+   - `code.cvtm_sources_equal_freeze_without_docstrings`: the same files with docstrings removed (AST) equal the
+     freeze copies;
+   - `freeze.cache_meta_sha256`, `freeze.core_file_sha256`, `freeze.core_state_hash`;
+   - `config.bootstrap_matches_protocol`;
+   - `data.store_digests`: the meta.json digests of the train, validation and test stores equal the literal values of
+     the config, which equal the CP anchor's records and docs/notes;
+   - `data.one_data_root`: the stores, the M2 flags and the access log lie under the study's `data/`, and
+     TMLM_DATA_DIR is unset;
+   - the validation pass: `validation.raw_doc_bytes_sha256`, `validation.doc_keep_equals_M2_flags`,
+     `reproduces.validation_cvtm_core`, `reproduces.validation_kn5_D0`, `reproduces.validation_kn5_knmodel` (exact
+     equality with the three frozen values), `validation.kn5_vote_form_within_1e-9_of_knmodel`.
+2. Refusals. The read is refused (exit 3, no row written) when any of these holds; `test.refused` names each one that
+   holds:
+   - a check of rule 1 failed;
+   - `--confirm-test-read` is missing;
+   - the run is not `run_logged.py` running as `cvtm_a3_H8_3_H8_4_test` (TMLM_RUN_DIR/run.json with status running);
+   - docs/13 has no heading line of this amendment;
+   - the access log does not have exactly 112 rows with sha256 4e406939...;
+   - an earlier row already carries this read's purpose.
+3. Checks after the read.
+   - Invalidating. If one fails, the numbers are kept and both verdicts read "invalid":
+     - `test.one_access_row_appended`;
+     - `test.access_row_is_this_run` (caller `corpus_store.load_split`, the config's purpose, the driver's own pid, a
+       time inside the run);
+     - `test.raw_doc_bytes_sha256`;
+     - `reproduces.test_kn5_knmodel`: the KNModel path of KN-5 equals 1.3718501779650507 exactly.
+
+     Trade-off: a last-bit difference in a context seen only on test would void both verdicts. This is accepted,
+     because the exact equality is the end-to-end identity check of the tokens and of the byte count.
+   - Reporting only. If one fails, the verdicts stay valid and the rows it concerns are labelled unverified:
+     - `test.doc_keep_equals_M2_flags`, for the de-overlapped rows;
+     - `test.kn5_vote_form_within_1e-9_of_knmodel`, for the vote-form KN-5 row and the paired differences that use it
+       (core minus KN-5, KN-5+D0 minus KN-5). It does not change the core's number, and H8.2 was registered on
+       validation.
+   - The split is not read again under this amendment; a second read needs its own dated amendment that declares the
+     second use. A run that ends after row 113 is written, whatever the cause, has used the split.
+   - Binding to the freeze (read in the report step): a run.json `config_sha256` other than
+     7174364e60f2483a2f9394f4725c12b5137843bcc040b26ef84d40d05b59e0ef, or a `source_tree_hash` or `prereg_sha256` other
+     than the freeze record's (`source_tree_hash`; `docs13_after_sha256`), makes both verdicts "invalid": the numbers
+     are kept and reported, and the split is not read again. The one exception is a file outside the driver's import
+     closure and the launch path, listed with its diff. The same holds when the independent recompute reports
+     "agrees": false: no verdict is written, and a dated diagnosis note follows.
+   - Exit status: 0 every check passed; 1 at least one check failed (`checks_failed` names them; the verdict fields say
+     valid or invalid); 3 refused, no row written; 4 a crash after the read began (`test.crashed_after_read`): the
+     numbers written so far are kept, both verdicts read "invalid", and the split is not read again. The metrics are
+     written after the access-row checks, again after the full-split rows and the verdicts, and at the end.
+4. H8.3 is MET when the CVTM-core's test bits per byte on the full split is at most 1.3219, the number of docs/13 line
+   178, compared as written; otherwise NOT MET. The comparator stays the registered KN-5 test 1.3719.
+5. H8.4 is MET when the CVTM-core's test bits per byte is strictly lower than that of KN-5+D0 on the full split. A tie
+   is NOT MET.
+6. Reporting, no threshold:
+   - every row on the full split and on the de-overlapped documents: CVTM-core, KN-5+D0, KN-5 in vote form, KN-5 by the
+     KNModel path, each with bits per byte, bits per token, documents, tokens, bytes and a document-bootstrap interval;
+   - the paired differences core minus KN-5+D0, core minus KN-5, KN-5+D0 minus KN-5 and core minus KN-5 (KNModel),
+     each with its interval, on both document sets.
+
+   No multiplicity correction is applied: each rule stands alone, with no combined line; H8.3 is the headline, and H8.4
+   is reported as its own rule beside it. A MET is a point-estimate statement about one deterministic model. The paired
+   interval is printed beside it, and the report says so when the interval crosses the bar: for H8.3 the pair core
+   minus KN-5 by the KNModel path (the registered comparator) against -0.04995 = 1.3219 - 1.3718501779650507; for H8.4
+   the pair core minus KN-5+D0 against 0.
+7. Wording.
+   - docs/13 lines 188 to 190: "the CVTM-core contains KN-5 as a component, so "beats KN-5" (H8.3) says nothing about
+     Tsetlin learning; its accuracy comes from counting and in-context copying expressed as clause votes". Lines 191 and
+     192: no claim that the CVTM matches a transformer trained beyond 600 s.
+   - In every sentence the model is "the count-vote core (KN-5 plus document caches in clause form, with no
+     Tsetlin-learned clauses)". The credit goes to counting and in-context copying, never to Tsetlin learning.
+   - No "LLM" wording (A4). Published WikiText-103 results appear only as derived placements, labelled not like for
+     like (A6 C-rule). Neither KN-5 nor KN-5+D0 is called "the strongest classical comparator".
+   - H8.3 does not re-judge H1.1.
+   - Every sentence names the use count (access 113; the 22nd WikiText-103 test row).
+   - Fixed wording of the outcomes, the H8.3 sentence first and the H8.4 sentence after it, each with its paired
+     interval:
+     - H8.3 met: "On the WikiText-103 test split (access 113; the 22nd WikiText-103 test row), the count-vote core (KN-5
+       plus document caches in clause form, with no Tsetlin-learned clauses) scored X bits per byte, D below KN-5's
+       1.3719 (registered: at most 1.3219): H8.3 MET; the credit goes to counting and in-context copying, not to
+       Tsetlin learning.";
+     - H8.3 not met: "lower than KN-5 by D, short of the registered 0.05: NOT MET" (or "not lower than KN-5: NOT MET"),
+       never "beats";
+     - H8.4 met: "lower than KN-5 plus a document unigram cache by E: H8.4 MET";
+     - H8.4 not met: "the core is not lower than KN-5 plus a document unigram cache (H8.4 NOT MET): on test it shows no
+       gain beyond that cache".
+   - Headline: H8.3 (A3's "P1 headline"), in one table of both verdicts and all rows.
+
+**Report step.**
+1. Folder: `results/<UTC>_cvtm_a3_H8_3_H8_4_test/`.
+2. Read first:
+   - run.json `exit_status`;
+   - `checks_failed`: empty, or reporting-only names;
+   - `test.access_log_after.rows`: 113;
+   - `test.access_row`: caller, purpose, pid equal to `driver.pid`, utc inside the run;
+   - the `check.reproduces.*` metrics;
+   - run.json `config_sha256` equal to 7174364e60f2483a2f9394f4725c12b5137843bcc040b26ef84d40d05b59e0ef, and
+     `source_tree_hash` and `prereg_sha256` equal to the freeze record's (`source_tree_hash`, `docs13_after_sha256`);
+     `dataset_hashes` against the literal digests. Any difference is ruled by the binding rule of rule 3.
+3. Then the independent recompute, before any verdict is written down:
+   `.venv-tm/bin/python experiments/cvtm_test_read_verify.py --run-dir <folder> --split test` must report
+   `"agrees": true`. It recomputes every bits-per-byte number from `scores_test.npz` and the per-document bits from the
+   per-token log2 P, computes the paired intervals with a new bootstrap seed (20261025, 113, 2) on the full split and on
+   the de-overlapped documents, recomputes both verdicts, and checks the KN-5 identity (the KNModel row equals
+   1.3718501779650507 within 1e-12) and the split's size (322,929 tokens, 1,289,123 bytes). It does not redo the
+   scoring, which rests on the exact validation reproduction and on the KN-5 identity. "agrees": false is ruled by the
+   binding rule of rule 3.
+4. Then results.md (rows H8.3 and H8.4, the de-overlapped numbers, the use count), the README counts, the corrections
+   named under "KB7, the archive", and the research log.
+
+**What a met or failed rule leads to.**
+- H8.3 met: the results page and the summaries report the number with the wording of rule 7.
+- H8.3 not met: D15, as defined above.
+- H8.4: reported either way in the same table.
+- Invalid: reported as invalid, with the numbers and the failed check (also after a crash, exit 4, and after a
+  binding mismatch).

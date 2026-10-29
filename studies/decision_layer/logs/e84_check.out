@@ -1,0 +1,6 @@
+random negatives, MultiWOZ dev, 16k, T 16000, s 8, mean of seeds 1-2: best-dev / final epoch / last-10 mean
+  refined   0.3530 / 0.3446 / 0.3438   beside it (no rule): minus hardest (2 seed(s)) best-dev +4.23, last-10 +5.98; TM minus LR -1.13
+  bge-large 0.3486 / 0.3328 / 0.3360   beside it (no rule): minus hardest (1 seed(s)) best-dev +1.26, last-10 +2.40; TM minus LR -1.74
+  C4        0.3500 / 0.3451 / 0.3431   beside it (no rule): minus hardest (2 seed(s)) best-dev +4.41, last-10 +5.92; TM minus LR -0.86
+G-ref (R24 gate: refined minus bge-large): best-dev +0.45 (needs >= -1.0), last-10 +0.77: MET, steady; an R24 draft may follow (test unread until it is frozen)
+G-C4 (R24 gate: C4 minus bge-large): best-dev +0.14 (needs >= -1.0), last-10 +0.71: MET, steady; an R24 draft may follow (test unread until it is frozen)

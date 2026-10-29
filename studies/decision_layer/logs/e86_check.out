@@ -1,0 +1,24 @@
+e86, the C4 agent (no neural network at any stage), dev, mean of seeds 1-2: best-dev / final epoch / last-10 mean; per seed best-dev; TM minus LR on the same bits (no rule)
+  multiwoz (16k, T 16000, s 8; LR dev 0.3586 from dry_e77mwoz_lr_mem_c4):
+    reference           (random, drop 0) 0.3500 / 0.3451 / 0.3431   seeds 0.3500, 0.3499   TM minus LR -0.86
+    random + drop 0.5   (random, drop 0.5) 0.3457 / 0.3454 / 0.3390   seeds 0.3457, 0.3457   TM minus LR -1.29
+  star (16k, T 16000, s 16; LR dev 0.6558 from dry_R21star_lr_mem_c4):
+    reference           (hardest, drop 0) 0.6562 / 0.6540 / 0.6507   seeds 0.6545, 0.6579   TM minus LR +0.04
+    hardest + drop 0.5  (hardest, drop 0.5) 0.6487 / 0.6472 / 0.6407   seeds 0.6484, 0.6491   TM minus LR -0.70
+    random + drop 0.5   (random, drop 0.5) 0.4593 / 0.4593 / 0.4431   seeds 0.4569, 0.4616   TM minus LR -19.65
+    beside it (no rule): the reference's seed 1 minus R22's seed-1 dev row (0.6545): +0.00
+  abcd (4k, T 4000, s 16; LR dev 0.8119 from dry_R21abcd_lr_mem_c4):
+    reference           (hardest, drop 0) 0.8420 / 0.8373 / 0.8367   seeds 0.8417, 0.8423   TM minus LR +3.01
+    hardest + drop 0.5  (hardest, drop 0.5) 0.8317 / 0.8317 / 0.8238   seeds 0.8309, 0.8325   TM minus LR +1.98
+    random + drop 0.5   (random, drop 0.5) 0.7576 / 0.7576 / 0.7400   seeds 0.7565, 0.7587   TM minus LR -5.43
+    beside it (no rule): the reference's seed 1 minus R23's seed-1 dev row (0.8417): +0.00
+Dropout per dataset (the dropout cell minus the reference; needs >= +0.5 at best-dev and on the last-10 mean):
+  multiwoz: random + drop 0.5 best-dev -0.43, last-10 -0.41: not kept
+  star: hardest + drop 0.5 best-dev -0.75, last-10 -1.00: not kept
+  abcd: hardest + drop 0.5 best-dev -1.03, last-10 -1.29: not kept
+E86.1 (drop 0.5 kept on all three datasets): not met (kept on: none)
+  E86.3 multiwoz: random + drop 0.5 minus the dataset's best setting (reference) best-dev -0.43, last-10 -0.41 (needs >= -0.5): holds
+  E86.3 star: random + drop 0.5 minus the dataset's best setting (reference) best-dev -19.69, last-10 -20.75 (needs >= -0.5): fails
+  E86.3 abcd: random + drop 0.5 minus the dataset's best setting (reference) best-dev -8.44, last-10 -9.68 (needs >= -0.5): fails
+E86.3 (random + drop 0.5 as one setting for all three datasets): not met
+Set aside (no rule; the queue stopped on 2026-10-23): e86_star_C4_c16000_s16_ref seed 1, written 2026-10-23T02:26:20Z, acc 0.6545; the row written after the note: 0.6545, difference +0.00

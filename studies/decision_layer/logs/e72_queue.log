@@ -1,0 +1,19 @@
+2026-10-19T05:05:19Z queue start: 2 jobs from logs/jobs_e72_smoke.txt, max 4.5 cores
+2026-10-19T05:05:29Z cores 4.19 over 10.0 s; throttled 1 of 100 periods
+2026-10-19T05:05:29Z start (try 1): HF_HUB_OFFLINE=1 OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 RAYON_NUM_THREADS=2 DL_GPU_FRAC=0.25 .venv-dl/bin/python scripts/table_run.py --table c4words-S1000-v1 scripts/abcd_explore.py --encoder none --arms tm --seed 1 --dataset abcd --parts mem,words,xcust,xrecent --clauses 200 --epochs 2 --tag e72_smoke_abcd >> logs/e72_smoke_abcd.log 2>&1
+2026-10-19T05:05:54Z exit 0 (try 1)
+2026-10-19T05:06:04Z cores 4.28 over 10.0 s; throttled 0 of 100 periods
+2026-10-19T05:06:04Z start (try 1): HF_HUB_OFFLINE=1 OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 RAYON_NUM_THREADS=2 DL_GPU_FRAC=0.25 .venv-dl/bin/python scripts/table_run.py --table c4words-S1000-v1 scripts/abcd_explore.py --encoder none --arms tm --seed 1 --dataset star --parts mem,words,xcust,xrecent --clauses 200 --epochs 2 --tag e72_smoke_star >> logs/e72_smoke_star.log 2>&1
+2026-10-19T05:06:36Z exit 0 (try 1)
+2026-10-19T05:06:36Z queue done
+2026-10-19T05:06:52Z queue start: 3 jobs from logs/jobs_e72.txt, max 4.5 cores
+2026-10-19T05:07:02Z cores 4.15 over 10.0 s; throttled 0 of 100 periods
+2026-10-19T05:07:02Z start (try 1): HF_HUB_OFFLINE=1 OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 RAYON_NUM_THREADS=2 DL_GPU_FRAC=0.25 .venv-dl/bin/python scripts/table_run.py --table c4words-S1000-v1 scripts/abcd_explore.py --encoder none --arms tm --seed 1 --dataset abcd --parts mem,words,xcust,xrecent --clauses 4000 --save --tag e72_abcd_Bc4_c4000 >> logs/e72_abcd_Bc4_c4000.log 2>&1
+2026-10-19T05:10:12Z exit 0 (try 1)
+2026-10-19T05:10:22Z cores 4.26 over 10.0 s; throttled 1 of 100 periods
+2026-10-19T05:10:22Z start (try 1): HF_HUB_OFFLINE=1 OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 RAYON_NUM_THREADS=2 DL_GPU_FRAC=0.25 .venv-dl/bin/python scripts/table_run.py --table c4words-S1000-v1 scripts/abcd_explore.py --encoder none --arms tm --seed 1 --dataset star --parts mem,words,xcust,xrecent --clauses 16000 --save --tag e72_star_Bc4_c16000 >> logs/e72_star_Bc4_c16000.log 2>&1
+2026-10-19T05:35:12Z exit 0 (try 1)
+2026-10-19T05:35:22Z cores 4.33 over 10.0 s; throttled 2 of 100 periods
+2026-10-19T05:35:22Z start (try 1): HF_HUB_OFFLINE=1 OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 RAYON_NUM_THREADS=2 DL_GPU_FRAC=0.25 .venv-dl/bin/python scripts/table_run.py --table c4words-S1000-v1 scripts/abcd_explore.py --encoder none --arms tm --seed 1 --dataset abcd --parts words,xcust,xrecent --clauses 4000 --tag e72_abcd_Bc4nomem_c4000 >> logs/e72_abcd_Bc4nomem_c4000.log 2>&1
+2026-10-19T05:38:38Z exit 0 (try 1)
+2026-10-19T05:38:38Z queue done

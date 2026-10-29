@@ -1,0 +1,17 @@
+0. the four files equal logs/plan_e87_receipts.frozen.json (static_text.py and abcd.py as published, docs/hash-table.md); the e70 and e71 records hold the values before e77's one-line change
+2. tokenizer port == reference (tokens and row ids) on 284,085 texts
+3. C4 abcd cust: 2865 bits (4521 train words), OR == max on all train and dev texts, 0.557 of dev bits on, concepts ef71d49d64c53935, codes 5892a4c43baee9f2
+3. C4 abcd recent: 2753 bits (4562 train words), OR == max on all train and dev texts, 0.556 of dev bits on, concepts e8703c040c0204ed, codes 9882ed1060153c94
+3. C4 abcd crecent: 2973 bits (4077 train words), OR == max on all train and dev texts, 0.543 of dev bits on, concepts b90def60dba18f8a, codes 3152264ee2368205
+3. C4 star cust: 3045 bits (6516 train words), OR == max on all train and dev texts, 0.537 of dev bits on, concepts 9358d15047c674c2, codes db909f5eacf64275
+3. C4 star recent: 2802 bits (6956 train words), OR == max on all train and dev texts, 0.542 of dev bits on, concepts f801165c9ff998ce, codes e6ad16a9117ee80e
+3. C4: two fits identical (concepts, thresholds, codes)
+3. C4 star crecent: 3134 bits (6504 train words), OR == max on all train and dev texts, 0.532 of dev bits on, concepts ec5af6d405c49715, codes 575405b10c74edca
+4. ('mem', 'words', 'xcust', 'xrecent') (3684, 6684) {'xcust': 2865, 'xrecent': 2753}
+4. ('mem', 'cwords', 'xcust', 'xcrecent') (3684, 6904) {'xcust': 2865, 'xcrecent': 2973}
+4. no potion: table() raises; not imported: sentence_transformers, model2vec, transformers
+1. ABCD cust: ExistsTC on potion's table == ExistsT (info, names, concepts, thresholds, codes; bits on 29190 train and 3684 dev texts); 3218 bits, codes 01052cc233b57cc6
+1. ABCD recent: ExistsTC on potion's table == ExistsT (info, names, concepts, thresholds, codes; bits on 29190 train and 3684 dev texts); 3033 bits, codes fa9b54657f57c4f1
+0. the four files equal logs/plan_e87_receipts.frozen.json (static_text.py and abcd.py as published, docs/hash-table.md); the e70 and e71 records hold the values before e77's one-line change
+ok
+exit 0

@@ -1,0 +1,7 @@
+ok smoke: passes; fails on a knob-off row with one other field, a knob row equal to the plain row, a 9-literal clause, wrong preds labels
+ok screen: +0.5 on both qualifies; +0.0 on either one does not; the larger last-10 gain wins; an exact tie goes to the earlier arm; no qualifier writes no job; no overwrite
+ok P1: met at exactly +2.0 (2 more of 100 pair rows), not met at +1.0
+ok mid: C1 met writes the 4 STAR / ABCD jobs; C1 missed on the last-10 mean writes none; no pick: not tested
+ok final: C2 met at 0.34 and not met at 0.335 against the bar 0.33755; C3 met at 0 and not met at -1.67; no pick: the closing line
+ok refusals: a row before the freeze, two rows for one tag and seed, other dev bits, another table, a final prediction off the row's acc, an LR row with another C (and an existing jobs file, above)
+PASSED

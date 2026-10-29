@@ -1,0 +1,7 @@
+ok done path: smoke, e83a, screen, e83b, mid, e83c, final in order; end line 'done', exit 0
+ok failed smoke: e83a not started; end line 'smoke failed', exit 1
+ok no pick: e83b and e83c skipped; final closes with 'none of the four knobs'; end line 'done'
+ok C1 missed: e83b ran, e83c skipped, final says 'C3: not tested'; end line 'done'
+ok SIGTERM: the driver stopped its stage's process group (no process left) and wrote the end line 'signal TERM', exit 143
+ok existing end log: the driver refuses and runs nothing; end line 'refused (logs/e83_end.log exists)', exit 1
+PASSED

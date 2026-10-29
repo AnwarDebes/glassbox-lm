@@ -1,0 +1,13 @@
+table/cache abcd cust: 2749 unique dev texts, gap 5.96e-08, rows aligned
+table/cache abcd recent: 2955 unique dev texts, gap 8.94e-08, rows aligned
+table/cache star cust: 4764 unique dev texts, gap 5.96e-08, rows aligned
+table/cache star recent: 4729 unique dev texts, gap 5.96e-08, rows aligned
+view: mem and words blocks equal the cached readable bits (STAR dev); unknown part raises
+view: xrecent appended after mem and words (4564 bits)
+existsT abcd cust: 3218 bits, OR == max on all 3684 dev texts, 0.538 of bits on, concepts 0fab5ba0a6bda85f
+existsT abcd recent: 3033 bits, OR == max on all 3684 dev texts, 0.534 of bits on, concepts a0472c2168d147da
+existsT star cust: 3374 bits, OR == max on all 6908 dev texts, 0.526 of bits on, concepts 70e220dd98682bbc
+existsT star recent: 3184 bits, OR == max on all 6908 dev texts, 0.523 of bits on, concepts 9cae1b540377b8ec
+existsT: two fits identical (concepts, thresholds, codes)
+ok
+exit 0

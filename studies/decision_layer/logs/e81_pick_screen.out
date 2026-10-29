@@ -1,0 +1,10 @@
+a3B  star     4k s 16: T 4000 0.6375, T 2000 0.6380, T 1000 0.6348; pick T 4000
+a3B  abcd     4k s 16: T 4000 0.8461, T 2000 0.8415, T 1000 0.8341; pick T 4000
+a3B  multiwoz 4k s 8: T 4000 0.3123, T 2000 0.2976, T 1000 0.2950; pick T 4000
+bge  star     4k s 16: T 4000 0.6401, T 2000 0.6439, T 1000 0.6506; pick T 1000
+bge  abcd     4k s 24: T 4000 0.8472, T 2000 0.8480, T 1000 0.8453; pick T 4000
+bge  multiwoz 4k s 8: T 4000 0.3325, T 2000 0.3181, T 1000 0.3230; pick T 4000
+C4   star     4k s 16: T 4000 0.6349, T 2000 0.6314, T 1000 0.6303; pick T 4000
+C4   abcd     4k s 16: T 4000 0.8417, T 2000 0.8396, T 1000 0.8301; pick T 4000
+C4   multiwoz 4k s 8: T 4000 0.3085, T 2000 0.2999, T 1000 0.2992; pick T 4000
+wrote logs/jobs_e81b.txt (3 jobs)

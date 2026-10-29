@@ -1,0 +1,3 @@
+ok screen: four arms, no b8 line; pick drop50; P1 met at +2.0; the frozen e83_pick.py still refuses for the missing b8 row
+ok mid and final: no pick (not tested, closing line, no b8 column) and a pick with C1, C2 and C3
+PASSED

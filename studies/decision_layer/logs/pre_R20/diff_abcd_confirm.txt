@@ -1,0 +1,8 @@
+73a74
+>     ap.add_argument("--grid-c", default="", help="lr arms: comma-separated C values, searched in this order, ties to the first (default GRID_C); added 2026-10-18 for R20")
+74a76,77
+>     if args.grid_c:  # added 2026-10-18 for R20: unset, GRID_C is unchanged
+>         GRID_C[:] = [float(c) for c in args.grid_c.split(",")]
+140a144,145
+>     if args.grid_c:  # added 2026-10-18 for R20: the C grid goes into the json
+>         meta_bits["grid_c"] = list(GRID_C)

@@ -1,0 +1,9 @@
+e81 rows now: 0
+Traceback (most recent call last):
+  File "studies/decision_layer/verification/e81_prep/check_refs.py", line 21, in <module>
+    d = R.get(a["ref4k"][ds], 1, agent, ds, 4000, 4000)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "studies/decision_layer/scripts/e81_pick.py", line 100, in get
+    if self.bits.setdefault((agent, ds), h) != h:
+       ^^^^^^^^^
+AttributeError: 'R0' object has no attribute 'bits'

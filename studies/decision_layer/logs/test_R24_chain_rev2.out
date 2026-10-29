@@ -1,0 +1,2 @@
+ok: done path (gate, network-free test, report, two-level); refusal on an existing end log; a failing check stops with 'check failed'; before any test file: both agents missing the gate (exit 3), a failing gate check, a failing network-free test, a changed registration, e85 not ended done, dry checks not passed, a source file off its MANIFEST; a failing two-level report
+PASSED

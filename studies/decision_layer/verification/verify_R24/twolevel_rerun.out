@@ -1,0 +1,6 @@
+tm_mem_ref_nrand:tm_mem_bge_nrand        +0.05 [-0.83, +0.95] (two-level)
+tm_mem_c4_nrand:tm_mem_bge_nrand         +0.53 [-0.32, +1.40] (two-level)
+tm_mem_ref_nrand:lr_mem_ref              -2.49 [-3.42, -1.53] (two-level)
+tm_mem_c4_nrand:lr_mem_c4                -1.55 [-2.42, -0.68] (two-level)
+tm_mem_bge_nrand:lr_mem_bge              -1.89 [-2.75, -1.04] (two-level)
+wrote studies/decision_layer/verification/verify_R24/twolevel_R24mwoz.rerun.json

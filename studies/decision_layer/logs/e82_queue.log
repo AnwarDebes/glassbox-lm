@@ -1,0 +1,20 @@
+2026-10-21T01:31:36Z queue start: 6 jobs from logs/jobs_e82.txt, max 4.5 cores
+2026-10-21T01:31:46Z cores 2.38 over 10.0 s; throttled 0 of 100 periods
+2026-10-21T01:31:46Z start (try 1): HF_HUB_OFFLINE=1 OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 RAYON_NUM_THREADS=2 TOKENIZERS_PARALLELISM=false DL_GPU_FRAC=0.25 .venv-dl/bin/python scripts/newtable_run.py --table-dir data/tables/c4words_a3B_v1 --name c4words-a3B-v1 scripts/abcd_explore.py --encoder none --arms tm --parts mem,words,xcust,xrecent --save --dataset abcd --clauses 4000 --s 16 --seed 1 --tag e82_abcd_Bt_c4000_s16 >> logs/e82_abcd_Bt_c4000_s16_seed1.log 2>&1
+2026-10-21T01:36:16Z exit 0 (try 1)
+2026-10-21T01:36:26Z cores 2.85 over 10.0 s; throttled 2 of 100 periods
+2026-10-21T01:36:26Z start (try 1): HF_HUB_OFFLINE=1 OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 RAYON_NUM_THREADS=2 TOKENIZERS_PARALLELISM=false DL_GPU_FRAC=0.25 .venv-dl/bin/python scripts/newtable_run.py --table-dir data/tables/c4words_a3B_v1 --name c4words-a3B-v1 scripts/abcd_explore.py --encoder none --arms tm --parts mem,words,xcust,xrecent --save --dataset abcd --clauses 4000 --s 16 --seed 2 --tag e82_abcd_Bt_c4000_s16 >> logs/e82_abcd_Bt_c4000_s16_seed2.log 2>&1
+2026-10-21T01:40:56Z exit 0 (try 1)
+2026-10-21T01:41:06Z cores 3.46 over 10.0 s; throttled 3 of 100 periods
+2026-10-21T01:41:06Z start (try 1): HF_HUB_OFFLINE=1 OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 RAYON_NUM_THREADS=2 TOKENIZERS_PARALLELISM=false DL_GPU_FRAC=0.25 .venv-dl/bin/python scripts/newtable_run.py --table-dir data/tables/c4words_a3B_v1 --name c4words-a3B-v1 scripts/abcd_explore.py --encoder none --arms tm --parts mem,words,xcust,xrecent --save --dataset multiwoz --clauses 16000 --s 8 --seed 1 --tag e82_multiwoz_Bt_c16000_s8 >> logs/e82_multiwoz_Bt_c16000_s8_seed1.log 2>&1
+2026-10-21T02:08:27Z queue start: 3 jobs from logs/jobs_e82_rest.txt, max 4.5 cores
+2026-10-21T02:08:37Z cores 3.32 over 10.0 s; throttled 0 of 100 periods
+2026-10-21T02:08:37Z start (try 1): HF_HUB_OFFLINE=1 OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 RAYON_NUM_THREADS=2 TOKENIZERS_PARALLELISM=false DL_GPU_FRAC=0.25 .venv-dl/bin/python scripts/newtable_run.py --table-dir data/tables/c4words_a3B_v1 --name c4words-a3B-v1 scripts/abcd_explore.py --encoder none --arms tm --parts mem,words,xcust,xrecent --save --dataset multiwoz --clauses 16000 --s 8 --seed 2 --tag e82_multiwoz_Bt_c16000_s8 >> logs/e82_multiwoz_Bt_c16000_s8_seed2.log 2>&1
+2026-10-21T02:35:23Z exit 0 (try 1)
+2026-10-21T02:35:33Z cores 3.50 over 10.0 s; throttled 0 of 100 periods
+2026-10-21T02:35:33Z start (try 1): HF_HUB_OFFLINE=1 OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 RAYON_NUM_THREADS=2 TOKENIZERS_PARALLELISM=false DL_GPU_FRAC=0.25 .venv-dl/bin/python scripts/newtable_run.py --table-dir data/tables/c4words_a3B_v1 --name c4words-a3B-v1 scripts/abcd_explore.py --encoder none --arms tm --parts mem,words,xcust,xrecent --save --dataset star --clauses 16000 --s 16 --seed 1 --tag e82_star_Bt_c16000_s16 >> logs/e82_star_Bt_c16000_s16_seed1.log 2>&1
+2026-10-21T02:58:34Z exit 0 (try 1)
+2026-10-21T02:58:44Z cores 3.32 over 10.0 s; throttled 1 of 100 periods
+2026-10-21T02:58:44Z start (try 1): HF_HUB_OFFLINE=1 OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 RAYON_NUM_THREADS=2 TOKENIZERS_PARALLELISM=false DL_GPU_FRAC=0.25 .venv-dl/bin/python scripts/newtable_run.py --table-dir data/tables/c4words_a3B_v1 --name c4words-a3B-v1 scripts/abcd_explore.py --encoder none --arms tm --parts mem,words,xcust,xrecent --save --dataset star --clauses 16000 --s 16 --seed 2 --tag e82_star_Bt_c16000_s16 >> logs/e82_star_Bt_c16000_s16_seed2.log 2>&1
+2026-10-21T03:21:46Z exit 0 (try 1)
+2026-10-21T03:21:46Z queue done

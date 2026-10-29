@@ -1,0 +1,84 @@
+{
+ "what": "e77 view smoke test (C4 view B, MultiWOZ)",
+ "table": "c4words-S1000-v1",
+ "n_bits": 6580,
+ "n_labels": 128,
+ "bits_sha256": {
+  "train": "a8c92a30430ec501d95cd7519e84847fb448d240356745a7d6474ae9dad71c66",
+  "dev": "311e8933d2724bf8fc3ee1a5cef412010bd3a580c076217e3a964bcd286d68ba"
+ },
+ "static_info": {
+  "xcust": {
+   "what": "customer's words so far",
+   "K": 512,
+   "n_bins": 8,
+   "iters": 25,
+   "seed": 0,
+   "draw": "cpu",
+   "n_train_texts": 56581,
+   "n_train_vocab": 3060,
+   "n_bits": 2673,
+   "concepts_sha256": "36fbcddfc54147b7fd9f4d2066b3a49aba4ae63e78c20c3d06398b60934f7f4a",
+   "thresholds_sha256": "22e96e1e491fe1342ba62d616a0491018aeccc6d00fa79005ecf7a4cc5293b48",
+   "codes_sha256": "1cde1029bc9dd55702635d0ac3c4817ba0fdb614e7e32dd6eaf71009365e44e9",
+   "table": "c4words-S1000-v1",
+   "table_file_sha256": "e1771d9eaf4a07f71c532fe4f3ef91909334cbdcb4d7785ff0bb7ed0e51c5c0a",
+   "table_sha256": "46311c47aee71a003126836f5b955f2a8fa5cdb786cdcbb926188c3c6c4f671a",
+   "tokenizer": "port of tokenize_ref.py 2c3c1aff44ed34e0 (words; a token not in the list is dropped)",
+   "n_words": 63091,
+   "dim": 500
+  },
+  "xrecent": {
+   "what": "last 3 turns",
+   "K": 512,
+   "n_bins": 8,
+   "iters": 25,
+   "seed": 0,
+   "draw": "cpu",
+   "n_train_texts": 56581,
+   "n_train_vocab": 4160,
+   "n_bits": 2645,
+   "concepts_sha256": "a09cfd7287a87d9c901ea4085337d0405cc93df04f7b49c46847a924035b7f3e",
+   "thresholds_sha256": "170dfad302006d4906d6d4b6d7f3208d07ad8af6065865024b0248da854a0208",
+   "codes_sha256": "13cccc5b696b8c90f41f165e482476ce5f114e43c32e46e5bc935d2457a7c247",
+   "table": "c4words-S1000-v1",
+   "table_file_sha256": "e1771d9eaf4a07f71c532fe4f3ef91909334cbdcb4d7785ff0bb7ed0e51c5c0a",
+   "table_sha256": "46311c47aee71a003126836f5b955f2a8fa5cdb786cdcbb926188c3c6c4f671a",
+   "tokenizer": "port of tokenize_ref.py 2c3c1aff44ed34e0 (words; a token not in the list is dropped)",
+   "n_words": 63091,
+   "dim": 500
+  }
+ },
+ "per_part": {
+  "mem": {
+   "n_bits_name_prefix": 128
+  },
+  "words": {
+   "n_bits_name_prefix": 0
+  },
+  "xcust": {
+   "n_bits_name_prefix": 0
+  },
+  "xrecent": {
+   "n_bits_name_prefix": 0
+  }
+ },
+ "first_names": [
+  "done(Attraction-Inform)",
+  "done(Attraction-Inform+Attraction-NoOffer)",
+  "done(Attraction-Inform+Attraction-Recommend)",
+  "done(Attraction-Inform+Attraction-Recommend+general-reqmore)",
+  "done(Attraction-Inform+Attraction-Request)",
+  "...",
+  "some word of the last 3 turns is close to concept 510 (italian|tuscan|mediterranean|gastronomy) at level 6 (cos >= 0.389)",
+  "some word of the last 3 turns is close to concept 511 (attempting|attempt|attempted|unable) at level 0 (cos >= 0.376)",
+  "some word of the last 3 turns is close to concept 511 (attempting|attempt|attempted|unable) at level 1 (cos >= 0.431)",
+  "some word of the last 3 turns is close to concept 511 (attempting|attempt|attempted|unable) at level 2 (cos >= 0.464)",
+  "some word of the last 3 turns is close to concept 511 (attempting|attempt|attempted|unable) at level 3 (cos >= 0.514)"
+ ],
+ "mean_bits_on": {
+  "train": 3037.1,
+  "dev": 3102.7
+ },
+ "seconds": 26.7
+}

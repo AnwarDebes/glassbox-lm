@@ -1,0 +1,28 @@
+2026-10-21T03:23:16Z
+frozen_utc: 2026-10-21T01:31:09Z
+first start: 2026-10-21T01:31:46Z
+plan sha256 now: 1dfea7622161cb8b5db1db93b9990180c3b6ba2f25a928808c8b7388a58a577a
+frozen sha256:   1dfea7622161cb8b5db1db93b9990180c3b6ba2f25a928808c8b7388a58a577a
+--- diff_frozen:
+NEW scripts/r25_check.py
+NEW scripts/r25_refs.py
+NEW scripts/report_twolevel.py
+NEW scripts/verify_policy_a3B.py
+--- queue log tries:
+6
+0
+2026-10-21T01:36:16Z exit 0 (try 1)
+2026-10-21T01:40:56Z exit 0 (try 1)
+2026-10-21T02:35:23Z exit 0 (try 1)
+2026-10-21T02:58:34Z exit 0 (try 1)
+2026-10-21T03:21:46Z exit 0 (try 1)
+--- checker:
+39
+0
+--- table hashes:
+4a1ed2aed7aa4ce7  table.npz
+49dae3df4202d976  words.txt
+2c3c1aff44ed34e0  tokenize_ref.py
+21d0c4fb14849853  vectors.npy
+35ae923e408084ff  README.md
+1d1a00ad74634f77  MANIFEST.sha256

@@ -1,0 +1,14 @@
+ok whole run: a waits for a0's done line and the CPU gate (5.10 cores twice, then 1.00); a0 waits for 3 empty-GPU checks (6 checks);
+   bdry: dry queue, gate, dry check; b: the 9-job file, gate, bar check; bkill: gate, full check; every second start refused
+ok an existing output refuses a first start; a failed a0 stops at its dataset, and a and bdry refuse
+ok a failing dry check ends bdry and b refuses; b refuses when the dry check did not end with its pass line
+ok pins: a changed note, a missing freeze record, a job file, a pinned repository file (row with a parenthesis) or this chain off the
+   note's table (a finish-pass row is not a repository row), an e80 chain stage holding its lock (a stale lock file is fine),
+   src/dl/tm.py changed since the freeze
+   (scripts/e86_check.py, off e87's path, is fine); an unknown stage
+ok a restart after a handoff timeout (the old end line kept); none when an output exists or after a failed check; a held lock refuses
+ok fail closed: an nvidia-smi error and a cpu_load.py error count as busy (a0 and a end at their time limits)
+ok A_PARALLEL=1: waits for b; the three datasets at once into their own outputs; a failing dataset fails the stage;
+   a gate timeout and a TERM both stop the running jobs
+ok signals: TERM while A0 runs (its job's process group stopped too), HUP while a waits, INT while bkill waits: 'killed by signal <name>' at once
+PASSED

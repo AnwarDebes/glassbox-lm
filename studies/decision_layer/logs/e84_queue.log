@@ -1,0 +1,14 @@
+2026-10-22T12:16:24Z queue start: 4 jobs from logs/jobs_e84.txt, max 4.5 cores
+2026-10-22T12:16:34Z cores 0.22 over 10.0 s; throttled 0 of 100 periods
+2026-10-22T12:16:34Z start (try 1): HF_HUB_OFFLINE=1 OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 RAYON_NUM_THREADS=2 TOKENIZERS_PARALLELISM=false DL_GPU_FRAC=0.25 .venv-dl/bin/python scripts/knob_run.py --neg-sampling random --preds-out results/explore/e84_preds/e84_multiwoz_bge_c16000_s8_nrand_seed1.npz -- scripts/abcd_explore.py --encoder bge-large --parts mem,intent,step,words --arms tm --save --dataset multiwoz --clauses 16000 --T 16000 --s 8 --seed 1 --tag e84_multiwoz_bge_c16000_s8_nrand >> logs/e84_multiwoz_bge_c16000_s8_nrand_seed1.log 2>&1
+2026-10-22T12:23:02Z exit 0 (try 1)
+2026-10-22T12:23:12Z cores 0.17 over 10.0 s; throttled 0 of 100 periods
+2026-10-22T12:23:12Z start (try 1): HF_HUB_OFFLINE=1 OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 RAYON_NUM_THREADS=2 TOKENIZERS_PARALLELISM=false DL_GPU_FRAC=0.25 .venv-dl/bin/python scripts/knob_run.py --neg-sampling random --preds-out results/explore/e84_preds/e84_multiwoz_bge_c16000_s8_nrand_seed2.npz -- scripts/abcd_explore.py --encoder bge-large --parts mem,intent,step,words --arms tm --save --dataset multiwoz --clauses 16000 --T 16000 --s 8 --seed 2 --tag e84_multiwoz_bge_c16000_s8_nrand >> logs/e84_multiwoz_bge_c16000_s8_nrand_seed2.log 2>&1
+2026-10-22T12:29:41Z exit 0 (try 1)
+2026-10-22T12:29:51Z cores 0.13 over 10.0 s; throttled 0 of 100 periods
+2026-10-22T12:29:51Z start (try 1): HF_HUB_OFFLINE=1 OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 RAYON_NUM_THREADS=2 TOKENIZERS_PARALLELISM=false DL_GPU_FRAC=0.25 .venv-dl/bin/python scripts/knob_run.py --neg-sampling random --preds-out results/explore/e84_preds/e84_multiwoz_C4_c16000_s8_nrand_seed1.npz -- scripts/table_run.py --table c4words-S1000-v1 scripts/abcd_explore.py --encoder none --arms tm --parts mem,words,xcust,xrecent --save --dataset multiwoz --clauses 16000 --T 16000 --s 8 --seed 1 --tag e84_multiwoz_C4_c16000_s8_nrand >> logs/e84_multiwoz_C4_c16000_s8_nrand_seed1.log 2>&1
+2026-10-22T12:48:40Z exit 0 (try 1)
+2026-10-22T12:48:50Z cores 0.14 over 10.0 s; throttled 0 of 100 periods
+2026-10-22T12:48:50Z start (try 1): HF_HUB_OFFLINE=1 OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 RAYON_NUM_THREADS=2 TOKENIZERS_PARALLELISM=false DL_GPU_FRAC=0.25 .venv-dl/bin/python scripts/knob_run.py --neg-sampling random --preds-out results/explore/e84_preds/e84_multiwoz_C4_c16000_s8_nrand_seed2.npz -- scripts/table_run.py --table c4words-S1000-v1 scripts/abcd_explore.py --encoder none --arms tm --parts mem,words,xcust,xrecent --save --dataset multiwoz --clauses 16000 --T 16000 --s 8 --seed 2 --tag e84_multiwoz_C4_c16000_s8_nrand >> logs/e84_multiwoz_C4_c16000_s8_nrand_seed2.log 2>&1
+2026-10-22T13:07:45Z exit 0 (try 1)
+2026-10-22T13:07:45Z queue done

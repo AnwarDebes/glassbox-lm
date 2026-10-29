@@ -1,0 +1,16 @@
+ok smoke stage: three tiny rows -> passes
+ok smoke stage: T = clauses (the --T flag lost) -> fails
+ok smoke stage: other dev bits for bge-large -> fails
+ok screen picks: +0.3 taken (also exactly +0.3), +0.29 not, exact tie to T = clauses, T 2000 / T 1000 tie to T 2000
+ok follow-up jobs: exactly the 6 expected lines (no C4 line although C4 STAR picked T 1000)
+ok a second screen refuses to overwrite jobs_e81b.txt
+ok final stage (B2 met): B1 lines with the epoch columns, TM minus LR, the r = 1 lines and B2 equal values computed here
+ok final stage (B2 not met): B1 lines with the epoch columns, TM minus LR, the r = 1 lines and B2 equal values computed here
+ok final stage (refined MultiWOZ pick T = clauses): today's TM stands, B2 not met, not steady
+ok refusal: e81 row written before the freeze (e81_star_a3B_c4000_s16_T2000 seed 1: written before the freeze)
+ok refusal: refined row not on the a3B table (e81_star_a3B_c4000_s16_T2000 seed 1: not on the a3B table)
+ok refusal: other TM settings (30 epochs) (e81_star_a3B_c4000_s16_T2000 seed 1: other TM settings differ from the reference rows')
+ok refusal: other dev bits (e81_star_a3B_c4000_s16_T2000 seed 1: dev bits bits-oth differ from the other a3B star rows' bits-a3B)
+ok refusal: two rows with one tag and seed (e81_star_a3B_c4000_s16_T2000 seed 1: 2 rows (need exactly 1))
+ok refusal: LR on other bits (dry_e81star_lr_bge: not LR on the same dev bits with the wide grid)
+PASSED

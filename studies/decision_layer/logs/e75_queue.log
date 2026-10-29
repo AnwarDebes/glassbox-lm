@@ -1,0 +1,17 @@
+2026-10-19T20:23:29Z queue start: 5 jobs from logs/jobs_e75.txt, max 4.5 cores
+2026-10-19T20:23:39Z cores 2.28 over 10.0 s; throttled 0 of 100 periods
+2026-10-19T20:23:39Z start (try 1): HF_HUB_OFFLINE=1 OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 RAYON_NUM_THREADS=2 DL_GPU_FRAC=0.25 .venv-dl/bin/python scripts/table_run.py --table c4words-S1000-v1 scripts/abcd_explore.py --encoder none --arms tm --seed 1 --parts mem,words,xcust,xrecent --dataset abcd --clauses 4000 --s 24 --tag e75_abcd_Bc4_c4000_s24 >> logs/e75_abcd_Bc4_c4000_s24.log 2>&1
+2026-10-19T20:26:14Z exit 0 (try 1)
+2026-10-19T20:26:24Z cores 2.20 over 10.0 s; throttled 0 of 100 periods
+2026-10-19T20:26:24Z start (try 1): HF_HUB_OFFLINE=1 OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 RAYON_NUM_THREADS=2 DL_GPU_FRAC=0.25 .venv-dl/bin/python scripts/abcd_explore.py --dataset abcd --encoder bge-large --parts mem,intent,step,words --arms tm --seed 1 --clauses 4000 --s 8 --tag e75_abcd_bge_c4000_s8 >> logs/e75_abcd_bge_c4000_s8.log 2>&1
+2026-10-19T20:27:16Z exit 0 (try 1)
+2026-10-19T20:27:26Z cores 2.23 over 10.0 s; throttled 0 of 100 periods
+2026-10-19T20:27:26Z start (try 1): HF_HUB_OFFLINE=1 OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 RAYON_NUM_THREADS=2 DL_GPU_FRAC=0.25 .venv-dl/bin/python scripts/abcd_explore.py --dataset abcd --encoder bge-large --parts mem,intent,step,words --arms tm --seed 1 --clauses 4000 --s 12 --tag e75_abcd_bge_c4000_s12 >> logs/e75_abcd_bge_c4000_s12.log 2>&1
+2026-10-19T20:28:13Z exit 0 (try 1)
+2026-10-19T20:28:23Z cores 2.19 over 10.0 s; throttled 0 of 100 periods
+2026-10-19T20:28:23Z start (try 1): HF_HUB_OFFLINE=1 OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 RAYON_NUM_THREADS=2 DL_GPU_FRAC=0.25 .venv-dl/bin/python scripts/abcd_explore.py --dataset abcd --encoder bge-large --parts mem,intent,step,words --arms tm --seed 1 --clauses 4000 --s 16 --tag e75_abcd_bge_c4000_s16 >> logs/e75_abcd_bge_c4000_s16.log 2>&1
+2026-10-19T20:29:08Z exit 0 (try 1)
+2026-10-19T20:29:18Z cores 2.17 over 10.0 s; throttled 0 of 100 periods
+2026-10-19T20:29:18Z start (try 1): HF_HUB_OFFLINE=1 OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 RAYON_NUM_THREADS=2 DL_GPU_FRAC=0.25 .venv-dl/bin/python scripts/abcd_explore.py --dataset abcd --encoder bge-large --parts mem,intent,step,words --arms tm --seed 1 --clauses 4000 --s 24 --tag e75_abcd_bge_c4000_s24 >> logs/e75_abcd_bge_c4000_s24.log 2>&1
+2026-10-19T20:30:02Z exit 0 (try 1)
+2026-10-19T20:30:02Z queue done

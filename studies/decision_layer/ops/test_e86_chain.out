@@ -1,0 +1,4 @@
+ok: waits for the process, then for 3 empty-GPU checks in a row (busy on checks 1 and 3: 6 checks); both runs dry then the 14 jobs;
+    dry and run as separate stages; refusals: a second start, run before the dry checks passed, a failing dry check stops before the jobs,
+    a changed plan, an unknown stage
+PASSED

@@ -1,0 +1,18 @@
+ok  dev row e83_multiwoz_a3B_c16000_s8_nrand seed 1: exactly one
+ok  dev row e84_multiwoz_C4_c16000_s8_nrand seed 1: exactly one
+ok  dev row e84_multiwoz_bge_c16000_s8_nrand seed 1: exactly one
+ok  dry tm_mem_ref_nrand_s8: encoder none, parts, random negatives
+ok  dry tm_mem_ref_nrand_s8: the arm's table (4a1ed2ae)
+ok  dry tm_mem_ref_nrand_s8: cfg equals e83_multiwoz_a3B_c16000_s8_nrand's but the seed and the dry size (200, 2)
+ok  dry tm_mem_ref_nrand: train/dev bits equal e83_multiwoz_a3B_c16000_s8_nrand's; test = dev
+ok  dry lr_mem_ref: dev accuracy 0.364316 and C 0.001 equal dry_e82mwoz_lr_mem_a3B's
+ok  dry tm_mem_c4_nrand_s8: encoder none, parts, random negatives
+ok  dry tm_mem_c4_nrand_s8: the arm's table (e1771d9e)
+ok  dry tm_mem_c4_nrand_s8: cfg equals e84_multiwoz_C4_c16000_s8_nrand's but the seed and the dry size (200, 2)
+ok  dry tm_mem_c4_nrand: train/dev bits equal e84_multiwoz_C4_c16000_s8_nrand's; test = dev
+ok  dry lr_mem_c4: dev accuracy 0.358609 and C 0.001 equal dry_e77mwoz_lr_mem_c4's
+ok  dry tm_mem_bge_nrand_s8: encoder bge-large, parts, random negatives
+ok  dry tm_mem_bge_nrand_s8: cfg equals e84_multiwoz_bge_c16000_s8_nrand's but the seed and the dry size (200, 2)
+ok  dry tm_mem_bge_nrand: train/dev bits equal e84_multiwoz_bge_c16000_s8_nrand's; test = dev
+ok  dry lr_mem_bge: dev accuracy 0.365946 and C 0.01 equal dry_e81multiwoz_lr_bge's
+all dry checks passed

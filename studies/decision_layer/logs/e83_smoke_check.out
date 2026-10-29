@@ -1,0 +1,5 @@
+smoke knob-off identity: the row through knob_run.py with no knob equals the plain row (every field but tag, time, train_s, peak_gpu_mb and the evaluations' clock 't')
+smoke knobs on: cfg neg_sampling random, clause_drop 0.5; differs from the plain row
+smoke budget: cfg max_literals 8, start trim; longest clause 8 literals
+smoke preds files: off, on and b8 agree with ABCD dev's labels, their history and their acc
+smoke: ok

@@ -1,0 +1,3 @@
+smoke a3B: ok (1 row(s); needs 200 clauses, T 50, 2 epochs, s 16, written after the freeze, the dev bits of e82_abcd_Bt_c4000_s16, the a3B table)
+smoke bge: ok (1 row(s); needs 200 clauses, T 50, 2 epochs, s 24, written after the freeze, the dev bits of e75_abcd_bge_c4000_s24)
+smoke C4: ok (1 row(s); needs 200 clauses, T 50, 2 epochs, s 16, written after the freeze, the dev bits of e74c_abcd_Bc4_c4000_s16)

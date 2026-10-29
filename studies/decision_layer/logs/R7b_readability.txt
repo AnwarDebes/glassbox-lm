@@ -1,0 +1,398 @@
+clinc150 {
+ "test_acc": 0.9659555555555555,
+ "median_literals_nonempty": 16.0,
+ "share_le_8_literals": 0.0024255814485137045,
+ "share_le_32_literals": 1.0,
+ "share_with_plain_literal": 0.09222331448607525,
+ "firing_clauses_median": 3275.7,
+ "firing_with_positive_vote_for_winner_median": 1697.3,
+ "receipt_equals_model_prediction": 1.0,
+ "max_literals_max": 17,
+ "vs_nearest_centre_post_hoc": {
+  "agree": 0.9919777777777778,
+  "n_disagree": 36.1,
+  "tm_right_when_disagree": 0.5512798820407928,
+  "centre_right_when_disagree": 0.211421815060335
+ },
+ "nearest_centre_rule_post_hoc": {
+  "val": 0.9686666666666667,
+  "test": 0.9633333333333334,
+  "oos_auroc_test_max_sim": 0.9658063333333333
+ },
+ "sufficiency_post_hoc": {
+  "top1": 0.6777333319187164,
+  "top3": 0.92120001912117,
+  "top5": 0.9617333471775055,
+  "top10": 0.9814444541931152
+ },
+ "pruning_post_hoc": {
+  "le4": {
+   "val": 0.01666666666666667,
+   "test": 0.017533333333333335
+  },
+  "le8": {
+   "val": 0.016600000000000004,
+   "test": 0.017266666666666666
+  },
+  "le16": {
+   "val": 0.9712666666666667,
+   "test": 0.9659555555555555
+  },
+  "le32": {
+   "val": 0.9712666666666667,
+   "test": 0.9659555555555555
+  },
+  "le64": {
+   "val": 0.9712666666666667,
+   "test": 0.9659555555555555
+  },
+  "plain_only": {
+   "val": 0.0668,
+   "test": 0.06035555555555555
+  },
+  "all": {
+   "val": 0.9712666666666667,
+   "test": 0.9659555555555555
+  }
+ },
+ "min_explanation_post_hoc": {
+  "median_items": 1.0,
+  "share_1_item": 0.6777333319187164,
+  "share_le3_items": 0.9358666837215424,
+  "share_found_le20": 0.9936000049114228,
+  "median_literals": 16.0,
+  "share_le5_literals": 0.0006888888776302338,
+  "share_le10_literals": 0.0013111111242324115
+ }
+}
+LR-readable: {
+ "refit_equals_registered_prediction": 1.0,
+ "median_items": 1.0,
+ "share_1_item": 0.9380000233650208,
+ "share_le3_items": 0.9993333220481873,
+ "share_found_le20": 1.0,
+ "median_literals": 1.0,
+ "share_le5_literals": 1.0,
+ "share_le10_literals": 1.0
+}
+QUERY: "please text john"   (true intent: text)
+  DECISION: text  (vote 4376; runner-up no -4350; 3481 of 4000 clauses fire)
+    +75  IF near(make_call) < p25 AND near(order_checks) < p25 AND near(weather) < p50 AND NONE OF [nearest = exchange_rate, nearest = restaurant_suggestion, todo_list_update in top 3, contains "for an", contains "hotel", contains "money", ... (+7 more)]
+    +56  IF near(directions) < p75 AND near(rewards_balance) < p25 AND near(shopping_list_update) < p50 AND near(thank_you) < p5 AND near(todo_list) < p50 AND NONE OF [nearest = insurance_change, alarm in top 3, pay_bill in top 3, contains "appointment", contains "great", contains "joke about", ... (+5 more)]
+    +56  IF near(apr) < p5 AND near(payday) < p25 AND near(schedule_maintenance) < p75 AND near(timezone) < p75 AND NONE OF [contains "a good", contains "able", contains "account to", contains "after", contains "call", contains "card as", ... (+6 more)]
+    (these 3 clauses carry 1% of the positive vote for text)
+
+QUERY: "i don't understand your language; switch the language"   (true intent: change_language)
+  DECISION: change_language  (vote 5305; runner-up cancel_reservation -4237; 3376 of 4000 clauses fire)
+    +135  IF near(calendar_update) < p75 AND NONE OF [nearest = translate, contains "after", contains "boss", contains "enough", contains "good", contains "help with", ... (+9 more)]
+    +128  IF near(change_user_name) < p50 AND near(pin_change) < p25 AND near(tell_joke) < p50 AND near(whisper_mode) < p50 AND NONE OF [nearest = direct_deposit, nearest = translate, contains "didn", contains "info", contains "many points", contains "our", ... (+6 more)]
+    +124  IF near(account_blocked) < p50 AND near(application_status) < p5 AND near(apr) < p75 AND near(food_last) < p5 AND near(traffic) < p25 AND NONE OF [nearest = account_blocked, nearest = translate, contains "book a", contains "card as", contains "express card", contains "friday", ... (+5 more)]
+    (these 3 clauses carry 1% of the positive vote for change_language)
+
+QUERY: "give me a 10 minute timer"   (true intent: timer)
+  DECISION: timer  (vote 6248; runner-up reminder_update -5159; 2959 of 4000 clauses fire)
+    +117  IF near(alarm) < p50 AND near(confirm_reservation) < p5 AND near(find_phone) < p25 AND near(greeting) < p75 AND near(next_holiday) < p5 AND near(tell_joke) < p25 AND NONE OF [nearest = taxes, nearest = timezone, interest_rate in top 3, update_playlist in top 3, contains "american", contains "capital", ... (+4 more)]
+    +102  IF near(confirm_reservation) < p50 AND near(current_location) < p50 AND near(traffic) < p75 AND NONE OF [nearest = change_volume, nearest = redeem_rewards, contains "cleaning", contains "damaged", contains "more", contains "phone", ... (+7 more)]
+    +87  IF near(book_hotel) < p75 AND near(find_phone) < p75 AND near(what_can_i_ask_you) < p75 AND NONE OF [freeze_account in top 3, tell_joke in top 3, todo_list_update in top 3, contains "1st", contains "7th", contains "ai", ... (+7 more)]
+    (these 3 clauses carry 1% of the positive vote for timer)
+
+QUERY: "i want to get the w-2 form"   (true intent: w2)
+  DECISION: w2  (vote 5634; runner-up uber -4462; 3324 of 4000 clauses fire)
+    +115  IF near(schedule_meeting) < p25 AND NONE OF [nearest = flip_coin, nearest = report_lost_card, nearest = schedule_maintenance, nearest = taxes, whisper_mode in top 3, contains "does it", ... (+9 more)]
+    +99  IF near(cancel_reservation) < p5 AND near(date) < p50 AND near(flight_status) < p25 AND near(restaurant_reviews) < p25 AND near(taxes) < p5 AND near(timezone) < p50 AND NONE OF [nearest = replacement_card_duration, change_language in top 3, contains "card in", contains "create", contains "freeze my", contains "hotel room", ... (+4 more)]
+    +94  IF near(book_hotel) < p75 AND near(calories) < p5 AND near(cook_time) < p5 AND near(roll_dice) < p50 AND near(schedule_meeting) < p50 AND NONE OF [nearest = taxes, contains "aware", contains "bank i", contains "correct", contains "credit limit", contains "flight with", ... (+5 more)]
+    (these 3 clauses carry 1% of the positive vote for w2)
+
+QUERY: "that's true"   (true intent: yes)
+  DECISION: yes  (vote 7377; runner-up no -3583; 3409 of 4000 clauses fire)
+    +142  IF near(card_declined) < p75 AND near(meeting_schedule) < p75 AND near(thank_you) < p25 AND NONE OF [nearest = thank_you, contains "at 6", contains "calories in", contains "chase bank", contains "chili", contains "kind", ... (+7 more)]
+    +135  IF near(calendar_update) < p5 AND near(change_ai_name) < p5 AND near(exchange_rate) < p5 AND near(greeting) < p75 AND near(restaurant_reservation) < p25 AND near(spelling) < p50 AND NONE OF [nearest = thank_you, contains "are a", contains "chris", contains "i pay", contains "it s", contains "nutrition facts", ... (+4 more)]
+    +129  IF near(credit_limit_change) < p5 AND near(thank_you) < p50 AND NONE OF [nearest = what_are_your_hobbies, freeze_account in top 3, w2 in top 3, contains "bad", contains "but", contains "calories", ... (+8 more)]
+    (these 3 clauses carry 1% of the positive vote for yes)
+
+QUERY: "could you tell me what my credit score is"   (true intent: credit_score)
+  DECISION: credit_score  (vote 6114; runner-up credit_limit -5297; 3005 of 4000 clauses fire)
+    +124  IF near(carry_on) < p25 AND NONE OF [nearest = apr, nearest = improve_credit_score, todo_list_update in top 3, contains "date of", contains "dl123", contains "it safe", ... (+9 more)]
+    +117  IF near(change_ai_name) < p75 AND near(oil_change_when) < p25 AND near(roll_dice) < p75 AND near(who_do_you_work_for) < p25 AND NONE OF [nearest = improve_credit_score, nearest = lost_luggage, nearest = next_holiday, nearest = translate, freeze_account in top 3, contains "and returning", ... (+6 more)]
+    +116  IF near(carry_on) < p5 AND near(current_location) < p50 AND near(expiration_date) < p50 AND NONE OF [nearest = improve_credit_score, routing in top 3, what_can_i_ask_you in top 3, contains "at 7", contains "call", contains "look like", ... (+7 more)]
+    (these 3 clauses carry 1% of the positive vote for credit_score)
+
+QUERY: "can you help me locate my phone, please"   (true intent: find_phone)
+  DECISION: find_phone  (vote 12316; runner-up account_blocked -4867; 3199 of 4000 clauses fire)
+    +129  IF near(cancel) < p25 AND near(change_user_name) < p5 AND near(flip_coin) < p75 AND near(what_are_your_hobbies) < p25 AND NONE OF [nearest = meeting_schedule, nearest = sync_device, contains "1st", contains "fuel", contains "give me", contains "i go", ... (+6 more)]
+    +115  IF near(balance) < p5 AND near(freeze_account) < p50 AND near(schedule_meeting) < p75 AND near(sync_device) < p50 AND NONE OF [nearest = next_song, contains "a recipe", contains "a travel", contains "location to", contains "luggage", contains "my bank", ... (+6 more)]
+    +106  IF near(roll_dice) < p50 AND near(sync_device) < p75 AND near(thank_you) < p50 AND NONE OF [nearest = accept_reservations, nearest = credit_limit, nearest = maybe, book_flight in top 3, repeat in top 3, contains "100", ... (+7 more)]
+    (these 3 clauses carry 1% of the positive vote for find_phone)
+
+QUERY: "make 1234 a new pin for my savings account"   (true intent: pin_change)
+  DECISION: pin_change  (vote 7850; runner-up freeze_account -4500; 3268 of 4000 clauses fire)
+    +115  IF near(balance) < p5 AND near(change_accent) < p25 AND near(change_user_name) < p25 AND near(confirm_reservation) < p5 AND near(pto_request) < p75 AND near(routing) < p5 AND near(whisper_mode) < p25 AND NONE OF [nearest = change_ai_name, contains "able", contains "away", contains "minutes", contains "package", contains "put in", ... (+3 more)]
+    +112  IF near(gas_type) < p50 AND NONE OF [nearest = shopping_list, pay_bill in top 3, routing in top 3, todo_list in top 3, contains "calling", contains "fill", ... (+9 more)]
+    +111  IF near(w2) < p5 AND NONE OF [nearest = timer, calendar_update in top 3, routing in top 3, transfer in top 3, update_playlist in top 3, contains "a fun", ... (+9 more)]
+    (these 3 clauses carry 1% of the positive vote for pin_change)
+
+banking77 {
+ "test_acc": 0.9324675324675324,
+ "median_literals_nonempty": 16.0,
+ "share_le_8_literals": 0.005951431951985052,
+ "share_le_32_literals": 1.0,
+ "share_with_plain_literal": 0.2593578080948304,
+ "firing_clauses_median": 2674.2,
+ "firing_with_positive_vote_for_winner_median": 1421.4,
+ "receipt_equals_model_prediction": 1.0,
+ "max_literals_max": 16,
+ "vs_nearest_centre_post_hoc": {
+  "agree": 0.9902922077922078,
+  "n_disagree": 29.9,
+  "tm_right_when_disagree": 0.4579763855741968,
+  "centre_right_when_disagree": 0.2811469143917844
+ },
+ "nearest_centre_rule_post_hoc": {
+  "val": 0.9312063808574277,
+  "test": 0.9308441558441558
+ },
+ "sufficiency_post_hoc": {
+  "top1": 0.824999988079071,
+  "top3": 0.9773376405239105,
+  "top5": 0.9975649178028106,
+  "top10": 0.999350643157959
+ },
+ "pruning_post_hoc": {
+  "le4": {
+   "val": 0.058025922233300095,
+   "test": 0.056298701298701306
+  },
+  "le8": {
+   "val": 0.06111665004985045,
+   "test": 0.05957792207792208
+  },
+  "le16": {
+   "val": 0.9356929212362912,
+   "test": 0.9324675324675324
+  },
+  "le32": {
+   "val": 0.9356929212362912,
+   "test": 0.9324675324675324
+  },
+  "le64": {
+   "val": 0.9356929212362912,
+   "test": 0.9324675324675324
+  },
+  "plain_only": {
+   "val": 0.3819541375872383,
+   "test": 0.37493506493506495
+  },
+  "all": {
+   "val": 0.9356929212362912,
+   "test": 0.9324675324675324
+  }
+ },
+ "min_explanation_post_hoc": {
+  "median_items": 1.0,
+  "share_1_item": 0.824999988079071,
+  "share_le3_items": 0.9828895926475525,
+  "share_found_le20": 1.0,
+  "median_literals": 16.0,
+  "share_le5_literals": 0.02824675248702988,
+  "share_le10_literals": 0.030487012246157973
+ }
+}
+LR-readable: {
+ "refit_equals_registered_prediction": 1.0,
+ "median_items": 1.0,
+ "share_1_item": 0.8123376369476318,
+ "share_le3_items": 0.9970778822898865,
+ "share_found_le20": 1.0,
+ "median_literals": 1.0,
+ "share_le5_literals": 0.9993506073951721,
+ "share_le10_literals": 1.0
+}
+QUERY: "how secure is a disposable virtual card"   (true intent: get_disposable_virtual_card)
+  DECISION: get_disposable_virtual_card  (vote 1469; runner-up virtual_card_not_working -3651; 2671 of 4000 clauses fire)
+    +116  IF near(change_pin) < p25 AND NONE OF [nearest = card_linking, nearest = disposable_card_limits, pending_top_up in top 3, contains "a way", contains "asked for", contains "assist me", ... (+9 more)]
+    +110  IF near(transfer_fee_charged) < p25 AND NONE OF [nearest = disposable_card_limits, cancel_transfer in top 3, contains "charges", contains "currencies", contains "debit", contains "declining my", ... (+9 more)]
+    +102  IF near(pending_transfer) < p50 AND near(topping_up_by_card) < p25 AND NONE OF [nearest = disposable_card_limits, contains "company", contains "could i", contains "edit", contains "exchanging currencies", contains "fast", ... (+8 more)]
+    (these 3 clauses carry 1% of the positive vote for get_disposable_virtual_card)
+
+QUERY: "I received cash from the ATM earlier, but this shows up as pending in the app.  I've got the cash already.  How can this be still pending?"   (true intent: pending_cash_withdrawal)
+  DECISION: pending_cash_withdrawal  (vote 7835; runner-up exchange_via_app -3883; 2267 of 4000 clauses fire)
+    +140  IF near(apple_pay_or_google_pay) < p5 AND near(extra_charge_on_statement) < p75 AND NONE OF [nearest = declined_cash_withdrawal, automatic_top_up in top 3, contains "anything", contains "arrived yet", contains "as possible", contains "got cash", ... (+8 more)]
+    +120  IF near(change_pin) < p50 AND NONE OF [nearest = declined_cash_withdrawal, nearest = extra_charge_on_statement, balance_not_updated_after_bank_transfer in top 3, contains "change my", contains "eur", contains "funds come", ... (+9 more)]
+    +98  IF near(extra_charge_on_statement) < p25 AND near(transfer_timing) < p25 AND NONE OF [nearest = declined_cash_withdrawal, nearest = lost_or_stolen_card, card_acceptance in top 3, contains "account that", contains "am unable", contains "an international", ... (+8 more)]
+    (these 3 clauses carry 1% of the positive vote for pending_cash_withdrawal)
+
+QUERY: "How do I link a new card?"   (true intent: card_linking)
+  DECISION: card_linking  (vote 6147; runner-up card_about_to_expire -3719; 2520 of 4000 clauses fire)
+    +231  IF nearest = card_linking
+    +92  IF near(card_linking) >= p5 AND near(declined_card_payment) < p75 AND near(disposable_card_limits) < p25 AND NONE OF [top_up_by_cash_or_cheque in top 3, contains "activated", contains "an additional", contains "any fees", contains "did", contains "get money", ... (+7 more)]
+    +92  IF contains "card" AND NONE OF [nearest = receiving_money, reverted_card_payment? in top 3, unable_to_verify_identity in top 3, contains "a uk", contains "am trying", contains "and it", ... (+9 more)]
+    (these 3 clauses carry 1% of the positive vote for card_linking)
+
+QUERY: "Hi, I was trying to use my card but it was declining by ATM. I have cross checked with two different ATMs but i was facing the same issue. Could you please check my account."   (true intent: declined_cash_withdrawal)
+  DECISION: declined_cash_withdrawal  (vote 2871; runner-up card_swallowed -3258; 2145 of 4000 clauses fire)
+    +126  IF near(card_arrival) < p50 AND NONE OF [nearest = request_refund, nearest = wrong_amount_of_cash_received, contains "a top", contains "again", contains "ago and", contains "and need", ... (+9 more)]
+    +125  IF NONE OF [nearest = pending_cash_withdrawal, nearest = Refund_not_showing_up, contains "an additional", contains "as soon", contains "france", contains "missing", ... (+10 more)]
+    +122  IF near(card_arrival) < p25 AND near(supported_cards_and_currencies) < p50 AND NONE OF [nearest = direct_debit_payment_not_recognised, nearest = wrong_amount_of_cash_received, contains "a card", contains "a restaurant", contains "account is", contains "card payment", ... (+8 more)]
+    (these 3 clauses carry 1% of the positive vote for declined_cash_withdrawal)
+
+QUERY: "why do i not have a virtual card"   (true intent: getting_virtual_card)
+  DECISION: getting_virtual_card  (vote 3623; runner-up get_disposable_virtual_card -4274; 2735 of 4000 clauses fire)
+    +123  IF near(Refund_not_showing_up) < p75 AND near(activate_my_card) < p25 AND near(card_payment_wrong_exchange_rate) < p75 AND NONE OF [nearest = virtual_card_not_working, contains "a transaction", contains "am", contains "cards and", contains "cash i", contains "dispute", ... (+7 more)]
+    +109  IF near(cash_withdrawal_charge) < p25 AND near(failed_transfer) < p25 AND NONE OF [nearest = age_limit, nearest = card_linking, disposable_card_limits in top 3, contains "500", contains "abroad and", contains "am", ... (+8 more)]
+    +93  IF near(top_up_limits) < p75 AND near(visa_or_mastercard) < p75 AND NONE OF [contains "accepted", contains "allow me", contains "away", contains "can t", contains "cannot", contains "didn", ... (+8 more)]
+    (these 3 clauses carry 1% of the positive vote for getting_virtual_card)
+
+QUERY: "Someone needs to make me aware when there are extra charges for payments. I happened to be looking at the app earlier and noticed a charge associated to a payment that was extra that no one made me aware of before at all."   (true intent: card_payment_fee_charged)
+  DECISION: card_payment_fee_charged  (vote 3089; runner-up cancel_transfer -2862; 2209 of 4000 clauses fire)
+    +133  IF near(balance_not_updated_after_cheque_or_cash_deposit) < p75 AND near(lost_or_stolen_phone) < p50 AND NONE OF [lost_or_stolen_card in top 3, contains "account what", contains "card isn", contains "could", contains "did a", contains "didnt", ... (+8 more)]
+    +127  IF near(terminate_account) < p75 AND NONE OF [nearest = cash_withdrawal_charge, nearest = declined_cash_withdrawal, contactless_not_working in top 3, contains "able to", contains "being charged", contains "card will", ... (+9 more)]
+    +114  IF NONE OF [nearest = visa_or_mastercard, exchange_via_app in top 3, contains "an", contains "being declined", contains "for getting", contains "i don", ... (+10 more)]
+    (these 3 clauses carry 1% of the positive vote for card_payment_fee_charged)
+
+QUERY: "I bought something, but the exchange rate looks wrong."   (true intent: card_payment_wrong_exchange_rate)
+  DECISION: card_payment_wrong_exchange_rate  (vote 6514; runner-up transaction_charged_twice -5503; 2516 of 4000 clauses fire)
+    +151  IF near(apple_pay_or_google_pay) < p25 AND near(card_acceptance) < p50 AND near(exchange_rate) >= p5 AND near(top_up_by_bank_transfer_charge) < p50 AND near(verify_my_identity) < p50 AND NONE OF [nearest = wrong_exchange_rate_for_cash_withdrawal, automatic_top_up in top 3, contains "allowed", contains "anything", contains "card how", contains "cash", ... (+5 more)]
+    +147  IF near(beneficiary_not_allowed) < p75 AND NONE OF [nearest = exchange_rate, contains "as my", contains "cash", contains "denied", contains "double charged", contains "forgot", ... (+9 more)]
+    +135  IF near(automatic_top_up) < p50 AND NONE OF [nearest = wrong_exchange_rate_for_cash_withdrawal, balance_not_updated_after_cheque_or_cash_deposit in top 3, contains "figure out", contains "i exchange", contains "i link", contains "i noticed", ... (+9 more)]
+    (these 3 clauses carry 1% of the positive vote for card_payment_wrong_exchange_rate)
+
+QUERY: "WTF??? I tried to withdraw some money at a Metro bank on High St. Kensington and without any notice it disappeared in the machine. The bank was already closed so I couldn't do anything. How do I get it back?"   (true intent: card_swallowed)
+  DECISION: declined_cash_withdrawal  (vote 598; runner-up pending_cash_withdrawal -3032; 2130 of 4000 clauses fire)
+    +126  IF near(card_arrival) < p50 AND NONE OF [nearest = request_refund, nearest = wrong_amount_of_cash_received, contains "a top", contains "again", contains "ago and", contains "and need", ... (+9 more)]
+    +125  IF NONE OF [nearest = pending_cash_withdrawal, nearest = Refund_not_showing_up, contains "an additional", contains "as soon", contains "france", contains "missing", ... (+10 more)]
+    +122  IF near(card_arrival) < p25 AND near(supported_cards_and_currencies) < p50 AND NONE OF [nearest = direct_debit_payment_not_recognised, nearest = wrong_amount_of_cash_received, contains "a card", contains "a restaurant", contains "account is", contains "card payment", ... (+8 more)]
+    (these 3 clauses carry 1% of the positive vote for declined_cash_withdrawal)
+
+hwu64 {
+ "test_acc": 0.9169144981412639,
+ "median_literals_nonempty": 16.0,
+ "share_le_8_literals": 0.01811372400289447,
+ "share_le_32_literals": 1.0,
+ "share_with_plain_literal": 0.2608624396390273,
+ "firing_clauses_median": 2896.2,
+ "firing_with_positive_vote_for_winner_median": 1553.2,
+ "receipt_equals_model_prediction": 1.0,
+ "max_literals_max": 17,
+ "vs_nearest_centre_post_hoc": {
+  "agree": 0.9845724907063197,
+  "n_disagree": 16.6,
+  "tm_right_when_disagree": 0.30901281724811136,
+  "centre_right_when_disagree": 0.2806599609540786
+ },
+ "nearest_centre_rule_post_hoc": {
+  "val": 0.9275092936802974,
+  "test": 0.9163568773234201
+ },
+ "sufficiency_post_hoc": {
+  "top1": 0.8517657876014709,
+  "top3": 0.9806691348552704,
+  "top5": 0.9922862470149993,
+  "top10": 0.9992565035820007
+ },
+ "pruning_post_hoc": {
+  "le4": {
+   "val": 0.09479553903345725,
+   "test": 0.08838289962825278
+  },
+  "le8": {
+   "val": 0.09488847583643122,
+   "test": 0.08838289962825278
+  },
+  "le16": {
+   "val": 0.93317843866171,
+   "test": 0.9170074349442379
+  },
+  "le32": {
+   "val": 0.93317843866171,
+   "test": 0.9169144981412639
+  },
+  "le64": {
+   "val": 0.93317843866171,
+   "test": 0.9169144981412639
+  },
+  "plain_only": {
+   "val": 0.39098513011152414,
+   "test": 0.3720260223048327
+  },
+  "all": {
+   "val": 0.93317843866171,
+   "test": 0.9169144981412639
+  }
+ },
+ "min_explanation_post_hoc": {
+  "median_items": 1.0,
+  "share_1_item": 0.8517657876014709,
+  "share_le3_items": 0.9860594689846038,
+  "share_found_le20": 1.0,
+  "median_literals": 16.0,
+  "share_le5_literals": 0.032156132627278566,
+  "share_le10_literals": 0.032156132627278566
+ }
+}
+LR-readable: {
+ "refit_equals_registered_prediction": 1.0,
+ "median_items": 1.0,
+ "share_1_item": 0.7592936754226685,
+ "share_le3_items": 0.9972118735313416,
+ "share_found_le20": 1.0,
+ "median_literals": 1.0,
+ "share_le5_literals": 0.9981412291526794,
+ "share_le10_literals": 1.0
+}
+QUERY: "please tweet about the problem i m facing with the product of company"   (true intent: social post)
+  DECISION: social post  (vote 6434; runner-up social query -4074; 2993 of 4000 clauses fire)
+    +162  IF near(play podcasts) < p75 AND NONE OF [nearest = lists remove, nearest = social query, contains "add new", contains "correct response", contains "five pm", contains "italian", ... (+9 more)]
+    +161  IF near(alarm query) < p50 AND near(iot hue lighton) < p75 AND NONE OF [nearest = social query, contains "a list", contains "as", contains "does my", contains "florida", contains "going to", ... (+8 more)]
+    +152  IF near(alarm set) < p25 AND near(social query) >= p5 AND NONE OF [nearest = general confirm, nearest = social query, contains "address of", contains "am i", contains "cancel", contains "delete my", ... (+8 more)]
+    (these 3 clauses carry 1% of the positive vote for social post)
+
+QUERY: "raise the volume of my music player by fifty percent"   (true intent: audio volume up)
+  DECISION: audio volume up  (vote 6070; runner-up music settings -3133; 2807 of 4000 clauses fire)
+    +139  IF near(general explain) < p50 AND near(news query) < p75 AND near(weather query) < p50 AND NONE OF [nearest = audio volume down, contains "an uber", contains "convert", contains "happy", contains "many", contains "me how", ... (+7 more)]
+    +139  IF near(audio volume down) < p75 AND NONE OF [nearest = audio volume down, social query in top 3, contains "fifteen", contains "for the", contains "it to", contains "living", ... (+9 more)]
+    +128  IF near(general explain) < p75 AND near(iot hue lightchange) < p50 AND near(iot hue lightoff) < p5 AND NONE OF [nearest = audio volume down, general repeat in top 3, contains "a cup", contains "complaint about", contains "hundred and", contains "know about", ... (+7 more)]
+    (these 3 clauses carry 1% of the positive vote for audio volume up)
+
+QUERY: "what time is the alarm set for tomorrow"   (true intent: alarm query)
+  DECISION: alarm query  (vote 4901; runner-up datetime query -4441; 1911 of 4000 clauses fire)
+    +191  IF near(iot cleaning) < p50 AND NONE OF [nearest = alarm set, transport ticket in top 3, contains "cleaner", contains "dinner", contains "everything", contains "i need", ... (+9 more)]
+    +163  IF near(audio volume up) < p50 AND near(transport ticket) < p25 AND NONE OF [nearest = alarm set, nearest = weather query, contains "a game", contains "at noon", contains "but i", contains "chinese", ... (+8 more)]
+    +157  IF near(audio volume down) < p25 AND near(calendar remove) < p25 AND near(general affirm) < p50 AND near(iot wemo on) >= p5 AND near(play game) >= p5 AND NONE OF [nearest = alarm set, contains "again clarify", contains "com", contains "cool", contains "more time", contains "nine hundred", ... (+5 more)]
+    (these 3 clauses carry 2% of the positive vote for alarm query)
+
+QUERY: "turn on the wemo plug socket to connect my charger to it"   (true intent: iot wemo on)
+  DECISION: iot wemo on  (vote 4835; runner-up iot cleaning -3703; 2805 of 4000 clauses fire)
+    +170  IF near(lists remove) < p50 AND near(qa factoid) >= p5 AND near(qa stock) < p25 AND NONE OF [nearest = iot wemo off, contains "appreciate it", contains "be the", contains "channel", contains "go", contains "lights in", ... (+7 more)]
+    +165  IF near(social post) < p50 AND near(takeaway query) < p50 AND NONE OF [nearest = iot wemo off, contains "chess", contains "do i", contains "every", contains "hey olly", contains "how many", ... (+8 more)]
+    +140  IF near(iot cleaning) < p5 AND near(iot wemo off) < p75 AND near(lists query) < p75 AND near(takeaway order) < p25 AND NONE OF [nearest = iot hue lightoff, nearest = lists query, nearest = recommendation locations, music likeness in top 3, contains "buy", contains "can you", ... (+6 more)]
+    (these 3 clauses carry 1% of the positive vote for iot wemo on)
+
+QUERY: "s2, i can not understand that."   (true intent: general explain)
+  DECISION: general explain  (vote 7476; runner-up general commandstop -4930; 3016 of 4000 clauses fire)
+    +119  IF near(general negate) < p50 AND near(general repeat) < p50 AND NONE OF [audio volume up in top 3, contains "day of", contains "dentist appointment", contains "election", contains "from now", contains "give", ... (+8 more)]
+    +110  IF near(calendar set) < p25 AND NONE OF [nearest = alarm remove, nearest = cooking recipe, nearest = general repeat, contains "a recipe", contains "add a", contains "all my", ... (+9 more)]
+    +104  IF near(email querycontact) < p25 AND NONE OF [nearest = general negate, nearest = takeaway order, nearest = transport query, contains "address", contains "calendar for", contains "class", ... (+9 more)]
+    (these 3 clauses carry 1% of the positive vote for general explain)
+
+QUERY: "olly please can you shut up."   (true intent: general commandstop)
+  DECISION: general commandstop  (vote 7444; runner-up general explain -6005; 2280 of 4000 clauses fire)
+    +114  IF NONE OF [lists createoradd in top 3, contains "divided", contains "eggs", contains "have any", contains "he", contains "incorrect", ... (+10 more)]
+    +101  IF near(audio volume down) < p25 AND NONE OF [nearest = general dontcare, contains "catch that", contains "correcly", contains "get home", contains "how to", contains "many", ... (+9 more)]
+    +94  IF near(audio volume down) < p5 AND near(iot hue lightchange) < p25 AND NONE OF [nearest = general repeat, contains "account", contains "birthday", contains "delete all", contains "game with", contains "how can", ... (+8 more)]
+    (these 3 clauses carry 1% of the positive vote for general commandstop)
+
+QUERY: "please set an alarm clock for my next meeting with the team at three pm next friday"   (true intent: alarm set)
+  DECISION: alarm set  (vote 8557; runner-up calendar set -3058; 2339 of 4000 clauses fire)
+    +246  IF NONE OF [nearest = alarm query, contains "correct", contains "dollars", contains "don t", contains "favorites", contains "find the", ... (+10 more)]
+    +203  IF near(general explain) < p5 AND near(qa stock) < p75 AND NONE OF [nearest = alarm query, contains "did i", contains "eleven am", contains "forecast", contains "get a", contains "in a", ... (+8 more)]
+    +169  IF near(music settings) < p25 AND near(qa stock) < p75 AND NONE OF [nearest = alarm query, contains "answers", contains "book me", contains "brightness", contains "description", contains "find the", ... (+8 more)]
+    (these 3 clauses carry 1% of the positive vote for alarm set)
+
+QUERY: "start audiobook the time traveller"   (true intent: play audiobook)
+  DECISION: play audiobook  (vote 2849; runner-up play podcasts -2821; 2847 of 4000 clauses fire)
+    +150  IF near(cooking recipe) < p50 AND near(email querycontact) < p50 AND NONE OF [contains "alarms do", contains "best", contains "clean my", contains "command", contains "detail please", contains "get home", ... (+8 more)]
+    +147  IF NONE OF [contains "alarms", contains "any events", contains "be the", contains "catch that", contains "clarify me", contains "confirm", ... (+10 more)]
+    +146  IF NONE OF [nearest = play podcasts, iot wemo on in top 3, contains "at eight", contains "details please", contains "display", contains "events going", ... (+10 more)]
+    (these 3 clauses carry 1% of the positive vote for play audiobook)
+
+2026-10-16T12:22:41Z

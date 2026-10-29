@@ -1,0 +1,13 @@
+C4 4k s  8: dev 0.3085
+C4 4k s 12: dev 0.3089
+C4 4k s 16: dev 0.3098
+C4 4k s 24: dev 0.3029
+C4: best s 16 (0.3098); s 8 0.3085; gap +0.14; pick s 8
+bge-large 4k s  8: dev 0.3325
+bge-large 4k s 12: dev 0.3375
+bge-large 4k s 16: dev 0.3375
+bge-large 4k s 24: dev 0.3400
+bge-large: best s 24 (0.3400); s 8 0.3325; gap +0.75; pick s 24
+C4: 16k s 8 0.3038; 16k pick s 8 0.3038 -> s* 8
+bge-large: 16k s 8 0.3359; 16k pick s 24 0.3312 -> s* 8
+tuned dev gap at 16k (C4 at s* 8 minus bge-large at s* 8): -3.21 points

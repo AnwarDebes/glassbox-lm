@@ -1,0 +1,3 @@
+# R10c jobs lost to CUDA out-of-memory at 01:41 UTC (GPU full), same commands, started when fewer jobs run
+.venv-dl/bin/python scripts/abcd_bandit.py --learner linucb --passes 15 --eval test --out confirm/R10 --alpha 0.1 --tag R10c_a0.1 --seed 3
+.venv-dl/bin/python scripts/abcd_bandit.py --learner linucb --passes 15 --eval test --out confirm/R10 --alpha 1.0 --tag R10c_a1.0 --seed 3

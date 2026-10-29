@@ -1,0 +1,23 @@
+--- logs/pre_R20/abcd_closed_loop.py	2026-10-17 11:47:05.940768179 +0000
++++ scripts/abcd_closed_loop.py	2026-10-18 20:15:31.808384973 +0000
+@@ -81,6 +81,7 @@
+     ap.add_argument("--tag", default="")
+     ap.add_argument("--view", default="readable", choices=["readable", "free"], help="free: the bandit's label-free view (R10); models from --model-glob")
+     ap.add_argument("--model-file", default="", help="free view: model file pattern with {seed}, e.g. results/explore/model_tm_X_seed{seed}.npz")
++    ap.add_argument("--dataset", default="abcd", choices=["abcd", "star"], help="added 2026-10-18 for R20: STAR as well")
+     args = ap.parse_args()
+     if args.split == "test" and not args.out:
+         raise SystemExit("test split only in registered runs (--out <registration>)")
+@@ -88,7 +89,12 @@
+     assert parts[0] == "mem", "memory bits must be the first block"
+     tr, blist = load_examples("train")
+     ev, _ = load_examples(args.split)
++    if args.dataset != "abcd":  # added 2026-10-18 for R20
++        tr, blist = load_examples("train", args.dataset)
++        ev, _ = load_examples(args.split, args.dataset)
+     E = np.load(ROOT / "data" / "emb" / f"abcd__{args.encoder}.npz")
++    if args.dataset != "abcd":  # added 2026-10-18 for R20
++        E = np.load(ROOT / "data" / "emb" / f"{args.dataset}__{args.encoder}.npz")
+     etr = {f: E[f"train__{f}"] for f in ("cust", "recent", "full")}
+     eev = {f: E[f"{args.split}__{f}"] for f in ("cust", "recent", "full")}
+     src = ROOT / "results" / "confirm" / args.registration / args.name

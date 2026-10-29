@@ -1,0 +1,85 @@
+checks {'reference': {'dev_acc_cpu_decision': 0.6394035900405327, 'dev_acc_cpu_bits': 0.6395483497394325, 'bits_differ': 44, 'rows_differ': 42, 'n_rows': 6908}, 'chosen': {'dev_acc_cpu_decision': 0.6343370005790387, 'dev_acc_cpu_bits': 0.6343370005790387, 'bits_differ': 0, 'rows_differ': 0, 'n_rows': 6908}}
+Loading weights:   0%|          | 0/391 [00:00<?, ?it/s]Loading weights:   8%|▊         | 32/391 [00:00<00:01, 260.69it/s]Loading weights:  15%|█▌        | 59/391 [00:00<00:01, 197.03it/s]Loading weights:  20%|██        | 80/391 [00:00<00:01, 182.90it/s]Loading weights:  25%|██▌       | 99/391 [00:00<00:01, 152.52it/s]Loading weights:  31%|███       | 120/391 [00:00<00:01, 162.45it/s]Loading weights:  36%|███▌      | 141/391 [00:00<00:01, 163.91it/s]Loading weights:  41%|████      | 161/391 [00:00<00:01, 168.39it/s]Loading weights:  47%|████▋     | 182/391 [00:01<00:01, 173.91it/s]Loading weights:  52%|█████▏    | 204/391 [00:01<00:01, 167.16it/s]Loading weights:  57%|█████▋    | 221/391 [00:01<00:01, 136.30it/s]Loading weights:  61%|██████▏   | 240/391 [00:01<00:01, 148.34it/s]Loading weights:  68%|██████▊   | 265/391 [00:01<00:00, 169.09it/s]Loading weights:  73%|███████▎  | 286/391 [00:01<00:00, 174.24it/s]Loading weights:  79%|███████▉  | 308/391 [00:01<00:00, 179.55it/s]Loading weights:  85%|████████▍ | 331/391 [00:01<00:00, 186.96it/s]Loading weights:  91%|█████████ | 355/391 [00:02<00:00, 196.90it/s]Loading weights:  96%|█████████▌| 376/391 [00:02<00:00, 175.57it/s]Loading weights: 100%|██████████| 391/391 [00:02<00:00, 178.68it/s]
+{
+ "label": "rough: shared machine, one CPU thread, batch 1",
+ "n": 1000,
+ "parts": [
+  "mem",
+  "words",
+  "xcust",
+  "xrecent"
+ ],
+ "model": "results/explore/abcd_models/e60_star_B_c16000_seed1.npz",
+ "checks": {
+  "reference": {
+   "dev_acc_cpu_decision": 0.6394035900405327,
+   "dev_acc_cpu_bits": 0.6395483497394325,
+   "bits_differ": 44,
+   "rows_differ": 42,
+   "n_rows": 6908
+  },
+  "chosen": {
+   "dev_acc_cpu_decision": 0.6343370005790387,
+   "dev_acc_cpu_bits": 0.6343370005790387,
+   "bits_differ": 0,
+   "rows_differ": 0,
+   "n_rows": 6908
+  }
+ },
+ "stages": {
+  "bge_encode": {
+   "median_ms": 779.1393445804715,
+   "p90_ms": 1622.8679960593581,
+   "mean_ms": 948.5782085545361
+  },
+  "bge_proto": {
+   "median_ms": 5.451657809317112,
+   "p90_ms": 5.595108214765787,
+   "mean_ms": 5.536113270558417
+  },
+  "mean_encode": {
+   "median_ms": 0.7684305310249329,
+   "p90_ms": 1.218956056982279,
+   "mean_ms": 0.8257386591285467
+  },
+  "mean_proto": {
+   "median_ms": 0.0007706694304943085,
+   "p90_ms": 0.0010346993803977966,
+   "mean_ms": 0.0008917013183236122
+  },
+  "existsT": {
+   "median_ms": 0.4882924258708954,
+   "p90_ms": 0.8482928387820721,
+   "mean_ms": 0.5322390394285321
+  },
+  "mem_words": {
+   "median_ms": 0.3583049401640892,
+   "p90_ms": 0.42803278192877775,
+   "mean_ms": 0.36997681949287653
+  },
+  "decision_ref": {
+   "median_ms": 20.46350622549653,
+   "p90_ms": 20.706529822200537,
+   "mean_ms": 20.511082105338573
+  },
+  "decision_chosen": {
+   "median_ms": 28.681818395853043,
+   "p90_ms": 28.954885248094797,
+   "mean_ms": 28.740888306871057
+  },
+  "total_ref": {
+   "median_ms": 805.8620751835406,
+   "p90_ms": 1648.827522341162,
+   "mean_ms": 974.995380749926
+  },
+  "total_chosen": {
+   "median_ms": 29.458750505000353,
+   "p90_ms": 29.92398738861084,
+   "mean_ms": 29.531356485560536
+  }
+ },
+ "time": "2026-10-18T19:41:45Z",
+ "ratio_total_ref_over_chosen_median": 27.3556095003674,
+ "ratio_text_bge_over_existsT_median": 1595.6408563799353,
+ "ratio_text_bge_over_mean_median": 1013.9359553312585
+}

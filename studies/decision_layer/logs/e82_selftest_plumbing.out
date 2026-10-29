@@ -1,0 +1,12 @@
+ok   c4words-plumbing-test: loads through CountTable, table.npz e1771d9eaf4a07f7, tokenizer checked
+   word list: 63,091 words; equal to the C4 table's (63,091); 0 new, 0 gone
+ok   star: view B on the C4 table = e74c_star_Bc4_c16000_s16's dev bits (3fc00b17)
+ok   star: mem (380) and words (1000) bits byte-identical to the C4 view's
+   star: new table view B 7227 bits (xcust 3045, xrecent 2802; C4: 3045, 2802); text-bit difference share 0.0000; on-share of the text bits 0.539
+ok   abcd: view B on the C4 table = e74c_abcd_Bc4_c4000_s16's dev bits (56297e10)
+ok   abcd: mem (66) and words (1000) bits byte-identical to the C4 view's
+   abcd: new table view B 6684 bits (xcust 2865, xrecent 2753; C4: 2865, 2753); text-bit difference share 0.0000; on-share of the text bits 0.556
+ok   multiwoz: view B on the C4 table = e77_mwoz_Bc4_c16000_s8's dev bits (311e8933)
+ok   multiwoz: mem (262) and words (1000) bits byte-identical to the C4 view's
+   multiwoz: new table view B 6580 bits (xcust 2673, xrecent 2645; C4: 2673, 2645); text-bit difference share 0.0000; on-share of the text bits 0.573
+all checks passed

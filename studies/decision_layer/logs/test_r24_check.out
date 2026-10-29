@@ -1,0 +1,4 @@
+ok full mode passes on consistent files (refined at s* 16 against its e85b dev row)
+ok 26 refusals, each on its own check's line
+ok --gate: one agent missed keeps exit 0 and says so; both missed exit 3; exactly -1.0 holds
+PASSED

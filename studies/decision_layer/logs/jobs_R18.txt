@@ -1,0 +1,15 @@
+.venv-dl/bin/python scripts/abcd_confirm.py --dataset star --registration R18 --name tm_mem --arm tm --parts mem,intent,step,words --clauses 16000 --seeds 1
+.venv-dl/bin/python scripts/abcd_confirm.py --dataset star --registration R18 --name tm_nomem --arm tm --parts intent,step,words --clauses 16000 --seeds 1
+.venv-dl/bin/python scripts/abcd_confirm.py --dataset star --registration R18 --name tm_mem --arm tm --parts mem,intent,step,words --clauses 16000 --seeds 2
+.venv-dl/bin/python scripts/abcd_confirm.py --dataset star --registration R18 --name tm_nomem --arm tm --parts intent,step,words --clauses 16000 --seeds 2
+.venv-dl/bin/python scripts/abcd_confirm.py --dataset star --registration R18 --name tm_mem --arm tm --parts mem,intent,step,words --clauses 16000 --seeds 3
+.venv-dl/bin/python scripts/abcd_confirm.py --dataset star --registration R18 --name tm_nomem --arm tm --parts intent,step,words --clauses 16000 --seeds 3
+.venv-dl/bin/python scripts/abcd_confirm.py --dataset star --registration R18 --name tm_mem --arm tm --parts mem,intent,step,words --clauses 16000 --seeds 4
+.venv-dl/bin/python scripts/abcd_confirm.py --dataset star --registration R18 --name tm_nomem --arm tm --parts intent,step,words --clauses 16000 --seeds 4
+.venv-dl/bin/python scripts/abcd_confirm.py --dataset star --registration R18 --name tm_mem --arm tm --parts mem,intent,step,words --clauses 16000 --seeds 5
+.venv-dl/bin/python scripts/abcd_confirm.py --dataset star --registration R18 --name tm_nomem --arm tm --parts intent,step,words --clauses 16000 --seeds 5
+.venv-dl/bin/python scripts/abcd_confirm.py --dataset star --registration R18 --name mlp_mem --arm mlp --parts mem,intent,step,words --seeds 1 2 3 4 5
+.venv-dl/bin/python scripts/abcd_confirm.py --dataset star --registration R18 --name lr_mem --arm lr --parts mem,intent,step,words --seeds 0
+.venv-dl/bin/python scripts/abcd_confirm.py --dataset star --registration R18 --name lr_nomem --arm lr --parts intent,step,words --seeds 0
+# report (not recorded at the time; reconstructed and checked byte-identical 2026-10-17 17:47:58 UTC):
+# .venv-dl/bin/python scripts/report_abcd.py --registration R18 --arms tm_mem tm_nomem lr_mem lr_nomem mlp_mem --pairs tm_mem:tm_nomem tm_mem:lr_mem tm_mem:mlp_mem lr_mem:lr_nomem tm_nomem:lr_nomem --out report_R18.json

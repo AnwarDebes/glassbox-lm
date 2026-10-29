@@ -1,0 +1,10 @@
+star 4k: s 8 0.6047, s 12 0.6371, s 16 0.6375, s 24 0.6354; best s 16 (+3.29 over s 8); pick s 16
+abcd 4k: s 8 0.8393, s 12 0.8428, s 16 0.8461, s 24 0.8412; best s 16 (+0.68 over s 8); pick s 16
+multiwoz 4k: s 8 0.3123, s 12 0.3007, s 16 0.3037, s 24 0.3068; best s 8 (+0.00 over s 8); pick s 8
+star 16k: s 8 0.6404; pick s 16 0.6582 -> s* 16
+multiwoz 16k: s 8 0.3123; pick s 8 0.3123 -> s* 8
+s*: {'star': 16, 'abcd': 16, 'multiwoz': 8}
+go-bar star: refined at s* 16 0.6582 / 0.6571; C4 at s 16 0.6545 / 0.6579; difference +0.14 (needs >= +1.0): stop (dev-only line; test unread)
+go-bar abcd: refined at s* 16 0.8461 / 0.8491; C4 at s 16 0.8417 / 0.8423; difference +0.56 (needs >= +0.7): stop (dev-only line; test unread)
+R24 gate: refined at s* 8 seed 1 0.3123 minus bge-large 0.3359: -2.36 (needs >= -1.0); mean of seeds 1-2 -2.51 (reported)
+PRECEDENCE: no registered test

@@ -89,9 +89,12 @@ data/                 raw datasets and cached embeddings (not committed)
 results/explore/      exploratory runs, validation splits only
 results/confirm/      registered runs (test split)
 logs/                 dev plans and dated notes (each frozen one with its freeze record), driver scripts; run logs, job lists and archive/ (local)
+ops/                  the launch chains of e80 and e84 to e87 and of R24's dry run, with their tests
+verification/         independent recomputes (R21, R24, e71; e81, e82 R4, e83 and e84, e86) and diagnostics
+speed/                FastCoTM (exact speed-ups of the TM with byte-identical results) and a C clause evaluator
 ```
 
-In the repository, `logs/` holds the dev plans and dated notes, the freeze record (`*.frozen.json`) of each one that was frozen, the driver scripts and one sample file that `docs/results.md` cites (`e71_k35_sample.json`); the raw run logs and job lists stay local, like the run folders in `results/`, and so do the earlier drafts and frozen copies that some plans cite under `logs/archive/`. `verification/` holds independent recomputations of registered results (R21 to R24) and of the e71 and e76 tallies on dev: the scripts and their recorded outputs, and the commands of the R20 report; `verification/README.md` lists each file and what it recomputes. `docs/data.md` is the data card (datasets, pretrained models and word tables).
+In the repository, `logs/` holds the dev plans and dated notes, the freeze record (`*.frozen.json`) of each one that was frozen, the driver scripts and one sample file that `docs/results.md` cites (`e71_k35_sample.json`), the earlier versions of four scripts that the plans cite by hash (`logs/pre_R19/`, `logs/pre_R20/`, `logs/pre_e77/`), and the run logs and job lists that the results pages cite by name; the raw run logs and job lists stay local, like the run folders in `results/`, and so do the earlier drafts and frozen copies that some plans cite under `logs/archive/`. `verification/` holds independent recomputations of registered results (R21 to R24) and of the e71 and e76 tallies on dev: the scripts and their recorded outputs, and the commands of the R20 report; `verification/README.md` lists each file and what it recomputes. `docs/data.md` is the data card (datasets, pretrained models and word tables).
 
 ## Environment
 

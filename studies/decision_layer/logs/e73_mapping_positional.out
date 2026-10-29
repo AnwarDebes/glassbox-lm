@@ -1,0 +1,38 @@
+36 slotted template labels, 11325 train picks; filled exactly 8486 (0.749)
+  trivia/trivia_ask_question: 1487 picks, 1487 with an item, 1487 match the pattern, exact 0.999, slots {'question': 'Question'}
+  weather/weather_inform_forecast: 1408 picks, 1408 with an item, 1408 match the pattern, exact 0.998, slots {'weather': 'Weather', 'day': 'Day', 'city': 'City', 'temperature': 'TemperatureCelsius'}
+  trip_directions/trip_inform_simple_step_ask_proceed: 1211 picks, 1211 with an item, 1211 match the pattern, exact 0.000, slots {}
+  ride_book/ride_ask_confirm_booking: 509 picks, 509 with an item, 509 match the pattern, exact 0.994, slots {'service_provider': 'ServiceProvider', 'departure_location': 'DepartureLocation', 'arrival_location': 'ArrivalLocation', 'price': 'Price', 'minutes_till_pickup': 'MinutesTillPickup'}
+  party_plan/party_ask_confirm_booking: 492 picks, 492 with an item, 485 match the pattern, exact 1.000, slots {'venue_name': 'VenueName', 'day': 'Day', 'time': 'Time'}
+  restaurant_book/restaurant_inform_booking_successful: 416 picks, 416 with an item, 416 match the pattern, exact 1.000, slots {'restaurant_name': 'RestaurantName'}
+  party_plan/party_booking_successful: 413 picks, 413 with an item, 407 match the pattern, exact 1.000, slots {'venue_name': 'VenueName', 'day': 'Day', 'time': 'Time'}
+  bank_balance/bank_inform_balance: 399 picks, 399 with an item, 399 match the pattern, exact 1.000, slots {'balance': 'BankBalance'}
+  hotel_search/hotel_inform_rating: 391 picks, 391 with an item, 391 match the pattern, exact 0.997, slots {'hotel_name': 'Name', 'average_rating': 'AverageRating'}
+  trip_directions/trip_inform_last_step_and_done: 388 picks, 386 with an item, 386 match the pattern, exact 0.000, slots {}
+  restaurant_book/restaurant_ask_confirm_booking: 378 picks, 378 with an item, 378 match the pattern, exact 1.000, slots {'restaurant_name': 'RestaurantName'}
+  hotel_search/hotel_provide_search_result: 358 picks, 358 with an item, 358 match the pattern, exact 1.000, slots {'hotel_name': 'Name', 'hotel_location': 'Location', 'price_range': 'Cost', 'average_rating': 'AverageRating'}
+  trip_directions/trip_inform_detailed_step: 321 picks, 320 with an item, 320 match the pattern, exact 0.000, slots {}
+  hotel_book/hotel_ask_confirm_booking: 314 picks, 314 with an item, 314 match the pattern, exact 1.000, slots {'hotel_name': 'HotelName'}
+  hotel_book/hotel_unavailable: 288 picks, 288 with an item, 288 match the pattern, exact 1.000, slots {'hotel_name': 'HotelName'}
+  doctor_followup/doctor_inform_doctors_instructions: 255 picks, 255 with an item, 255 match the pattern, exact 1.000, slots {'instructions': 'Message'}
+  trivia/trivia_inform_answer_incorrect_ask_next: 252 picks, 252 with an item, 252 match the pattern, exact 1.000, slots {'answer': 'Answer'}
+  doctor_schedule/doctor_inform_booking_successful: 212 picks, 212 with an item, 212 match the pattern, exact 1.000, slots {'doctor_name': 'DoctorName'}
+  doctor_schedule/doctor_inform_booking_available: 207 picks, 207 with an item, 0 match the pattern, exact 0.000, slots {}
+  plane_search/plane_inform_flight_details: 177 picks, 177 with an item, 177 match the pattern, exact 0.000, slots {'airline': 'Airline', 'price': 'Price', 'duration': 'DurationHours', 'arrival_city': 'ArrivalCity'}
+  plane_book/plane_flight_unavailable: 173 picks, 173 with an item, 173 match the pattern, exact 1.000, slots {'flight_id': 'id'}
+  trivia/trivia_inform_answer_2_ask_next: 163 picks, 163 with an item, 163 match the pattern, exact 0.988, slots {'answer': 'Answer'}
+  meeting_schedule/meeting_inform_confirmed: 160 picks, 160 with an item, 151 match the pattern, exact 1.000, slots {'guest_name': 'GuestName', 'day': 'Day', 'start_time': 'StartTime', 'end_time': 'EndTime'}
+  apartment_search/apartment_inform_search_result: 155 picks, 155 with an item, 155 match the pattern, exact 0.000, slots {'apartment_name': 'Name', 'floor': 'Level', 'size': 'FloorSquareMeters', 'num_bedrooms': 'NumRooms', 'price': 'Price'}
+  spaceship_access_codes/spaceship_inform_outcome: 110 picks, 110 with an item, 110 match the pattern, exact 1.000, slots {'message': 'Message'}
+  hotel_service_request/hotel_inform_service_request_successful: 108 picks, 108 with an item, 0 match the pattern, exact 0.000, slots {}
+  meeting_schedule/meeting_inform_unavailable_ask_different_time: 108 picks, 108 with an item, 108 match the pattern, exact 1.000, slots {'guest_name': 'GuestName', 'day': 'Day', 'start_time': 'StartTime'}
+  doctor_schedule/doctor_inform_booking_unavailable: 106 picks, 106 with an item, 0 match the pattern, exact 0.000, slots {}
+  ride_book/ride_provide_driver_details: 104 picks, 104 with an item, 104 match the pattern, exact 0.933, slots {'driver_name': 'DriverName'}
+  spaceship_life_support/spaceship_inform_outcome: 95 picks, 95 with an item, 95 match the pattern, exact 0.000, slots {}
+  ride_book/ride_confirm_booking: 64 picks, 64 with an item, 64 match the pattern, exact 0.344, slots {'license_plate': 'LicensePlate', 'booking_id': 'id'}
+  party_plan/party_venue_not_available: 36 picks, 36 with an item, 36 match the pattern, exact 1.000, slots {'venue_name': 'VenueName'}
+  hotel_search/hotel_inform_price: 35 picks, 35 with an item, 35 match the pattern, exact 1.000, slots {'hotel_name': 'Name', 'price_range': 'Cost'}
+  hotel_book/hotel_ask_customer_request: 12 picks, 12 with an item, 12 match the pattern, exact 0.000, slots {}
+  hotel_search/hotel_inform_location: 12 picks, 12 with an item, 12 match the pattern, exact 1.000, slots {'hotel_location': 'Location'}
+  hotel_search/hotel_inform_name: 8 picks, 8 with an item, 8 match the pattern, exact 1.000, slots {'hotel_name': 'Name'}
+sha256 4dd5e768c06ada65dc2ad2e242061cf4f14727d260c68d79c46231565478dbb5

@@ -1,0 +1,18 @@
+2026-10-22T20:35:39Z R24 start (pid 3725673): the gate at s* (dev)
+ok  s* from logs/e85_pick_final.out: refined s 8, bge-large s 8, C4 s 8
+ok  dev row e83_multiwoz_a3B_c16000_s8_nrand seed 1: exactly one
+ok  dev row e84_multiwoz_C4_c16000_s8_nrand seed 1: exactly one
+ok  dev row e84_multiwoz_bge_c16000_s8_nrand seed 1: exactly one
+G-s* C4: e84_multiwoz_C4_c16000_s8_nrand 0.3500 minus e84_multiwoz_bge_c16000_s8_nrand 0.3486: +0.15 (needs >= -1.0): holds; its rules stand
+G-s* refined: e83_multiwoz_a3B_c16000_s8_nrand 0.3498 minus e84_multiwoz_bge_c16000_s8_nrand 0.3486: +0.12 (needs >= -1.0): holds; its rules stand
+G-s* done: tm_mem_c4_nrand, tm_mem_ref_nrand keep their rules
+2026-10-22T20:35:39Z the network-free path test (dry size, dev only)
+network-free path checks passed
+2026-10-22T20:36:47Z test examples
+2026-10-22T20:37:03Z test vectors (bge-large)
+2026-10-22T20:38:22Z the 18 test jobs
+2026-10-23T00:36:21Z the checker
+all checks passed
+2026-10-23T00:36:27Z the registered report
+2026-10-23T00:36:29Z the two-level intervals (no rule)
+2026-10-23T00:36:31Z R24 done; logs/R24_report.out 13c76487, logs/R24_twolevel.out af848dd6

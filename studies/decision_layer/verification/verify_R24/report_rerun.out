@@ -1,0 +1,11 @@
+tm_mem_ref_nrand acc 0.3389 (sd 0.0045, 5 seeds)  AST-weighted 0.3389
+tm_mem_c4_nrand  acc 0.3437 (sd 0.0036, 5 seeds)  AST-weighted 0.3437
+tm_mem_bge_nrand acc 0.3384 (sd 0.0024, 5 seeds)  AST-weighted 0.3384
+lr_mem_ref       acc 0.3638 (sd 0.0000, 1 seeds)  AST-weighted 0.3638
+lr_mem_c4        acc 0.3592 (sd 0.0000, 1 seeds)  AST-weighted 0.3592
+lr_mem_bge       acc 0.3573 (sd 0.0000, 1 seeds)  AST-weighted 0.3573
+tm_mem_ref_nrand:tm_mem_bge_nrand +0.05 [-0.65, +0.72]   AST +0.05 [-0.65, +0.72]
+tm_mem_c4_nrand:tm_mem_bge_nrand +0.53 [-0.18, +1.23]   AST +0.53 [-0.18, +1.23]
+tm_mem_ref_nrand:lr_mem_ref  -2.49 [-3.33, -1.64]   AST -2.49 [-3.33, -1.64]
+tm_mem_c4_nrand:lr_mem_c4    -1.55 [-2.32, -0.79]   AST -1.55 [-2.32, -0.79]
+tm_mem_bge_nrand:lr_mem_bge  -1.89 [-2.69, -1.10]   AST -1.89 [-2.69, -1.10]

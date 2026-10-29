@@ -1,0 +1,4 @@
+ok   star: B + xcrecent = 10361 bits; the first 7227 equal e74c_star_Bc4_c16000_s16's dev bits (3fc00b17); xcrecent 3134 bits; on-share 0.532
+ok   abcd: B + xcrecent = 9657 bits; the first 6684 equal e74c_abcd_Bc4_c4000_s16's dev bits (56297e10); xcrecent 2973 bits; on-share 0.543
+ok   multiwoz: B + xcrecent = 9315 bits; the first 6580 equal e77_mwoz_Bc4_c16000_s8's dev bits (311e8933); xcrecent 2735 bits; on-share 0.567
+all checks passed

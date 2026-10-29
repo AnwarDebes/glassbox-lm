@@ -1,0 +1,7 @@
+.venv-dl/bin/python scripts/confirm_router.py --registration R2 --dataset clinc150 --encoder minilm --view lex:2000 --name C_lr_bits --lr-only --lr-input bits --seeds 0
+.venv-dl/bin/python scripts/confirm_router.py --registration R2 --dataset clinc150 --encoder minilm --view lex:2000 --name A_default --seeds 1 2 3 4 5
+.venv-dl/bin/python scripts/confirm_router.py --registration R2 --dataset clinc150 --encoder minilm --view lex:2000 --name B_exact32 --max-literals 32 --seeds 1 2 3 4 5
+.venv-dl/bin/python scripts/confirm_router.py --registration R2 --dataset clinc150 --encoder minilm --view lex:2000 --name Bp_tmu32 --max-literals 32 --budget-mode tmu --seeds 1 2 3 4 5
+.venv-dl/bin/python scripts/confirm_router.py --registration R2 --dataset clinc150 --encoder minilm --view lex:2000 --name A_default --seeds 6 7 8 9 10
+.venv-dl/bin/python scripts/confirm_router.py --registration R2 --dataset clinc150 --encoder minilm --view lex:2000 --name B_exact32 --max-literals 32 --seeds 6 7 8 9 10
+.venv-dl/bin/python scripts/confirm_router.py --registration R2 --dataset clinc150 --encoder minilm --view lex:2000 --name Bp_tmu32 --max-literals 32 --budget-mode tmu --seeds 6 7 8 9 10

@@ -1,0 +1,20 @@
+a3B  star     4k s 16: T 4000 0.6375, T 2000 0.6380, T 1000 0.6348; pick T 4000
+a3B  abcd     4k s 16: T 4000 0.8461, T 2000 0.8415, T 1000 0.8341; pick T 4000
+a3B  multiwoz 4k s 8: T 4000 0.3123, T 2000 0.2976, T 1000 0.2950; pick T 4000
+bge  star     4k s 16: T 4000 0.6401, T 2000 0.6439, T 1000 0.6506; pick T 1000
+bge  abcd     4k s 24: T 4000 0.8472, T 2000 0.8480, T 1000 0.8453; pick T 4000
+bge  multiwoz 4k s 8: T 4000 0.3325, T 2000 0.3181, T 1000 0.3230; pick T 4000
+C4   star     4k s 16: T 4000 0.6349, T 2000 0.6314, T 1000 0.6303; pick T 4000
+C4   abcd     4k s 16: T 4000 0.8417, T 2000 0.8396, T 1000 0.8301; pick T 4000
+C4   multiwoz 4k s 8: T 4000 0.3085, T 2000 0.2999, T 1000 0.2992; pick T 4000
+a3B  star    : pick T 4000 (T = clauses); TM at T = clauses, 16000 clauses, mean of 2 seed(s) 0.6576; TM minus LR -0.83
+a3B  abcd    : pick T 4000 (T = clauses); TM at T = clauses, 4000 clauses, mean of 2 seed(s) 0.8476; TM minus LR +3.27
+a3B  multiwoz: pick T 4000 (T = clauses); TM at T = clauses, 16000 clauses, mean of 2 seed(s) 0.3108; TM minus LR -5.35
+bge  star    : T 4000 against T 16000 at 16000 clauses, mean of seeds 1-2: +0.14 (B1 needs >= +0.5: not met); beside it: final epoch -0.54, last-10 mean -0.33; TM minus LR -1.51
+bge  abcd    : pick T 4000 (T = clauses); TM at T = clauses, 4000 clauses, mean of 1 seed(s) 0.8472; TM minus LR +1.11
+bge  multiwoz: pick T 4000 (T = clauses); TM at T = clauses, 16000 clauses, mean of 1 seed(s) 0.3359; TM minus LR -3.00
+C4   star    : pick T 4000 (no follow-up); TM at T = clauses, 16000 clauses, mean of 2 seed(s) 0.6562; TM minus LR +0.04
+C4   abcd    : pick T 4000 (no follow-up); TM at T = clauses, 4000 clauses, mean of 2 seed(s) 0.8420; TM minus LR +3.01
+C4   multiwoz: pick T 4000 (no follow-up); TM at T = clauses, 16000 clauses, mean of 2 seed(s) 0.3059; TM minus LR -5.27
+B2 (refined agent, MultiWOZ): TM minus LR -5.35 (today -5.35; needs >= -2.68): not met
+B2 beside it (no rule): last-10 mean TM minus LR -8.03 (today -8.03; half of it -4.01): not steady

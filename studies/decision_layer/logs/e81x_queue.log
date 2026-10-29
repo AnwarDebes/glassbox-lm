@@ -1,0 +1,20 @@
+2026-10-21T12:44:28Z queue start: 6 jobs from logs/jobs_e81x_lr_lowC.txt, max 4.5 cores
+2026-10-21T12:44:38Z cores 3.08 over 10.0 s; throttled 0 of 100 periods
+2026-10-21T12:44:38Z start (try 1): HF_HUB_OFFLINE=1 OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 RAYON_NUM_THREADS=2 TOKENIZERS_PARALLELISM=false DL_GPU_FRAC=0.25 .venv-dl/bin/python scripts/newtable_run.py --table-dir data/tables/c4words_a3B_v1 --name c4words-a3B-v1 scripts/abcd_confirm.py --encoder none --dataset multiwoz --registration e81x --name dry_e81x_mwoz_lr_a3B_C1e-3 --arm lr --parts mem,words,xcust,xrecent --seeds 0 --grid-c 0.001 --dry-run >> logs/e81x_lr_dev.out 2>&1
+2026-10-21T12:45:29Z exit 0 (try 1)
+2026-10-21T12:45:39Z cores 3.12 over 10.0 s; throttled 0 of 100 periods
+2026-10-21T12:45:39Z start (try 1): HF_HUB_OFFLINE=1 OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 RAYON_NUM_THREADS=2 TOKENIZERS_PARALLELISM=false DL_GPU_FRAC=0.25 .venv-dl/bin/python scripts/newtable_run.py --table-dir data/tables/c4words_a3B_v1 --name c4words-a3B-v1 scripts/abcd_confirm.py --encoder none --dataset multiwoz --registration e81x --name dry_e81x_mwoz_lr_a3B_C3e-4 --arm lr --parts mem,words,xcust,xrecent --seeds 0 --grid-c 0.0003 --dry-run >> logs/e81x_lr_dev.out 2>&1
+2026-10-21T12:46:26Z exit 0 (try 1)
+2026-10-21T12:46:36Z cores 2.86 over 10.0 s; throttled 0 of 100 periods
+2026-10-21T12:46:36Z start (try 1): HF_HUB_OFFLINE=1 OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 RAYON_NUM_THREADS=2 TOKENIZERS_PARALLELISM=false DL_GPU_FRAC=0.25 .venv-dl/bin/python scripts/newtable_run.py --table-dir data/tables/c4words_a3B_v1 --name c4words-a3B-v1 scripts/abcd_confirm.py --encoder none --dataset multiwoz --registration e81x --name dry_e81x_mwoz_lr_a3B_C1e-4 --arm lr --parts mem,words,xcust,xrecent --seeds 0 --grid-c 0.0001 --dry-run >> logs/e81x_lr_dev.out 2>&1
+2026-10-21T12:47:28Z exit 0 (try 1)
+2026-10-21T12:47:38Z cores 2.28 over 10.0 s; throttled 0 of 100 periods
+2026-10-21T12:47:38Z start (try 1): HF_HUB_OFFLINE=1 OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 RAYON_NUM_THREADS=2 TOKENIZERS_PARALLELISM=false DL_GPU_FRAC=0.25 .venv-dl/bin/python scripts/table_run.py --table c4words-S1000-v1 scripts/abcd_confirm.py --encoder none --dataset multiwoz --registration e81x --name dry_e81x_mwoz_lr_C4_C1e-3 --arm lr --parts mem,words,xcust,xrecent --seeds 0 --grid-c 0.001 --dry-run >> logs/e81x_lr_dev.out 2>&1
+2026-10-21T12:48:25Z exit 0 (try 1)
+2026-10-21T12:48:36Z cores 2.39 over 10.0 s; throttled 0 of 100 periods
+2026-10-21T12:48:36Z start (try 1): HF_HUB_OFFLINE=1 OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 RAYON_NUM_THREADS=2 TOKENIZERS_PARALLELISM=false DL_GPU_FRAC=0.25 .venv-dl/bin/python scripts/table_run.py --table c4words-S1000-v1 scripts/abcd_confirm.py --encoder none --dataset multiwoz --registration e81x --name dry_e81x_mwoz_lr_C4_C3e-4 --arm lr --parts mem,words,xcust,xrecent --seeds 0 --grid-c 0.0003 --dry-run >> logs/e81x_lr_dev.out 2>&1
+2026-10-21T12:49:22Z exit 0 (try 1)
+2026-10-21T12:49:32Z cores 3.73 over 10.0 s; throttled 2 of 100 periods
+2026-10-21T12:49:32Z start (try 1): HF_HUB_OFFLINE=1 OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 RAYON_NUM_THREADS=2 TOKENIZERS_PARALLELISM=false DL_GPU_FRAC=0.25 .venv-dl/bin/python scripts/table_run.py --table c4words-S1000-v1 scripts/abcd_confirm.py --encoder none --dataset multiwoz --registration e81x --name dry_e81x_mwoz_lr_C4_C1e-4 --arm lr --parts mem,words,xcust,xrecent --seeds 0 --grid-c 0.0001 --dry-run >> logs/e81x_lr_dev.out 2>&1
+2026-10-21T12:50:18Z exit 0 (try 1)
+2026-10-21T12:50:18Z queue done

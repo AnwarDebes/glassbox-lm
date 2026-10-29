@@ -1,0 +1,3 @@
+.venv-htm/bin/python scripts/abcd_htm.py --model flat --s 4 --T 3200 --clauses 3200 --epochs 30 --eval-every 30 --split test --out R16b --seed 1 --tag R16b
+.venv-htm/bin/python scripts/abcd_htm.py --model flat --s 4 --T 3200 --clauses 3200 --epochs 30 --eval-every 30 --split test --out R16b --seed 2 --tag R16b
+.venv-htm/bin/python scripts/abcd_htm.py --model flat --s 4 --T 3200 --clauses 3200 --epochs 30 --eval-every 30 --split test --out R16b --seed 3 --tag R16b

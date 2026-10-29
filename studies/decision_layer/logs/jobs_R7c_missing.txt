@@ -1,0 +1,7 @@
+# R7c seeds lost to CUDA out-of-memory at about 13:00 to 13:45 (6 jobs), same commands; confirm_router skips seeds already written
+.venv-dl/bin/python scripts/confirm_router.py --registration R7c --encoder bge-large --view proto:k=1:whiten=0.001+lex:2000 --max-literals 16 --init trim --budget-select rank --dataset banking77 --name banking77 --seeds 3 4
+.venv-dl/bin/python scripts/confirm_router.py --registration R7c --encoder bge-large --view proto:k=1:whiten=0.001+lex:2000 --max-literals 16 --init trim --budget-select rank --dataset banking77 --name banking77 --seeds 7 8
+.venv-dl/bin/python scripts/confirm_router.py --registration R7c --encoder bge-large --view proto:k=1:whiten=0.001+lex:2000 --max-literals 16 --init trim --budget-select rank --dataset banking77 --name banking77 --seeds 9 10
+.venv-dl/bin/python scripts/confirm_router.py --registration R7c --encoder bge-large --view proto:k=1:whiten=0.001+lex:2000 --max-literals 16 --init trim --budget-select rank --dataset hwu64 --name hwu64 --seeds 3 4
+.venv-dl/bin/python scripts/confirm_router.py --registration R7c --encoder bge-large --view proto:k=1:whiten=0.001+lex:2000 --max-literals 16 --init trim --budget-select rank --dataset hwu64 --name hwu64 --seeds 5 6
+.venv-dl/bin/python scripts/confirm_router.py --registration R7c --encoder bge-large --view proto:k=1:whiten=0.001+lex:2000 --max-literals 16 --init trim --budget-select rank --dataset hwu64 --name hwu64 --seeds 9 10

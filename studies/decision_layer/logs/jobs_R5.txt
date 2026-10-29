@@ -1,0 +1,123 @@
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset clinc150 --target domain --seed 1 --learner tm --eps 0.1 --eps-decay 0.0 --topk 3 --replay 4
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset clinc150 --target domain --seed 1 --learner linucb --alpha 1.0
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset clinc150 --target domain --seed 1 --learner eps_logistic --eps 0.1 --topk 3 --lr 0.05 --replay 0
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset clinc150 --target domain --seed 1 --learner sup_tm
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset hwu64 --target domain --seed 1 --learner tm --eps 0.1 --eps-decay 0.0 --topk 3 --replay 4
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset hwu64 --target domain --seed 1 --learner linucb --alpha 1.0
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset hwu64 --target domain --seed 1 --learner eps_logistic --eps 0.1 --topk 3 --lr 0.05 --replay 0
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset hwu64 --target domain --seed 1 --learner sup_tm
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset banking77 --target intent --seed 1 --learner tm --eps 0.1 --eps-decay 0.0 --topk 3 --replay 4
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset banking77 --target intent --seed 1 --learner linucb --alpha 1.0
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset banking77 --target intent --seed 1 --learner eps_logistic --eps 0.1 --topk 3 --lr 0.05 --replay 0
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset banking77 --target intent --seed 1 --learner sup_tm
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset clinc150 --target domain --seed 2 --learner tm --eps 0.1 --eps-decay 0.0 --topk 3 --replay 4
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset clinc150 --target domain --seed 2 --learner linucb --alpha 1.0
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset clinc150 --target domain --seed 2 --learner eps_logistic --eps 0.1 --topk 3 --lr 0.05 --replay 0
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset clinc150 --target domain --seed 2 --learner sup_tm
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset hwu64 --target domain --seed 2 --learner tm --eps 0.1 --eps-decay 0.0 --topk 3 --replay 4
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset hwu64 --target domain --seed 2 --learner linucb --alpha 1.0
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset hwu64 --target domain --seed 2 --learner eps_logistic --eps 0.1 --topk 3 --lr 0.05 --replay 0
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset hwu64 --target domain --seed 2 --learner sup_tm
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset banking77 --target intent --seed 2 --learner tm --eps 0.1 --eps-decay 0.0 --topk 3 --replay 4
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset banking77 --target intent --seed 2 --learner linucb --alpha 1.0
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset banking77 --target intent --seed 2 --learner eps_logistic --eps 0.1 --topk 3 --lr 0.05 --replay 0
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset banking77 --target intent --seed 2 --learner sup_tm
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset clinc150 --target domain --seed 3 --learner tm --eps 0.1 --eps-decay 0.0 --topk 3 --replay 4
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset clinc150 --target domain --seed 3 --learner linucb --alpha 1.0
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset clinc150 --target domain --seed 3 --learner eps_logistic --eps 0.1 --topk 3 --lr 0.05 --replay 0
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset clinc150 --target domain --seed 3 --learner sup_tm
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset hwu64 --target domain --seed 3 --learner tm --eps 0.1 --eps-decay 0.0 --topk 3 --replay 4
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset hwu64 --target domain --seed 3 --learner linucb --alpha 1.0
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset hwu64 --target domain --seed 3 --learner eps_logistic --eps 0.1 --topk 3 --lr 0.05 --replay 0
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset hwu64 --target domain --seed 3 --learner sup_tm
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset banking77 --target intent --seed 3 --learner tm --eps 0.1 --eps-decay 0.0 --topk 3 --replay 4
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset banking77 --target intent --seed 3 --learner linucb --alpha 1.0
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset banking77 --target intent --seed 3 --learner eps_logistic --eps 0.1 --topk 3 --lr 0.05 --replay 0
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset banking77 --target intent --seed 3 --learner sup_tm
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset clinc150 --target domain --seed 4 --learner tm --eps 0.1 --eps-decay 0.0 --topk 3 --replay 4
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset clinc150 --target domain --seed 4 --learner linucb --alpha 1.0
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset clinc150 --target domain --seed 4 --learner eps_logistic --eps 0.1 --topk 3 --lr 0.05 --replay 0
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset clinc150 --target domain --seed 4 --learner sup_tm
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset hwu64 --target domain --seed 4 --learner tm --eps 0.1 --eps-decay 0.0 --topk 3 --replay 4
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset hwu64 --target domain --seed 4 --learner linucb --alpha 1.0
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset hwu64 --target domain --seed 4 --learner eps_logistic --eps 0.1 --topk 3 --lr 0.05 --replay 0
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset hwu64 --target domain --seed 4 --learner sup_tm
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset banking77 --target intent --seed 4 --learner tm --eps 0.1 --eps-decay 0.0 --topk 3 --replay 4
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset banking77 --target intent --seed 4 --learner linucb --alpha 1.0
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset banking77 --target intent --seed 4 --learner eps_logistic --eps 0.1 --topk 3 --lr 0.05 --replay 0
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset banking77 --target intent --seed 4 --learner sup_tm
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset clinc150 --target domain --seed 5 --learner tm --eps 0.1 --eps-decay 0.0 --topk 3 --replay 4
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset clinc150 --target domain --seed 5 --learner linucb --alpha 1.0
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset clinc150 --target domain --seed 5 --learner eps_logistic --eps 0.1 --topk 3 --lr 0.05 --replay 0
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset clinc150 --target domain --seed 5 --learner sup_tm
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset hwu64 --target domain --seed 5 --learner tm --eps 0.1 --eps-decay 0.0 --topk 3 --replay 4
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset hwu64 --target domain --seed 5 --learner linucb --alpha 1.0
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset hwu64 --target domain --seed 5 --learner eps_logistic --eps 0.1 --topk 3 --lr 0.05 --replay 0
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset hwu64 --target domain --seed 5 --learner sup_tm
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset banking77 --target intent --seed 5 --learner tm --eps 0.1 --eps-decay 0.0 --topk 3 --replay 4
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset banking77 --target intent --seed 5 --learner linucb --alpha 1.0
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset banking77 --target intent --seed 5 --learner eps_logistic --eps 0.1 --topk 3 --lr 0.05 --replay 0
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset banking77 --target intent --seed 5 --learner sup_tm
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset clinc150 --target domain --seed 6 --learner tm --eps 0.1 --eps-decay 0.0 --topk 3 --replay 4
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset clinc150 --target domain --seed 6 --learner linucb --alpha 1.0
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset clinc150 --target domain --seed 6 --learner eps_logistic --eps 0.1 --topk 3 --lr 0.05 --replay 0
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset clinc150 --target domain --seed 6 --learner sup_tm
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset hwu64 --target domain --seed 6 --learner tm --eps 0.1 --eps-decay 0.0 --topk 3 --replay 4
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset hwu64 --target domain --seed 6 --learner linucb --alpha 1.0
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset hwu64 --target domain --seed 6 --learner eps_logistic --eps 0.1 --topk 3 --lr 0.05 --replay 0
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset hwu64 --target domain --seed 6 --learner sup_tm
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset banking77 --target intent --seed 6 --learner tm --eps 0.1 --eps-decay 0.0 --topk 3 --replay 4
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset banking77 --target intent --seed 6 --learner linucb --alpha 1.0
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset banking77 --target intent --seed 6 --learner eps_logistic --eps 0.1 --topk 3 --lr 0.05 --replay 0
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset banking77 --target intent --seed 6 --learner sup_tm
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset clinc150 --target domain --seed 7 --learner tm --eps 0.1 --eps-decay 0.0 --topk 3 --replay 4
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset clinc150 --target domain --seed 7 --learner linucb --alpha 1.0
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset clinc150 --target domain --seed 7 --learner eps_logistic --eps 0.1 --topk 3 --lr 0.05 --replay 0
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset clinc150 --target domain --seed 7 --learner sup_tm
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset hwu64 --target domain --seed 7 --learner tm --eps 0.1 --eps-decay 0.0 --topk 3 --replay 4
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset hwu64 --target domain --seed 7 --learner linucb --alpha 1.0
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset hwu64 --target domain --seed 7 --learner eps_logistic --eps 0.1 --topk 3 --lr 0.05 --replay 0
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset hwu64 --target domain --seed 7 --learner sup_tm
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset banking77 --target intent --seed 7 --learner tm --eps 0.1 --eps-decay 0.0 --topk 3 --replay 4
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset banking77 --target intent --seed 7 --learner linucb --alpha 1.0
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset banking77 --target intent --seed 7 --learner eps_logistic --eps 0.1 --topk 3 --lr 0.05 --replay 0
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset banking77 --target intent --seed 7 --learner sup_tm
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset clinc150 --target domain --seed 8 --learner tm --eps 0.1 --eps-decay 0.0 --topk 3 --replay 4
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset clinc150 --target domain --seed 8 --learner linucb --alpha 1.0
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset clinc150 --target domain --seed 8 --learner eps_logistic --eps 0.1 --topk 3 --lr 0.05 --replay 0
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset clinc150 --target domain --seed 8 --learner sup_tm
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset hwu64 --target domain --seed 8 --learner tm --eps 0.1 --eps-decay 0.0 --topk 3 --replay 4
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset hwu64 --target domain --seed 8 --learner linucb --alpha 1.0
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset hwu64 --target domain --seed 8 --learner eps_logistic --eps 0.1 --topk 3 --lr 0.05 --replay 0
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset hwu64 --target domain --seed 8 --learner sup_tm
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset banking77 --target intent --seed 8 --learner tm --eps 0.1 --eps-decay 0.0 --topk 3 --replay 4
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset banking77 --target intent --seed 8 --learner linucb --alpha 1.0
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset banking77 --target intent --seed 8 --learner eps_logistic --eps 0.1 --topk 3 --lr 0.05 --replay 0
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset banking77 --target intent --seed 8 --learner sup_tm
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset clinc150 --target domain --seed 9 --learner tm --eps 0.1 --eps-decay 0.0 --topk 3 --replay 4
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset clinc150 --target domain --seed 9 --learner linucb --alpha 1.0
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset clinc150 --target domain --seed 9 --learner eps_logistic --eps 0.1 --topk 3 --lr 0.05 --replay 0
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset clinc150 --target domain --seed 9 --learner sup_tm
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset hwu64 --target domain --seed 9 --learner tm --eps 0.1 --eps-decay 0.0 --topk 3 --replay 4
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset hwu64 --target domain --seed 9 --learner linucb --alpha 1.0
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset hwu64 --target domain --seed 9 --learner eps_logistic --eps 0.1 --topk 3 --lr 0.05 --replay 0
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset hwu64 --target domain --seed 9 --learner sup_tm
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset banking77 --target intent --seed 9 --learner tm --eps 0.1 --eps-decay 0.0 --topk 3 --replay 4
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset banking77 --target intent --seed 9 --learner linucb --alpha 1.0
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset banking77 --target intent --seed 9 --learner eps_logistic --eps 0.1 --topk 3 --lr 0.05 --replay 0
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset banking77 --target intent --seed 9 --learner sup_tm
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset clinc150 --target domain --seed 10 --learner tm --eps 0.1 --eps-decay 0.0 --topk 3 --replay 4
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset clinc150 --target domain --seed 10 --learner linucb --alpha 1.0
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset clinc150 --target domain --seed 10 --learner eps_logistic --eps 0.1 --topk 3 --lr 0.05 --replay 0
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset clinc150 --target domain --seed 10 --learner sup_tm
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset hwu64 --target domain --seed 10 --learner tm --eps 0.1 --eps-decay 0.0 --topk 3 --replay 4
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset hwu64 --target domain --seed 10 --learner linucb --alpha 1.0
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset hwu64 --target domain --seed 10 --learner eps_logistic --eps 0.1 --topk 3 --lr 0.05 --replay 0
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset hwu64 --target domain --seed 10 --learner sup_tm
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset banking77 --target intent --seed 10 --learner tm --eps 0.1 --eps-decay 0.0 --topk 3 --replay 4
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset banking77 --target intent --seed 10 --learner linucb --alpha 1.0
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset banking77 --target intent --seed 10 --learner eps_logistic --eps 0.1 --topk 3 --lr 0.05 --replay 0
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset banking77 --target intent --seed 10 --learner sup_tm
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset clinc150 --target domain --seed 1 --learner sup_logreg
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset hwu64 --target domain --seed 1 --learner sup_logreg
+.venv-dl/bin/python scripts/bandit_run.py --eval test --out confirm/R5 --tag R5 --dataset banking77 --target intent --seed 1 --learner sup_logreg

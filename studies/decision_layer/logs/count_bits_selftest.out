@@ -1,0 +1,35 @@
+ok   star: one counted xcust bit per concept (512); 25 concepts use their highest level (no level 3)
+ok   star: hit matrix = xcust's codes at the counted levels for all 63,091 words
+ok   star dev: 7227 + 1536 bits, names line up (8763)
+ok   star dev: the first 7227 bits equal ABCDView's, byte for byte
+ok   star dev: ABCDView's bits equal e74c_star_Bc4_c16000_s16's (3fc00b17)
+ok   star dev: n_k >= 1 equals xcust's level-3 (or highest) bit, all 512 concepts, all 6908 rows
+ok   star dev: the block is n_k >= 2, 4, 8
+ok   star dev: n >= 8 <= n >= 4 <= n >= 2 <= the counted xcust bit
+ok   star dev: all 1536 domain rows hold
+ok   star: no count name matches verify_policy's concept regex
+   star dev on-share: {'n>=2': 0.2361, 'n>=4': 0.0716, 'n>=8': 0.0107}; by decile: 0-14: 0.01/0.00/0.00; 14-22: 0.04/0.00/0.00; 22-31: 0.07/0.00/0.00; 31-41: 0.11/0.01/0.00; 41-53: 0.16/0.02/0.00; 53-68: 0.21/0.03/0.00; 68-84: 0.27/0.06/0.00; 84-109: 0.36/0.09/0.01; 109-152: 0.47/0.16/0.01; 152-507: 0.65/0.34/0.08
+ok   star train[:5000]: 7227 + 1536 bits, names line up (8763)
+ok   star train[:5000]: the first 7227 bits equal ABCDView's, byte for byte
+ok   star train[:5000]: n_k >= 1 equals xcust's level-3 (or highest) bit, all 512 concepts, all 5000 rows
+ok   star train[:5000]: the block is n_k >= 2, 4, 8
+ok   star train[:5000]: n >= 8 <= n >= 4 <= n >= 2 <= the counted xcust bit
+ok   star train[:5000]: all 1536 domain rows hold
+ok   abcd: one counted xcust bit per concept (512); 38 concepts use their highest level (no level 3)
+ok   abcd: hit matrix = xcust's codes at the counted levels for all 63,091 words
+ok   abcd dev: 6684 + 1536 bits, names line up (8220)
+ok   abcd dev: the first 6684 bits equal ABCDView's, byte for byte
+ok   abcd dev: ABCDView's bits equal e74c_abcd_Bc4_c4000_s16's (56297e10)
+ok   abcd dev: n_k >= 1 equals xcust's level-3 (or highest) bit, all 512 concepts, all 3684 rows
+ok   abcd dev: the block is n_k >= 2, 4, 8
+ok   abcd dev: n >= 8 <= n >= 4 <= n >= 2 <= the counted xcust bit
+ok   abcd dev: all 1536 domain rows hold
+ok   abcd: no count name matches verify_policy's concept regex
+   abcd dev on-share: {'n>=2': 0.21, 'n>=4': 0.0439, 'n>=8': 0.0035}; by decile: 2-19: 0.03/0.00/0.00; 19-26: 0.07/0.00/0.00; 26-31: 0.10/0.01/0.00; 31-38: 0.13/0.01/0.00; 38-43: 0.17/0.02/0.00; 43-50: 0.20/0.03/0.00; 50-58: 0.24/0.04/0.00; 58-69: 0.29/0.05/0.00; 69-87: 0.35/0.08/0.01; 87-260: 0.51/0.20/0.03
+ok   abcd train[:5000]: 6684 + 1536 bits, names line up (8220)
+ok   abcd train[:5000]: the first 6684 bits equal ABCDView's, byte for byte
+ok   abcd train[:5000]: n_k >= 1 equals xcust's level-3 (or highest) bit, all 512 concepts, all 5000 rows
+ok   abcd train[:5000]: the block is n_k >= 2, 4, 8
+ok   abcd train[:5000]: n >= 8 <= n >= 4 <= n >= 2 <= the counted xcust bit
+ok   abcd train[:5000]: all 1536 domain rows hold
+{"all checks passed": true, "seconds": 58.1, "report": {"star": {"n_bits_view_B": 7227, "n_bits_block": 1536, "on_share": {"n>=2": 0.2361, "n>=4": 0.0716, "n>=8": 0.0107}, "on_share_by_decile": [{"tokens": "0-14", "n>=2": 0.011, "n>=4": 0.0, "n>=8": 0.0}, {"tokens": "14-22", "n>=2": 0.036, "n>=4": 0.001, "n>=8": 0.0}, {"tokens": "22-31", "n>=2": 0.073, "n>=4": 0.004, "n>=8": 0.0}, {"tokens": "31-41", "n>=2": 0.112, "n>=4": 0.01, "n>=8": 0.0}, {"tokens": "41-53", "n>=2": 0.157, "n>=4": 0.02, "n>=8": 0.001}, {"tokens": "53-68", "n>=2": 0.214, "n>=4": 0.033, "n>=8": 0.001}, {"tokens": "68-84", "n>=2": 0.273, "n>=4": 0.055, "n>=8": 0.003}, {"tokens": "84-109", "n>=2": 0.356, "n>=4": 0.09, "n>=8": 0.007}, {"tokens": "109-152", "n>=2": 0.466, "n>=4": 0.156, "n>=8": 0.015}, {"tokens": "152-507", "n>=2": 0.648, "n>=4": 0.341, "n>=8": 0.078}]}, "abcd": {"n_bits_view_B": 6684, "n_bits_block": 1536, "on_share": {"n>=2": 0.21, "n>=4": 0.0439, "n>=8": 0.0035}, "on_share_by_decile": [{"tokens": "2-19", "n>=2": 0.03, "n>=4": 0.001, "n>=8": 0.0}, {"tokens": "19-26", "n>=2": 0.066, "n>=4": 0.002, "n>=8": 0.0}, {"tokens": "26-31", "n>=2": 0.096, "n>=4": 0.005, "n>=8": 0.0}, {"tokens": "31-38", "n>=2": 0.128, "n>=4": 0.009, "n>=8": 0.0}, {"tokens": "38-43", "n>=2": 0.17, "n>=4": 0.017, "n>=8": 0.0}, {"tokens": "43-50", "n>=2": 0.201, "n>=4": 0.025, "n>=8": 0.0}, {"tokens": "50-58", "n>=2": 0.238, "n>=4": 0.038, "n>=8": 0.001}, {"tokens": "58-69", "n>=2": 0.286, "n>=4": 0.052, "n>=8": 0.002}, {"tokens": "69-87", "n>=2": 0.347, "n>=4": 0.083, "n>=8": 0.005}, {"tokens": "87-260", "n>=2": 0.514, "n>=4": 0.202, "n>=8": 0.027}]}}}

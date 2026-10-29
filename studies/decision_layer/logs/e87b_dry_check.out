@@ -1,0 +1,11 @@
+ok code since the plan's record: on e87's path exactly the note's 7 files; 24 files off the path changed or new (no rule)
+ok e87bdry_multiwoz_L3 seed 1 (tiny): settings, bits, run record (886 chunked budget updates), model file, recomputed accuracy equal to the row's; literals per clause {'0': 0, '1': 0, '2': 0, '3': 200, 'over_3': 0, 'max': 3}; train 3.6 s, peak GPU 633.9 MB
+ok multiwoz: Part A's file not there yet; the kill rule's path is covered by tests/test_e87b_check.py
+ok e87bdry_star_L3 seed 1 (tiny): settings, bits, run record (860 chunked budget updates), model file, recomputed accuracy equal to the row's; literals per clause {'0': 0, '1': 0, '2': 0, '3': 200, 'over_3': 0, 'max': 3}; train 3.8 s, peak GPU 681.5 MB
+ok e87bdry_star_size_L3 seed 1 (size): settings, bits, run record (860 chunked budget updates), model file, recomputed accuracy equal to the row's; literals per clause {'0': 0, '1': 0, '2': 2, '3': 15998, 'over_3': 0, 'max': 3}; train 91.6 s, peak GPU 3744.1 MB
+ok star: Part A's file not there yet; the kill rule's path is covered by tests/test_e87b_check.py
+ok e87bdry_abcd_L3 seed 1 (tiny): settings, bits, run record (458 chunked budget updates), model file, recomputed accuracy equal to the row's; literals per clause {'0': 0, '1': 0, '2': 0, '3': 200, 'over_3': 0, 'max': 3}; train 2.2 s, peak GPU 423.8 MB
+ok e87bdry_abcd_plain_L3 seed 1: equal to e87bdry_abcd_L3 array by array (ta, w), and in acc and history: select_k_skip0 changed nothing on the GPU
+ok abcd: Part A's file not there yet; the kill rule's path is covered by tests/test_e87b_check.py
+projection (no rule): the exact budget's training time on STAR 16k is 1.52 times R22's seed-1 run; the 9 jobs then need about 194 GPU-minutes (90 s per 16k job and 40 s per ABCD job for the view and the files); peak GPU 3744.1 MB
+all dry checks passed

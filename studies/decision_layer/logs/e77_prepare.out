@@ -1,0 +1,28 @@
+{
+ "what": "e77 MultiWOZ 2.2 next system action (multiwoz_prepare.py)",
+ "min_train": 20,
+ "n_labels": 128,
+ "n_raw_combinations_train": 628,
+ "splits": {
+  "train": {
+   "dialogues": 8437,
+   "examples": 56581,
+   "system_turns_without_act": 195,
+   "share_without_act": 0.0034,
+   "share_OTHER": 0.0303,
+   "sha256": "0e20a31434de10a5248f0b10ab01e7474ceb5e020cd5cbc7048bfe8f5db69e9b"
+  },
+  "dev": {
+   "dialogues": 1000,
+   "examples": 7359,
+   "system_turns_without_act": 15,
+   "share_without_act": 0.002,
+   "share_OTHER": 0.0338,
+   "sha256": "3414cc8a6ecc64aafa0df070748b9d502a12e7996420b84a12df1b094a89fcd2"
+  }
+ },
+ "majority_label_train": "general-bye",
+ "majority_accuracy_dev": 0.0716
+}
+top 25 labels (train): [('general-bye', 4354), ('Train-Request', 2613), ('general-bye+general-welcome', 2594), ('Attraction-Inform', 2121), ('Booking-Book+general-reqmore', 2107), ('Restaurant-Inform', 2045), ('Train-Inform+Train-OfferBook', 1755), ('OTHER', 1714), ('Hotel-Inform', 1707), ('Booking-Book', 1702), ('Attraction-Inform+general-reqmore', 1659), ('Train-Inform', 1548), ('Booking-Inform+Hotel-Inform', 1394), ('Hotel-Inform+Hotel-Request', 1371), ('general-reqmore', 1278), ('Train-Inform+Train-Request', 1216), ('Taxi-Request', 1171), ('Restaurant-Inform+Restaurant-Request', 1135), ('Booking-Request', 1085), ('Restaurant-Inform+general-reqmore', 1042), ('Booking-Inform+Restaurant-Inform', 996), ('Taxi-Inform', 904), ('Train-OfferBooked', 808), ('Hotel-Request', 792), ('Hotel-Inform+general-reqmore', 744)]
+labels with 20-50 train examples: 43 of 128

@@ -1,0 +1,7 @@
+tm_mem_static    acc 0.6271 (sd 0.0061, 5 seeds)  AST-weighted 0.6271
+lr_mem_static_posthocC acc 0.6493 (sd 0.0000, 1 seeds)  AST-weighted 0.6493
+lr_mem_static    acc 0.6392 (sd 0.0000, 1 seeds)  AST-weighted 0.6392
+lr_mem_R18       acc 0.6591 (sd 0.0000, 1 seeds)  AST-weighted 0.6591
+tm_mem_R18       acc 0.6265 (sd 0.0047, 5 seeds)  AST-weighted 0.6265
+tm_mem_static:lr_mem_static_posthocC -2.22 [-3.02, -1.42]   AST -2.22 [-3.02, -1.42]
+lr_mem_static_posthocC:lr_mem_R18 -0.99 [-1.99, +0.06]   AST -0.99 [-1.99, +0.06]

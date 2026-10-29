@@ -1,0 +1,5 @@
+ok both gates met and steady (G-C4 at exactly -1.0)
+ok G-C4 not met at -1.5
+ok G-ref met at best-dev only (last-10 -3.5): no R24 draft
+ok refusals: before the freeze, hardest negatives on an e84 row, other dev bits, two rows, a preds file off the acc
+PASSED

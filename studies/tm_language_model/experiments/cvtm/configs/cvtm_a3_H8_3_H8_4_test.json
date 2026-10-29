@@ -1,0 +1,100 @@
+{
+ "experiment": "cvtm_a3_H8_3_H8_4_test",
+ "mode": "test_read",
+ "prereg": [
+  "H8.3",
+  "H8.4"
+ ],
+ "status": "DRAFT 2026-10-25 (finish pass), revision 2 after the pre-freeze reviews: the one test read of docs/13 amendment A3 rows H8.3 and H8.4, to run only after its plan (draft docs/drafts/H8_3_H8_4_test_plan_DRAFT_2026-10-25.md) is frozen into docs/13 as the amendment whose heading carries test.amendment_heading. With --split validation it is the smoke (no test access).",
+ "script": "experiments/cvtm_test_read.py",
+ "venv": ".venv-tm",
+ "docs": "docs/13 A3 (lines 150 to 192), section 4 (test budget, lines 95 to 96) and section 5 (contamination, lines 110 to 111); docs/06; docs/11 11.6; the plan of the read: the docs/13 amendment named by test.amendment_heading",
+ "seeds": "none: the CVTM-core is deterministic given the data (docs/13 A3); uncertainty is the document-block bootstrap",
+ "vocab": 8000,
+ "frozen": {
+  "run": "results/20260924T085728Z_cvtm_cache_build/",
+  "cache_dir": "results/20260924T085728Z_cvtm_cache_build/cache",
+  "core_state_hash": "97052edf2f983dbc4fe6992e0037b104d7c322bc414a77d954c22105a7cc3bc3",
+  "core_file_sha256": "aeff5e7ee52991dc66104684e27ce5eb2da6abe77d0137e1c58a07070123de77",
+  "cache_meta_sha256": "d94191e71d4a3e9b9d66977ed1525c0680d2af32da2d5f7cb14be32397ddf261",
+  "cvtm_sources_sha256": {
+   "__init__.py": "c5d9259ac33bf0bcf2c288746aa4ede76f2f7006f3857995b28693998abe3630",
+   "cache.py": "7366c5dd5d488e1988a2439ed08687a810f4178dc855525d37f7de0da13d866d",
+   "doc_clauses.py": "e835c70904e9a0f28c4e2d54425249bfb71273c08f6a1c4e10827faff44d1f40",
+   "energy.py": "852f53fa9dc947a41e19b6c9bffde4f98009d58c53f0cd32efc58172fb8c4f60",
+   "kn_gpu.py": "582507f75a8a792f9716bdaed3f12188ac78200cfe5b74e1bc6472b10ba97fc4",
+   "mixture.py": "e1522c60b1b722ab53bb5990b2a21a606a172bcda3c1f1bba57ada1d3473cf11",
+   "model.py": "27200cc29c167dd0517a82e56ff475aa22ff30a6866384c77e9f8ca7d1f2f0d8",
+   "protocol.py": "ef0cc0c0d4f86a8c34f0f02f4c44228e259690c8b5f241db88b61cebbcea3e5a",
+   "suffix.py": "ea16dde565031d4086224411b3f81b610e08dbd2faf3a539a5fefbdcaa824d6f"
+  },
+  "note": "the frozen CVTM-core of lane L0 (docs/11 11.6 on the full V 8000 train split, whole-document window, components S, D0..D4, P); the stage-1 files must still carry these sha256 (checked at start)",
+  "cvtm_sources_code_sha256_at_freeze": {
+   "__init__.py": "5c04595997820c90159baeb6d4411d9a479f4dc26f1ac532dd740dcb011f3e23",
+   "cache.py": "75f99e526fd036e063d659c00a1fb35913e1e1a5200170685cbd34ab0159776f",
+   "doc_clauses.py": "a73e95b4d1ccfe62517c4bdca5e17e585c6f650e2abc5e06a7f7641d58bd9fef",
+   "energy.py": "e8057a219cb7222fa3a9b48977fc1f4c3af4e699713911d742049ffe92f640c4",
+   "kn_gpu.py": "5cc383f10d5251d34d6fd05b8b34695f0c561e6a634276b3048a0bb0d73b76c0",
+   "mixture.py": "c3b8277367c98b12210cc2b3e7b2766a8458ad85bde017af85b58685e2117197",
+   "model.py": "6debc3de0c818c2ea553f051ed4cbef015c62714930020716f3226fe4c261d24",
+   "protocol.py": "9b8a49b11ea160cc1de49c0f901865979fdc2efc0f83a8f297fa213597c75884",
+   "suffix.py": "1bbe135086db5eca577494fb9da38a7e022e58f29a4e63ef9bed4f5ffd412776"
+  },
+  "cvtm_sources_code_note": "sha256 of each module's AST with the docstrings removed (experiments/cvtm_test_read.py code_sha256), computed on 2026-10-25 from the freeze copies whose file sha256 equal cvtm_sources_sha256 of results/20260924T085728Z_cvtm_cache_build/cache/cache_meta.json; cvtm_sources_sha256 above holds the published values (docs/hash-table.md lines 32 to 40), which differ in docstrings and comments only",
+  "data_digests": {
+   "train_tok_V8000": "41831aa37014272a9857c2a10167631b88c100c8f05ef862f4b9b6b29bc4f3ea",
+   "train_doc_start_V8000": "1c773019ad338acd5156eeb606e40c830bdba028f986aabe9b98693976314494",
+   "validation_tok_V8000": "51de55ed80d82b678d1c94666ad727225388e745c470e6d359d6d074ee747f25",
+   "validation_doc_start_V8000": "60bbdb9e8acfcccbac8eb46d82c4fd613199ea101fdb9f3a293e99fe68344fa6",
+   "validation_text_utf8": "fbf387067edf87fc0f11e8cc1708be8ff6c944f6eeb98c1e34140c8a95629a00",
+   "validation_doc_bytes": "2545558faa0e771f9509b30ba5e2d99f039ae7e825e4b11853469f820b6b3725",
+   "test_tok_V8000": "1035b6fa65ad838afd4a4b7c30af783a1b28d4fa7e7b6afb2db8feb17f2b643b",
+   "test_doc_start_V8000": "8fd691ab8d67a61c7463bbbc9f989a39e82eea32198676770382fa0fef0c4d0b",
+   "test_text_utf8": "7952b062817620ac99b47296dc945942b55068d0e85baf1f95f300c7ad1480ef",
+   "test_doc_bytes": "268ecdb3276a4774ab4a2c1f4e330039f8c78696a2ffb68b39aa738ac4c546f5"
+  },
+  "data_digests_note": "meta.json digests of the stores (protocol.dataset_hashes), read 2026-10-25; the tok and text values equal results/20260923T042350Z_CP_anchor/dataset_hashes.json, and the test doc_start and doc_bytes values equal docs/notes/preregistration-data-hashes.json"
+ },
+ "reference": {
+  "validation_cvtm_core": 1.240880320113308,
+  "validation_kn5_D0": 1.3338053432747112,
+  "validation_kn5_knmodel": 1.3501314033898424,
+  "validation_run": "results/20260924T085728Z_cvtm_cache_build/ (metrics validation.cvtm_core.bits_per_byte, validation.kn5_D0.bits_per_byte, check.kn5_KNModel_path.validation_bits_per_byte)",
+  "test_kn5_knmodel": 1.3718501779650507,
+  "test_kn5_run": "results/20260923T042350Z_CP_anchor/ (metric kn5.test.bits_per_byte: the KN-5 test number of docs/13 A3, rounded there to 1.3719)"
+ },
+ "thresholds": {
+  "H8.3_max_test_bits_per_byte": 1.3219,
+  "H8.3_text": "docs/13 line 178: test bits per byte, once, after freezing; KN-5 test 1.3719; at most 1.3219 (KN-5 minus 0.05)",
+  "H8.4_text": "docs/13 line 179: test bits per byte vs KN-5 plus a document unigram cache fitted by the same protocol (section 11.6); lower"
+ },
+ "test": {
+  "amendment_heading": "the CVTM-core test read of H8.3 and H8.4",
+  "run_name": "cvtm_a3_H8_3_H8_4_test",
+  "access_rows_before": 112,
+  "access_log_sha256_before": "4e406939e1bdf1864135b90bceb97056a9a2a3a56120f377ae8e2eb7f61819c2",
+  "require_project_data_root": true,
+  "purpose": "H8.3 and H8.4 (docs/13 A3): frozen CVTM-core, KN-5+D0 and KN-5 test bits per byte, once, after the plan was frozen; access 113 on the study's counter, the 22nd WikiText-103 test row",
+  "use_count": "access 113 on the study's access counter (the counter of results.md line 39, on which the CP anchor is 22); the 22nd row of the WikiText-103 test split (rows 1-17 M2 build, 19-21 E11 prompts, 22 CP anchor; row 18 is PTB); per configuration: CVTM-core 1st, KN-5+D0 1st, KN-5 2nd (row 22 was its first)"
+ },
+ "bootstrap": {
+  "unit": "document of the scored split (all its documents; and the de-overlapped documents)",
+  "resamples": 2000,
+  "seed": [
+   20260924,
+   1106,
+   1
+  ],
+  "statistic": "per resample: sum of bits / sum of UTF-8 bytes of the drawn documents (paired: of the differences)",
+  "label": "derived",
+  "source": "tmlm.cvtm.protocol N_BOOT and BOOT_SEED (the driver checks the equality)"
+ },
+ "compute": {
+  "cpu_slots": 1,
+  "threads": 1,
+  "gpu": "none (CUDA_VISIBLE_DEVICES empty)",
+  "peak_gib": "measured by the logged validation smoke (metric peak_rss_gib); see the plan",
+  "note": "the frozen core is 6,541,415,381 bytes; the 13-gram set of the train split is built in memory"
+ },
+ "launch": "CUDA_VISIBLE_DEVICES= scripts/cpu_slot.sh 1 -- nice -n 19 .venv-tm/bin/python scripts/mem_guard.py --scope group --limit-gib 60 -- scripts/run_logged.py --no-gpu-sampler --name cvtm_a3_H8_3_H8_4_test --config experiments/cvtm/configs/cvtm_a3_H8_3_H8_4_test.json -- .venv-tm/bin/python -u experiments/cvtm_test_read.py --config experiments/cvtm/configs/cvtm_a3_H8_3_H8_4_test.json --split test --confirm-test-read"
+}

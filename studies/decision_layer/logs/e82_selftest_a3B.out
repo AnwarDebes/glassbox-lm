@@ -1,0 +1,12 @@
+ok   c4words-a3B-v1: loads through CountTable, table.npz 4a1ed2aed7aa4ce7, tokenizer checked
+   word list: 63,091 words; equal to the C4 table's (63,091); 0 new, 0 gone
+ok   star: view B on the C4 table = e74c_star_Bc4_c16000_s16's dev bits (3fc00b17)
+ok   star: mem (380) and words (1000) bits byte-identical to the C4 view's
+   star: new table view B 7764 bits (xcust 3365, xrecent 3019; C4: 3045, 2802); text-bit difference share nan; on-share of the text bits 0.523
+ok   abcd: view B on the C4 table = e74c_abcd_Bc4_c4000_s16's dev bits (56297e10)
+ok   abcd: mem (66) and words (1000) bits byte-identical to the C4 view's
+   abcd: new table view B 7092 bits (xcust 3163, xrecent 2863; C4: 2865, 2753); text-bit difference share nan; on-share of the text bits 0.540
+ok   multiwoz: view B on the C4 table = e77_mwoz_Bc4_c16000_s8's dev bits (311e8933)
+ok   multiwoz: mem (262) and words (1000) bits byte-identical to the C4 view's
+   multiwoz: new table view B 7249 bits (xcust 3002, xrecent 2985; C4: 2673, 2645); text-bit difference share nan; on-share of the text bits 0.561
+all checks passed

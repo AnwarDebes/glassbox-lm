@@ -1,0 +1,8 @@
+plan frozen 2026-10-19T05:05:14Z
+abcd: e72 0.8317 vs potion 0.8325: -0.08 points (gate: at least 0.8125) -> PASS
+  checks: {'encoder none': True, 'parts view B': True, 'settings': True, 'C4 table in both fields': True, "bits equal the smoke's": True, 'after the freeze': True}
+  no rule: vs bge-large dev 0.8398: -0.81; n_bits 6684 (potion 7317); xcust 2865, xrecent 2753; best epoch 14 (potion 26); train 158.3 s (potion 770.5); GPU peak 1941.6 MB
+star: e72 0.6317 vs potion 0.6343: -0.26 points (gate: at least 0.6143) -> PASS
+  checks: {'encoder none': True, 'parts view B': True, 'settings': True, 'C4 table in both fields': True, "bits equal the smoke's": True, 'after the freeze': True}
+  no rule: vs bge-large dev 0.6394: -0.77; n_bits 7227 (potion 7938); xcust 3045, xrecent 2802; best epoch 16 (potion 22); train 1404.5 s (potion 7942.7); GPU peak 4113.3 MB
+no rule: ABCD no-memory twin e72 0.6107 vs potion 0.6200: -0.92 points

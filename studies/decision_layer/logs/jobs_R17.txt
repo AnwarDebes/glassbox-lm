@@ -1,0 +1,6 @@
+.venv-dl/bin/python scripts/abcd_bandit.py --learner tm --passes 15 --eval test --out confirm/R17 --tag R17 --seed 1 --save-model
+.venv-dl/bin/python scripts/abcd_bandit.py --learner tm --passes 15 --eval test --out confirm/R17 --tag R17 --seed 2 --save-model
+.venv-dl/bin/python scripts/abcd_bandit.py --learner tm --passes 15 --eval test --out confirm/R17 --tag R17 --seed 3 --save-model
+.venv-dl/bin/python scripts/abcd_bandit.py --learner tm --passes 15 --eval test --out confirm/R17 --tag R17 --seed 4 --save-model
+.venv-dl/bin/python scripts/abcd_bandit.py --learner tm --passes 15 --eval test --out confirm/R17 --tag R17 --seed 5 --save-model
+.venv-dl/bin/python scripts/abcd_closed_loop.py --registration R17 --name tm_bandit --kind tm --view free --parts mem,words,rclust,cclust --model-file "results/confirm/R17/model_tm_R17_seed{seed}.npz" --split test --out R17 --seeds 1 2 3 4 5 --tag R17

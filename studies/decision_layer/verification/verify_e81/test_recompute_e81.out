@@ -1,0 +1,3 @@
+ok (B2 met): recompute MATCHes e81_pick's final output; a tampered output gives MISMATCH
+ok (B2 not met): recompute MATCHes e81_pick's final output; a tampered output gives MISMATCH
+PASSED

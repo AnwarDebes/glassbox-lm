@@ -1,0 +1,131 @@
+
+QUERY 1213 [true intent: credit_score]
+  step 0: user so far: "give me"
+    router guess: no (top -2097, margin 743)
+    POLICY: ASK   Q = ROUTE -0.65, ASK +0.51, ESCALATE +0.02
+      because +75 (strongest of the 400 clauses that fired): IF margin_now < 1006 AND step < 3 AND top_now < 15
+  step 1: user so far: "give me my"
+    router guess: no (top -2872, margin 15), same as before: True
+    POLICY: ASK   Q = ROUTE -0.97, ASK +0.58, ESCALATE -0.06
+      because +86 (strongest of the 480 clauses that fired): IF margin_now < 465
+  step 2: user so far: "give me my credit score"
+    router guess: credit_score (top 3686, margin 7839), same as before: False
+    POLICY: ROUTE   Q = ROUTE +0.90, ASK +0.77, ESCALATE +0.19
+      because +86 (strongest of the 545 clauses that fired): IF margin_now >= 2771 AND step >= 1
+    outcome: routed correctly; return +0.8
+
+QUERY 2863 [true intent: pin_change]
+  step 0: user so far: "make 1234"
+    router guess: calculator (top -224, margin 2301)
+    POLICY: ASK   Q = ROUTE -0.56, ASK +0.53, ESCALATE +0.06
+      because +63 (strongest of the 369 clauses that fired): IF margin_now >= 1432 AND top_now < 4828
+  step 1: user so far: "make 1234 the pin"
+    router guess: pin_change (top 3427, margin 6890), same as before: False
+    POLICY: ASK   Q = ROUTE +0.77, ASK +0.90, ESCALATE +0.14
+      because +63 (strongest of the 513 clauses that fired): IF margin_now >= 1432 AND top_now < 4828
+  step 2: user so far: "make 1234 the pin on my"
+    router guess: pin_change (top 3452, margin 7297), same as before: True
+    POLICY: ROUTE   Q = ROUTE +0.92, ASK +0.73, ESCALATE +0.15
+      because +102 (strongest of the 527 clauses that fired): IF margin_now >= 2771 AND -1079 <= top_now < 3472
+    outcome: routed correctly; return +0.8
+
+QUERY 2298 [true intent: w2]
+  step 0: user so far: "i wanna"
+    router guess: order (top -1676, margin 362)
+    POLICY: ASK   Q = ROUTE -0.64, ASK +0.59, ESCALATE +0.12
+      because +86 (strongest of the 441 clauses that fired): IF margin_now < 465
+  step 1: user so far: "i wanna know where"
+    router guess: current_location (top -1936, margin 1055), same as before: False
+    POLICY: ASK   Q = ROUTE -0.70, ASK +0.53, ESCALATE -0.00
+      because +63 (strongest of the 355 clauses that fired): IF margin_now < 1432 AND step < 3
+  step 2: user so far: "i wanna know where to find"
+    router guess: recipe (top -2653, margin 452), same as before: False
+    POLICY: ASK   Q = ROUTE -0.90, ASK +0.28, ESCALATE -0.01
+      because +86 (strongest of the 477 clauses that fired): IF margin_now < 465
+  step 3: user so far: "i wanna know where to find a w2"
+    router guess: w2 (top 4311, margin 8669), same as before: False
+    POLICY: ROUTE   Q = ROUTE +0.98, ESCALATE +0.13
+      because +93 (strongest of the 563 clauses that fired): IF step >= 3
+    outcome: routed correctly; return +0.7
+
+QUERY 1384 [true intent: yes]
+  step 0: user so far: "that's"
+    router guess: yes (top 259, margin 1500)
+    POLICY: ASK   Q = ROUTE -0.84, ASK +0.63, ESCALATE +0.14
+      because +63 (strongest of the 365 clauses that fired): IF margin_now >= 1432 AND top_now < 4828
+  step 1: user so far: "that's"
+    router guess: yes (top 259, margin 1500), same as before: True
+    POLICY: ASK   Q = ROUTE -0.01, ASK +0.95, ESCALATE +0.12
+      because +63 (strongest of the 355 clauses that fired): IF margin_now >= 1432 AND top_now < 4828
+  step 2: user so far: "that's true"
+    router guess: yes (top 4017, margin 7023), same as before: True
+    POLICY: ROUTE   Q = ROUTE +0.98, ASK +0.90, ESCALATE +0.24
+      because +86 (strongest of the 533 clauses that fired): IF margin_now >= 2771 AND step >= 1
+    outcome: routed correctly; return +0.8
+
+QUERY 184 [true intent: find_phone]
+  step 0: user so far: "can you"
+    router guess: what_can_i_ask_you (top -2470, margin 490)
+    POLICY: ASK   Q = ROUTE -0.64, ASK +0.76, ESCALATE +0.07
+      because +76 (strongest of the 460 clauses that fired): IF margin_now < 691 AND top_now < -1481
+  step 1: user so far: "can you help me"
+    router guess: thank_you (top -1581, margin 1052), same as before: False
+    POLICY: ASK   Q = ROUTE -0.55, ASK +0.63, ESCALATE +0.04
+      because +63 (strongest of the 355 clauses that fired): IF margin_now < 1432 AND step < 3
+  step 2: user so far: "can you help me locate my"
+    router guess: find_phone (top -889, margin 1150), same as before: False
+    POLICY: ASK   Q = ROUTE +0.04, ASK +0.51, ESCALATE -0.00
+      because +63 (strongest of the 348 clauses that fired): IF margin_now < 1432 AND step < 3
+  step 3: user so far: "can you help me locate my phone, please"
+    router guess: find_phone (top 5050, margin 9176), same as before: True
+    POLICY: ROUTE   Q = ROUTE +0.97, ESCALATE +0.07
+      because +93 (strongest of the 574 clauses that fired): IF step >= 3
+    outcome: routed correctly; return +0.7
+
+QUERY 3823 [true intent: text]
+  step 0: user so far: "get a"
+    router guess: what_is_your_name (top -2226, margin 210)
+    POLICY: ASK   Q = ROUTE -0.61, ASK +0.79, ESCALATE +0.05
+      because +86 (strongest of the 505 clauses that fired): IF margin_now < 465
+  step 1: user so far: "get a text"
+    router guess: text (top 4887, margin 8401), same as before: False
+    POLICY: ROUTE   Q = ROUTE +1.12, ASK +0.90, ESCALATE +0.16
+      because +86 (strongest of the 561 clauses that fired): IF margin_now >= 2771 AND step >= 1
+    outcome: routed correctly; return +0.9
+
+QUERY 5411 [true intent: out of scope]
+  step 0: user so far: "what are"
+    router guess: definition (top 1638, margin 3872)
+    POLICY: ASK   Q = ROUTE -0.19, ASK +0.43, ESCALATE +0.08
+      because +63 (strongest of the 448 clauses that fired): IF margin_now >= 1432 AND top_now < 4828
+  step 1: user so far: "what are the"
+    router guess: definition (top -1072, margin 668), same as before: True
+    POLICY: ASK   Q = ROUTE -0.59, ASK +1.04, ESCALATE +0.09
+      because +75 (strongest of the 356 clauses that fired): IF margin_now < 1006 AND step < 3 AND top_now < 15
+  step 2: user so far: "what are the rules for"
+    router guess: carry_on (top -2138, margin 476), same as before: False
+    POLICY: ASK   Q = ROUTE -0.45, ASK +0.34, ESCALATE +0.03
+      because +76 (strongest of the 441 clauses that fired): IF margin_now < 691 AND top_now < -1481
+  step 3: user so far: "what are the rules for chess"
+    router guess: roll_dice (top -3230, margin 8), same as before: False
+    POLICY: ESCALATE   Q = ROUTE -0.81, ESCALATE -0.09
+      because +38 (strongest of the 502 clauses that fired): IF margin_now < 691 AND top_now < -1481
+    outcome: escalated to a human; return -0.3
+
+QUERY 5003 [true intent: out of scope]
+  step 0: user so far: "give me"
+    router guess: no (top -2097, margin 743)
+    POLICY: ASK   Q = ROUTE -0.65, ASK +0.51, ESCALATE +0.02
+      because +75 (strongest of the 400 clauses that fired): IF margin_now < 1006 AND step < 3 AND top_now < 15
+  step 1: user so far: "give me a recommendation"
+    router guess: travel_suggestion (top -2721, margin 301), same as before: False
+    POLICY: ASK   Q = ROUTE -0.92, ASK +0.57, ESCALATE +0.02
+      because +86 (strongest of the 471 clauses that fired): IF margin_now < 465
+  step 2: user so far: "give me a recommendation for a"
+    router guess: gas_type (top -2914, margin 279), same as before: False
+    POLICY: ASK   Q = ROUTE -0.96, ASK +0.23, ESCALATE -0.01
+      because +86 (strongest of the 491 clauses that fired): IF margin_now < 465
+  step 3: user so far: "give me a recommendation for a local landscaper"
+    router guess: travel_suggestion (top -2044, margin 939), same as before: False
+    POLICY: ESCALATE   Q = ROUTE -0.84, ESCALATE -0.01
+      because +29 (strongest of the 405 clauses that fired): IF margin_now < 1006 AND top_now < -1825

@@ -1,0 +1,13 @@
+abcd train cust    tokens 1,451,542  no vector 0.65%  texts with a drop 23.2%  texts with no known token 0  top: afzal, covid, acount, aphoenix, jbanter, subcription, jbanter1, chole
+abcd train recent  tokens 1,025,406  no vector 0.46%  texts with a drop 13.6%  texts with no known token 0  top: afzal, acmebrands, acmecorp, acmebrand, safzal1, aphoenix, jwu1, oyu
+abcd train crecent tokens   724,398  no vector 0.72%  texts with a drop 14.5%  texts with no known token 0  top: afzal, aphoenix, jbanter, jbanter1, jbanter367, nbouchard, 5555, 5678
+abcd dev   cust    tokens   186,650  no vector 0.66%  texts with a drop 25.9%  texts with no known token 0  top: afzal, covid, okie, dokie, bougt, cminh1982, jwuwu, aphoenix
+abcd dev   recent  tokens   128,075  no vector 0.49%  texts with a drop 14.5%  texts with no known token 0  top: afzal, acmebrands, acmebrand, cminh1982, asanders, shirly, 438704, cminh85
+abcd dev   crecent tokens    91,019  no vector 0.79%  texts with a drop 16.3%  texts with no known token 0  top: afzal, cminh1982, jwuwu, 438704, benefirs, experited, 6z1k9smoce, asanders
+star train cust    tokens 3,824,908  no vector 0.85%  texts with a drop 34.6%  texts with no known token 8  top: shadyside, 85731890, 84318931431, 95381901, 68318931, 351531510, 1596, 93418043810
+star train recent  tokens 2,095,674  no vector 0.70%  texts with a drop 19.5%  texts with no known token 0  top: shadyside, 'hilton, 1596, 'airport, 'shadyside, 'hospital, 'forbes, 'hyatt
+star train crecent tokens 1,658,580  no vector 0.86%  texts with a drop 18.5%  texts with no known token 8  top: shadyside, 1596, 3941, 85731890, 9503, 0314, 68318931, 84318931431
+star dev   cust    tokens   492,262  no vector 0.80%  texts with a drop 32.7%  texts with no known token 1  top: shadyside, 351531510, 0314, 85731890, 84318931431, 1596, 68318931, 5380
+star dev   recent  tokens   268,381  no vector 0.73%  texts with a drop 20.0%  texts with no known token 0  top: shadyside, 0314, 'hospital, 351531510, 1596, 'shadyside, 'airport, 'university
+star dev   crecent tokens   214,459  no vector 0.87%  texts with a drop 18.2%  texts with no known token 1  top: shadyside, 0314, 351531510, 1596, 85731890, 9503, 84318931431, 3941
+port check: 0 mismatches on 284,085 texts; 14.7 s; wrote results/explore/count_table_coverage.json

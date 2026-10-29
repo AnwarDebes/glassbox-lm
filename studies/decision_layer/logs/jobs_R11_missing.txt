@@ -1,0 +1,3 @@
+# R11 seeds lost to CUDA out-of-memory at about 22:20 to 22:40 UTC (2 jobs; the GPU is shared with other users' processes), same commands; confirm_router skips seeds already written
+.venv-dl/bin/python scripts/confirm_router.py --registration R11 --encoder bge-large --view proto:k=1:whiten=0.001+lex:2000 --max-literals 16 --init trim --budget-select rank --dataset massive_en --name massive_en_ml16 --seeds 5 6
+.venv-dl/bin/python scripts/confirm_router.py --registration R11 --encoder bge-large --view proto:k=1:whiten=0.001+lex:2000 --max-literals 16 --init trim --budget-select rank --dataset massive_en --name massive_en_ml16 --seeds 9 10

@@ -1,0 +1,7 @@
+ok dropout kept on all three at exactly +0.5 (E86.1 met); random + drop at exactly -0.5 against STAR's kept dropout cell (E86.3 met); R22 seed-1 reading; TM minus LR
+ok the kept dropout cell is E86.3's comparator: random + drop +0.5 over STAR's reference but -1.5 under its kept cell fails
+ok kept on MultiWOZ only (E86.1 not met); E86.3 fails on STAR at -11.0
+ok a gain at best-dev only (+1.0, last-10 +0.0) is not kept
+ok dry mode: 7 tiny cells pass; a drop cell without dropout is refused
+ok refusals: before the freeze, a drop cell without dropout, an e84 reference with dropout, other dev bits, two rows, a preds file off the acc, an LR row on other bits
+PASSED

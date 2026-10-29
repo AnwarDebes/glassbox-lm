@@ -1,0 +1,4 @@
+a3B  LR on MultiWOZ dev: C 1e-3 0.3643, C 3e-4 0.3528, C 1e-4 0.3375 (C 1e-3 reproduces the old row); best C 1e-3 0.3643 (inside the extended grid)
+B2 beside it (extended LR, no rule): TM at e81's pick, 16k, mean of seeds 1-2 0.3108 minus the best LR -5.35 (against the old LR at C 1e-3: -5.35)
+C4   LR on MultiWOZ dev: C 1e-3 0.3586, C 3e-4 0.3513, C 1e-4 0.3313 (C 1e-3 reproduces the old row); best C 1e-3 0.3586 (inside the extended grid)
+C4 beside it (extended LR, no rule): TM at T = clauses, 16k, mean of seeds 1-2 0.3059 minus the best LR -5.27 (against the old LR at C 1e-3: -5.27)

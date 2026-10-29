@@ -1,0 +1,6 @@
+02:03:28Z star gate: 2026-10-29T02:03:28Z cores 1.16 over 10.0 s; throttled 0 of 100 periods
+02:04:36Z star exit 0 one CPU thread, batch 1, nice 19; C built with gcc -O3 -march=native", "utc_start": "2026-10-29T02:03:34Z", "utc_end": "2026-10-29T02:04:36Z", "tm_speedup_best_c": 3.3416747689349005, "decision_total_
+02:04:46Z multiwoz gate: 2026-10-29T02:04:46Z cores 1.14 over 10.0 s; throttled 0 of 100 periods
+02:06:00Z multiwoz exit 0 , one CPU thread, batch 1, nice 19; C built with gcc -O3 -march=native", "utc_start": "2026-10-29T02:04:51Z", "utc_end": "2026-10-29T02:05:59Z", "tm_speedup_best_c": 3.470178717483011, "decision_total
+02:06:10Z abcd gate: 2026-10-29T02:06:10Z cores 1.10 over 10.0 s; throttled 0 of 100 periods
+02:06:35Z abcd exit 0 e CPU thread, batch 1, nice 19; C built with gcc -O3 -march=native", "utc_start": "2026-10-29T02:06:15Z", "utc_end": "2026-10-29T02:06:34Z", "tm_speedup_best_c": 2.5818466112990874, "decision_total_ms

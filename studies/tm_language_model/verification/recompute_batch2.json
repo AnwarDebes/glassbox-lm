@@ -1,0 +1,52 @@
+{
+ "H9.6": {
+  "pairs": 10000000,
+  "bins": 190,
+  "weighted_r2": -1.7354370437549687,
+  "pairs_p_gt_20b": 6224756,
+  "spearman_S_lnp": 0.29360053134910147,
+  "met": false,
+  "T": 64.0,
+  "V": 8000.0,
+  "Q": 1.0
+ },
+ "H8.8c": {
+  "per_repeat": [
+   802636.1235459157,
+   879894.9864258856,
+   878839.667318872,
+   889697.2367147204,
+   891829.474471329
+  ],
+  "median": 879894.9864258856,
+  "met": false,
+  "every_repeat_reproduces_frozen_state_hash": true
+ },
+ "H8.9": {
+  "prune_c1": {
+   "bytes_fraction": 0.22171933278222092,
+   "loss_bits_per_byte": 0.02798941730912108,
+   "qualifies": false
+  },
+  "prune_c2": {
+   "bytes_fraction": 0.12313543620719043,
+   "loss_bits_per_byte": 0.05202293055724572,
+   "qualifies": false
+  },
+  "met": false
+ },
+ "recorded": {
+  "H9.6": {
+   "weighted_r2": -1.7354370437549744,
+   "spearman": 0.29360053134910147,
+   "pairs_p_gt_20b": 6224756,
+   "verdict": "NOT MET"
+  }
+ },
+ "agree": {
+  "H9.6_r2": true,
+  "H9.6_spearman": true,
+  "H9.6_pairs": true,
+  "H9.6_verdict": true
+ }
+}

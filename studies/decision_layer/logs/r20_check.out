@@ -1,0 +1,286 @@
+ok  registration text unchanged (a4fc1418cfe68cf0)
+ok  all 84 frozen sources unchanged (changed or gone: []; new since, not on R20's path: [])
+ok  seed files are exactly the 11 training and 23 closed-loop seeds of logs/jobs_R20.txt
+ok  R20abcd/lr_mem_cust: every json time and file of the arm after the freeze 2026-10-18T23:23:30Z
+ok  R20abcd/lr_mem_cust_closed: every json time and file of the arm after the freeze 2026-10-18T23:23:30Z
+ok  R20abcd/tm_mem_cust: every json time and file of the arm after the freeze 2026-10-18T23:23:30Z
+ok  R20abcd/tm_mem_cust_closed: every json time and file of the arm after the freeze 2026-10-18T23:23:30Z
+ok  R20abcd/tm_mem_static_closed: every json time and file of the arm after the freeze 2026-10-18T23:23:30Z
+ok  R20abcd/tm_nomem_cust: every json time and file of the arm after the freeze 2026-10-18T23:23:30Z
+ok  R20star/lr_mem_closed: every json time and file of the arm after the freeze 2026-10-18T23:23:30Z
+ok  R20star/lr_mem_static_closed: every json time and file of the arm after the freeze 2026-10-18T23:23:30Z
+ok  R20star/tm_mem_closed: every json time and file of the arm after the freeze 2026-10-18T23:23:30Z
+ok  R20star/tm_mem_static_closed: every json time and file of the arm after the freeze 2026-10-18T23:23:30Z
+ok  R20abcd/lr_mem_cust/seed0: settings as the job line
+ok  R20abcd/lr_mem_cust/seed0: LR C 0.03 from the grid [0.001, 0.003, 0.01, 0.03, 0.1, 0.3, 1.0, 3.0, 10.0, 30.0, 100.0]
+ok  R20abcd/lr_mem_cust/seed0: C and dev accuracy 0.766558 equal the dry run's
+ok  R20abcd/lr_mem_cust/seed0: train/dev bits equal e65_abcd_C_c4000's (78cfda79/b3601375)
+ok  R20abcd/lr_mem_cust/seed0: npz gives the json's test accuracy 0.758592
+ok  R20abcd/lr_mem_cust/seed0: test rows equal the other arms'
+ok  R20abcd/tm_mem_cust/seed1: settings as the job line
+ok  R20abcd/tm_mem_cust/seed1: cfg equals R19's tm_mem_static but the seed (4000 clauses, best epoch 20)
+ok  R20abcd/tm_mem_cust/seed1: train/dev bits equal e65_abcd_C_c4000's (78cfda79/b3601375)
+ok  R20abcd/tm_mem_cust/seed1: dev accuracy 0.787188 equals the e65 row's exactly
+ok  R20abcd/tm_mem_cust/seed1: npz gives the json's test accuracy 0.780765
+ok  R20abcd/tm_mem_cust/seed1: test rows equal the other arms'
+ok  R20abcd/tm_mem_cust/seed2: settings as the job line
+ok  R20abcd/tm_mem_cust/seed2: cfg equals R19's tm_mem_static but the seed (4000 clauses, best epoch 20)
+ok  R20abcd/tm_mem_cust/seed2: train/dev bits equal e65_abcd_C_c4000's (78cfda79/b3601375)
+ok  R20abcd/tm_mem_cust/seed2: npz gives the json's test accuracy 0.781319
+ok  R20abcd/tm_mem_cust/seed2: test rows equal the other arms'
+ok  R20abcd/tm_mem_cust/seed3: settings as the job line
+ok  R20abcd/tm_mem_cust/seed3: cfg equals R19's tm_mem_static but the seed (4000 clauses, best epoch 22)
+ok  R20abcd/tm_mem_cust/seed3: train/dev bits equal e65_abcd_C_c4000's (78cfda79/b3601375)
+ok  R20abcd/tm_mem_cust/seed3: npz gives the json's test accuracy 0.779933
+ok  R20abcd/tm_mem_cust/seed3: test rows equal the other arms'
+ok  R20abcd/tm_mem_cust/seed4: settings as the job line
+ok  R20abcd/tm_mem_cust/seed4: cfg equals R19's tm_mem_static but the seed (4000 clauses, best epoch 38)
+ok  R20abcd/tm_mem_cust/seed4: train/dev bits equal e65_abcd_C_c4000's (78cfda79/b3601375)
+ok  R20abcd/tm_mem_cust/seed4: npz gives the json's test accuracy 0.782705
+ok  R20abcd/tm_mem_cust/seed4: test rows equal the other arms'
+ok  R20abcd/tm_mem_cust/seed5: settings as the job line
+ok  R20abcd/tm_mem_cust/seed5: cfg equals R19's tm_mem_static but the seed (4000 clauses, best epoch 26)
+ok  R20abcd/tm_mem_cust/seed5: train/dev bits equal e65_abcd_C_c4000's (78cfda79/b3601375)
+ok  R20abcd/tm_mem_cust/seed5: npz gives the json's test accuracy 0.779656
+ok  R20abcd/tm_mem_cust/seed5: test rows equal the other arms'
+ok  R20abcd/tm_nomem_cust/seed1: settings as the job line
+ok  R20abcd/tm_nomem_cust/seed1: cfg equals R19's tm_mem_static but the seed (4000 clauses, best epoch 40)
+ok  R20abcd/tm_nomem_cust/seed1: train/dev bits equal e65_abcd_Cnomem_c4000's (c4d98138/c80a2bca)
+ok  R20abcd/tm_nomem_cust/seed1: dev accuracy 0.498371 equals the e65 row's exactly
+ok  R20abcd/tm_nomem_cust/seed1: npz gives the json's test accuracy 0.496397
+ok  R20abcd/tm_nomem_cust/seed1: test rows equal the other arms'
+ok  R20abcd/tm_nomem_cust/seed2: settings as the job line
+ok  R20abcd/tm_nomem_cust/seed2: cfg equals R19's tm_mem_static but the seed (4000 clauses, best epoch 36)
+ok  R20abcd/tm_nomem_cust/seed2: train/dev bits equal e65_abcd_Cnomem_c4000's (c4d98138/c80a2bca)
+ok  R20abcd/tm_nomem_cust/seed2: npz gives the json's test accuracy 0.474224
+ok  R20abcd/tm_nomem_cust/seed2: test rows equal the other arms'
+ok  R20abcd/tm_nomem_cust/seed3: settings as the job line
+ok  R20abcd/tm_nomem_cust/seed3: cfg equals R19's tm_mem_static but the seed (4000 clauses, best epoch 10)
+ok  R20abcd/tm_nomem_cust/seed3: train/dev bits equal e65_abcd_Cnomem_c4000's (c4d98138/c80a2bca)
+ok  R20abcd/tm_nomem_cust/seed3: npz gives the json's test accuracy 0.493348
+ok  R20abcd/tm_nomem_cust/seed3: test rows equal the other arms'
+ok  R20abcd/tm_nomem_cust/seed4: settings as the job line
+ok  R20abcd/tm_nomem_cust/seed4: cfg equals R19's tm_mem_static but the seed (4000 clauses, best epoch 16)
+ok  R20abcd/tm_nomem_cust/seed4: train/dev bits equal e65_abcd_Cnomem_c4000's (c4d98138/c80a2bca)
+ok  R20abcd/tm_nomem_cust/seed4: npz gives the json's test accuracy 0.486142
+ok  R20abcd/tm_nomem_cust/seed4: test rows equal the other arms'
+ok  R20abcd/tm_nomem_cust/seed5: settings as the job line
+ok  R20abcd/tm_nomem_cust/seed5: cfg equals R19's tm_mem_static but the seed (4000 clauses, best epoch 8)
+ok  R20abcd/tm_nomem_cust/seed5: train/dev bits equal e65_abcd_Cnomem_c4000's (c4d98138/c80a2bca)
+ok  R20abcd/tm_nomem_cust/seed5: npz gives the json's test accuracy 0.484202
+ok  R20abcd/tm_nomem_cust/seed5: test rows equal the other arms'
+ok  R20abcd cwords+xcust+xcrecent: one test-bit hash over seeds and arms (1182aec9)
+ok  R20abcd mem+cwords+xcust+xcrecent: one test-bit hash over seeds and arms (1c8194d9)
+ok  R20abcd/lr_mem_cust: bit_names.json equals the dry run's
+ok  R20abcd/tm_mem_cust: bit_names.json equals the dry run's
+ok  R20abcd/tm_nomem_cust: bit_names.json equals the dry run's
+ok  R20abcd/lr_mem_cust_closed/seed0: settings as the job line (models of R20abcd/lr_mem_cust)
+ok  R20abcd/lr_mem_cust_closed/seed0: open-loop accuracy 0.758592 equals R20abcd/lr_mem_cust's test accuracy (0 rows apart)
+ok  R20abcd/lr_mem_cust_closed/seed0: npz gives the json's closed-loop accuracy 0.720898
+ok  R20abcd/lr_mem_cust_closed/seed0: test rows equal the other arms'
+ok  R20abcd/tm_mem_cust_closed/seed1: settings as the job line (models of R20abcd/tm_mem_cust)
+ok  R20abcd/tm_mem_cust_closed/seed1: open-loop accuracy 0.780765 equals R20abcd/tm_mem_cust's test accuracy (0 rows apart)
+ok  R20abcd/tm_mem_cust_closed/seed1: npz gives the json's closed-loop accuracy 0.729490
+ok  R20abcd/tm_mem_cust_closed/seed1: test rows equal the other arms'
+ok  R20abcd/tm_mem_cust_closed/seed2: settings as the job line (models of R20abcd/tm_mem_cust)
+ok  R20abcd/tm_mem_cust_closed/seed2: open-loop accuracy 0.781319 equals R20abcd/tm_mem_cust's test accuracy (0 rows apart)
+ok  R20abcd/tm_mem_cust_closed/seed2: npz gives the json's closed-loop accuracy 0.730599
+ok  R20abcd/tm_mem_cust_closed/seed2: test rows equal the other arms'
+ok  R20abcd/tm_mem_cust_closed/seed3: settings as the job line (models of R20abcd/tm_mem_cust)
+ok  R20abcd/tm_mem_cust_closed/seed3: open-loop accuracy 0.779933 equals R20abcd/tm_mem_cust's test accuracy (0 rows apart)
+ok  R20abcd/tm_mem_cust_closed/seed3: npz gives the json's closed-loop accuracy 0.720621
+ok  R20abcd/tm_mem_cust_closed/seed3: test rows equal the other arms'
+ok  R20abcd/tm_mem_cust_closed/seed4: settings as the job line (models of R20abcd/tm_mem_cust)
+ok  R20abcd/tm_mem_cust_closed/seed4: open-loop accuracy 0.782705 equals R20abcd/tm_mem_cust's test accuracy (0 rows apart)
+ok  R20abcd/tm_mem_cust_closed/seed4: npz gives the json's closed-loop accuracy 0.726996
+ok  R20abcd/tm_mem_cust_closed/seed4: test rows equal the other arms'
+ok  R20abcd/tm_mem_cust_closed/seed5: settings as the job line (models of R20abcd/tm_mem_cust)
+ok  R20abcd/tm_mem_cust_closed/seed5: open-loop accuracy 0.779656 equals R20abcd/tm_mem_cust's test accuracy (0 rows apart)
+ok  R20abcd/tm_mem_cust_closed/seed5: npz gives the json's closed-loop accuracy 0.723670
+ok  R20abcd/tm_mem_cust_closed/seed5: test rows equal the other arms'
+ok  R20abcd/tm_mem_static_closed/seed1: settings as the job line (models of R19abcd/tm_mem_static)
+ok  R20abcd/tm_mem_static_closed/seed1: open-loop accuracy 0.827051 equals R19abcd/tm_mem_static's test accuracy (0 rows apart)
+ok  R20abcd/tm_mem_static_closed/seed1: npz gives the json's closed-loop accuracy 0.788525
+ok  R20abcd/tm_mem_static_closed/seed1: test rows equal the other arms'
+ok  R20abcd/tm_mem_static_closed/seed2: settings as the job line (models of R19abcd/tm_mem_static)
+ok  R20abcd/tm_mem_static_closed/seed2: open-loop accuracy 0.827605 equals R19abcd/tm_mem_static's test accuracy (0 rows apart)
+ok  R20abcd/tm_mem_static_closed/seed2: npz gives the json's closed-loop accuracy 0.791574
+ok  R20abcd/tm_mem_static_closed/seed2: test rows equal the other arms'
+ok  R20abcd/tm_mem_static_closed/seed3: settings as the job line (models of R19abcd/tm_mem_static)
+ok  R20abcd/tm_mem_static_closed/seed3: open-loop accuracy 0.832040 equals R19abcd/tm_mem_static's test accuracy (0 rows apart)
+ok  R20abcd/tm_mem_static_closed/seed3: npz gives the json's closed-loop accuracy 0.798503
+ok  R20abcd/tm_mem_static_closed/seed3: test rows equal the other arms'
+ok  R20abcd/tm_mem_static_closed/seed4: settings as the job line (models of R19abcd/tm_mem_static)
+ok  R20abcd/tm_mem_static_closed/seed4: open-loop accuracy 0.833703 equals R19abcd/tm_mem_static's test accuracy (0 rows apart)
+ok  R20abcd/tm_mem_static_closed/seed4: npz gives the json's closed-loop accuracy 0.804047
+ok  R20abcd/tm_mem_static_closed/seed4: test rows equal the other arms'
+ok  R20abcd/tm_mem_static_closed/seed5: settings as the job line (models of R19abcd/tm_mem_static)
+ok  R20abcd/tm_mem_static_closed/seed5: open-loop accuracy 0.830100 equals R19abcd/tm_mem_static's test accuracy (0 rows apart)
+ok  R20abcd/tm_mem_static_closed/seed5: npz gives the json's closed-loop accuracy 0.797672
+ok  R20abcd/tm_mem_static_closed/seed5: test rows equal the other arms'
+ok  R20star/lr_mem_closed/seed0: settings as the job line (models of R18/lr_mem)
+ok  R20star/lr_mem_closed/seed0: open-loop accuracy 0.659130 equals R18/lr_mem's test accuracy (0 rows apart)
+ok  R20star/lr_mem_closed/seed0: npz gives the json's closed-loop accuracy 0.576703
+ok  R20star/lr_mem_closed/seed0: test rows equal the other arms'
+ok  R20star/lr_mem_static_closed/seed0: settings as the job line (models of R19star/lr_mem_static)
+ok  R20star/lr_mem_static_closed/seed0: open-loop accuracy 0.639239 equals R19star/lr_mem_static's test accuracy (0 rows apart)
+ok  R20star/lr_mem_static_closed/seed0: npz gives the json's closed-loop accuracy 0.589439
+ok  R20star/lr_mem_static_closed/seed0: test rows equal the other arms'
+ok  R20star/tm_mem_closed/seed1: settings as the job line (models of R18/tm_mem)
+ok  R20star/tm_mem_closed/seed1: open-loop accuracy 0.632513 equals R18/tm_mem's test accuracy (0 rows apart)
+ok  R20star/tm_mem_closed/seed1: npz gives the json's closed-loop accuracy 0.535203
+ok  R20star/tm_mem_closed/seed1: test rows equal the other arms'
+ok  R20star/tm_mem_closed/seed2: settings as the job line (models of R18/tm_mem)
+ok  R20star/tm_mem_closed/seed2: open-loop accuracy 0.620492 equals R18/tm_mem's test accuracy (0 rows apart)
+ok  R20star/tm_mem_closed/seed2: npz gives the json's closed-loop accuracy 0.535060
+ok  R20star/tm_mem_closed/seed2: test rows equal the other arms'
+ok  R20star/tm_mem_closed/seed3: settings as the job line (models of R18/tm_mem)
+ok  R20star/tm_mem_closed/seed3: open-loop accuracy 0.627075 equals R18/tm_mem's test accuracy (0 rows apart)
+ok  R20star/tm_mem_closed/seed3: npz gives the json's closed-loop accuracy 0.533629
+ok  R20star/tm_mem_closed/seed3: test rows equal the other arms'
+ok  R20star/tm_mem_closed/seed4: settings as the job line (models of R18/tm_mem)
+ok  R20star/tm_mem_closed/seed4: open-loop accuracy 0.623497 equals R18/tm_mem's test accuracy (0 rows apart)
+ok  R20star/tm_mem_closed/seed4: npz gives the json's closed-loop accuracy 0.528191
+ok  R20star/tm_mem_closed/seed4: test rows equal the other arms'
+ok  R20star/tm_mem_closed/seed5: settings as the job line (models of R18/tm_mem)
+ok  R20star/tm_mem_closed/seed5: open-loop accuracy 0.628935 equals R18/tm_mem's test accuracy (0 rows apart)
+ok  R20star/tm_mem_closed/seed5: npz gives the json's closed-loop accuracy 0.529622
+ok  R20star/tm_mem_closed/seed5: test rows equal the other arms'
+ok  R20star/tm_mem_static_closed/seed1: settings as the job line (models of R19star/tm_mem_static)
+ok  R20star/tm_mem_static_closed/seed1: open-loop accuracy 0.632084 equals R19star/tm_mem_static's test accuracy (0 rows apart)
+ok  R20star/tm_mem_static_closed/seed1: npz gives the json's closed-loop accuracy 0.551231
+ok  R20star/tm_mem_static_closed/seed1: test rows equal the other arms'
+ok  R20star/tm_mem_static_closed/seed2: settings as the job line (models of R19star/tm_mem_static)
+ok  R20star/tm_mem_static_closed/seed2: open-loop accuracy 0.626932 equals R19star/tm_mem_static's test accuracy (0 rows apart)
+ok  R20star/tm_mem_static_closed/seed2: npz gives the json's closed-loop accuracy 0.557384
+ok  R20star/tm_mem_static_closed/seed2: test rows equal the other arms'
+ok  R20star/tm_mem_static_closed/seed3: settings as the job line (models of R19star/tm_mem_static)
+ok  R20star/tm_mem_static_closed/seed3: open-loop accuracy 0.625501 equals R19star/tm_mem_static's test accuracy (0 rows apart)
+ok  R20star/tm_mem_static_closed/seed3: npz gives the json's closed-loop accuracy 0.547796
+ok  R20star/tm_mem_static_closed/seed3: test rows equal the other arms'
+ok  R20star/tm_mem_static_closed/seed4: settings as the job line (models of R19star/tm_mem_static)
+ok  R20star/tm_mem_static_closed/seed4: open-loop accuracy 0.617773 equals R19star/tm_mem_static's test accuracy (0 rows apart)
+ok  R20star/tm_mem_static_closed/seed4: npz gives the json's closed-loop accuracy 0.546222
+ok  R20star/tm_mem_static_closed/seed4: test rows equal the other arms'
+ok  R20star/tm_mem_static_closed/seed5: settings as the job line (models of R19star/tm_mem_static)
+ok  R20star/tm_mem_static_closed/seed5: open-loop accuracy 0.633085 equals R19star/tm_mem_static's test accuracy (0 rows apart)
+ok  R20star/tm_mem_static_closed/seed5: npz gives the json's closed-loop accuracy 0.557098
+ok  R20star/tm_mem_static_closed/seed5: test rows equal the other arms'
+ok  copy R20abcd/tm_mem_closed_R13/seed1.json equals the list and its source R13/tm_mem_short_closed/seed1.json
+ok  copy R20abcd/tm_mem_closed_R13/seed1.npz equals the list and its source R13/tm_mem_short_closed/seed1.npz
+ok  R20abcd/tm_mem_closed_R13/seed1.npz: test rows equal the other arms'
+ok  copy R20abcd/tm_mem_closed_R13/seed10.json equals the list and its source R13/tm_mem_short_closed/seed10.json
+ok  copy R20abcd/tm_mem_closed_R13/seed10.npz equals the list and its source R13/tm_mem_short_closed/seed10.npz
+ok  R20abcd/tm_mem_closed_R13/seed10.npz: test rows equal the other arms'
+ok  copy R20abcd/tm_mem_closed_R13/seed2.json equals the list and its source R13/tm_mem_short_closed/seed2.json
+ok  copy R20abcd/tm_mem_closed_R13/seed2.npz equals the list and its source R13/tm_mem_short_closed/seed2.npz
+ok  R20abcd/tm_mem_closed_R13/seed2.npz: test rows equal the other arms'
+ok  copy R20abcd/tm_mem_closed_R13/seed3.json equals the list and its source R13/tm_mem_short_closed/seed3.json
+ok  copy R20abcd/tm_mem_closed_R13/seed3.npz equals the list and its source R13/tm_mem_short_closed/seed3.npz
+ok  R20abcd/tm_mem_closed_R13/seed3.npz: test rows equal the other arms'
+ok  copy R20abcd/tm_mem_closed_R13/seed4.json equals the list and its source R13/tm_mem_short_closed/seed4.json
+ok  copy R20abcd/tm_mem_closed_R13/seed4.npz equals the list and its source R13/tm_mem_short_closed/seed4.npz
+ok  R20abcd/tm_mem_closed_R13/seed4.npz: test rows equal the other arms'
+ok  copy R20abcd/tm_mem_closed_R13/seed5.json equals the list and its source R13/tm_mem_short_closed/seed5.json
+ok  copy R20abcd/tm_mem_closed_R13/seed5.npz equals the list and its source R13/tm_mem_short_closed/seed5.npz
+ok  R20abcd/tm_mem_closed_R13/seed5.npz: test rows equal the other arms'
+ok  copy R20abcd/tm_mem_closed_R13/seed6.json equals the list and its source R13/tm_mem_short_closed/seed6.json
+ok  copy R20abcd/tm_mem_closed_R13/seed6.npz equals the list and its source R13/tm_mem_short_closed/seed6.npz
+ok  R20abcd/tm_mem_closed_R13/seed6.npz: test rows equal the other arms'
+ok  copy R20abcd/tm_mem_closed_R13/seed7.json equals the list and its source R13/tm_mem_short_closed/seed7.json
+ok  copy R20abcd/tm_mem_closed_R13/seed7.npz equals the list and its source R13/tm_mem_short_closed/seed7.npz
+ok  R20abcd/tm_mem_closed_R13/seed7.npz: test rows equal the other arms'
+ok  copy R20abcd/tm_mem_closed_R13/seed8.json equals the list and its source R13/tm_mem_short_closed/seed8.json
+ok  copy R20abcd/tm_mem_closed_R13/seed8.npz equals the list and its source R13/tm_mem_short_closed/seed8.npz
+ok  R20abcd/tm_mem_closed_R13/seed8.npz: test rows equal the other arms'
+ok  copy R20abcd/tm_mem_closed_R13/seed9.json equals the list and its source R13/tm_mem_short_closed/seed9.json
+ok  copy R20abcd/tm_mem_closed_R13/seed9.npz equals the list and its source R13/tm_mem_short_closed/seed9.npz
+ok  R20abcd/tm_mem_closed_R13/seed9.npz: test rows equal the other arms'
+ok  copy R20abcd/tm_mem_static_R19/bit_names.json equals the list and its source R19abcd/tm_mem_static/bit_names.json
+ok  copy R20abcd/tm_mem_static_R19/seed1.json equals the list and its source R19abcd/tm_mem_static/seed1.json
+ok  copy R20abcd/tm_mem_static_R19/seed1.npz equals the list and its source R19abcd/tm_mem_static/seed1.npz
+ok  R20abcd/tm_mem_static_R19/seed1.npz: test rows equal the other arms'
+ok  copy R20abcd/tm_mem_static_R19/seed2.json equals the list and its source R19abcd/tm_mem_static/seed2.json
+ok  copy R20abcd/tm_mem_static_R19/seed2.npz equals the list and its source R19abcd/tm_mem_static/seed2.npz
+ok  R20abcd/tm_mem_static_R19/seed2.npz: test rows equal the other arms'
+ok  copy R20abcd/tm_mem_static_R19/seed3.json equals the list and its source R19abcd/tm_mem_static/seed3.json
+ok  copy R20abcd/tm_mem_static_R19/seed3.npz equals the list and its source R19abcd/tm_mem_static/seed3.npz
+ok  R20abcd/tm_mem_static_R19/seed3.npz: test rows equal the other arms'
+ok  copy R20abcd/tm_mem_static_R19/seed4.json equals the list and its source R19abcd/tm_mem_static/seed4.json
+ok  copy R20abcd/tm_mem_static_R19/seed4.npz equals the list and its source R19abcd/tm_mem_static/seed4.npz
+ok  R20abcd/tm_mem_static_R19/seed4.npz: test rows equal the other arms'
+ok  copy R20abcd/tm_mem_static_R19/seed5.json equals the list and its source R19abcd/tm_mem_static/seed5.json
+ok  copy R20abcd/tm_mem_static_R19/seed5.npz equals the list and its source R19abcd/tm_mem_static/seed5.npz
+ok  R20abcd/tm_mem_static_R19/seed5.npz: test rows equal the other arms'
+ok  copy R20abcd/tm_nomem_static_R19/bit_names.json equals the list and its source R19abcd/tm_nomem_static/bit_names.json
+ok  copy R20abcd/tm_nomem_static_R19/seed1.json equals the list and its source R19abcd/tm_nomem_static/seed1.json
+ok  copy R20abcd/tm_nomem_static_R19/seed1.npz equals the list and its source R19abcd/tm_nomem_static/seed1.npz
+ok  R20abcd/tm_nomem_static_R19/seed1.npz: test rows equal the other arms'
+ok  copy R20abcd/tm_nomem_static_R19/seed2.json equals the list and its source R19abcd/tm_nomem_static/seed2.json
+ok  copy R20abcd/tm_nomem_static_R19/seed2.npz equals the list and its source R19abcd/tm_nomem_static/seed2.npz
+ok  R20abcd/tm_nomem_static_R19/seed2.npz: test rows equal the other arms'
+ok  copy R20abcd/tm_nomem_static_R19/seed3.json equals the list and its source R19abcd/tm_nomem_static/seed3.json
+ok  copy R20abcd/tm_nomem_static_R19/seed3.npz equals the list and its source R19abcd/tm_nomem_static/seed3.npz
+ok  R20abcd/tm_nomem_static_R19/seed3.npz: test rows equal the other arms'
+ok  copy R20abcd/tm_nomem_static_R19/seed4.json equals the list and its source R19abcd/tm_nomem_static/seed4.json
+ok  copy R20abcd/tm_nomem_static_R19/seed4.npz equals the list and its source R19abcd/tm_nomem_static/seed4.npz
+ok  R20abcd/tm_nomem_static_R19/seed4.npz: test rows equal the other arms'
+ok  copy R20abcd/tm_nomem_static_R19/seed5.json equals the list and its source R19abcd/tm_nomem_static/seed5.json
+ok  copy R20abcd/tm_nomem_static_R19/seed5.npz equals the list and its source R19abcd/tm_nomem_static/seed5.npz
+ok  R20abcd/tm_nomem_static_R19/seed5.npz: test rows equal the other arms'
+ok  copy R20star/lr_mem_static_R19/bit_names.json equals the list and its source R19star/lr_mem_static/bit_names.json
+ok  copy R20star/lr_mem_static_R19/seed0.json equals the list and its source R19star/lr_mem_static/seed0.json
+ok  copy R20star/lr_mem_static_R19/seed0.npz equals the list and its source R19star/lr_mem_static/seed0.npz
+ok  R20star/lr_mem_static_R19/seed0.npz: test rows equal the other arms'
+ok  copy R20star/tm_mem_R18/bit_names.json equals the list and its source R18/tm_mem/bit_names.json
+ok  copy R20star/tm_mem_R18/seed1.json equals the list and its source R18/tm_mem/seed1.json
+ok  copy R20star/tm_mem_R18/seed1.npz equals the list and its source R18/tm_mem/seed1.npz
+ok  R20star/tm_mem_R18/seed1.npz: test rows equal the other arms'
+ok  copy R20star/tm_mem_R18/seed2.json equals the list and its source R18/tm_mem/seed2.json
+ok  copy R20star/tm_mem_R18/seed2.npz equals the list and its source R18/tm_mem/seed2.npz
+ok  R20star/tm_mem_R18/seed2.npz: test rows equal the other arms'
+ok  copy R20star/tm_mem_R18/seed3.json equals the list and its source R18/tm_mem/seed3.json
+ok  copy R20star/tm_mem_R18/seed3.npz equals the list and its source R18/tm_mem/seed3.npz
+ok  R20star/tm_mem_R18/seed3.npz: test rows equal the other arms'
+ok  copy R20star/tm_mem_R18/seed4.json equals the list and its source R18/tm_mem/seed4.json
+ok  copy R20star/tm_mem_R18/seed4.npz equals the list and its source R18/tm_mem/seed4.npz
+ok  R20star/tm_mem_R18/seed4.npz: test rows equal the other arms'
+ok  copy R20star/tm_mem_R18/seed5.json equals the list and its source R18/tm_mem/seed5.json
+ok  copy R20star/tm_mem_R18/seed5.npz equals the list and its source R18/tm_mem/seed5.npz
+ok  R20star/tm_mem_R18/seed5.npz: test rows equal the other arms'
+ok  copy R20star/tm_mem_static_R19/bit_names.json equals the list and its source R19star/tm_mem_static/bit_names.json
+ok  copy R20star/tm_mem_static_R19/seed1.json equals the list and its source R19star/tm_mem_static/seed1.json
+ok  copy R20star/tm_mem_static_R19/seed1.npz equals the list and its source R19star/tm_mem_static/seed1.npz
+ok  R20star/tm_mem_static_R19/seed1.npz: test rows equal the other arms'
+ok  copy R20star/tm_mem_static_R19/seed2.json equals the list and its source R19star/tm_mem_static/seed2.json
+ok  copy R20star/tm_mem_static_R19/seed2.npz equals the list and its source R19star/tm_mem_static/seed2.npz
+ok  R20star/tm_mem_static_R19/seed2.npz: test rows equal the other arms'
+ok  copy R20star/tm_mem_static_R19/seed3.json equals the list and its source R19star/tm_mem_static/seed3.json
+ok  copy R20star/tm_mem_static_R19/seed3.npz equals the list and its source R19star/tm_mem_static/seed3.npz
+ok  R20star/tm_mem_static_R19/seed3.npz: test rows equal the other arms'
+ok  copy R20star/tm_mem_static_R19/seed4.json equals the list and its source R19star/tm_mem_static/seed4.json
+ok  copy R20star/tm_mem_static_R19/seed4.npz equals the list and its source R19star/tm_mem_static/seed4.npz
+ok  R20star/tm_mem_static_R19/seed4.npz: test rows equal the other arms'
+ok  copy R20star/tm_mem_static_R19/seed5.json equals the list and its source R19star/tm_mem_static/seed5.json
+ok  copy R20star/tm_mem_static_R19/seed5.npz equals the list and its source R19star/tm_mem_static/seed5.npz
+ok  R20star/tm_mem_static_R19/seed5.npz: test rows equal the other arms'
+ok  copy R20star/tm_nomem_static_R19/bit_names.json equals the list and its source R19star/tm_nomem_static/bit_names.json
+ok  copy R20star/tm_nomem_static_R19/seed1.json equals the list and its source R19star/tm_nomem_static/seed1.json
+ok  copy R20star/tm_nomem_static_R19/seed1.npz equals the list and its source R19star/tm_nomem_static/seed1.npz
+ok  R20star/tm_nomem_static_R19/seed1.npz: test rows equal the other arms'
+ok  copy R20star/tm_nomem_static_R19/seed2.json equals the list and its source R19star/tm_nomem_static/seed2.json
+ok  copy R20star/tm_nomem_static_R19/seed2.npz equals the list and its source R19star/tm_nomem_static/seed2.npz
+ok  R20star/tm_nomem_static_R19/seed2.npz: test rows equal the other arms'
+ok  copy R20star/tm_nomem_static_R19/seed3.json equals the list and its source R19star/tm_nomem_static/seed3.json
+ok  copy R20star/tm_nomem_static_R19/seed3.npz equals the list and its source R19star/tm_nomem_static/seed3.npz
+ok  R20star/tm_nomem_static_R19/seed3.npz: test rows equal the other arms'
+ok  copy R20star/tm_nomem_static_R19/seed4.json equals the list and its source R19star/tm_nomem_static/seed4.json
+ok  copy R20star/tm_nomem_static_R19/seed4.npz equals the list and its source R19star/tm_nomem_static/seed4.npz
+ok  R20star/tm_nomem_static_R19/seed4.npz: test rows equal the other arms'
+ok  copy R20star/tm_nomem_static_R19/seed5.json equals the list and its source R19star/tm_nomem_static/seed5.json
+ok  copy R20star/tm_nomem_static_R19/seed5.npz equals the list and its source R19star/tm_nomem_static/seed5.npz
+ok  R20star/tm_nomem_static_R19/seed5.npz: test rows equal the other arms'
+ok  the reference folders hold exactly the 78 listed files
+ok  R20abcd: 3608 test action turns in 1004 conversations
+ok  R20star: 6988 test action turns in 611 conversations
+all checks passed

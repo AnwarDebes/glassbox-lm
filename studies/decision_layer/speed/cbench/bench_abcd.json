@@ -1,0 +1,34 @@
+{
+ "dataset": "abcd",
+ "model": "studies/decision_layer/results/confirm/R23abcd/tm_mem_c4_s16/model_seed1.npz",
+ "table": "c4words-S1000-v1",
+ "n_dev_rows_exact": 3684,
+ "exact_lits": true,
+ "exact_words": true,
+ "n_timed": 1000,
+ "n_clauses_kept": 3995,
+ "n_classes": 30,
+ "n_features": 6684,
+ "n_literals": 52135,
+ "n_sparse_words": 42814,
+ "median_ms": {
+  "view_text_to_bits": 0.20990660414099693,
+  "tm_numpy_current": 0.2345140092074871,
+  "tm_c_lits": 0.09083189070224762,
+  "tm_c_words": 0.09643612429499626
+ },
+ "p90_ms": {
+  "tm_numpy_current": 0.27355197817087173,
+  "tm_c_lits": 0.10425001382827759,
+  "tm_c_words": 0.10816976428031921
+ },
+ "label": "rough: shared machine, one CPU thread, batch 1, nice 19; C built with gcc -O3 -march=native",
+ "utc_start": "2026-10-29T02:06:15Z",
+ "utc_end": "2026-10-29T02:06:34Z",
+ "tm_speedup_best_c": 2.5818466112990874,
+ "decision_total_ms": {
+  "now": 0.44442061334848404,
+  "with_best_c": 0.30073849484324455,
+  "speedup": 1.4777643067613664
+ }
+}

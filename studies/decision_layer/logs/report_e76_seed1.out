@@ -1,0 +1,147 @@
+{
+ "tag": "e76",
+ "seed": 1,
+ "rows": 579,
+ "states": 200,
+ "in_last_3_turns": {
+  "per_group": {
+   "P_first": {
+    "groups": 58,
+    "certified at k = 2": 46,
+    "k1_breaking_edit_sets": 310,
+    "k1_replays_reproduced": 9,
+    "k1_replays": 9,
+    "k2_breaking_edit_sets": 933,
+    "k2_replays_reproduced": 36,
+    "k2_replays": 36,
+    "certified at k = 1; a 2-word edit breaks the rule": 8,
+    "a 1-word edit breaks the rule": 2,
+    "own choice breaks the rule": 2
+   },
+   "P_prec(enter-details, *)": {
+    "groups": 133,
+    "certified at k = 2": 130,
+    "k1_breaking_edit_sets": 0,
+    "k1_replays_reproduced": 0,
+    "k1_replays": 0,
+    "k2_breaking_edit_sets": 53,
+    "k2_replays_reproduced": 12,
+    "k2_replays": 12,
+    "certified at k = 1; a 2-word edit breaks the rule": 3
+   },
+   "P_prec(log-out-in, *)": {
+    "groups": 135,
+    "certified at k = 2": 130,
+    "k1_breaking_edit_sets": 0,
+    "k1_replays_reproduced": 0,
+    "k1_replays": 0,
+    "k2_breaking_edit_sets": 1771,
+    "k2_replays_reproduced": 21,
+    "k2_replays": 21,
+    "certified at k = 1; a 2-word edit breaks the rule": 5
+   },
+   "P_prec(pull-up-account, *)": {
+    "groups": 34,
+    "certified at k = 1; a 2-word edit breaks the rule": 9,
+    "k1_breaking_edit_sets": 310,
+    "k1_replays_reproduced": 20,
+    "k1_replays": 20,
+    "k2_breaking_edit_sets": 2229,
+    "k2_replays_reproduced": 35,
+    "k2_replays": 35,
+    "a 1-word edit breaks the rule": 8,
+    "certified at k = 2": 13,
+    "own choice breaks the rule": 4
+   },
+   "P_prec(search-faq, *)": {
+    "groups": 111,
+    "certified at k = 2": 98,
+    "k1_breaking_edit_sets": 4,
+    "k1_replays_reproduced": 4,
+    "k1_replays": 4,
+    "k2_breaking_edit_sets": 1609,
+    "k2_replays_reproduced": 56,
+    "k2_replays": 56,
+    "certified at k = 1; a 2-word edit breaks the rule": 12,
+    "a 1-word edit breaks the rule": 1
+   },
+   "P_prec(verify-identity, *)": {
+    "groups": 102,
+    "certified at k = 2": 95,
+    "k1_breaking_edit_sets": 0,
+    "k1_replays_reproduced": 0,
+    "k1_replays": 0,
+    "k2_breaking_edit_sets": 1974,
+    "k2_replays_reproduced": 26,
+    "k2_replays": 26,
+    "certified at k = 1; a 2-word edit breaks the rule": 7
+   }
+  },
+  "state_level": {
+   "states": 197,
+   "certified at k = 1 (all groups)": 180,
+   "certified at k = 2 (all groups)": 150,
+   "some group: own choice breaks the rule": 6
+  }
+ },
+ "outside_last_3_turns": {
+  "per_group": {
+   "P_first": {
+    "groups": 2,
+    "certified at k = 2": 2,
+    "k1_breaking_edit_sets": 0,
+    "k1_replays_reproduced": 0,
+    "k1_replays": 0,
+    "k2_breaking_edit_sets": 0,
+    "k2_replays_reproduced": 0,
+    "k2_replays": 0
+   },
+   "P_prec(enter-details, *)": {
+    "groups": 1,
+    "certified at k = 2": 1,
+    "k1_breaking_edit_sets": 0,
+    "k1_replays_reproduced": 0,
+    "k1_replays": 0,
+    "k2_breaking_edit_sets": 0,
+    "k2_replays_reproduced": 0,
+    "k2_replays": 0
+   },
+   "P_prec(log-out-in, *)": {
+    "groups": 1,
+    "certified at k = 2": 1,
+    "k1_breaking_edit_sets": 0,
+    "k1_replays_reproduced": 0,
+    "k1_replays": 0,
+    "k2_breaking_edit_sets": 0,
+    "k2_replays_reproduced": 0,
+    "k2_replays": 0
+   },
+   "P_prec(search-faq, *)": {
+    "groups": 1,
+    "certified at k = 2": 1,
+    "k1_breaking_edit_sets": 0,
+    "k1_replays_reproduced": 0,
+    "k1_replays": 0,
+    "k2_breaking_edit_sets": 0,
+    "k2_replays_reproduced": 0,
+    "k2_replays": 0
+   },
+   "P_prec(verify-identity, *)": {
+    "groups": 1,
+    "certified at k = 2": 1,
+    "k1_breaking_edit_sets": 0,
+    "k1_replays_reproduced": 0,
+    "k1_replays": 0,
+    "k2_breaking_edit_sets": 0,
+    "k2_replays_reproduced": 0,
+    "k2_replays": 0
+   }
+  },
+  "state_level": {
+   "states": 3,
+   "certified at k = 1 (all groups)": 3,
+   "certified at k = 2 (all groups)": 3,
+   "some group: own choice breaks the rule": 0
+  }
+ }
+}

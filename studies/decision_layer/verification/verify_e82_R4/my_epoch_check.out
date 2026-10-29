@@ -1,0 +1,3 @@
+star: best-epoch (rule) +0.14; final logged epoch +0.25; mean of the last 10 logged evals (epochs 22-40) +0.27; best epochs refined [34, 24], C4 [30, 40]
+abcd: best-epoch (rule) +0.56; final logged epoch +0.42; mean of the last 10 logged evals (epochs 22-40) +0.66; best epochs refined [24, 32], C4 [26, 28]
+multiwoz: best-epoch (rule) +0.49; final logged epoch -0.02; mean of the last 10 logged evals (epochs 22-40) +0.01; best epochs refined [4, 40], C4 [20, 36]

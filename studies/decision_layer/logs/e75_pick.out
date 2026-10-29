@@ -1,0 +1,10 @@
+C4 s  8: dev 0.8317 (best epoch 14, 158.3 s; e72_abcd_Bc4_c4000)
+C4 s 12: dev 0.8398 (best epoch 30, 145.9 s; e74_abcd_Bc4_c4000_s12)
+C4 s 16: dev 0.8417 (best epoch 26, 140.9 s; e74c_abcd_Bc4_c4000_s16)
+C4 s 24: dev 0.8341 (best epoch 32, 135.4 s; e75_abcd_Bc4_c4000_s24)
+C4: best s 16 (0.8417); s 8 0.8317; gap +1.00; pick s 16
+bge-large s  8: dev 0.8398 (best epoch 40, 43.1 s; e75_abcd_bge_c4000_s8)
+bge-large s 12: dev 0.8445 (best epoch 38, 38.4 s; e75_abcd_bge_c4000_s12)
+bge-large s 16: dev 0.8447 (best epoch 32, 37.3 s; e75_abcd_bge_c4000_s16)
+bge-large s 24: dev 0.8472 (best epoch 38, 36.1 s; e75_abcd_bge_c4000_s24)
+bge-large: best s 24 (0.8472); s 8 0.8398; gap +0.73; pick s 24

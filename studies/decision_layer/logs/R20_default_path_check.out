@@ -1,0 +1,10 @@
+R20 default-path check of the edited scripts/abcd_confirm.py (--grid-c unset): R19's stored dry runs against reruns with default flags
+run 2026-10-19T00:11:57Z
+dry_R20default_R19abcd_tm_mem_static vs dry_R19abcd_tm_mem_static: json fields differing (besides name, time, peak_gpu_mb, train_s): []; dev 0.33686210640608033 / 0.33686210640608033; grid_c key in rerun: False
+  bit_names.json identical bytes: True
+  model_seed1.npz: arrays ['cfg', 'ta', 'w'] identical: True
+  seed1.npz: arrays ['S', 'convo_id', 'k', 'pred', 'w_bert', 'w_roberta', 'y'] identical: True
+dry_R20default_R19abcd_lr_mem_static vs dry_R19abcd_lr_mem_static: json fields differing (besides name, time, peak_gpu_mb, train_s): []; dev 0.8110749185667753 / 0.8110749185667753; grid_c key in rerun: False
+  bit_names.json identical bytes: True
+  lr_weights_seed0.npz: arrays ['W', 'b'] identical: True
+  seed0.npz: arrays ['convo_id', 'k', 'pred', 'w_bert', 'w_roberta', 'y'] identical: True

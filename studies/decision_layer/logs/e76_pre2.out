@@ -1,0 +1,2 @@
+candidates 1626; kept clauses 3995; table c4words-S1000-v1
+{"tag": "e76_pre2", "model": "tm_c4_s16", "models": "results/confirm/R23abcd/tm_mem_c4_s16", "seed": 1, "table_file_sha256": "e1771d9eaf4a07f71c532fe4f3ef91909334cbdcb4d7785ff0bb7ed0e51c5c0a", "time": "2026-10-19T21:11:59Z", "kind": "enum_precheck2_c4", "states": 30, "single_equal": 48780, "single_rows": 48780, "pair_equal": 243900, "pair_rows": 243900}

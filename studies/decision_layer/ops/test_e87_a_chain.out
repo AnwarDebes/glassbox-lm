@@ -1,0 +1,4 @@
+ok: a0 waits for both pids, then 3 empty-GPU checks in a row (busy on check 2: 5 checks), runs abcd, star, multiwoz and exits;
+    a waits for A0's done line and the CPU gate (5.10 cores twice, then 1.00), runs the three datasets; refusals: a second start,
+    a failing dataset stops A0 and A refuses, a changed plan, an unknown stage
+PASSED

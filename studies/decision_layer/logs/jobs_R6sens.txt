@@ -1,0 +1,10 @@
+.venv-dl/bin/python scripts/r6_run.py --seed 1 --eval test --out confirm/R6 --tag R6sens --learner tm_q --kappa 0.005 --updates 3000 --clauses 2000 --T 1000 --s 4.0
+.venv-dl/bin/python scripts/r6_run.py --seed 2 --eval test --out confirm/R6 --tag R6sens --learner tm_q --kappa 0.005 --updates 3000 --clauses 2000 --T 1000 --s 4.0
+.venv-dl/bin/python scripts/r6_run.py --seed 3 --eval test --out confirm/R6 --tag R6sens --learner tm_q --kappa 0.005 --updates 3000 --clauses 2000 --T 1000 --s 4.0
+.venv-dl/bin/python scripts/r6_run.py --seed 4 --eval test --out confirm/R6 --tag R6sens --learner tm_q --kappa 0.005 --updates 3000 --clauses 2000 --T 1000 --s 4.0
+.venv-dl/bin/python scripts/r6_run.py --seed 5 --eval test --out confirm/R6 --tag R6sens --learner tm_q --kappa 0.005 --updates 3000 --clauses 2000 --T 1000 --s 4.0
+.venv-dl/bin/python scripts/r6_run.py --seed 6 --eval test --out confirm/R6 --tag R6sens --learner tm_q --kappa 0.005 --updates 3000 --clauses 2000 --T 1000 --s 4.0
+.venv-dl/bin/python scripts/r6_run.py --seed 7 --eval test --out confirm/R6 --tag R6sens --learner tm_q --kappa 0.005 --updates 3000 --clauses 2000 --T 1000 --s 4.0
+.venv-dl/bin/python scripts/r6_run.py --seed 8 --eval test --out confirm/R6 --tag R6sens --learner tm_q --kappa 0.005 --updates 3000 --clauses 2000 --T 1000 --s 4.0
+.venv-dl/bin/python scripts/r6_run.py --seed 9 --eval test --out confirm/R6 --tag R6sens --learner tm_q --kappa 0.005 --updates 3000 --clauses 2000 --T 1000 --s 4.0
+.venv-dl/bin/python scripts/r6_run.py --seed 10 --eval test --out confirm/R6 --tag R6sens --learner tm_q --kappa 0.005 --updates 3000 --clauses 2000 --T 1000 --s 4.0

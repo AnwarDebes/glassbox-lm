@@ -1,0 +1,61 @@
+ok   star: provenance names the C4 table file (e1771d9e)
+ok   star: test arrays are empty
+ok   star train cust: 54,913 rows, 500 dims
+ok   star train cust: every vector has norm 1 or 0 (8 zero)
+ok   star train cust: 1,000 rows recomputed in float64, max gap 2.68e-07
+ok   star train recent: 54,913 rows, 500 dims
+ok   star train recent: every vector has norm 1 or 0 (0 zero)
+ok   star train recent: 1,000 rows recomputed in float64, max gap 1.35e-07
+ok   star train full: 54,913 rows, 500 dims
+ok   star train full: every vector has norm 1 or 0 (0 zero)
+ok   star train full: 1,000 rows recomputed in float64, max gap 2.05e-08
+ok   star dev cust: 6,908 rows, 500 dims
+ok   star dev cust: every vector has norm 1 or 0 (1 zero)
+ok   star dev cust: 1,000 rows recomputed in float64, max gap 2.61e-07
+ok   star dev recent: 6,908 rows, 500 dims
+ok   star dev recent: every vector has norm 1 or 0 (0 zero)
+ok   star dev recent: 1,000 rows recomputed in float64, max gap 1.22e-07
+ok   star dev full: 6,908 rows, 500 dims
+ok   star dev full: every vector has norm 1 or 0 (0 zero)
+ok   star dev full: 1,000 rows recomputed in float64, max gap 2.05e-08
+ok   abcd: provenance names the C4 table file (e1771d9e)
+ok   abcd: test arrays are empty
+ok   abcd train cust: 29,190 rows, 500 dims
+ok   abcd train cust: every vector has norm 1 or 0 (0 zero)
+ok   abcd train cust: 1,000 rows recomputed in float64, max gap 2.03e-07
+ok   abcd train recent: 29,190 rows, 500 dims
+ok   abcd train recent: every vector has norm 1 or 0 (0 zero)
+ok   abcd train recent: 1,000 rows recomputed in float64, max gap 1.33e-07
+ok   abcd train full: 29,190 rows, 500 dims
+ok   abcd train full: every vector has norm 1 or 0 (0 zero)
+ok   abcd train full: 1,000 rows recomputed in float64, max gap 4.06e-07
+ok   abcd dev cust: 3,684 rows, 500 dims
+ok   abcd dev cust: every vector has norm 1 or 0 (0 zero)
+ok   abcd dev cust: 1,000 rows recomputed in float64, max gap 2.04e-07
+ok   abcd dev recent: 3,684 rows, 500 dims
+ok   abcd dev recent: every vector has norm 1 or 0 (0 zero)
+ok   abcd dev recent: 1,000 rows recomputed in float64, max gap 1.20e-07
+ok   abcd dev full: 3,684 rows, 500 dims
+ok   abcd dev full: every vector has norm 1 or 0 (0 zero)
+ok   abcd dev full: 1,000 rows recomputed in float64, max gap 4.76e-07
+ok   multiwoz: provenance names the C4 table file (e1771d9e)
+ok   multiwoz: test arrays are empty
+ok   multiwoz train cust: 56,581 rows, 500 dims
+ok   multiwoz train cust: every vector has norm 1 or 0 (0 zero)
+ok   multiwoz train cust: 1,000 rows recomputed in float64, max gap 2.40e-07
+ok   multiwoz train recent: 56,581 rows, 500 dims
+ok   multiwoz train recent: every vector has norm 1 or 0 (0 zero)
+ok   multiwoz train recent: 1,000 rows recomputed in float64, max gap 1.34e-07
+ok   multiwoz train full: 56,581 rows, 500 dims
+ok   multiwoz train full: every vector has norm 1 or 0 (0 zero)
+ok   multiwoz train full: 1,000 rows recomputed in float64, max gap 2.05e-08
+ok   multiwoz dev cust: 7,359 rows, 500 dims
+ok   multiwoz dev cust: every vector has norm 1 or 0 (0 zero)
+ok   multiwoz dev cust: 1,000 rows recomputed in float64, max gap 2.39e-07
+ok   multiwoz dev recent: 7,359 rows, 500 dims
+ok   multiwoz dev recent: every vector has norm 1 or 0 (0 zero)
+ok   multiwoz dev recent: 1,000 rows recomputed in float64, max gap 1.36e-07
+ok   multiwoz dev full: 7,359 rows, 500 dims
+ok   multiwoz dev full: every vector has norm 1 or 0 (0 zero)
+ok   multiwoz dev full: 1,000 rows recomputed in float64, max gap 2.05e-08
+all checks passed

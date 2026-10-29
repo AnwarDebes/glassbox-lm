@@ -1,0 +1,8 @@
+ok fires: plain and negated literals; an empty clause never fires
+ok TM receipts: one clause; two needed; ties by the lower index; none within the cap
+ok LR receipts: the intercept alone (0 bits); two bits needed
+ok coverage at k literals; S1's point for the TM (3 clauses of 3 literals) and LR (9 bits)
+ok Part B's kill rule: the most accurate C at the budget; killed at exactly -0.5; the extension 0.003 > 0.001 > ... stops at the first that reaches 0.90 or below the pruned agent minus 5; no comparator is 'not testable'
+ok clause precision with the 10-firing floor; dev accuracy; clause statistics
+ok end to end: output file, the dev-accuracy check against the run, a refusal when it differs, no overwrite
+PASSED

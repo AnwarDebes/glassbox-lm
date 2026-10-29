@@ -1,0 +1,14 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+train 54913 examples, 4811 dialogues
+dev 6908 examples, 604 dialogues
+test 6988 examples, 611 dialogues
+Loading weights:   0%|          | 0/391 [00:00<?, ?it/s]Loading weights:   2%|▏         | 8/391 [00:00<00:05, 66.09it/s]Loading weights:   8%|▊         | 32/391 [00:00<00:02, 143.73it/s]Loading weights:  12%|█▏        | 48/391 [00:00<00:02, 139.27it/s]Loading weights:  16%|█▌        | 62/391 [00:00<00:02, 118.68it/s]Loading weights:  20%|█▉        | 77/391 [00:00<00:02, 127.99it/s]Loading weights:  23%|██▎       | 91/391 [00:00<00:02, 111.15it/s]Loading weights:  26%|██▋       | 103/391 [00:00<00:02, 97.74it/s]Loading weights:  31%|███       | 120/391 [00:01<00:02, 114.31it/s]Loading weights:  38%|███▊      | 148/391 [00:01<00:01, 152.05it/s]Loading weights:  45%|████▌     | 176/391 [00:01<00:01, 169.44it/s]Loading weights:  52%|█████▏    | 205/391 [00:01<00:00, 200.17it/s]Loading weights:  58%|█████▊    | 227/391 [00:01<00:00, 190.80it/s]Loading weights:  66%|██████▋   | 260/391 [00:01<00:00, 217.09it/s]Loading weights:  72%|███████▏  | 283/391 [00:01<00:00, 219.89it/s]Loading weights:  78%|███████▊  | 306/391 [00:01<00:00, 189.92it/s]Loading weights:  83%|████████▎ | 326/391 [00:02<00:00, 186.76it/s]Loading weights: 100%|██████████| 391/391 [00:02<00:00, 188.57it/s]
+bge-large train cust 54913 texts, 37647 unique 169s
+bge-large train recent 54913 texts, 36913 unique 264s
+bge-large train full 54913 texts, 1 unique 264s
+bge-large dev cust 6908 texts, 4764 unique 286s
+bge-large dev recent 6908 texts, 4729 unique 298s
+bge-large dev full 6908 texts, 1 unique 299s
+bge-large test cust 6988 texts, 4843 unique 321s
+bge-large test recent 6988 texts, 4810 unique 333s
+bge-large test full 6988 texts, 1 unique 333s

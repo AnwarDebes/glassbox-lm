@@ -1,0 +1,5 @@
+ok: per-C lines, best with ties to the larger C, reproduction, B2 and C4 lines; the refined TM equals e81_pick's B2 value
+ok: a C 1e-3 rerun that differs is reported; a best at 1e-4 is 'again at the grid's edge'
+ok refusal: an e81x row written before the note's freeze
+ok refusal: an e81x row on other bits
+PASSED

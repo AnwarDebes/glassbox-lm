@@ -1,0 +1,2 @@
+candidates 1626; kept clauses 3995; table c4words-S1000-v1
+{"tag": "e76_contr", "model": "tm_c4_s16", "models": "results/confirm/R23abcd/tm_mem_c4_s16", "seed": 1, "table_file_sha256": "e1771d9eaf4a07f71c532fe4f3ef91909334cbdcb4d7785ff0bb7ed0e51c5c0a", "time": "2026-10-19T21:09:13Z", "kind": "enum_precheck_c4_contractions", "n_states_with_contraction": 400, "states": 400, "zero_edit_exact": 400, "single_rows": 4361, "single_exact": 4361, "argmax_rows": 0, "argmax_equal": 0, "double_rows": 8000, "double_exact": 8000, "contr_rows": 34654, "contr_exact": 34654}

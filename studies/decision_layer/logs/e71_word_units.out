@@ -1,0 +1,6 @@
+run 2026-10-19T01:13:51Z
+xcust: 3218 bits; bits set by one dev token: median 67, mean 84.9, p10 10, p90 175; tokens per dev text: median 45
+xrecent: 3033 bits; bits set by one dev token: median 67, mean 104.6, p10 17, p90 240; tokens per dev text: median 33
+words: bits on per dev state: median 32, p10 18, p90 49 of 1000
+xcust: bits on per dev state: median 1747, p10 1142, p90 2286 of 3218
+xrecent: bits on per dev state: median 1635, p10 1145, p90 2045 of 3033

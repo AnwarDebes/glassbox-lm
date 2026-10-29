@@ -1,0 +1,20 @@
+tm_mem_cust_closed acc 0.7263 (sd 0.0041, 5 seeds)  AST-weighted 0.7600
+tm_nomem_cust    acc 0.4869 (sd 0.0087, 5 seeds)  AST-weighted 0.5699
+tm_mem_cust      acc 0.7809 (sd 0.0012, 5 seeds)  AST-weighted 0.8081
+lr_mem_cust_closed acc 0.7209 (sd 0.0000, 1 seeds)  AST-weighted 0.7534
+lr_mem_cust      acc 0.7586 (sd 0.0000, 1 seeds)  AST-weighted 0.7909
+tm_mem_static_closed acc 0.7961 (sd 0.0061, 5 seeds)  AST-weighted 0.8176
+tm_mem_static_R19 acc 0.8301 (sd 0.0028, 5 seeds)  AST-weighted 0.8478
+tm_nomem_static_R19 acc 0.6222 (sd 0.0044, 5 seeds)  AST-weighted 0.6846
+tm_mem_closed_R13 acc 0.8070 (sd 0.0030, 10 seeds)  AST-weighted 0.8201
+tm_mem_cust_closed:tm_nomem_cust +23.94 [+22.20, +25.67]   AST +19.00 [+17.20, +20.83]
+tm_mem_cust_closed:tm_mem_static_closed -6.98 [-8.13, -5.84]   AST -5.76 [-6.78, -4.78]
+tm_mem_cust:tm_mem_static_R19 -4.92 [-5.81, -4.08]   AST -3.98 [-4.80, -3.18]
+tm_nomem_cust:tm_nomem_static_R19 -13.54 [-14.65, -12.44]   AST -11.46 [-12.65, -10.30]
+tm_mem_cust_closed:tm_mem_cust -5.46 [-6.26, -4.67]   AST -4.81 [-5.67, -3.97]
+tm_mem_cust_closed:lr_mem_cust_closed +0.54 [-0.77, +1.82]   AST +0.66 [-0.72, +2.06]
+tm_mem_cust:lr_mem_cust      +2.23 [+1.24, +3.21]   AST +1.72 [+0.68, +2.76]
+tm_mem_cust_closed:tm_mem_closed_R13 -8.07 [-9.40, -6.79]   AST -6.01 [-7.23, -4.86]
+tm_mem_static_closed:tm_mem_static_R19 -3.40 [-4.02, -2.80]   AST -3.02 [-3.75, -2.31]
+tm_mem_static_closed:tm_nomem_static_R19 +17.38 [+15.84, +18.93]   AST +13.30 [+11.69, +14.94]
+lr_mem_cust_closed:lr_mem_cust -3.77 [-4.66, -2.88]   AST -3.75 [-4.81, -2.72]

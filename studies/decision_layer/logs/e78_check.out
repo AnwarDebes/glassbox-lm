@@ -1,0 +1,33 @@
+ok   e74c_star_Bc4_c16000_s16 seed 1: exactly one row
+ok   e74c_star_Bc4_c16000_s16 seed 1: settings (star, mem+words+xcust+xrecent, 16000, s 16)
+ok   e78_star_B_c16000_s16 seed 2: exactly one row
+ok   e78_star_B_c16000_s16 seed 2: settings (star, mem+words+xcust+xrecent, 16000, s 16)
+ok   e78_star_B_c16000_s16 seed 2: written 2026-10-20T19:56:34Z, after the freeze 2026-10-20T18:55:37Z
+ok   star: the reference seed 2 has seed 1's train and dev bits
+ok   e78_star_BN_c16000_s16 seed 1: exactly one row
+ok   e78_star_BN_c16000_s16 seed 1: settings (star, mem+words+xcust+xrecent+xcustn, 16000, s 16)
+ok   e78_star_BN_c16000_s16 seed 1: written 2026-10-20T20:22:11Z, after the freeze 2026-10-20T18:55:37Z
+ok   e78_star_BN_c16000_s16 seed 2: exactly one row
+ok   e78_star_BN_c16000_s16 seed 2: settings (star, mem+words+xcust+xrecent+xcustn, 16000, s 16)
+ok   e78_star_BN_c16000_s16 seed 2: written 2026-10-20T20:47:59Z, after the freeze 2026-10-20T18:55:37Z
+ok   star: the two candidate seeds share their bits
+ok   star: candidate bits 8763 = view B's 7227 + 1,536
+ok   star: static_info has the xcustn block (count at level 3, spec f8f552fd)
+   star: reference 0.6545 / 0.6579 (mean 0.6562); candidate 0.6455 / 0.6513 (mean 0.6484); candidate minus reference -0.78 points
+ok   e74c_abcd_Bc4_c4000_s16 seed 1: exactly one row
+ok   e74c_abcd_Bc4_c4000_s16 seed 1: settings (abcd, mem+words+xcust+xrecent, 4000, s 16)
+ok   e78_abcd_B_c4000_s16 seed 2: exactly one row
+ok   e78_abcd_B_c4000_s16 seed 2: settings (abcd, mem+words+xcust+xrecent, 4000, s 16)
+ok   e78_abcd_B_c4000_s16 seed 2: written 2026-10-20T19:28:26Z, after the freeze 2026-10-20T18:55:37Z
+ok   abcd: the reference seed 2 has seed 1's train and dev bits
+ok   e78_abcd_BN_c4000_s16 seed 1: exactly one row
+ok   e78_abcd_BN_c4000_s16 seed 1: settings (abcd, mem+words+xcust+xrecent+xcustn, 4000, s 16)
+ok   e78_abcd_BN_c4000_s16 seed 1: written 2026-10-20T19:32:01Z, after the freeze 2026-10-20T18:55:37Z
+ok   e78_abcd_BN_c4000_s16 seed 2: exactly one row
+ok   e78_abcd_BN_c4000_s16 seed 2: settings (abcd, mem+words+xcust+xrecent+xcustn, 4000, s 16)
+ok   e78_abcd_BN_c4000_s16 seed 2: written 2026-10-20T19:35:39Z, after the freeze 2026-10-20T18:55:37Z
+ok   abcd: the two candidate seeds share their bits
+ok   abcd: candidate bits 8220 = view B's 6684 + 1,536
+ok   abcd: static_info has the xcustn block (count at level 3, spec f8f552fd)
+   abcd: reference 0.8417 / 0.8423 (mean 0.8420); candidate 0.8390 / 0.8393 (mean 0.8392); candidate minus reference -0.29 points
+RULE: STAR -0.78 (needs >= +0.5), ABCD -0.29 (needs >= -0.5) -> NOT taken

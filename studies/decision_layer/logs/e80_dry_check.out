@@ -1,0 +1,9 @@
+ok e80dry_abcd_BX seed 1: settings; 9657 bits, xcrecent 2973 on the C4 table
+ok e80dry_abcd_BX seed 2: settings; 9657 bits, xcrecent 2973 on the C4 table
+ok e80dry_abcd_BX: the two seeds share their train and dev bits
+ok e80dry_star_BX seed 1: settings; 10361 bits, xcrecent 3134 on the C4 table
+ok e80dry_star_BX seed 2: settings; 10361 bits, xcrecent 3134 on the C4 table
+ok e80dry_star_BX: the two seeds share their train and dev bits
+ok e80dry_mwoz_BX seed 1: settings; 9315 bits, xcrecent 2735 on the C4 table
+ok the 5 reference rows: one row each, at their pinned lines, unchanged
+all dry checks passed

@@ -1,0 +1,75 @@
+{
+  "experiment": "E11",
+  "docs": "docs/05",
+  "milestone": "M8",
+  "lane": 3,
+  "status": "planned",
+  "prereg": [
+    "H2.4"
+  ],
+  "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "script": "experiments/h2_4_recheck.py",
+  "venv": ".venv-tm",
+  "gpu_lock": "none",
+  "params": {
+    "run_dir": "results/20260922T232251Z_E11",
+    "receipts_files": "the fifteen receipts_<decoder>_seed<N>.json of that run, in E11's order",
+    "checker": "src/tmlm/certify/checker_standalone.py (binding to the generation run, 2026-10-25)",
+    "expected_seed": "N of the file name (docs/13 section 3)",
+    "expected_temperature": 1.0,
+    "tamper_per_mode": 100,
+    "tamper_modes": "tmlm.certify.receipt.TAMPER_MODES (the twelve of E11 and forged_draw, temperature, mode_switch)",
+    "rule": "the docs/13 amendment with the words 're-check of H2.4' in its heading (draft docs/drafts/H2_4_recheck_note_DRAFT_2026-10-25.md until it is frozen)",
+    "note": "re-check of H2.4 after the fix of bug TLM-B2; nothing is generated and no split is opened",
+    "expected_temperature_note": "not a registered value: E11's config has no temperature field, and its decoders ran with their default, 1.0 (anyorder.py, diffusion.py, eliminate.py)",
+    "input_sha256": {
+      "bank.npz": "879fd72819a3a35ff0913eb277f665958c0ab95f1f9da39584fd30aefcbe8dc7",
+      "receipts_anyorder_seed1.json": "c9a8c41519644114bfa50e34ab8a0349d5f76bdca1affb0699cdd412cee0b685",
+      "receipts_anyorder_seed2.json": "5cb24e170c0109f128cae380e15b14359ab1e6a4a339715c131ee8df2ba0fcd1",
+      "receipts_anyorder_seed3.json": "93164380182131fbf62669e71f9a0f67e27e58f1d191c739091f83164f00ea3c",
+      "receipts_anyorder_seed4.json": "99316ad8c4fe2d534ee5346ca1a80c27864660532ef9438b4e5e17f5c3ab4ba5",
+      "receipts_anyorder_seed5.json": "41d1b4f99999ff6f44e53f34f2535ee4ad6dbe9efd3de865165d54da85950240",
+      "receipts_diffusion_seed1.json": "2eada6bd0b3ec2b65463f0877d127aafa2f1f3af37a5bd8aa2f1a62457f0b24a",
+      "receipts_diffusion_seed2.json": "01d8aacd00f45311f889e30ccadfbe2a1773c29da0865c27fbc47e41ec680d99",
+      "receipts_diffusion_seed3.json": "e5f687896400d7e0c6b8a3f64e032ea84c2387ed36bff3a54d9e0bf863eff792",
+      "receipts_diffusion_seed4.json": "16a8b2964f2c248a644f184365d16199b021480dbf4aede511558c02107ef8b3",
+      "receipts_diffusion_seed5.json": "d8042fc08d07b904ef33b19f581501a5826b25aa6eecea17cacf33e37fbe4b5e",
+      "receipts_eliminate_seed1.json": "64f0630b857f197c249aa24d80df3447aaebdd688e293b1807e49a70ef1e50e0",
+      "receipts_eliminate_seed2.json": "0e8a3d49cbf2452582d7f1161a4d3c5b6df40482b75e029e667cccb133daacb6",
+      "receipts_eliminate_seed3.json": "8cdd200b53daf0065ad499b8b4241e79aac8c5b39cb436b8d3305f152d593998",
+      "receipts_eliminate_seed4.json": "f114f425af811927c80814b74b60aab72327cafb6ee4003f21819f593ef83cf2",
+      "receipts_eliminate_seed5.json": "ac46053d16b9bf4ed0a19fcfd984ae1b98db208b5438f611c28e71447e0eb239",
+      "MANIFEST.json": "6a270b4b22eeeba34faa712af121f14666d6c04c03ca12d1aa64bb6565fcf08a"
+    },
+    "tamper_counts": {
+      "claimed": 100,
+      "drop_clause_keep_sums": 100,
+      "drop_clause_fix_sums": 100,
+      "add_clause": 100,
+      "vote_weight": 100,
+      "literal": 100,
+      "context": 88,
+      "state_hash": 100,
+      "bank_hash": 100,
+      "draw": 100,
+      "sums": 100,
+      "survivors": 25,
+      "forged_draw": 100,
+      "temperature": 99,
+      "mode_switch": 100
+    },
+    "tamper_counts_note": "the twelve E11 modes: E11's counts (results/20260922T232251Z_E11/metrics.json tamper.*), reproduced exactly by the selection-only pass of 2026-10-25 13:07:29-13:11:28 UTC (no checker call); the three new modes: the counts of that pass (per decoder anyorder/diffusion/eliminate: forged_draw 30/45/25, temperature 30/45/24, mode_switch 30/45/25), written here before the run",
+    "receipts_checked": 11400,
+    "runs_per_file": 20,
+    "smoke_row": {
+      "file": "receipts_anyorder_seed1.json",
+      "result": "640/640 pass"
+    }
+  }
+}

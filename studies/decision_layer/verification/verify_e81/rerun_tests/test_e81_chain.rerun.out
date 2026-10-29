@@ -1,0 +1,5 @@
+ok done path: driver, e81x jobs, report, 'e81x done'; end line 'e81x done (report exit 0)', exit 0
+ok failed smoke: e81x not started; end line 'driver stopped (e81x not started)', exit 1
+ok SIGTERM: the chain stopped its stage's process group (no process left) and wrote the end line 'signal TERM', exit 143 (after 0.0 s)
+ok existing driver log: the chain refuses and nothing runs; end line 'refused (logs/e81_driver.log exists)', exit 1
+PASSED

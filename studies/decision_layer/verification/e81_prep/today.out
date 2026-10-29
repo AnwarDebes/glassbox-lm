@@ -1,0 +1,9 @@
+a3B  star     4k seed 1 0.6375 (best ep 40); 16000 clauses, 2 seed(s): best-dev 0.6576, final 0.6564, last-10 0.6534; LR not run; swing between evaluations: median 0.42, max 7.15 points
+a3B  abcd     4k seed 1 0.8461 (best ep 24); 4000 clauses, 2 seed(s): best-dev 0.8476, final 0.8415, last-10 0.8433; LR not run; swing between evaluations: median 0.30, max 8.60 points
+a3B  multiwoz 4k seed 1 0.3123 (best ep 4); 16000 clauses, 2 seed(s): best-dev 0.3108, final 0.2961, last-10 0.2840; LR 0.3643; TM-LR -5.35; swing between evaluations: median 0.91, max 4.33 points
+bge  star     4k seed 1 0.6401 (best ep 30); 16000 clauses, 1 seed(s): best-dev 0.6507, final 0.6481, last-10 0.6468; LR not run; swing between evaluations: median 0.47, max 8.02 points
+bge  abcd     4k seed 1 0.8472 (best ep 38); 4000 clauses, 1 seed(s): best-dev 0.8472, final 0.8436, last-10 0.8423; LR not run; swing between evaluations: median 0.38, max 6.30 points
+bge  multiwoz 4k seed 1 0.3325 (best ep 40); 16000 clauses, 1 seed(s): best-dev 0.3359, final 0.2856, last-10 0.3120; LR not run; swing between evaluations: median 0.77, max 3.76 points
+C4   star     4k seed 1 0.6349 (best ep 40); 16000 clauses, 2 seed(s): best-dev 0.6562, final 0.6540, last-10 0.6507; LR 0.6558; TM-LR +0.04; swing between evaluations: median 0.42, max 6.76 points
+C4   abcd     4k seed 1 0.8417 (best ep 26); 4000 clauses, 2 seed(s): best-dev 0.8420, final 0.8373, last-10 0.8367; LR 0.8119; TM-LR +3.01; swing between evaluations: median 0.30, max 8.63 points
+C4   multiwoz 4k seed 1 0.3085 (best ep 20); 16000 clauses, 2 seed(s): best-dev 0.3059, final 0.2963, last-10 0.2839; LR 0.3586; TM-LR -5.27; swing between evaluations: median 1.18, max 4.50 points

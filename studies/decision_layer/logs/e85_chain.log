@@ -1,0 +1,14 @@
+2026-10-22T19:44:56Z e85a starts (R24 dry check: all dry checks passed)
+refined   4k seed 1: s 8 0.3371, s 12 0.3393, s 16 0.3336, s 24 0.3309; best s 12, +0.22 over s 8; pick s 8
+bge-large 4k seed 1: s 8 0.3337, s 12 0.3332, s 16 0.3322, s 24 0.3306; best s 8, +0.00 over s 8; pick s 8
+C4        4k seed 1: s 8 0.3355, s 12 0.3361, s 16 0.3374, s 24 0.3265; best s 16, +0.19 over s 8; pick s 8
+wrote logs/jobs_e85b.txt (0 jobs)
+refined   4k seed 1: s 8 0.3371, s 12 0.3393, s 16 0.3336, s 24 0.3309; best s 12, +0.22 over s 8; pick s 8
+bge-large 4k seed 1: s 8 0.3337, s 12 0.3332, s 16 0.3322, s 24 0.3306; best s 8, +0.00 over s 8; pick s 8
+C4        4k seed 1: s 8 0.3355, s 12 0.3361, s 16 0.3374, s 24 0.3265; best s 16, +0.19 over s 8; pick s 8
+refined  : pick s 8 -> s* 8 (16k s 8 0.3498)
+bge-large: pick s 8 -> s* 8 (16k s 8 0.3486)
+C4       : pick s 8 -> s* 8 (16k s 8 0.3500)
+s*: refined 8, bge-large 8, C4 8
+wrote logs/jobs_R24.txt (18 jobs)
+2026-10-22T20:35:26Z e85 done

@@ -1,0 +1,7 @@
+ok  s* from logs/e85_pick_final.out: refined s 8, bge-large s 8, C4 s 8
+ok  dev row e83_multiwoz_a3B_c16000_s8_nrand seed 1: exactly one
+ok  dev row e84_multiwoz_C4_c16000_s8_nrand seed 1: exactly one
+ok  dev row e84_multiwoz_bge_c16000_s8_nrand seed 1: exactly one
+G-s* C4: e84_multiwoz_C4_c16000_s8_nrand 0.3500 minus e84_multiwoz_bge_c16000_s8_nrand 0.3486: +0.15 (needs >= -1.0): holds; its rules stand
+G-s* refined: e83_multiwoz_a3B_c16000_s8_nrand 0.3498 minus e84_multiwoz_bge_c16000_s8_nrand 0.3486: +0.12 (needs >= -1.0): holds; its rules stand
+G-s* done: tm_mem_c4_nrand, tm_mem_ref_nrand keep their rules

@@ -1,0 +1,68 @@
+{
+ "what": "e77: TM against LR on the same C4 bits, MultiWOZ dev (no rule)",
+ "tm": "e77_mwoz_Bc4_c16000_s8",
+ "lr": "dry_e77mwoz_lr_mem_c4 (C 0.001)",
+ "acc_tm": 0.3038456311998913,
+ "acc_lr": 0.35860850659056936,
+ "both_right": 0.21918738959097703,
+ "only_lr": 0.13942111699959234,
+ "only_tm": 0.08465824160891426,
+ "first": {
+  "tm": 0.366,
+  "lr": 0.423
+ },
+ "later": {
+  "tm": 0.2940713948734078,
+  "lr": 0.3484824657965089
+ },
+ "by_train_frequency": [
+  {
+   "train_examples": "20-49",
+   "n_dev": 187,
+   "n_labels": 41,
+   "tm": 0.0,
+   "lr": 0.0
+  },
+  {
+   "train_examples": "50-199",
+   "n_dev": 376,
+   "n_labels": 29,
+   "tm": 0.005319148936170213,
+   "lr": 0.0026595744680851063
+  },
+  {
+   "train_examples": "200-999",
+   "n_dev": 1967,
+   "n_labels": 33,
+   "tm": 0.128622267412303,
+   "lr": 0.18047788510421964
+  },
+  {
+   "train_examples": "1000-max",
+   "n_dev": 4829,
+   "n_labels": 20,
+   "tm": 0.4102298612549182,
+   "lr": 0.47276868916960035
+  }
+ ],
+ "share_predictions_top20_labels": {
+  "tm": 0.8649272999048784,
+  "lr": 0.8382932463649952,
+  "gold": 0.656203288490284
+ },
+ "n_distinct_labels_predicted": {
+  "tm": 64,
+  "lr": 49,
+  "gold": 123
+ }
+}
+{'label': 'general-bye+general-welcome', 'n': 365, 'tm': 0.008, 'lr': 0.271, 'turns_gained': np.float64(96.0)}
+{'label': 'Train-Inform+Train-OfferBook', 'n': 297, 'tm': 0.36, 'lr': 0.636, 'turns_gained': np.float64(82.0)}
+{'label': 'Booking-Book+general-reqmore', 'n': 278, 'tm': 0.439, 'lr': 0.694, 'turns_gained': np.float64(71.0)}
+{'label': 'Attraction-Inform', 'n': 326, 'tm': 0.387, 'lr': 0.558, 'turns_gained': np.float64(56.0)}
+{'label': 'Booking-Request', 'n': 146, 'tm': 0.13, 'lr': 0.493, 'turns_gained': np.float64(53.0)}
+{'label': 'Restaurant-Inform+Restaurant-Request', 'n': 128, 'tm': 0.266, 'lr': 0.617, 'turns_gained': np.float64(45.0)}
+{'label': 'Train-OfferBooked', 'n': 146, 'tm': 0.178, 'lr': 0.418, 'turns_gained': np.float64(35.0)}
+{'label': 'Booking-Inform+Restaurant-Inform', 'n': 149, 'tm': 0.107, 'lr': 0.309, 'turns_gained': np.float64(30.0)}
+{'label': 'Hotel-Inform+Hotel-Request', 'n': 163, 'tm': 0.448, 'lr': 0.613, 'turns_gained': np.float64(27.0)}
+{'label': 'Attraction-Inform+Attraction-Request', 'n': 85, 'tm': 0.188, 'lr': 0.471, 'turns_gained': np.float64(24.0)}

@@ -1,0 +1,4 @@
+ok screen and final: +0.5 picked, +0.0 stays s 8; a pick at or above its 16k s 8 kept, one below falls back; jobs_e85b.txt (2) and jobs_R24.txt (18) written; no overwrite
+ok an exact tie between s 12 and s 16 goes to s 12
+ok refusals: before the freeze, no preds file, other dev bits, two rows
+PASSED

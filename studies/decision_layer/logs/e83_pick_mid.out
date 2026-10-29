@@ -1,0 +1,11 @@
+screen (MultiWOZ dev, 4k, T 4000, s 8, seed 2): best-dev / final epoch / last-10 mean
+  ref     0.2969 / 0.2780 / 0.2868
+  nrand   0.3358 / 0.3294 / 0.3261   against REF: best-dev +3.89, last-10 +3.93
+  nmix50  0.3066 / 0.2817 / 0.2829   against REF: best-dev +0.96, last-10 -0.40
+  drop50  0.3172 / 0.3083 / 0.3069   against REF: best-dev +2.02, last-10 +2.01
+qualifiers (+0.5 at best-dev and on the last-10 mean): nrand, drop50; pick: nrand
+P1 (nrand): pooled accuracy on the 6 pair labels 47.87 against REF 47.07: +0.80 (needs >= +2.0): not met
+P1 (nmix50): pooled accuracy on the 6 pair labels 45.53 against REF 47.07: -1.54 (needs >= +2.0): not met
+beside P1 (no rule): pooled on the three '+' labels: ref 45.43, nrand 42.34, nmix50 39.68, drop50 37.02
+C1 (nrand at 16k on MultiWOZ, mean of seeds 1-2, against e82's 16k rows): best-dev +4.23, last-10 mean +5.98 (each needs >= +0.5): MET; beside it: final epoch +4.85
+wrote logs/jobs_e83c.txt (4 jobs)

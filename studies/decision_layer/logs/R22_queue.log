@@ -1,0 +1,32 @@
+2026-10-19T16:50:04Z queue start: 10 jobs from logs/jobs_R22.txt, max 4.5 cores
+2026-10-19T16:50:14Z cores 2.55 over 10.0 s; throttled 0 of 100 periods
+2026-10-19T16:50:14Z start (try 1): HF_HUB_OFFLINE=1 OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 RAYON_NUM_THREADS=2 DL_GPU_FRAC=0.25 .venv-dl/bin/python scripts/table_run.py --table c4words-S1000-v1 scripts/abcd_confirm.py --encoder none --dataset star --registration R22star --arm tm --parts mem,words,xcust,xrecent --s 16 --name tm_mem_c4_s16 --clauses 16000 --seeds 1 >> logs/R22.out 2>&1
+2026-10-19T17:11:41Z exit 0 (try 1)
+2026-10-19T17:11:51Z cores 2.09 over 10.0 s; throttled 0 of 100 periods
+2026-10-19T17:11:51Z start (try 1): HF_HUB_OFFLINE=1 OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 RAYON_NUM_THREADS=2 DL_GPU_FRAC=0.25 .venv-dl/bin/python scripts/table_run.py --table c4words-S1000-v1 scripts/abcd_confirm.py --encoder none --dataset star --registration R22star --arm tm --parts mem,words,xcust,xrecent --s 16 --name tm_mem_c4_s16 --clauses 16000 --seeds 2 >> logs/R22.out 2>&1
+2026-10-19T17:33:17Z exit 0 (try 1)
+2026-10-19T17:33:27Z cores 2.09 over 10.0 s; throttled 0 of 100 periods
+2026-10-19T17:33:27Z start (try 1): HF_HUB_OFFLINE=1 OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 RAYON_NUM_THREADS=2 DL_GPU_FRAC=0.25 .venv-dl/bin/python scripts/table_run.py --table c4words-S1000-v1 scripts/abcd_confirm.py --encoder none --dataset star --registration R22star --arm tm --parts mem,words,xcust,xrecent --s 16 --name tm_mem_c4_s16 --clauses 16000 --seeds 3 >> logs/R22.out 2>&1
+2026-10-19T17:54:57Z exit 0 (try 1)
+2026-10-19T17:55:07Z cores 2.09 over 10.0 s; throttled 0 of 100 periods
+2026-10-19T17:55:07Z start (try 1): HF_HUB_OFFLINE=1 OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 RAYON_NUM_THREADS=2 DL_GPU_FRAC=0.25 .venv-dl/bin/python scripts/table_run.py --table c4words-S1000-v1 scripts/abcd_confirm.py --encoder none --dataset star --registration R22star --arm tm --parts mem,words,xcust,xrecent --s 16 --name tm_mem_c4_s16 --clauses 16000 --seeds 4 >> logs/R22.out 2>&1
+2026-10-19T18:16:33Z exit 0 (try 1)
+2026-10-19T18:16:43Z cores 2.10 over 10.0 s; throttled 0 of 100 periods
+2026-10-19T18:16:43Z start (try 1): HF_HUB_OFFLINE=1 OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 RAYON_NUM_THREADS=2 DL_GPU_FRAC=0.25 .venv-dl/bin/python scripts/table_run.py --table c4words-S1000-v1 scripts/abcd_confirm.py --encoder none --dataset star --registration R22star --arm tm --parts mem,words,xcust,xrecent --s 16 --name tm_mem_c4_s16 --clauses 16000 --seeds 5 >> logs/R22.out 2>&1
+2026-10-19T18:38:09Z exit 0 (try 1)
+2026-10-19T18:38:19Z cores 2.09 over 10.0 s; throttled 0 of 100 periods
+2026-10-19T18:38:19Z start (try 1): HF_HUB_OFFLINE=1 OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 RAYON_NUM_THREADS=2 DL_GPU_FRAC=0.25 .venv-dl/bin/python scripts/abcd_confirm.py --encoder bge-large --dataset star --registration R22star --arm tm --parts mem,intent,step,words --s 16 --name tm_mem_bge_s16 --clauses 16000 --seeds 1 >> logs/R22.out 2>&1
+2026-10-19T18:46:31Z exit 0 (try 1)
+2026-10-19T18:46:41Z cores 2.09 over 10.0 s; throttled 0 of 100 periods
+2026-10-19T18:46:41Z start (try 1): HF_HUB_OFFLINE=1 OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 RAYON_NUM_THREADS=2 DL_GPU_FRAC=0.25 .venv-dl/bin/python scripts/abcd_confirm.py --encoder bge-large --dataset star --registration R22star --arm tm --parts mem,intent,step,words --s 16 --name tm_mem_bge_s16 --clauses 16000 --seeds 2 >> logs/R22.out 2>&1
+2026-10-19T18:54:51Z exit 0 (try 1)
+2026-10-19T18:55:01Z cores 2.24 over 10.0 s; throttled 0 of 100 periods
+2026-10-19T18:55:01Z start (try 1): HF_HUB_OFFLINE=1 OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 RAYON_NUM_THREADS=2 DL_GPU_FRAC=0.25 .venv-dl/bin/python scripts/abcd_confirm.py --encoder bge-large --dataset star --registration R22star --arm tm --parts mem,intent,step,words --s 16 --name tm_mem_bge_s16 --clauses 16000 --seeds 3 >> logs/R22.out 2>&1
+2026-10-19T19:03:13Z exit 0 (try 1)
+2026-10-19T19:03:23Z cores 2.09 over 10.0 s; throttled 0 of 100 periods
+2026-10-19T19:03:23Z start (try 1): HF_HUB_OFFLINE=1 OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 RAYON_NUM_THREADS=2 DL_GPU_FRAC=0.25 .venv-dl/bin/python scripts/abcd_confirm.py --encoder bge-large --dataset star --registration R22star --arm tm --parts mem,intent,step,words --s 16 --name tm_mem_bge_s16 --clauses 16000 --seeds 4 >> logs/R22.out 2>&1
+2026-10-19T19:11:31Z exit 0 (try 1)
+2026-10-19T19:11:41Z cores 2.04 over 10.0 s; throttled 0 of 100 periods
+2026-10-19T19:11:41Z start (try 1): HF_HUB_OFFLINE=1 OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 RAYON_NUM_THREADS=2 DL_GPU_FRAC=0.25 .venv-dl/bin/python scripts/abcd_confirm.py --encoder bge-large --dataset star --registration R22star --arm tm --parts mem,intent,step,words --s 16 --name tm_mem_bge_s16 --clauses 16000 --seeds 5 >> logs/R22.out 2>&1
+2026-10-19T19:19:50Z exit 0 (try 1)
+2026-10-19T19:19:50Z queue done

@@ -1,0 +1,5 @@
+e80 readings (dev only; no rule: the rule is scripts/e80_check.py's); each value is the mean of seeds 1 and 2
+  star: best-dev: view B 0.6562, view B + xcrecent 0.6522, -0.40 points; final epoch: view B 0.6540, view B + xcrecent 0.6476, -0.64 points; last-10 mean: view B 0.6507, view B + xcrecent 0.6485, -0.22 points (the best-dev line is the rule's statistic)
+  abcd: best-dev: view B 0.8420, view B + xcrecent 0.8409, -0.11 points; final epoch: view B 0.8373, view B + xcrecent 0.8362, -0.11 points; last-10 mean: view B 0.8367, view B + xcrecent 0.8357, -0.11 points
+  multiwoz (seed 1 only, a reading with no rule): best-dev: view B 0.3038, view B + xcrecent 0.3200, +1.62 points; final epoch: view B 0.2976, view B + xcrecent 0.2858, -1.18 points; last-10 mean: view B 0.2841, view B + xcrecent 0.2903, +0.61 points
+caveats: selection is optimistic (the best-dev snapshot is the best of 20 dev evaluations on the dev split the rule reads); no multiplicity correction: one rule with two conditions, MultiWOZ is a reading, no superiority claim

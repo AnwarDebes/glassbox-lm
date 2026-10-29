@@ -1,0 +1,131 @@
+C4 e77_mwoz_Bc4_c16000_s8 1 checked
+C4 e79_mwoz_B_c16000_s8 2 checked
+a3B e82_multiwoz_Bt_c16000_s8 1 checked
+a3B e82_multiwoz_Bt_c16000_s8 2 checked
+{
+ "what": "MultiWOZ dev: TM and LR errors as label sets (private diagnostic; no rule)",
+ "n_dev": 7359,
+ "gold_parts_per_label": {
+  "2": 3422,
+  "1": 3786,
+  "3": 151
+ },
+ "arms": {
+  "C4": {
+   "LR": {
+    "exact": 0.3586,
+    "subset": 0.1894,
+    "superset": 0.1133,
+    "overlap": 0.0601,
+    "disjoint": 0.2786,
+    "part_precision": 0.6118,
+    "part_recall": 0.5772,
+    "part_f1": 0.594,
+    "jaccard": 0.5297
+   },
+   "LR_acc": 0.35860850659056936,
+   "TM": [
+    {
+     "tag": "e77_mwoz_Bc4_c16000_s8",
+     "seed": 1,
+     "acc": 0.3038456311998913,
+     "exact": 0.3038,
+     "subset": 0.2027,
+     "superset": 0.0715,
+     "overlap": 0.0482,
+     "disjoint": 0.3737,
+     "part_precision": 0.5591,
+     "part_recall": 0.4777,
+     "part_f1": 0.5152,
+     "jaccard": 0.4562,
+     "on_lr_right_tm_wrong": {
+      "share_of_dev": 0.1394,
+      "subset": 0.3353,
+      "superset": 0.1667,
+      "overlap": 0.0458,
+      "disjoint": 0.4522
+     }
+    },
+    {
+     "tag": "e79_mwoz_B_c16000_s8",
+     "seed": 2,
+     "acc": 0.30792227204783257,
+     "exact": 0.3079,
+     "subset": 0.1957,
+     "superset": 0.0822,
+     "overlap": 0.0496,
+     "disjoint": 0.3646,
+     "part_precision": 0.5535,
+     "part_recall": 0.4893,
+     "part_f1": 0.5194,
+     "jaccard": 0.4627,
+     "on_lr_right_tm_wrong": {
+      "share_of_dev": 0.1288,
+      "subset": 0.3302,
+      "superset": 0.1709,
+      "overlap": 0.0475,
+      "disjoint": 0.4515
+     }
+    }
+   ]
+  },
+  "a3B": {
+   "LR": {
+    "exact": 0.3643,
+    "subset": 0.1859,
+    "superset": 0.1169,
+    "overlap": 0.062,
+    "disjoint": 0.271,
+    "part_precision": 0.6186,
+    "part_recall": 0.5867,
+    "part_f1": 0.6022,
+    "jaccard": 0.5362
+   },
+   "LR_acc": 0.3643158037776872,
+   "TM": [
+    {
+     "tag": "e82_multiwoz_Bt_c16000_s8",
+     "seed": 1,
+     "acc": 0.3122706889523033,
+     "exact": 0.3123,
+     "subset": 0.1631,
+     "superset": 0.1305,
+     "overlap": 0.0741,
+     "disjoint": 0.3202,
+     "part_precision": 0.5515,
+     "part_recall": 0.5481,
+     "part_f1": 0.5498,
+     "jaccard": 0.4841,
+     "on_lr_right_tm_wrong": {
+      "share_of_dev": 0.1389,
+      "subset": 0.2583,
+      "superset": 0.3288,
+      "overlap": 0.0881,
+      "disjoint": 0.3249
+     }
+    },
+    {
+     "tag": "e82_multiwoz_Bt_c16000_s8",
+     "seed": 2,
+     "acc": 0.3092811523304797,
+     "exact": 0.3093,
+     "subset": 0.1504,
+     "superset": 0.1094,
+     "overlap": 0.0848,
+     "disjoint": 0.3461,
+     "part_precision": 0.5332,
+     "part_recall": 0.5213,
+     "part_f1": 0.5272,
+     "jaccard": 0.4673,
+     "on_lr_right_tm_wrong": {
+      "share_of_dev": 0.1372,
+      "subset": 0.2455,
+      "superset": 0.2594,
+      "overlap": 0.0782,
+      "disjoint": 0.4168
+     }
+    }
+   ]
+  }
+ }
+}

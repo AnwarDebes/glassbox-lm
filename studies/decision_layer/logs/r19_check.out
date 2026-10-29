@@ -1,0 +1,225 @@
+ok  registration text unchanged (b743819a784f2dfe)
+ok  all 76 frozen sources unchanged (new since: ['scripts/r19_check.py'])
+ok  seed files are exactly the 22 jobs of logs/jobs_R19.txt
+ok  R19abcd/lr_mem_static/seed0: settings as the job line
+ok  R19abcd/lr_mem_static/seed0: written 2026-10-18T19:09:59Z, every file of the arm after the freeze 2026-10-18T09:40:15Z
+ok  R19abcd/lr_mem_static/seed0: LR C 0.1 (grid 0.1 to 100)
+ok  R19abcd/lr_mem_static/seed0: train/dev bits equal e60_abcd_B_c4000's (1f81cb23/2f3223b2)
+ok  R19abcd/lr_mem_static/seed0: dev accuracy 0.811075 equals the dev row's exactly
+ok  R19abcd/lr_mem_static/seed0: npz gives the json's test accuracy 0.806264
+ok  R19abcd/lr_mem_static/seed0: test rows equal the other arms'
+ok  R19abcd/tm_mem_static/seed1: settings as the job line
+ok  R19abcd/tm_mem_static/seed1: written 2026-10-18T17:52:30Z, every file of the arm after the freeze 2026-10-18T09:40:15Z
+ok  R19abcd/tm_mem_static/seed1: cfg equals R9b tm_mem_short's but the seed (4000 clauses, best epoch 26)
+ok  R19abcd/tm_mem_static/seed1: train/dev bits equal e60_abcd_B_c4000's (1f81cb23/2f3223b2)
+ok  R19abcd/tm_mem_static/seed1: dev accuracy 0.832519 equals the dev row's exactly
+ok  R19abcd/tm_mem_static/seed1: npz gives the json's test accuracy 0.827051
+ok  R19abcd/tm_mem_static/seed1: test rows equal the other arms'
+ok  R19abcd/tm_mem_static/seed2: settings as the job line
+ok  R19abcd/tm_mem_static/seed2: written 2026-10-18T18:23:42Z, every file of the arm after the freeze 2026-10-18T09:40:15Z
+ok  R19abcd/tm_mem_static/seed2: cfg equals R9b tm_mem_short's but the seed (4000 clauses, best epoch 30)
+ok  R19abcd/tm_mem_static/seed2: train/dev bits equal e60_abcd_B_c4000's (1f81cb23/2f3223b2)
+ok  R19abcd/tm_mem_static/seed2: npz gives the json's test accuracy 0.827605
+ok  R19abcd/tm_mem_static/seed2: test rows equal the other arms'
+ok  R19abcd/tm_mem_static/seed3: settings as the job line
+ok  R19abcd/tm_mem_static/seed3: written 2026-10-18T18:39:02Z, every file of the arm after the freeze 2026-10-18T09:40:15Z
+ok  R19abcd/tm_mem_static/seed3: cfg equals R9b tm_mem_short's but the seed (4000 clauses, best epoch 22)
+ok  R19abcd/tm_mem_static/seed3: train/dev bits equal e60_abcd_B_c4000's (1f81cb23/2f3223b2)
+ok  R19abcd/tm_mem_static/seed3: npz gives the json's test accuracy 0.832040
+ok  R19abcd/tm_mem_static/seed3: test rows equal the other arms'
+ok  R19abcd/tm_mem_static/seed4: settings as the job line
+ok  R19abcd/tm_mem_static/seed4: written 2026-10-18T18:50:28Z, every file of the arm after the freeze 2026-10-18T09:40:15Z
+ok  R19abcd/tm_mem_static/seed4: cfg equals R9b tm_mem_short's but the seed (4000 clauses, best epoch 26)
+ok  R19abcd/tm_mem_static/seed4: train/dev bits equal e60_abcd_B_c4000's (1f81cb23/2f3223b2)
+ok  R19abcd/tm_mem_static/seed4: npz gives the json's test accuracy 0.833703
+ok  R19abcd/tm_mem_static/seed4: test rows equal the other arms'
+ok  R19abcd/tm_mem_static/seed5: settings as the job line
+ok  R19abcd/tm_mem_static/seed5: written 2026-10-18T19:03:37Z, every file of the arm after the freeze 2026-10-18T09:40:15Z
+ok  R19abcd/tm_mem_static/seed5: cfg equals R9b tm_mem_short's but the seed (4000 clauses, best epoch 22)
+ok  R19abcd/tm_mem_static/seed5: train/dev bits equal e60_abcd_B_c4000's (1f81cb23/2f3223b2)
+ok  R19abcd/tm_mem_static/seed5: npz gives the json's test accuracy 0.830100
+ok  R19abcd/tm_mem_static/seed5: test rows equal the other arms'
+ok  R19abcd/tm_nomem_static/seed1: settings as the job line
+ok  R19abcd/tm_nomem_static/seed1: written 2026-10-18T18:08:47Z, every file of the arm after the freeze 2026-10-18T09:40:15Z
+ok  R19abcd/tm_nomem_static/seed1: cfg equals R9b tm_mem_short's but the seed (4000 clauses, best epoch 20)
+ok  R19abcd/tm_nomem_static/seed1: train/dev bits equal e61_abcd_Bnomem_c4000's (00b387d7/60498079)
+ok  R19abcd/tm_nomem_static/seed1: dev accuracy 0.619978 equals the dev row's exactly
+ok  R19abcd/tm_nomem_static/seed1: npz gives the json's test accuracy 0.623337
+ok  R19abcd/tm_nomem_static/seed1: test rows equal the other arms'
+ok  R19abcd/tm_nomem_static/seed2: settings as the job line
+ok  R19abcd/tm_nomem_static/seed2: written 2026-10-18T18:36:55Z, every file of the arm after the freeze 2026-10-18T09:40:15Z
+ok  R19abcd/tm_nomem_static/seed2: cfg equals R9b tm_mem_short's but the seed (4000 clauses, best epoch 16)
+ok  R19abcd/tm_nomem_static/seed2: train/dev bits equal e61_abcd_Bnomem_c4000's (00b387d7/60498079)
+ok  R19abcd/tm_nomem_static/seed2: npz gives the json's test accuracy 0.625277
+ok  R19abcd/tm_nomem_static/seed2: test rows equal the other arms'
+ok  R19abcd/tm_nomem_static/seed3: settings as the job line
+ok  R19abcd/tm_nomem_static/seed3: written 2026-10-18T18:49:28Z, every file of the arm after the freeze 2026-10-18T09:40:15Z
+ok  R19abcd/tm_nomem_static/seed3: cfg equals R9b tm_mem_short's but the seed (4000 clauses, best epoch 10)
+ok  R19abcd/tm_nomem_static/seed3: train/dev bits equal e61_abcd_Bnomem_c4000's (00b387d7/60498079)
+ok  R19abcd/tm_nomem_static/seed3: npz gives the json's test accuracy 0.626663
+ok  R19abcd/tm_nomem_static/seed3: test rows equal the other arms'
+ok  R19abcd/tm_nomem_static/seed4: settings as the job line
+ok  R19abcd/tm_nomem_static/seed4: written 2026-10-18T19:03:13Z, every file of the arm after the freeze 2026-10-18T09:40:15Z
+ok  R19abcd/tm_nomem_static/seed4: cfg equals R9b tm_mem_short's but the seed (4000 clauses, best epoch 10)
+ok  R19abcd/tm_nomem_static/seed4: train/dev bits equal e61_abcd_Bnomem_c4000's (00b387d7/60498079)
+ok  R19abcd/tm_nomem_static/seed4: npz gives the json's test accuracy 0.620288
+ok  R19abcd/tm_nomem_static/seed4: test rows equal the other arms'
+ok  R19abcd/tm_nomem_static/seed5: settings as the job line
+ok  R19abcd/tm_nomem_static/seed5: written 2026-10-18T19:08:41Z, every file of the arm after the freeze 2026-10-18T09:40:15Z
+ok  R19abcd/tm_nomem_static/seed5: cfg equals R9b tm_mem_short's but the seed (4000 clauses, best epoch 12)
+ok  R19abcd/tm_nomem_static/seed5: train/dev bits equal e61_abcd_Bnomem_c4000's (00b387d7/60498079)
+ok  R19abcd/tm_nomem_static/seed5: npz gives the json's test accuracy 0.615576
+ok  R19abcd/tm_nomem_static/seed5: test rows equal the other arms'
+ok  R19star/lr_mem_static/seed0: settings as the job line
+ok  R19star/lr_mem_static/seed0: written 2026-10-18T17:37:08Z, every file of the arm after the freeze 2026-10-18T09:40:15Z
+ok  R19star/lr_mem_static/seed0: LR C 0.1 (grid 0.1 to 100)
+ok  R19star/lr_mem_static/seed0: train/dev bits equal e60_star_B_c4000's (a3ce2dd9/bc27a3c6)
+ok  R19star/lr_mem_static/seed0: dev accuracy 0.640851 equals the dev row's exactly
+ok  R19star/lr_mem_static/seed0: npz gives the json's test accuracy 0.639239
+ok  R19star/lr_mem_static/seed0: test rows equal the other arms'
+ok  R19star/tm_mem_static/seed1: settings as the job line
+ok  R19star/tm_mem_static/seed1: written 2026-10-18T12:26:20Z, every file of the arm after the freeze 2026-10-18T09:40:15Z
+ok  R19star/tm_mem_static/seed1: cfg equals R18 tm_mem's but the seed (16000 clauses, best epoch 22)
+ok  R19star/tm_mem_static/seed1: train/dev bits equal e60_star_B_c16000's (a3ce2dd9/bc27a3c6)
+ok  R19star/tm_mem_static/seed1: dev accuracy 0.634337 equals the dev row's exactly
+ok  R19star/tm_mem_static/seed1: npz gives the json's test accuracy 0.632084
+ok  R19star/tm_mem_static/seed1: test rows equal the other arms'
+ok  R19star/tm_mem_static/seed2: settings as the job line
+ok  R19star/tm_mem_static/seed2: written 2026-10-18T14:07:59Z, every file of the arm after the freeze 2026-10-18T09:40:15Z
+ok  R19star/tm_mem_static/seed2: cfg equals R18 tm_mem's but the seed (16000 clauses, best epoch 18)
+ok  R19star/tm_mem_static/seed2: train/dev bits equal e60_star_B_c16000's (a3ce2dd9/bc27a3c6)
+ok  R19star/tm_mem_static/seed2: npz gives the json's test accuracy 0.626932
+ok  R19star/tm_mem_static/seed2: test rows equal the other arms'
+ok  R19star/tm_mem_static/seed3: settings as the job line
+ok  R19star/tm_mem_static/seed3: written 2026-10-18T14:53:22Z, every file of the arm after the freeze 2026-10-18T09:40:15Z
+ok  R19star/tm_mem_static/seed3: cfg equals R18 tm_mem's but the seed (16000 clauses, best epoch 24)
+ok  R19star/tm_mem_static/seed3: train/dev bits equal e60_star_B_c16000's (a3ce2dd9/bc27a3c6)
+ok  R19star/tm_mem_static/seed3: npz gives the json's test accuracy 0.625501
+ok  R19star/tm_mem_static/seed3: test rows equal the other arms'
+ok  R19star/tm_mem_static/seed4: settings as the job line
+ok  R19star/tm_mem_static/seed4: written 2026-10-18T17:07:38Z, every file of the arm after the freeze 2026-10-18T09:40:15Z
+ok  R19star/tm_mem_static/seed4: cfg equals R18 tm_mem's but the seed (16000 clauses, best epoch 36)
+ok  R19star/tm_mem_static/seed4: train/dev bits equal e60_star_B_c16000's (a3ce2dd9/bc27a3c6)
+ok  R19star/tm_mem_static/seed4: npz gives the json's test accuracy 0.617773
+ok  R19star/tm_mem_static/seed4: test rows equal the other arms'
+ok  R19star/tm_mem_static/seed5: settings as the job line
+ok  R19star/tm_mem_static/seed5: written 2026-10-18T18:27:21Z, every file of the arm after the freeze 2026-10-18T09:40:15Z
+ok  R19star/tm_mem_static/seed5: cfg equals R18 tm_mem's but the seed (16000 clauses, best epoch 26)
+ok  R19star/tm_mem_static/seed5: train/dev bits equal e60_star_B_c16000's (a3ce2dd9/bc27a3c6)
+ok  R19star/tm_mem_static/seed5: npz gives the json's test accuracy 0.633085
+ok  R19star/tm_mem_static/seed5: test rows equal the other arms'
+ok  R19star/tm_nomem_static/seed1: settings as the job line
+ok  R19star/tm_nomem_static/seed1: written 2026-10-18T12:24:15Z, every file of the arm after the freeze 2026-10-18T09:40:15Z
+ok  R19star/tm_nomem_static/seed1: cfg equals R18 tm_mem's but the seed (16000 clauses, best epoch 16)
+ok  R19star/tm_nomem_static/seed1: train/dev bits equal e61_star_Bnomem_c16000's (1862407b/0a9bbc27)
+ok  R19star/tm_nomem_static/seed1: dev accuracy 0.501013 equals the dev row's exactly
+ok  R19star/tm_nomem_static/seed1: npz gives the json's test accuracy 0.476531
+ok  R19star/tm_nomem_static/seed1: test rows equal the other arms'
+ok  R19star/tm_nomem_static/seed2: settings as the job line
+ok  R19star/tm_nomem_static/seed2: written 2026-10-18T14:49:39Z, every file of the arm after the freeze 2026-10-18T09:40:15Z
+ok  R19star/tm_nomem_static/seed2: cfg equals R18 tm_mem's but the seed (16000 clauses, best epoch 6)
+ok  R19star/tm_nomem_static/seed2: train/dev bits equal e61_star_Bnomem_c16000's (1862407b/0a9bbc27)
+ok  R19star/tm_nomem_static/seed2: npz gives the json's test accuracy 0.472524
+ok  R19star/tm_nomem_static/seed2: test rows equal the other arms'
+ok  R19star/tm_nomem_static/seed3: settings as the job line
+ok  R19star/tm_nomem_static/seed3: written 2026-10-18T16:24:07Z, every file of the arm after the freeze 2026-10-18T09:40:15Z
+ok  R19star/tm_nomem_static/seed3: cfg equals R18 tm_mem's but the seed (16000 clauses, best epoch 10)
+ok  R19star/tm_nomem_static/seed3: train/dev bits equal e61_star_Bnomem_c16000's (1862407b/0a9bbc27)
+ok  R19star/tm_nomem_static/seed3: npz gives the json's test accuracy 0.478105
+ok  R19star/tm_nomem_static/seed3: test rows equal the other arms'
+ok  R19star/tm_nomem_static/seed4: settings as the job line
+ok  R19star/tm_nomem_static/seed4: written 2026-10-18T17:09:17Z, every file of the arm after the freeze 2026-10-18T09:40:15Z
+ok  R19star/tm_nomem_static/seed4: cfg equals R18 tm_mem's but the seed (16000 clauses, best epoch 20)
+ok  R19star/tm_nomem_static/seed4: train/dev bits equal e61_star_Bnomem_c16000's (1862407b/0a9bbc27)
+ok  R19star/tm_nomem_static/seed4: npz gives the json's test accuracy 0.477533
+ok  R19star/tm_nomem_static/seed4: test rows equal the other arms'
+ok  R19star/tm_nomem_static/seed5: settings as the job line
+ok  R19star/tm_nomem_static/seed5: written 2026-10-18T18:57:33Z, every file of the arm after the freeze 2026-10-18T09:40:15Z
+ok  R19star/tm_nomem_static/seed5: cfg equals R18 tm_mem's but the seed (16000 clauses, best epoch 14)
+ok  R19star/tm_nomem_static/seed5: train/dev bits equal e61_star_Bnomem_c16000's (1862407b/0a9bbc27)
+ok  R19star/tm_nomem_static/seed5: npz gives the json's test accuracy 0.478392
+ok  R19star/tm_nomem_static/seed5: test rows equal the other arms'
+ok  R19abcd: one test-bit hash per view over seeds and arms mem+words+xcust+xrecent b7bad9ae, words+xcust+xrecent b4d587d2
+ok  R19abcd: 3608 test action turns in 1004 conversations
+ok  R19abcd/tm_mem_static: bit_names.json equals the dry run's
+ok  R19abcd/tm_nomem_static: bit_names.json equals the dry run's
+ok  R19abcd/lr_mem_static: bit_names.json equals the dry run's
+ok  R19abcd: TM and LR read the same bits
+ok  R19star: one test-bit hash per view over seeds and arms mem+words+xcust+xrecent bc78ca9c, words+xcust+xrecent b6e8b8b9
+ok  R19star: 6988 test action turns in 611 conversations
+ok  R19star/tm_mem_static: bit_names.json equals the dry run's
+ok  R19star/tm_nomem_static: bit_names.json equals the dry run's
+ok  R19star/lr_mem_static: bit_names.json equals the dry run's
+ok  R19star: TM and LR read the same bits
+ok  copy R19star/tm_mem_R18/bit_names.json equals the list and its source R18/tm_mem/bit_names.json
+ok  copy R19star/tm_mem_R18/seed1.json equals the list and its source R18/tm_mem/seed1.json
+ok  copy R19star/tm_mem_R18/seed1.npz equals the list and its source R18/tm_mem/seed1.npz
+ok  copy R19star/tm_mem_R18/seed2.json equals the list and its source R18/tm_mem/seed2.json
+ok  copy R19star/tm_mem_R18/seed2.npz equals the list and its source R18/tm_mem/seed2.npz
+ok  copy R19star/tm_mem_R18/seed3.json equals the list and its source R18/tm_mem/seed3.json
+ok  copy R19star/tm_mem_R18/seed3.npz equals the list and its source R18/tm_mem/seed3.npz
+ok  copy R19star/tm_mem_R18/seed4.json equals the list and its source R18/tm_mem/seed4.json
+ok  copy R19star/tm_mem_R18/seed4.npz equals the list and its source R18/tm_mem/seed4.npz
+ok  copy R19star/tm_mem_R18/seed5.json equals the list and its source R18/tm_mem/seed5.json
+ok  copy R19star/tm_mem_R18/seed5.npz equals the list and its source R18/tm_mem/seed5.npz
+ok  copy R19star/tm_nomem_R18/bit_names.json equals the list and its source R18/tm_nomem/bit_names.json
+ok  copy R19star/tm_nomem_R18/seed1.json equals the list and its source R18/tm_nomem/seed1.json
+ok  copy R19star/tm_nomem_R18/seed1.npz equals the list and its source R18/tm_nomem/seed1.npz
+ok  copy R19star/tm_nomem_R18/seed2.json equals the list and its source R18/tm_nomem/seed2.json
+ok  copy R19star/tm_nomem_R18/seed2.npz equals the list and its source R18/tm_nomem/seed2.npz
+ok  copy R19star/tm_nomem_R18/seed3.json equals the list and its source R18/tm_nomem/seed3.json
+ok  copy R19star/tm_nomem_R18/seed3.npz equals the list and its source R18/tm_nomem/seed3.npz
+ok  copy R19star/tm_nomem_R18/seed4.json equals the list and its source R18/tm_nomem/seed4.json
+ok  copy R19star/tm_nomem_R18/seed4.npz equals the list and its source R18/tm_nomem/seed4.npz
+ok  copy R19star/tm_nomem_R18/seed5.json equals the list and its source R18/tm_nomem/seed5.json
+ok  copy R19star/tm_nomem_R18/seed5.npz equals the list and its source R18/tm_nomem/seed5.npz
+ok  copy R19star/lr_mem_R18/bit_names.json equals the list and its source R18/lr_mem/bit_names.json
+ok  copy R19star/lr_mem_R18/seed0.json equals the list and its source R18/lr_mem/seed0.json
+ok  copy R19star/lr_mem_R18/seed0.npz equals the list and its source R18/lr_mem/seed0.npz
+ok  copy R19abcd/tm_mem_R9b/bit_names.json equals the list and its source R9b/tm_mem_short/bit_names.json
+ok  copy R19abcd/tm_mem_R9b/seed1.json equals the list and its source R9b/tm_mem_short/seed1.json
+ok  copy R19abcd/tm_mem_R9b/seed1.npz equals the list and its source R9b/tm_mem_short/seed1.npz
+ok  copy R19abcd/tm_mem_R9b/seed10.json equals the list and its source R9b/tm_mem_short/seed10.json
+ok  copy R19abcd/tm_mem_R9b/seed10.npz equals the list and its source R9b/tm_mem_short/seed10.npz
+ok  copy R19abcd/tm_mem_R9b/seed2.json equals the list and its source R9b/tm_mem_short/seed2.json
+ok  copy R19abcd/tm_mem_R9b/seed2.npz equals the list and its source R9b/tm_mem_short/seed2.npz
+ok  copy R19abcd/tm_mem_R9b/seed3.json equals the list and its source R9b/tm_mem_short/seed3.json
+ok  copy R19abcd/tm_mem_R9b/seed3.npz equals the list and its source R9b/tm_mem_short/seed3.npz
+ok  copy R19abcd/tm_mem_R9b/seed4.json equals the list and its source R9b/tm_mem_short/seed4.json
+ok  copy R19abcd/tm_mem_R9b/seed4.npz equals the list and its source R9b/tm_mem_short/seed4.npz
+ok  copy R19abcd/tm_mem_R9b/seed5.json equals the list and its source R9b/tm_mem_short/seed5.json
+ok  copy R19abcd/tm_mem_R9b/seed5.npz equals the list and its source R9b/tm_mem_short/seed5.npz
+ok  copy R19abcd/tm_mem_R9b/seed6.json equals the list and its source R9b/tm_mem_short/seed6.json
+ok  copy R19abcd/tm_mem_R9b/seed6.npz equals the list and its source R9b/tm_mem_short/seed6.npz
+ok  copy R19abcd/tm_mem_R9b/seed7.json equals the list and its source R9b/tm_mem_short/seed7.json
+ok  copy R19abcd/tm_mem_R9b/seed7.npz equals the list and its source R9b/tm_mem_short/seed7.npz
+ok  copy R19abcd/tm_mem_R9b/seed8.json equals the list and its source R9b/tm_mem_short/seed8.json
+ok  copy R19abcd/tm_mem_R9b/seed8.npz equals the list and its source R9b/tm_mem_short/seed8.npz
+ok  copy R19abcd/tm_mem_R9b/seed9.json equals the list and its source R9b/tm_mem_short/seed9.json
+ok  copy R19abcd/tm_mem_R9b/seed9.npz equals the list and its source R9b/tm_mem_short/seed9.npz
+ok  copy R19abcd/tm_nomem_R9b/bit_names.json equals the list and its source R9b/tm_nomem_short/bit_names.json
+ok  copy R19abcd/tm_nomem_R9b/seed1.json equals the list and its source R9b/tm_nomem_short/seed1.json
+ok  copy R19abcd/tm_nomem_R9b/seed1.npz equals the list and its source R9b/tm_nomem_short/seed1.npz
+ok  copy R19abcd/tm_nomem_R9b/seed10.json equals the list and its source R9b/tm_nomem_short/seed10.json
+ok  copy R19abcd/tm_nomem_R9b/seed10.npz equals the list and its source R9b/tm_nomem_short/seed10.npz
+ok  copy R19abcd/tm_nomem_R9b/seed2.json equals the list and its source R9b/tm_nomem_short/seed2.json
+ok  copy R19abcd/tm_nomem_R9b/seed2.npz equals the list and its source R9b/tm_nomem_short/seed2.npz
+ok  copy R19abcd/tm_nomem_R9b/seed3.json equals the list and its source R9b/tm_nomem_short/seed3.json
+ok  copy R19abcd/tm_nomem_R9b/seed3.npz equals the list and its source R9b/tm_nomem_short/seed3.npz
+ok  copy R19abcd/tm_nomem_R9b/seed4.json equals the list and its source R9b/tm_nomem_short/seed4.json
+ok  copy R19abcd/tm_nomem_R9b/seed4.npz equals the list and its source R9b/tm_nomem_short/seed4.npz
+ok  copy R19abcd/tm_nomem_R9b/seed5.json equals the list and its source R9b/tm_nomem_short/seed5.json
+ok  copy R19abcd/tm_nomem_R9b/seed5.npz equals the list and its source R9b/tm_nomem_short/seed5.npz
+ok  copy R19abcd/tm_nomem_R9b/seed6.json equals the list and its source R9b/tm_nomem_short/seed6.json
+ok  copy R19abcd/tm_nomem_R9b/seed6.npz equals the list and its source R9b/tm_nomem_short/seed6.npz
+ok  copy R19abcd/tm_nomem_R9b/seed7.json equals the list and its source R9b/tm_nomem_short/seed7.json
+ok  copy R19abcd/tm_nomem_R9b/seed7.npz equals the list and its source R9b/tm_nomem_short/seed7.npz
+ok  copy R19abcd/tm_nomem_R9b/seed8.json equals the list and its source R9b/tm_nomem_short/seed8.json
+ok  copy R19abcd/tm_nomem_R9b/seed8.npz equals the list and its source R9b/tm_nomem_short/seed8.npz
+ok  copy R19abcd/tm_nomem_R9b/seed9.json equals the list and its source R9b/tm_nomem_short/seed9.json
+ok  copy R19abcd/tm_nomem_R9b/seed9.npz equals the list and its source R9b/tm_nomem_short/seed9.npz
+ok  copy R19abcd/lr_mem_R9b/bit_names.json equals the list and its source R9b/lr_mem_short/bit_names.json
+ok  copy R19abcd/lr_mem_R9b/seed0.json equals the list and its source R9b/lr_mem_short/seed0.json
+ok  copy R19abcd/lr_mem_R9b/seed0.npz equals the list and its source R9b/lr_mem_short/seed0.npz
+ok  the reference folders hold exactly the 70 listed files
+all checks passed

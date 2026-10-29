@@ -1,0 +1,12 @@
+.venv-dl/bin/python scripts/confirm_router.py --registration R11 --encoder bge-large --view proto:k=1:whiten=0.001+lex:2000 --dataset massive_en --name massive_en_lrbits --lr-only --lr-input bits --seeds 0
+.venv-dl/bin/python scripts/confirm_router.py --registration R11 --encoder bge-large --view proto:k=1:whiten=0.001+lex:2000 --dataset massive_en --name massive_en --lr-only --seeds 0
+.venv-dl/bin/python scripts/confirm_router.py --registration R11 --encoder bge-large --view proto:k=1:whiten=0.001+lex:2000 --dataset massive_en --name massive_en --seeds 1 2
+.venv-dl/bin/python scripts/confirm_router.py --registration R11 --encoder bge-large --view proto:k=1:whiten=0.001+lex:2000 --dataset massive_en --name massive_en --seeds 3 4
+.venv-dl/bin/python scripts/confirm_router.py --registration R11 --encoder bge-large --view proto:k=1:whiten=0.001+lex:2000 --dataset massive_en --name massive_en --seeds 5 6
+.venv-dl/bin/python scripts/confirm_router.py --registration R11 --encoder bge-large --view proto:k=1:whiten=0.001+lex:2000 --dataset massive_en --name massive_en --seeds 7 8
+.venv-dl/bin/python scripts/confirm_router.py --registration R11 --encoder bge-large --view proto:k=1:whiten=0.001+lex:2000 --dataset massive_en --name massive_en --seeds 9 10
+.venv-dl/bin/python scripts/confirm_router.py --registration R11 --encoder bge-large --view proto:k=1:whiten=0.001+lex:2000 --max-literals 16 --init trim --budget-select rank --dataset massive_en --name massive_en_ml16 --seeds 1 2
+.venv-dl/bin/python scripts/confirm_router.py --registration R11 --encoder bge-large --view proto:k=1:whiten=0.001+lex:2000 --max-literals 16 --init trim --budget-select rank --dataset massive_en --name massive_en_ml16 --seeds 3 4
+.venv-dl/bin/python scripts/confirm_router.py --registration R11 --encoder bge-large --view proto:k=1:whiten=0.001+lex:2000 --max-literals 16 --init trim --budget-select rank --dataset massive_en --name massive_en_ml16 --seeds 5 6
+.venv-dl/bin/python scripts/confirm_router.py --registration R11 --encoder bge-large --view proto:k=1:whiten=0.001+lex:2000 --max-literals 16 --init trim --budget-select rank --dataset massive_en --name massive_en_ml16 --seeds 7 8
+.venv-dl/bin/python scripts/confirm_router.py --registration R11 --encoder bge-large --view proto:k=1:whiten=0.001+lex:2000 --max-literals 16 --init trim --budget-select rank --dataset massive_en --name massive_en_ml16 --seeds 9 10

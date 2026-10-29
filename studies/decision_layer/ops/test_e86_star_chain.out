@@ -1,0 +1,3 @@
+ok: waits for 3 empty-GPU checks in a row (busy on 1 and 3: 6 checks; idle: 3), runs the STAR job file then the check,
+    writes the end line; refusals: a second start, a stale or missing freeze record, a failing check, an existing queue log
+PASSED

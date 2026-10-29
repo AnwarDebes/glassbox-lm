@@ -1,0 +1,14 @@
+lr_mem_bge             seeds [0]  acc 35.73  per seed [35.73]
+lr_mem_c4              seeds [0]  acc 35.92  per seed [35.92]
+lr_mem_ref             seeds [0]  acc 36.38  per seed [36.38]
+tm_mem_bge_nrand       seeds [1, 2, 3, 4, 5]  acc 33.84  per seed [33.87, 33.65, 33.91, 33.58, 34.19]
+tm_mem_c4_nrand        seeds [1, 2, 3, 4, 5]  acc 34.37  per seed [34.6, 33.8, 34.32, 34.74, 34.38]
+tm_mem_ref_nrand       seeds [1, 2, 3, 4, 5]  acc 33.89  per seed [34.25, 33.83, 34.44, 33.54, 33.39]
+tm_mem_c4_nrand - tm_mem_bge_nrand           +0.53 [-0.18, +1.23]  (1000 dialogues, 7355 turns)  point >= -1.0: MET; lower end >= -1.0 (strong): yes
+tm_mem_ref_nrand - tm_mem_bge_nrand          +0.05 [-0.65, +0.74]  (1000 dialogues, 7355 turns)  point >= -1.0: MET; lower end >= -1.0 (strong): yes
+tm_mem_c4_nrand - tm_mem_bge_nrand           +0.53 [-0.18, +1.23]  (1000 dialogues, 7355 turns)  point >= -100.0: MET; interval above 0: no
+tm_mem_ref_nrand - tm_mem_bge_nrand          +0.05 [-0.65, +0.74]  (1000 dialogues, 7355 turns)  point >= -100.0: MET; interval above 0: no
+tm_mem_ref_nrand - lr_mem_ref                -2.49 [-3.31, -1.67]  (1000 dialogues, 7355 turns)
+tm_mem_c4_nrand - lr_mem_c4                  -1.55 [-2.32, -0.80]  (1000 dialogues, 7355 turns)
+tm_mem_bge_nrand - lr_mem_bge                -1.89 [-2.69, -1.07]  (1000 dialogues, 7355 turns)
+problems: none

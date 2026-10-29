@@ -1,0 +1,37 @@
+ok   constant column threshold = min + 1
+ok   two-valued column threshold = midpoint
+ok   other column threshold = median (2.5)
+ok   kinds counted
+ok   bit = value >= threshold (equality fires)
+ok   positive literal fires iff bit 1
+ok   negated literal fires iff bit 0
+ok   empty clause never fires
+ok   conjunction
+ok   ta == n_states is not an include
+ok   suppressed clause never fires
+ok   shape mismatch refused
+ok   predictions
+ok   top ties counted
+ok   clauses with a positive literal
+ok   clauses with a negated literal
+ok   non-empty clauses
+ok   median literals
+ok   max literals
+ok   weight zero share
+ok   degenerate at 0.70 / 400 / 100
+ok   not degenerate at 0.7001
+ok   healthy at 0.78 / 2000 / 10
+ok   structurally healthy but 0.775 is neither
+ok   healthy needs the structure
+ok   driver MET within 0.01 (0.81)
+ok   row 5: A CONFIRMED, B NOT RUN
+ok   row 1: driver NOT MET (0.81 but 1999 clauses)
+ok   row 1: driver NOT MET (0.8086 is more than 0.01 away)
+ok   row 1: driver MISSING
+ok   row 2: A MIXED
+ok   row 2: A MISSING
+ok   row 2: B MIXED
+ok   row 3: A REFUTED
+ok   row 3: B REFUTED
+ok   row 4: both CONFIRMED
+PASSED: 0 failure(s)

@@ -1,0 +1,19 @@
+.venv-dl/bin/python scripts/abcd_confirm.py --registration R9 --name tm_mem --arm tm --parts mem,intent,step,words,mem2,fstep,fwords --seeds 1 2
+.venv-dl/bin/python scripts/abcd_confirm.py --registration R9 --name tm_nomem --arm tm --parts intent,step,words,fstep,fwords --seeds 1 2
+.venv-dl/bin/python scripts/abcd_confirm.py --registration R9 --name tm_mem --arm tm --parts mem,intent,step,words,mem2,fstep,fwords --seeds 3 4
+.venv-dl/bin/python scripts/abcd_confirm.py --registration R9 --name tm_nomem --arm tm --parts intent,step,words,fstep,fwords --seeds 3 4
+.venv-dl/bin/python scripts/abcd_confirm.py --registration R9 --name tm_mem --arm tm --parts mem,intent,step,words,mem2,fstep,fwords --seeds 5 6
+.venv-dl/bin/python scripts/abcd_confirm.py --registration R9 --name tm_nomem --arm tm --parts intent,step,words,fstep,fwords --seeds 5 6
+.venv-dl/bin/python scripts/abcd_confirm.py --registration R9 --name tm_mem --arm tm --parts mem,intent,step,words,mem2,fstep,fwords --seeds 7 8
+.venv-dl/bin/python scripts/abcd_confirm.py --registration R9 --name tm_nomem --arm tm --parts intent,step,words,fstep,fwords --seeds 7 8
+.venv-dl/bin/python scripts/abcd_confirm.py --registration R9 --name tm_mem --arm tm --parts mem,intent,step,words,mem2,fstep,fwords --seeds 9 10
+.venv-dl/bin/python scripts/abcd_confirm.py --registration R9 --name tm_nomem --arm tm --parts intent,step,words,fstep,fwords --seeds 9 10
+.venv-dl/bin/python scripts/abcd_confirm.py --registration R9 --name mlp_mem --arm mlp --parts mem,intent,step,words,mem2,fstep,fwords --seeds 1 2 3 4 5
+.venv-dl/bin/python scripts/abcd_confirm.py --registration R9 --name mlp_mem --arm mlp --parts mem,intent,step,words,mem2,fstep,fwords --seeds 6 7 8 9 10
+.venv-dl/bin/python scripts/abcd_confirm.py --registration R9 --name mlp_raw --arm mlp_raw --parts mem,intent,step,words,mem2,fstep,fwords --seeds 1 2 3 4 5
+.venv-dl/bin/python scripts/abcd_confirm.py --registration R9 --name mlp_raw --arm mlp_raw --parts mem,intent,step,words,mem2,fstep,fwords --seeds 6 7 8 9 10
+.venv-dl/bin/python scripts/abcd_confirm.py --registration R9 --name lr_mem --arm lr --parts mem,intent,step,words,mem2,fstep,fwords --seeds 0
+.venv-dl/bin/python scripts/abcd_confirm.py --registration R9 --name lr_nomem --arm lr --parts intent,step,words,fstep,fwords --seeds 0
+.venv-dl/bin/python scripts/abcd_confirm.py --registration R9 --name lr_raw --arm lr_raw --parts mem,intent,step,words,mem2,fstep,fwords --seeds 0
+.venv-dl/bin/python scripts/abcd_confirm.py --registration R9 --name rule --arm rule --parts mem,intent,step,words,mem2,fstep,fwords --seeds 0
+.venv-dl/bin/python scripts/abcd_confirm.py --registration R9 --name table --arm table --parts mem,intent,step,words,mem2,fstep,fwords --seeds 0

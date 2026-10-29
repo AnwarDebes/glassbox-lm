@@ -1,0 +1,9 @@
+ok whole run: dry (6 GPU checks, the dry job file, the gate, the dry check); run waits for dry's done line (the 5-job file, the gate,
+   the check, the report); every second start refused
+ok an existing output; a failing dry check (run refuses); run without the dry pass line; a failing check (no restart after it); a failing report
+ok pins and locks: a changed note, a missing freeze record, a job file, a pinned repository file (row with a parenthesis) or the chain off
+   the note's table (a finish-pass row is not checked), e80_dry_check.py changed (e87b_check.py, off e80's path, is fine), its own lock held,
+   an e87 GPU stage's lock held (a stale lock file is fine), an unknown stage
+ok a restart after a handoff timeout (the old end line kept); fail closed: an nvidia-smi or cpu_load.py error counts as busy
+ok signals: TERM while the dry queue runs (its process group stopped too), HUP and INT while waiting for the GPU: 'killed by signal <name>' at once
+PASSED

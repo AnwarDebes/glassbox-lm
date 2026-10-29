@@ -1,0 +1,6 @@
+selftest case 0: clauses kept 49 of 50, features 130, classes 4: PASS (rows differing: lits 0, words 0)
+selftest case 1: clauses kept 199 of 200, features 64, classes 7: PASS (rows differing: lits 0, words 0)
+selftest case 2: clauses kept 299 of 300, features 1000, classes 30: PASS (rows differing: lits 0, words 0)
+selftest case 3: clauses kept 31 of 40, features 1, classes 2: PASS (rows differing: lits 0, words 0)
+selftest case 4: clauses kept 119 of 120, features 333, classes 187: PASS (rows differing: lits 0, words 0)
+selftest: all PASS
