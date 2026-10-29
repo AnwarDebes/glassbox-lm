@@ -28,6 +28,8 @@
 #   cd studies/tm_language_model && setsid nohup scripts/cpu_slot.sh 1 -- bash \
 #     launch/chain_hao_diag.sh \
 #     > launch/chain_hao_diag.out 2>&1 < /dev/null &
+# Erratum (2026-10-25): the launch lines above are copied from chain_hao_diag.sh. This file is
+# chain_hao_diag3.sh; launch/launch_hao_diag3.sh starts it inside one CPU slot (launch/README.md).
 LAUNCH_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$LAUNCH_DIR/lib.sh"
 SEEDS=${1:-"100 101"}

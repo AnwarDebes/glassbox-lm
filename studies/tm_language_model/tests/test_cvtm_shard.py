@@ -34,6 +34,10 @@ def _gpu_ok() -> bool:
 
 GPU = _gpu_ok()
 BACKENDS = ["numpy"] + (["cupy"] if GPU else [])
+# 2026-10-25 (TLM-B3): the cupy case is a GPU test; a test that loops over BACKENDS uses the GPU
+# exactly when one is visible, so it carries the gpu marker then (make test hides the GPU).
+BACKEND_PARAMS = ["numpy"] + ([pytest.param("cupy", marks=pytest.mark.gpu)] if GPU else [])
+gpu_when_visible = pytest.mark.gpu if GPU else (lambda f: f)
 needs_gpu = pytest.mark.skipif(not GPU, reason="no CUDA device visible to CuPy")
 DATA_ROOT = Path(__file__).resolve().parents[1] / "data"
 needs_data = pytest.mark.skipif(
@@ -99,7 +103,7 @@ def test_partition_is_a_function_of_the_context_content(S):
 
 
 # ------------------------------------------------------------------ bit identity
-@pytest.mark.parametrize("backend", BACKENDS)
+@pytest.mark.parametrize("backend", BACKEND_PARAMS)
 @pytest.mark.parametrize("S", [1, 2, 3, 4, 7])
 @pytest.mark.parametrize("order,pad", [(2, True), (3, False), (5, True), (5, False)])
 def test_sharded_fit_equals_unsharded(backend, S, order, pad):
@@ -114,7 +118,7 @@ def test_sharded_fit_equals_unsharded(backend, S, order, pad):
     assert sh.fit_info["shards"] == S
 
 
-@pytest.mark.parametrize("backend", BACKENDS)
+@pytest.mark.parametrize("backend", BACKEND_PARAMS)
 def test_sharded_suffix_votes_equal(backend):
     V = 40
     tok, ds = markov_corpus(7, V, 80, 200)
@@ -192,6 +196,7 @@ def test_argument_checks():
 
 # ------------------------------------------------------------------ GPU and real data
 @needs_gpu
+@pytest.mark.gpu
 def test_gpu_sharded_equals_gpu_unsharded_larger_corpus():
     V = 300
     tok, ds = markov_corpus(33, V, 400, 600, conc=0.1)
@@ -203,6 +208,7 @@ def test_gpu_sharded_equals_gpu_unsharded_larger_corpus():
 
 @needs_gpu
 @needs_data
+@pytest.mark.gpu
 def test_gpu_sharded_on_a_1m_training_slice():
     from tmlm.data.corpus_store import load_split
 

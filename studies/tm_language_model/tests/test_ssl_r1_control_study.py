@@ -350,6 +350,7 @@ def test_qpred_equals_brute_force_count_and_score(tmp_path):
     _brute_force_check(tmp_path, eng, cfg, st, prefix, val, targets, hidden, cnt_pos, row)
 
 
+@pytest.mark.gpu
 def test_qpred_cuda_path_equals_brute_force(tmp_path):
     """The production path: CUDA counting and fit rows, the H8.1 GPU fit, the GPU validation cross-check."""
     cp = pytest.importorskip("cupy")
@@ -374,6 +375,7 @@ def test_qpred_split_uses_the_fit_document_rule():
     assert not set(fit_pos.tolist()) & set(cnt_pos.tolist())
 
 
+@pytest.mark.gpu
 def test_count_table_cuda_equals_cpu():
     cp = pytest.importorskip("cupy")
     try:

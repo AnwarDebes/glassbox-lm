@@ -40,6 +40,16 @@ _tmlm_prepend PATH "/usr/local/cuda/bin"
 _tmlm_prepend PATH "${HOME}/.local/bin"
 _tmlm_prepend LD_LIBRARY_PATH "/usr/local/cuda/lib64"
 
+# The helper scripts (scripts/run_logged.py, scripts/mem_guard.py, scripts/env_check.py,
+# scripts/check_numbers_have_logs.py) start with `#!/usr/bin/env python3`, and the launch lines
+# start them by name. The machine of the study has no python3 of its own on PATH (added
+# 2026-10-25, finish pass, SHR-1: before, every start by name failed with exit status 127), so
+# the folder of the study interpreter comes first, once .venv-tm is built. This also makes
+# `python` and `python3` resolve to .venv-tm for everything started after sourcing this file.
+if [ -x "${TMLM_ROOT}/.venv-tm/bin/python3" ]; then
+    _tmlm_prepend PATH "${TMLM_ROOT}/.venv-tm/bin"
+fi
+
 _tmlm_threads="${TMLM_CPU_SLOTS:-6}"
 case "${_tmlm_threads}" in
     [1-6]) ;;

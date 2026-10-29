@@ -2,13 +2,13 @@
 
 This study asks whether a token-level Tsetlin Machine language model, trained with Tsetlin feedback on next-token prediction, can reach the accuracy of an n-gram baseline at useful speed, and what its clauses represent. The package `tmlm` in `src/` holds the engines, the baselines, the read-outs and the tooling that logs every run; `experiments/` holds the scripts that produced the runs.
 
-Status: archived. The study ran from 19 Sep to 1 Oct 2026 and is not continued. Code, registration and design documents are published as they stood at the end of the study, apart from the edits for publication that the page of [known limitations](../../docs/known-limitations.md) describes. This README, the index, the research protocol, the log of design changes and the results page were written for the publication from the records of the study. The run folders and the datasets are not part of the repository.
+Status: archived. The study ran from 19 Sep to 1 Oct 2026 and was archived on 2026-10-01 with nothing cut (docs/12 F4 and F23). In the finish pass of 2026-10-25 a few rows prepared before the archive were run under amendments A11 and A12 and job requests of that pass (H2.3 and H2.4 re-checked, H3.5 at 200 steps, H8.3 and H8.4 on the test split, H8.8 part (c), H8.9, H9.6); the results page gives each, and nothing else of the study changed. Code, registration and design documents are published as they stood at the end of the study, apart from the edits for publication that the page of [known limitations](../../docs/known-limitations.md) describes. This README, the index, the research protocol, the log of design changes and the results page were written for the publication from the records of the study. The run folders and the datasets are not part of the repository.
 
 ## What the study found
 
 The results page, [docs/results.md](docs/results.md), lists every registered hypothesis, gate and kill criterion with its status, its run ids and its measured values. This section gives the outcome in words only.
 
-The reproducibility hypotheses of the pre-registration (H2.1 to H2.4) were met at the scale tested. Of the 91 registered hypotheses, 12 are met, 11 are not met, 7 are not judged and 61 were never run; the results page gives the status and the runs of each. The main accuracy goal was missed: hypothesis H1.1 of the pre-registration ([docs/13-preregistration.md](docs/13-preregistration.md)), the causal model against an in-house Kneser-Ney 5-gram on identical tokens, is not met on seed 1, and the same run, `results/20260923T042350Z_CP_anchor`, triggered the kill criterion KB7 of docs/08. The pre-registration has ten dated amendments (A1 to A10), several of which add hypothesis families; after the miss these were, among others, the count-vote read-out of amendment A3 (family H8) and the self-supervised family of amendment A7 (family H17). The confirmatory tests of the self-supervised family were negative: gate G-R1 was read as "fail and below bag of words" on the confirmatory report `results/20260930T163619Z_ssl_r1cf_report_confirmatory` (docs/12 F29), H17.5 is not met (`results/20260930T203322Z_ssl_r2_hao_report_confirmatory`), and H17.10 is not met (`results/20260930T203322Z_ssl_r4_report_confirmatory`). Of the eight ids of the family that were run, one, H17.12, is met; the results page lists all twelve.
+The reproducibility hypotheses of the pre-registration (H2.1 to H2.4) were met at the scale tested; H2.4 was re-checked on 2026-10-25 with the checker that binds every decision to its generation run, and it holds. Of the 91 registered hypotheses, 15 are met, 14 are not met, 5 are not judged and 57 were never run; the results page gives the status and the runs of each. Of the 15, H8.11 was read on 2026-10-25 from a complete run file for which no verdict had been recorded at the time, and H8.3 and H8.4 were read on the test split on the same day, once: the count-vote core, which holds no Tsetlin-learned clause, scores 1.2478 bits per byte, 0.124 below KN-5 and 0.105 below KN-5 plus a document unigram cache, so the credit goes to counting and in-context copying, not to Tsetlin learning. The main accuracy goal was missed: hypothesis H1.1 of the pre-registration ([docs/13-preregistration.md](docs/13-preregistration.md)), the causal model against an in-house Kneser-Ney 5-gram on identical tokens, is not met on seed 1, and the same run, `results/20260923T042350Z_CP_anchor`, triggered the kill criterion KB7 of docs/08. The pre-registration has ten dated amendments (A1 to A10), several of which add hypothesis families; after the miss these were, among others, the count-vote read-out of amendment A3 (family H8) and the self-supervised family of amendment A7 (family H17). The confirmatory tests of the self-supervised family were negative: gate G-R1 was read as "fail and below bag of words" on the confirmatory report `results/20260930T163619Z_ssl_r1cf_report_confirmatory` (docs/12 F29), H17.5 is not met (`results/20260930T203322Z_ssl_r2_hao_report_confirmatory`), and H17.10 is not met (`results/20260930T203322Z_ssl_r4_report_confirmatory`). Of the eight ids of the family that were run, one, H17.12, is met; the results page lists all twelve.
 
 The log of design changes, [docs/12-design-changes.md](docs/12-design-changes.md), records how the design moved between these steps and why.
 
@@ -17,12 +17,12 @@ The log of design changes, [docs/12-design-changes.md](docs/12-design-changes.md
 | Path | Content |
 |---|---|
 | `src/tmlm/` | the package (version in `tmlm.__version__`), see below |
-| `experiments/` | 59 experiment scripts in one flat folder and their configs; [experiments/README.md](experiments/README.md) |
+| `experiments/` | 62 experiment scripts in one flat folder and their configs (three of them, `cvtm_test_read.py`, `cvtm_test_read_verify.py` and `h2_4_recheck.py`, added on 2026-10-25 and not yet run as registered runs); [experiments/README.md](experiments/README.md) |
 | `tests/` | the pytest suite: tooling, engine parity, configs, experiment helpers |
 | `scripts/` | `run_logged.py` (runs a command as a logged run), `gpu_run.sh` and `cpu_slot.sh` (GPU lock and CPU slots), `mem_guard.py`, `env_check.py`, `check_numbers_have_logs.py`, `lib_locks.sh` |
 | `env/` | `env.sh`, `bootstrap.sh`, `htm_install.sh` and the lock files `tm.lock`, `dl.lock`, `htm.lock` |
 | `launch/` | the launch chains of the overnight runs; [launch/README.md](launch/README.md) |
-| `docs/` | the docs index (00), the design documents 01 to 10, the engine specification (11), the log of design changes (12), the pre-registration (13), the research protocol, the results page, and `docs/notes/` with the data hash records; reading order in [docs/00-README.md](docs/00-README.md) |
+| `docs/` | the docs index (00), the design documents 01 to 10, the engine specification (11), the log of design changes (12), the pre-registration (13), the research protocol, the results page, `docs/notes/` with the data hash records, and `docs/drafts/` with two draft amendments of 2026-10-25 that are not frozen; reading order in [docs/00-README.md](docs/00-README.md) |
 | `third_party/` | the vendored GraphTsetlinMachine package; `third_party/README.md` |
 | `Makefile`, `pyproject.toml` | targets and package metadata; `pyproject.toml` reads this file as the package description |
 
@@ -47,11 +47,13 @@ All commands run from this folder. From the repository root the same targets are
 
 ```bash
 env/bootstrap.sh       # or: make bootstrap. Builds .venv-tm and .venv-dl, refuses when either exists
-source env/env.sh      # CUDA paths, thread caps, PYTHONHASHSEED
+source env/env.sh      # .venv-tm/bin first on PATH, CUDA paths, thread caps, PYTHONHASHSEED
 make env-check         # machine limits, GPU, imports, API signatures, written to results/<timestamp>_envcheck/
-make test              # pytest -q tests
+make test              # pytest -q -m "not gpu and not slow" tests, every CUDA device hidden
+make test-slow         # the three slow tests that need no GPU, every CUDA device hidden (about 3 min)
+make test-gpu          # the gpu-marked tests under the shared GPU lock (scripts/gpu_run.sh)
 make lint              # every number labelled as measured in docs/ cites a log under results/
-make smoke             # lint, then test
+make smoke             # lint, test, then scripts/smoke_e2e.py (end to end on tiny data)
 make configs-check     # tests/test_configs.py and tests/test_tm_core_constants.py
 ```
 
@@ -83,7 +85,14 @@ The following facts of the code matter for anyone who tries:
 - The compiled engine binaries are not included. The CPU engine is built with `g++` and the CUDA kernels with `nvcc` for `sm_70` when they are first used, and again whenever a source file is newer than the binary.
 - The code encodes the workstation of the recorded runs: one Tesla V100 (the bootstrap assertion and the `sm_70` build), a quota of 6 CPUs (the thread caps of `env/env.sh` and the six slots of `scripts/cpu_slot.sh`), a fixed location of the CUDA toolkit in `env/env.sh`, and the control-group memory files that `scripts/mem_guard.py` reads. docs/12 A1 and A2 describe the machine.
 - Run records carry no commit id. No commit was made while the study ran (docs/12 A8), and the run logger looks for `.git` in the study folder, next to `src/`, where this layout has none. A run started from a clone is therefore identified by its `source_tree_hash` only, a content hash of `src`, `experiments`, `scripts`, `tests` and `env`.
-- The helper scripts in `scripts/` and `experiments/p0_tmu_ae_repro.py` start with `#!/usr/bin/env python3`. Started by name, as in the recorded launch commands (`scripts/run_logged.py ...`, `scripts/mem_guard.py ...`), they run under whichever `python3` comes first on `PATH`, and `env/env.sh` does not put `.venv-tm/bin` there. Calling them as `.venv-tm/bin/python scripts/<name>.py` removes that dependence.
+- The helper scripts in `scripts/` and `experiments/p0_tmu_ae_repro.py` start with `#!/usr/bin/env python3`. Started by name, as in the recorded launch commands (`scripts/run_logged.py ...`, `scripts/mem_guard.py ...`), they run under whichever `python3` comes first on `PATH`. On the machine of the study no `python3` is on `PATH`, so until 2026-10-25 every such start failed with exit status 127. Since then `env/env.sh` puts `.venv-tm/bin` first on `PATH` once that environment exists, and `scripts/cpu_slot.sh` sources `env/env.sh`, so the recorded launch lines work after `source env/env.sh` (`tests/test_tooling_locks.py`). The studies `hierarchical_tm` and `clause_lm`, which start these helpers too, get the same `python3` when they source this file. Calling a helper as `.venv-tm/bin/python scripts/<name>.py` does not depend on `PATH` at all.
+- `make test` deselects the tests marked `gpu` or `slow` and hides every CUDA device; `tests/conftest.py` also hides the devices unless the GPU lock of `scripts/gpu_run.sh` is held, and skips the gpu-marked tests then. `make test-slow` runs the three slow tests that need no GPU: the data pipeline end to end on synthetic rows, and the two KB1 parity tests against tmu. The GPU tests run through `make test-gpu`. Until 2026-10-25, 31 test functions that need a CUDA device carried no marker (`tests/test_tooling_gpu_isolation.py` scans for them).
+- Known skips. On the workstation of the study `make test` reports 14 skipped items, all expected (2026-10-25):
+  - the 5 test modules that need a CUDA device, whose device probe runs at import;
+  - 8 tests that need torch, which `.venv-tm` does not hold (`tests/test_baselines_smoke.py` three times, `tests/test_cvtm_gx_transformer.py` five times); their docstrings name `.venv-dl/bin/python`, this study has no `.venv-dl`, and nothing is installed into a study environment;
+  - 1 opt-in test that reads dataset metadata over the network (`TMLM_HF_METADATA_TEST=1`).
+
+  Until 2026-10-25 the list held 3 more, the tests of `tests/test_ssl_r2_hao_diagnostics.py` that need the package sources at commits c85ca4e7 and 5b4a2230 and a reference clone under `third_party/ref`, which is not distributed. They are gpu-marked since then, so `make test` deselects them and `make test-gpu` runs them; without the clone they skip.
 - Fifteen configs in `experiments/configs` name experiment scripts that were never written (E2, E3_trackA, E4 to E10, H1, H3, TB, TK, s1, s2). They stay because `tests/test_configs.py` requires a config for every experiment heading of docs/05.
 
 The page of [known limitations](../../docs/known-limitations.md) at the repository root carries the limits that concern all studies.

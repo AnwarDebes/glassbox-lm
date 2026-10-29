@@ -51,7 +51,7 @@ Existence and proven-efficiency claims cannot come out negative; first-measureme
 - New stock-package risks: the seven blockers of docs/02 (dense `encoded_Y`, one graph at a time, pure-Python `Graphs`, H100 default grid, import-time curand seeding, whole-dataset upload, `atomicAdd` under nvcc 12.9).
 
 ## Unverified list (do not present as fact)
-- No training run has been logged yet; all model numbers are targets until logged.
+- No training run has been logged yet; all model numbers are targets until logged. [superseded: training runs are logged from 2026-09-22 on; docs/results.md lists them with their run ids]
 - `results/20260922T111529Z_envcheck/` was produced on a temporary A100 MIG slice (docs/12 F9) and is never cited.
 - The HGTM and Multi-HGTM facts (docs/01) are [stated] from their repositories as read on 2026-09-22 and are not re-measured here; the layer-2 mechanism is re-measured (H2).
 - The per-token cost bounds of docs/11 section 10 and the exchange list of docs/11 section 9 are design statements until s5 and CM log them.
@@ -68,7 +68,7 @@ Existence and proven-efficiency claims cannot come out negative; first-measureme
 - arXiv ids: all 34 exist with the expected titles [verified in source, 2026-09-22: `results/20260922T125436Z_prior_art_check/C_reference_and_tool_verification.md`]. Still unverified: the NUMBERS quoted from rows labelled [stated] in docs/01; the RDDLGN Figure 3 column order (Table 2 is read: validation PPL 95 at 8k shared vocabulary, 209 baseline); whether the 2024 "Logical Transformer" paper ever appeared. Now read in full: Abdelwahab et al. ISTM 2025, Gorji et al. 2023, Zhang et al. ICLR 2026, GraphTM v2; GraphTM v2 is now read in full; only the recommendation figure differed (above).
 - cair/PyHierarchicalTsetlinMachineCUDA main moved far past the vendored commit c85ca4e7 (HEAD 5b4a223 on 2026-09-22, version 0.3.2, branches `and_vote_normalization*` and `local_update_p*` that change the update rule). H1 must pin one commit, print its signatures into `results/`, and re-read `tm.py` before any run; the three MultiOutputTsetlinMachine defects are still present at that HEAD [verified in source: raw tm.py, 2026-09-22].
 - UiA AURA thesis repository was unreachable from this container; the two 2026 master's theses named in search snippets (a wireless TM autoencoder; TM inference on mobile) are unverified and not on language.
-- The environment recipe. The command block in the research protocol ("Environment setup") is a reconstruction from uv's output logs and the dist-info directories: the commands themselves were never logged and `env/bootstrap.sh` does not exist yet. Only the installed versions are measured (docs/02 V4).
+- The environment recipe. The command block in the research protocol ("Environment setup") is a reconstruction from uv's output logs and the dist-info directories: the commands themselves were never logged and `env/bootstrap.sh` does not exist yet. Only the installed versions are measured (docs/02 V4). [superseded: `env/bootstrap.sh` exists and was run with its log on 2026-09-22, docs/12 E4; research protocol, "Environment setup"]
 - The ISTM 2026 program is now read from istm.no (docs/01); paper contents are not.
 - ICLR 2026 Zhang convergence paper.
 - The two-phase TM-AE six-month DGX H100 figure (a projection).

@@ -96,6 +96,7 @@ def _synthetic(C_: int, V: int, n_rows: int, seed: int, max_fired: int) -> dict:
 
 
 @pytest.mark.parametrize("V,grid", [(300, 64), (8000, 1024)])
+@pytest.mark.gpu
 def test_fast_kernel_outputs_are_bit_identical_to_the_registered_kernel(V, grid):
     _gpu_or_skip()
     s = _synthetic(70, V, 400, 11, 16)
@@ -180,6 +181,7 @@ def test_prefix_pass_equals_fire_counts_count_table_and_fit_rows_cpu():
     _assert_pass_equals_registered(pp, eng, "cpu", cfg, c, fit_pos, cnt_pos, check_rows, 64)
 
 
+@pytest.mark.gpu
 def test_prefix_pass_cuda_equals_registered_and_cpu_for_any_chunk():
     _gpu_or_skip()
     from tmlm.engine.cuda.cuda_engine import CudaEngine
@@ -353,6 +355,7 @@ def test_stages_on_toy_data_cpu(tmp_path, monkeypatch):
     _check_stages(tmp_path, monkeypatch, "cpu")
 
 
+@pytest.mark.gpu
 def test_stages_on_toy_data_cuda(tmp_path, monkeypatch):
     _gpu_or_skip()
     w, cj, tr, fb = _check_stages(tmp_path, monkeypatch, "cuda")

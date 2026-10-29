@@ -10,6 +10,14 @@ licensing and eliminating clauses, the survivors and the conflict flag.
 `checker_standalone.py` (this package; imports nothing from the project) re-derives every token
 from the receipt and the bank export; `tamper()` produces the tampered variants that must fail
 (docs/04 M8 ACCEPT), one per tampering mode, chosen with the counter-based RNG.
+
+The last three modes (added 2026-10-25, finish pass, bug TLM-B2) are forgeries that change the
+generated token while keeping every re-derivation of the receipt self-consistent, so that only the
+binding of the decision to the generation run can catch them: `forged_draw` records a draw from
+counters of the forger's choice that selects another token, `temperature` changes the recorded
+temperature so that the recorded draw selects another token, `mode_switch` turns a sampled token
+into a greedy one (the argmax). Appending them keeps the index, and so the choices, of every
+earlier mode.
 """
 
 from __future__ import annotations
@@ -21,13 +29,18 @@ from typing import Any
 import numpy as np
 
 from ..decode.bank import Bank, bank_sha256
+from ..decode.conftm import logit_numerators
+from ..decode.sampling import cdf_q32, probs_from_numerators, select
 from ..decode.trace import Generation
 from ..engine.config import ANCHOR_NONE, N_EXACT_SEG, lit_text
 from ..engine.rng import rng32
 
 RECEIPT_FORMAT = "tmlm.receipt.trackB.v1"
 TAMPER_MODES = ("claimed", "drop_clause_keep_sums", "drop_clause_fix_sums", "add_clause", "vote_weight",
-                "literal", "context", "state_hash", "bank_hash", "draw", "sums", "survivors")
+                "literal", "context", "state_hash", "bank_hash", "draw", "sums", "survivors",
+                "forged_draw", "temperature", "mode_switch")
+# forged_draw: how far the forger searches one counter for a draw that selects the other token.
+FORGE_TRIES = 1 << 16
 
 
 def _clause_entry(bank: Bank, j: int, vocab: int) -> dict[str, Any]:
@@ -171,7 +184,64 @@ def tamper(doc: dict[str, Any], tok_idx: int, mode: str, bank: Bank, seed: int =
         else:
             s.add((e["claimed"] + 1) % V)
         e["eliminate"]["survivors"] = sorted(s)
+    elif mode == "forged_draw":
+        # another token, and a draw from counters of the forger's choice that selects it: u32 equals
+        # rng32 of the recorded counters, and the recorded sums, survivors and temperature are untouched
+        if e["draw"] is None:
+            return None
+        cdf = cdf_q32(_token_probs(d, e, bank, float.fromhex(e["temperature_hex"])))
+        width = np.diff(np.concatenate([[0], cdf]))
+        width[int(e["claimed"])] = 0
+        if not width.any():
+            return None
+        target = int(np.argmax(width))  # the widest interval: the fewest tries
+        field = ("seed", "a", "b", "c")[_pick(seed, mi, tok_idx, 4)]
+        dr = e["draw"]
+        for k in range(1, FORGE_TRIES + 1):
+            counters = {**dr, field: int(dr[field]) + k}
+            u = rng32(int(counters["seed"]), int(counters["stream"]), int(counters["a"]), int(counters["b"]), int(counters["c"]))
+            if select(cdf, u) == target:
+                e["draw"] = {**counters, "u32": int(u)}
+                e["claimed"] = target
+                return d
+        return None
+    elif mode == "temperature":
+        # another recorded temperature under which the recorded draw selects another token
+        if e["draw"] is None:
+            return None
+        temp = float.fromhex(e["temperature_hex"])
+        for factor in (2.0, 0.5, 4.0, 0.25, 8.0, 0.125):
+            tok = select(cdf_q32(_token_probs(d, e, bank, temp * factor)), int(e["draw"]["u32"]))
+            if tok != int(e["claimed"]):
+                e["temperature_hex"] = float(temp * factor).hex()
+                e["claimed"] = tok
+                return d
+        return None
+    elif mode == "mode_switch":
+        # a sampled token declared greedy: no draw, the claimed token is the argmax of the sums
+        if e["draw"] is None:
+            return None
+        e["mode"], e["draw"], e["eliminate"] = "greedy", None, None
+        e["claimed"] = int(np.argmax(_numerators(d, e, bank)))
     return d
+
+
+def _numerators(d: dict[str, Any], e: dict[str, Any], bank: Bank) -> np.ndarray:
+    """The exact logit numerators of one receipt entry, from its recorded sums."""
+    sums = np.zeros(int(d["vocab_size"]), dtype=np.int64)
+    for c, s in e["sums"].items():
+        sums[int(c)] = int(s)
+    cal = d["calibration"]
+    return logit_numerators(sums[None, :], bank.class_bias, int(cal["a_q16"]), int(cal["b_q16"]))[0]
+
+
+def _token_probs(d: dict[str, Any], e: dict[str, Any], bank: Bank, temperature: float) -> np.ndarray:
+    """The token distribution the checker re-derives for one entry (survivors only for eliminate)."""
+    allowed = None
+    if e.get("eliminate") is not None:
+        allowed = np.zeros(int(d["vocab_size"]), dtype=bool)
+        allowed[np.asarray(e["eliminate"]["survivors"], dtype=np.int64)] = True
+    return probs_from_numerators(_numerators(d, e, bank), temperature, allowed)
 
 
 def _refresh_sums(e: dict[str, Any]) -> None:

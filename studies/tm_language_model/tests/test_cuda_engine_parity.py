@@ -21,6 +21,7 @@ from tmlm.data.synthetic import dense_config, noisy_xor, toy_corpus
 from tmlm.engine.config import EngineConfig
 from tmlm.engine.cpu.cpu_engine import CpuEngine
 
+pytestmark = pytest.mark.gpu  # 2026-10-25 (TLM-B3): every test here needs the GPU
 cp = pytest.importorskip("cupy")
 try:
     cp.cuda.Device(0).compute_capability

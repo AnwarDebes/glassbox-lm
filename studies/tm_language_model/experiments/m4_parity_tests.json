@@ -1,0 +1,19 @@
+{
+  "experiment": "M4_parity_tests",
+  "docs": "docs/04 M4; docs/13 H2.2 (line 54, the training half) and H2.3 (line 55)",
+  "milestone": "M4",
+  "lane": 1,
+  "status": "planned (2026-10-25, finish pass): a logged run of the engine parity tests, so that H2.2 (training half) and H2.3 rest on a run folder",
+  "note": "Run definition for a logged pytest run of the GPU parity tests. Not a docs/05 experiment, hence outside experiments/configs/ (as experiments/m4_cuda_checks.json).",
+  "prereg": ["H2.2", "H2.3"],
+  "script": "tests/test_cuda_engine_parity.py (pytest), with tests/test_cuda_sharding.py and tests/test_engine_checkpoint.py",
+  "venv": ".venv-tm",
+  "gpu_lock": "shared",
+  "params": {
+    "steps": 100,
+    "batches": [64, 1024, 4096],
+    "rule_H2_3": "state_hash of the CPU engine equals that of the GPU engine after 100 steps at B in {64, 1024, 4096} (test_cuda_engine_matches_cpu_engine_for_100_steps)",
+    "rule_H2_2_training": "equal state_hash across two launch configurations (test_hash_is_invariant_to_the_launch_configuration)",
+    "pytest": "-v -rA -p no:cacheprovider --durations=0"
+  }
+}

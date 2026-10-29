@@ -84,6 +84,7 @@ def _cuda_engine_or_skip():
 
 
 @pytest.mark.parametrize("cut", [5, 16])
+@pytest.mark.gpu
 def test_cuda_resume_reproduces_the_uninterrupted_hash_and_crosses_engines(tmp_path, cut):
     CudaEngine = _cuda_engine_or_skip()
     corpus = _corpus()

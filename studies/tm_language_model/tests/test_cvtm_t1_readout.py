@@ -225,6 +225,7 @@ def test_compact_counts_equal_dense_counts_including_overflow(range_bits):
         t1.CompactCountAccumulator(C, V, range_bits=range_bits).add_range(0, np.array([0, 0], np.uint32), np.array([1, 1]))
 
 
+@pytest.mark.gpu
 def test_compact_counts_to_device_match_host():
     cp = _gpu_or_skip()
     C, V = 150, 40
@@ -346,6 +347,7 @@ def _gpu_or_skip():
 
 
 @pytest.mark.parametrize("V", [300, 8000])
+@pytest.mark.gpu
 def test_gpu_readout_matches_cpu_reference_and_is_deterministic(V):
     _gpu_or_skip()
     s = synthetic(C=50, V=V, n_rows=200, seed=9, max_fired=12)

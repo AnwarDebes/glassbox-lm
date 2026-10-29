@@ -57,6 +57,10 @@ def _gpu_ok() -> bool:
 
 GPU = _gpu_ok()
 BACKENDS = ["numpy"] + (["cupy"] if GPU else [])
+# 2026-10-25 (TLM-B3): the cupy case is a GPU test; a test that loops over BACKENDS uses the GPU
+# exactly when one is visible, so it carries the gpu marker then (make test hides the GPU).
+BACKEND_PARAMS = ["numpy"] + ([pytest.param("cupy", marks=pytest.mark.gpu)] if GPU else [])
+gpu_when_visible = pytest.mark.gpu if GPU else (lambda f: f)
 
 
 # ------------------------------------------------------------------ corpora
@@ -176,6 +180,7 @@ def kn_case(order: int, vocab: int, seed: int):
 
 
 @pytest.mark.parametrize("order,vocab,seed", [(2, 5, 1), (3, 6, 2), (5, 5, 3), (5, 7, 4)])
+@gpu_when_visible
 def test_vote_form_equals_textbook_kneser_ney_at_every_class(order, vocab, seed):
     train, held = kn_case(order, vocab, seed)
     bk = BruteKN(train, order, vocab)
@@ -215,6 +220,7 @@ def test_vote_form_equals_textbook_kneser_ney_at_every_class(order, vocab, seed)
 # ------------------------------------------------------------------ pruning, backoff-mass rule
 @pytest.mark.parametrize("m,seed", [({3: 2, 4: 2, 5: 2}, 14), ({3: 3, 4: 3, 5: 3}, 20), ({4: 2, 5: 3}, 21),
                                     ({5: 2}, 22), ({3: 2, 4: 2, 5: 2}, 38)])
+@gpu_when_visible
 def test_backoff_pruning_equals_its_definition(m, seed):
     order, vocab = 5, 6
     lengths = [0, 1, 3, 5, 40, 80, 120, 150, 60, 7, 90]

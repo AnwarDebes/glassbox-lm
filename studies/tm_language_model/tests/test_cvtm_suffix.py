@@ -205,6 +205,7 @@ def test_pruned_models_are_exact_too():
 
 
 @needs_gpu
+@pytest.mark.gpu
 def test_cupy_links_equal_numpy_links():
     tok, ds = markov_corpus(71, 80, n_docs=60, max_len=300)
     kn = KNModel(5, 80).fit(tok, ds)

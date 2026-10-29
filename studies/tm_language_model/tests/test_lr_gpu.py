@@ -11,7 +11,8 @@ try:
     HAS_GPU = cp.cuda.runtime.getDeviceCount() > 0
 except Exception:  # noqa: BLE001
     HAS_GPU = False
-pytestmark = pytest.mark.skipif(not HAS_GPU, reason="no CUDA device visible to CuPy")
+pytestmark = [pytest.mark.gpu,  # 2026-10-25 (TLM-B3)
+              pytest.mark.skipif(not HAS_GPU, reason="no CUDA device visible to CuPy")]
 
 from sklearn.linear_model import LogisticRegression  # noqa: E402
 

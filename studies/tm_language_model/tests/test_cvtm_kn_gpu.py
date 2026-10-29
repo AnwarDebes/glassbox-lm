@@ -30,6 +30,10 @@ def _gpu_ok() -> bool:
 
 GPU = _gpu_ok()
 BACKENDS = ["numpy"] + (["cupy"] if GPU else [])
+# 2026-10-25 (TLM-B3): the cupy case is a GPU test; a test that loops over BACKENDS uses the GPU
+# exactly when one is visible, so it carries the gpu marker then (make test hides the GPU).
+BACKEND_PARAMS = ["numpy"] + ([pytest.param("cupy", marks=pytest.mark.gpu)] if GPU else [])
+gpu_when_visible = pytest.mark.gpu if GPU else (lambda f: f)
 # every valid (prune_cont, prune_mass) pair; "backoff" needs prune_cont="full"
 PRUNE_COMBOS = [("recount", "renormalize"), ("full", "renormalize"), ("full", "backoff")]
 needs_gpu = pytest.mark.skipif(not GPU, reason="no CUDA device visible to CuPy")
@@ -93,7 +97,7 @@ def test_discounts_from_counts_of_counts_bit_identical():
 
 
 # ------------------------------------------------------------------ exact identity with KNModel.fit
-@pytest.mark.parametrize("backend", BACKENDS)
+@pytest.mark.parametrize("backend", BACKEND_PARAMS)
 @pytest.mark.parametrize("order,vocab,pad,mode,seed", [
     (1, 5, True, "modified", 1), (2, 7, True, "modified", 2), (3, 13, False, "modified", 3),
     (4, 3, True, "single", 4), (5, 50, True, "modified", 5), (5, 50, False, "modified", 6),
@@ -109,7 +113,7 @@ def test_fit_identical_to_reference(backend, order, vocab, pad, mode, seed):
     assert got.fit_info["backend"] == backend and got.fit_info["pruning"] is None
 
 
-@pytest.mark.parametrize("backend", BACKENDS)
+@pytest.mark.parametrize("backend", BACKEND_PARAMS)
 def test_fit_edge_corpora(backend):
     # one empty corpus with only empty documents, a single one-token document, documents at the end empty
     for tok, ds in [(np.zeros(0, np.uint16), np.array([0, 0, 0], np.uint32)),
@@ -134,6 +138,7 @@ def test_fit_rejects_bad_input():
 
 
 @needs_data
+@gpu_when_visible
 def test_fit_1m_slice_identical_to_reference():
     tok, ds = slice_1m()
     ref = KNModel(5, 8000).fit(tok, ds)
@@ -245,7 +250,7 @@ def _queries(kn: KNModel, tok, ds, seed):
     return ctx, valid, np.asarray(tok).astype(np.int64)
 
 
-@pytest.mark.parametrize("backend", BACKENDS)
+@pytest.mark.parametrize("backend", BACKEND_PARAMS)
 @pytest.mark.parametrize("mode", ["recount", "full"])
 @pytest.mark.parametrize("order,m,pad,seed", [
     (4, {3: 2, 4: 2}, True, 11), (5, {3: 2, 4: 2, 5: 2}, True, 12), (5, {3: 3, 4: 3, 5: 3}, True, 13),
@@ -293,7 +298,7 @@ def test_naive_reference_equals_knmodel_unpruned():
     assert np.allclose(kn.prob(ctx, w, valid), ref, rtol=1e-12, atol=0.0)
 
 
-@pytest.mark.parametrize("backend", BACKENDS)
+@pytest.mark.parametrize("backend", BACKEND_PARAMS)
 def test_prune_zero_thresholds_is_the_exact_fit(backend):
     tok, ds = markov_corpus(31, 20, n_docs=20, max_len=120)
     ref = KNModel(5, 20).fit(tok, ds)
@@ -317,6 +322,7 @@ def test_prune_rejects_bad_thresholds():
 
 
 @needs_gpu
+@pytest.mark.gpu
 def test_prune_cupy_equals_numpy():
     tok, ds = markov_corpus(41, 60, n_docs=60, max_len=300, conc=0.2)
     for mode, mass in PRUNE_COMBOS:
@@ -328,6 +334,7 @@ def test_prune_cupy_equals_numpy():
 
 
 @needs_data
+@gpu_when_visible
 def test_prune_1m_slice_rows_sum_to_one():
     tok, ds = slice_1m()
     val = load_real("validation")

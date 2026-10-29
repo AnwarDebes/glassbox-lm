@@ -1,6 +1,13 @@
 """Receipts and the standalone checker (docs/04 M8 ACCEPT: 100% of receipts pass the standalone
 checker, tampered receipts fail; docs/13 H2.4). The checker is imported from its file and also
-run as a separate process; an AST scan proves it imports nothing from the project."""
+run as a separate process; an AST scan proves it imports nothing from the project.
+
+Since 2026-10-25 (finish pass, bug TLM-B2) the checker binds every decision to the generation run;
+the tests at the end show that each new forgery mode passes the re-derivation of items 1 to 5 of the
+checker (so the checker before the fix accepted it) and fails only on the binding of item 6.
+
+    .venv-tm/bin/python -m pytest -q tests/test_certify.py
+"""
 
 from __future__ import annotations
 
@@ -13,7 +20,14 @@ from pathlib import Path
 import numpy as np
 import pytest
 
+import json
+
 from tmlm.certify.receipt import TAMPER_MODES, build_receipts, load_receipts, receipt_text, tamper, write_receipts
+from tmlm.certify.receipt import _token_probs
+from tmlm.decode import sampling
+from tmlm.decode.sampling import cdf_q32, select
+from tmlm.engine.config import Stream
+from tmlm.engine.rng import rng32
 from tmlm.data.synthetic import toy_corpus
 from tmlm.decode.anyorder import anyorder_generate
 from tmlm.decode.conftm import fit_two_scalar
@@ -96,8 +110,8 @@ def test_every_tampered_receipt_fails(setup, decoder, mode):
         assert not res[i]["pass"], (decoder, mode, i)
     if mode == "survivors" and decoder != "eliminate":
         assert n_try == 0
-    elif mode == "draw" and decoder == "greedy":
-        assert n_try == 0
+    elif mode in ("draw", "forged_draw", "temperature", "mode_switch") and decoder == "greedy":
+        assert n_try == 0  # a greedy token has no draw
     else:
         assert n_try > 0, (decoder, mode, "no token to tamper")
 
@@ -137,3 +151,123 @@ def test_optional_z3_check_agrees_on_greedy_receipts(setup):
 def test_receipt_text_is_readable(setup):
     txt = receipt_text(setup["docs"]["greedy"]["tokens"][0])
     assert txt.startswith("position ") and "sums:" in txt
+
+
+# ------------------------------------------------------------------ binding to the generation run (TLM-B2)
+SAMPLED = ["anyorder", "diffusion", "eliminate"]
+FORGERIES = {"forged_draw": "draw: the counters", "temperature": "temperature differs", "mode_switch": "mode "}
+
+
+def test_checker_constants_equal_the_decoders():
+    chk = _load_checker()
+    assert chk.STREAM_SAMPLER == int(Stream.SAMPLER)
+    assert chk.DRAW_TOKEN == sampling.DRAW_TOKEN
+
+
+@pytest.mark.parametrize("decoder", SAMPLED)
+def test_untampered_receipts_are_bound_to_their_run(setup, decoder):
+    doc, chk = setup["docs"][decoder], setup["chk"]
+    assert all(chk.binding_errors(doc, i) == [] for i in range(len(doc["tokens"])))
+    res = chk.check_receipts(setup["loaded_bank"], doc, expected_seed=3, expected_temperature=1.0)
+    assert all(r["pass"] for r in res)
+
+
+@pytest.mark.parametrize("decoder", SAMPLED)
+@pytest.mark.parametrize("mode", sorted(FORGERIES))
+def test_forgeries_pass_the_rederivation_and_fail_only_the_binding(setup, decoder, mode):
+    """The bug: items 1 to 5 alone (the whole checker before 2026-10-25) accept each forgery."""
+    doc, chk, lb = setup["docs"][decoder], setup["chk"], setup["loaded_bank"]
+    n_forged = 0
+    for i in range(len(doc["tokens"])):
+        t = tamper(doc, i, mode, setup["bank"], seed=1)
+        if t is None:
+            continue
+        n_forged += 1
+        assert t["tokens"][i]["claimed"] != doc["tokens"][i]["claimed"] or mode == "mode_switch"
+        assert chk.doc_errors(lb, t) == []
+        assert chk.check_token(lb, t, t["tokens"][i]) == [], (decoder, mode, i)  # accepted by items 1 to 5
+        bound = chk.binding_errors(t, i)
+        assert bound and any(FORGERIES[mode] in e for e in bound), bound
+        assert not chk.check_receipts(lb, t)[i]["pass"]
+    assert n_forged > 0
+
+
+def test_forged_draw_with_the_step_moved_along_is_rejected(setup):
+    """A forger who also rewrites the step to match the forged counter a."""
+    doc, chk, lb = setup["docs"]["anyorder"], setup["chk"], setup["loaded_bank"]
+    i = 2
+    e = json.loads(json.dumps(doc))
+    entry = e["tokens"][i]
+    cdf = cdf_q32(_token_probs(e, entry, setup["bank"], 1.0))
+    width = np.diff(np.concatenate([[0], cdf]))
+    width[entry["claimed"]] = 0
+    target = int(np.argmax(width))
+    dr = entry["draw"]
+    for k in range(1, 1 << 16):
+        u = rng32(dr["seed"], dr["stream"], dr["a"] + k, dr["b"], dr["c"])
+        if select(cdf, u) == target:
+            break
+    else:
+        pytest.skip("no counter found")
+    entry["draw"] = {**dr, "a": dr["a"] + k, "u32": int(u)}
+    entry["step"] = dr["a"] + k
+    entry["claimed"] = target
+    assert chk.check_token(lb, e, entry) == []
+    errors = chk.check_receipts(lb, e)[i]["errors"]
+    assert any("is not the token's index" in x for x in errors), errors
+
+
+def test_diffusion_token_moved_to_another_step_is_rejected(setup):
+    doc, chk = setup["docs"]["diffusion"], setup["chk"]
+    steps = [tok["step"] for tok in doc["tokens"]]
+    i = next(k for k in range(1, len(steps)) if steps[k] == steps[k - 1] + 1)  # the first token of a step
+    e = json.loads(json.dumps(doc))
+    e["tokens"][i - 1]["step"] += 1  # the last token of the step before, moved forward
+    e["tokens"][i - 1]["draw"]["a"] += 1
+    assert any("window differs" in x or "does not follow" in x for x in chk.binding_errors(e, i - 1))
+
+
+def test_expected_seed_binds_a_consistently_reseeded_document(setup):
+    """A forger who rewrites the seed of the whole run, every draw and every claim consistently: only the
+    seed the verifier expects (the registered one) can catch that."""
+    doc, chk, lb = setup["docs"]["anyorder"], setup["chk"], setup["loaded_bank"]
+    e = json.loads(json.dumps(doc))
+    e["generation"]["seed"] = 4
+    for entry in e["tokens"]:
+        dr = entry["draw"]
+        u = rng32(4, dr["stream"], dr["a"], dr["b"], dr["c"])
+        entry["draw"] = {**dr, "seed": 4, "u32": int(u)}
+        entry["claimed"] = select(cdf_q32(_token_probs(e, entry, setup["bank"], 1.0)), u)
+    assert all(r["pass"] for r in chk.check_receipts(lb, e))  # self-consistent: the header is not bound
+    res = chk.check_receipts(lb, e, expected_seed=3)
+    assert not any(r["pass"] for r in res)
+    assert "is not the expected seed 3" in res[0]["errors"][0]
+    assert not any(r["pass"] for r in chk.check_receipts(lb, doc, expected_temperature=0.5))
+
+
+def test_a_document_without_its_generation_record_fails(setup):
+    chk, lb = setup["chk"], setup["loaded_bank"]
+    e = json.loads(json.dumps(setup["docs"]["eliminate"]))
+    del e["generation"]
+    res = chk.check_receipts(lb, e)
+    assert res and not any(r["pass"] for r in res)
+
+
+def test_checker_cli_binds_seed_and_reads_the_runs_layout(setup):
+    tmp, docs = setup["tmp"], setup["docs"]
+    write_receipts(tmp / "runs.json", {"runs": [docs["anyorder"], docs["diffusion"], docs["eliminate"]]})
+    base = [sys.executable, str(CHECKER), "--bank", str(tmp / "bank.npz"), "--receipts", str(tmp / "runs.json")]
+    ok = subprocess.run([*base, "--seed", "3", "--temperature", "1.0", "--json", str(tmp / "runs_report.json"),
+                         "--quiet"], capture_output=True, text=True)
+    assert ok.returncode == 0, ok.stdout + ok.stderr
+    report = json.loads((tmp / "runs_report.json").read_text())
+    n = sum(len(docs[k]["tokens"]) for k in ("anyorder", "diffusion", "eliminate"))
+    assert report["n_runs"] == 3 and report["n_tokens"] == n and report["n_pass"] == n
+    assert {r["run"] for r in report["results"]} == {0, 1, 2}
+    wrong_seed = subprocess.run([*base, "--seed", "4", "--quiet"], capture_output=True, text=True)
+    assert wrong_seed.returncode == 1
+    forged = tamper(docs["anyorder"], 0, "forged_draw", setup["bank"], seed=1)
+    write_receipts(tmp / "forged.json", forged)
+    bad = subprocess.run([sys.executable, str(CHECKER), "--bank", str(tmp / "bank.npz"), "--receipts",
+                          str(tmp / "forged.json")], capture_output=True, text=True)
+    assert bad.returncode == 1 and "draw: the counters" in bad.stdout

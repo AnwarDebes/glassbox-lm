@@ -141,6 +141,7 @@ def test_stream_keys_equal_pattern_keys_numpy():
 
 
 @needs_gpu
+@pytest.mark.gpu
 def test_stream_keys_equal_pattern_keys_cupy():
     import cupy
     V = 12
@@ -197,6 +198,7 @@ def test_count_queried_matches_bruteforce(seed):
 
 
 @needs_gpu
+@pytest.mark.gpu
 def test_count_queried_cupy_equals_numpy():
     V = 12
     tok, ds = corpus(9, V, n_docs=200)

@@ -431,6 +431,8 @@ def test_package_stages_smoke_on_a_tiny_world(htm, tmp_path, fresh_runner):
 
 @pytest.mark.gpu
 def test_selftest_stage_on_the_installed_commit(htm, fresh_runner):
+    if _ref_source(DG.C85, "examples/ANDOfXORsDemo.py") is None:  # the demos stage reads the reference clone
+        pytest.skip("reference clone not readable (third_party/ref/PyHierarchicalTsetlinMachineCUDA, not distributed)")
     tag = _tag(htm)
     other = "head" if tag == "c85" else "c85"
     assert DG.main(["--stage", "selftest", "--config", str(CONFIG), "--expect-tag", other]) == 1

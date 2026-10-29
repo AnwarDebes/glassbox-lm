@@ -1252,6 +1252,7 @@ def _cupy_or_skip():
     return cp
 
 
+@pytest.mark.gpu
 def test_random_bank_cupy_equals_numpy():
     cp = _cupy_or_skip()
     c = toy_corpus(vocab=20, n_docs=5, doc_len=70, seed=13)
@@ -1266,6 +1267,7 @@ def test_random_bank_cupy_equals_numpy():
     assert np.array_equal(CF.random_bank_fire_counts(np, f_np, c.tok, c.doc_start, 50), CF.random_bank_fire_counts(cp, f_cp, c.tok, c.doc_start, 50))
 
 
+@pytest.mark.gpu
 def test_word_codes_cuda_equal_the_public_api():
     _cupy_or_skip()
     from tmlm.engine.cuda.cuda_engine import CudaEngine
@@ -1339,6 +1341,7 @@ def test_real_host_metadata_of_both_test_files(tmp_path):
         print("REFERENCE_KIND", task, "sha256" if m["lfs"] is not None else "git blob id only (no published sha256)")
 
 
+@pytest.mark.gpu
 def test_cuda_context_order_is_fixed_before_any_cupy_work():
     """tmu's import runs pycuda.autoinit; CuPy modules loaded before it fail afterwards (2026-09-25). main() imports tmu
     first; this test runs the confirm-stage order (CuPy, tmu probe applied, CuPy again) in a fresh process."""
@@ -1362,6 +1365,7 @@ def test_cuda_context_order_is_fixed_before_any_cupy_work():
     assert "tmu imported before any CuPy work" in out.stdout and "sum 64" in out.stdout
 
 
+@pytest.mark.gpu
 def test_cuda_context_first_leaves_the_cuda_engine_usable():
     """Regression (2026-09-26): after cuda_context_first() the CUDA engine must still launch its kernels."""
     cp = pytest.importorskip("cupy")

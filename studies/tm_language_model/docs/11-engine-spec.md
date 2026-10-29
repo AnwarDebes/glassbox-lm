@@ -388,7 +388,9 @@ the focused rule R3 selects the two highest-scoring wrong classes on every examp
 Zipf target distribution are the frequent classes nearly every time, so their votes are pushed
 down on almost every example and reinforced only when they are the target; the model ends below
 the unigram. With the negatives switched off or drawn uniformly the same engine doubled its
-accuracy (exploratory runs; the logged diagnosis runs are cited in docs/results.md).
+accuracy (exploratory runs; the logged diagnosis runs are cited in docs/results.md). [erratum of
+2026-10-25: the doubling rests on exploratory runs without a run folder; the one logged diagnosis
+run, with the negatives switched off, does not show it (docs/results.md, "Logged KB2 diagnosis runs")]
 
 `neg_mode = binomial` implements the uniform draw of `uniform_binomial` mode at O(k) cost per
 event instead of O(V): `k ~ Binomial(V - 1, Q / (V - 1))` by inversion of a host-computed Q32

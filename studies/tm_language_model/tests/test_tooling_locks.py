@@ -10,6 +10,7 @@ assertions depend on timing, and they use sleeps far longer than process start-u
 
 from __future__ import annotations
 
+import json
 import os
 import signal
 import subprocess
@@ -270,8 +271,11 @@ def test_cpu_slot_exports_thread_caps(cpu_slot, slots, repo_root):
              "NUMBA_NUM_THREADS", "RAYON_NUM_THREADS", "TMLM_CPU_SLOTS"]
     script = "; ".join(f'echo "${{{name}}}"' for name in names)
     script += '; echo "$TOKENIZERS_PARALLELISM"; echo "$TMLM_ROOT"; echo "$TMLM_CPU_SLOT_FDS" | wc -w'
+    # Hermetic (2026-10-25): a caller that already caps its own thread pools below N (the min rule
+    # of env/env.sh keeps such a value) must not decide this test; the jobs here are echo lines.
+    env = {key: value for key, value in os.environ.items() if key not in names}
     proc = subprocess.run([cpu_slot, str(slots), "--", "bash", "-c", script],
-                          capture_output=True, text=True, timeout=60)
+                          capture_output=True, text=True, timeout=60, env=env)
     assert proc.returncode == 0, proc.stderr
     lines = proc.stdout.split()
     assert lines[:7] == [str(slots)] * 7
@@ -374,7 +378,11 @@ def test_env_sh_is_idempotent_and_sets_the_caps(repo_root):
     caps, roots, path, ld_path = proc.stdout.splitlines()
     assert caps == "6 6 6 6 6 6 false"
     assert roots == f"{repo_root}|/usr/local/cuda|/usr/local/cuda"
-    assert path == f"{home}/.local/bin:/usr/local/cuda/bin:/usr/bin:/bin"
+    # Since 2026-10-25 (finish pass, SHR-1) the study interpreter's folder comes first when the
+    # environment is built, so that `#!/usr/bin/env python3` finds a python3.
+    venv_bin = repo_root / ".venv-tm" / "bin"
+    first = f"{venv_bin}:" if os.access(venv_bin / "python3", os.X_OK) else ""
+    assert path == f"{first}{home}/.local/bin:/usr/local/cuda/bin:/usr/bin:/bin"
     assert ld_path == "/usr/local/cuda/lib64"
 
 
@@ -385,3 +393,56 @@ def test_env_sh_never_raises_the_caps_above_six(repo_root):
             capture_output=True, text=True, timeout=60,
             env={"PATH": "/usr/bin:/bin", "HOME": "/tmp", "TMLM_CPU_SLOTS": requested})
         assert proc.stdout.strip() == expected
+
+
+# ------------------------------------------------------------------ python3 on PATH (SHR-1)
+# The helper scripts start with `#!/usr/bin/env python3`, and the launch lines start
+# scripts/run_logged.py (and, in docstrings, scripts/mem_guard.py) by name. The machine of the
+# study has no python3 of its own on PATH, so env/env.sh must provide one: the interpreter of
+# .venv-tm. Both tests skip in a clone where .venv-tm is not built.
+
+
+def _venv_python3(repo_root: Path) -> Path:
+    python3 = repo_root / ".venv-tm" / "bin" / "python3"
+    if not os.access(python3, os.X_OK):
+        pytest.skip(".venv-tm is not built")
+    return python3
+
+
+def test_env_sh_puts_the_study_python3_first_on_path(repo_root):
+    python3 = _venv_python3(repo_root)
+    script = (
+        "set -euo pipefail\n"
+        f'source "{repo_root}/env/env.sh"\n'
+        "command -v python3\n"
+        "command -v python\n"
+        f'source "{repo_root}/env/env.sh"\n'
+        "command -v python3\n"
+    )
+    proc = subprocess.run(["bash", "-c", script], capture_output=True, text=True, timeout=60,
+                          env={"PATH": "/usr/bin:/bin", "HOME": "/tmp"})
+    assert proc.returncode == 0, proc.stdout + proc.stderr
+    assert proc.stdout.split() == [str(python3), str(python3.with_name("python")), str(python3)]
+
+
+def test_helpers_start_by_name_after_sourcing_env_sh(repo_root, tmp_path):
+    """mem_guard.py and run_logged.py started by name, the command found as python3 on PATH:
+    the composition of the recorded launch lines. Exit status 127 before the fix."""
+    _venv_python3(repo_root)
+    cfg = tmp_path / "cfg.json"
+    cfg.write_text('{"name": "byname"}')
+    script = (
+        "set -uo pipefail\n"
+        f'source "{repo_root}/env/env.sh"\n'
+        f'cd "{repo_root}"\n'
+        "scripts/mem_guard.py --scope group --limit-gib 4 -- scripts/run_logged.py --no-gpu-sampler "
+        f'--name byname --config "{cfg}" --results-dir "{tmp_path}/res" -- '
+        "python3 -c 'print(12345)'\n"
+    )
+    proc = subprocess.run(["bash", "-c", script], capture_output=True, text=True, timeout=120,
+                          env={"PATH": "/usr/bin:/bin", "HOME": str(tmp_path), "CUDA_VISIBLE_DEVICES": ""})
+    assert proc.returncode == 0, proc.stdout + proc.stderr
+    runs = sorted((tmp_path / "res").glob("*_byname"))
+    assert len(runs) == 1
+    assert "12345" in (runs[0] / "log.txt").read_text()
+    assert json.loads((runs[0] / "run.json").read_text())["exit_status"] == 0

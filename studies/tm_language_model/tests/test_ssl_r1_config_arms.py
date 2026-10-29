@@ -585,6 +585,7 @@ def test_config_is_exploratory_names_the_twin_and_shares_the_control_params():
         assert CJ[k] == SC.load_config(ROOT / CJ["controls_config"])[k]
 
 
+@pytest.mark.gpu
 def test_cuda_engine_receives_the_overrides_and_matches_the_cpu_engine(arms, monkeypatch):
     cp = pytest.importorskip("cupy")
     try:
