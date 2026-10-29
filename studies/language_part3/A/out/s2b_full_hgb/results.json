@@ -1,0 +1,272 @@
+{
+ "arm": "full",
+ "family": "hgb",
+ "pick": "hgb_m127_lr0.2_l21",
+ "configs": {
+  "hgb_m31_lr0.05_l20": {
+   "b": 0.95,
+   "tune_cal_bits": 2.1780832733420126,
+   "tune_hold_bits": 2.1098997292291486,
+   "tune_hold_minus_B": -0.030519463210445893,
+   "seconds": 529.6,
+   "n_iter": 251,
+   "K2": {
+    "cal": {
+     "positions": 471,
+     "max_sum_err": 4.884981308350689e-15,
+     "min_p": 2.195036797338666e-09,
+     "max_fast_err_bits": 1.7763568394002505e-15,
+     "pass": true
+    },
+    "hold": {
+     "positions": 529,
+     "max_sum_err": 5.10702591327572e-15,
+     "min_p": 1.5309431350966646e-09,
+     "max_fast_err_bits": 8.881784197001252e-16,
+     "pass": true
+    }
+   }
+  },
+  "hgb_m31_lr0.05_l21": {
+   "b": 0.95,
+   "tune_cal_bits": 2.1538450828873033,
+   "tune_hold_bits": 2.0865370813105555,
+   "tune_hold_minus_B": -0.053882111129039,
+   "seconds": 1490.9,
+   "n_iter": 1000,
+   "K2": {
+    "cal": {
+     "positions": 471,
+     "max_sum_err": 4.884981308350689e-15,
+     "min_p": 2.195036797338666e-09,
+     "max_fast_err_bits": 1.1102230246251565e-15,
+     "pass": true
+    },
+    "hold": {
+     "positions": 529,
+     "max_sum_err": 4.9960036108132044e-15,
+     "min_p": 1.5309431350966646e-09,
+     "max_fast_err_bits": 8.881784197001252e-16,
+     "pass": true
+    }
+   }
+  },
+  "hgb_m31_lr0.2_l20": {
+   "b": 0.95,
+   "tune_cal_bits": 2.191737879957257,
+   "tune_hold_bits": 2.1223899123982526,
+   "tune_hold_minus_B": -0.018029280041342056,
+   "seconds": 121.9,
+   "n_iter": 51,
+   "K2": {
+    "cal": {
+     "positions": 471,
+     "max_sum_err": 5.10702591327572e-15,
+     "min_p": 2.195036797338666e-09,
+     "max_fast_err_bits": 8.881784197001252e-16,
+     "pass": true
+    },
+    "hold": {
+     "positions": 529,
+     "max_sum_err": 5.218048215738236e-15,
+     "min_p": 1.5309431350966646e-09,
+     "max_fast_err_bits": 8.881784197001252e-16,
+     "pass": true
+    }
+   }
+  },
+  "hgb_m31_lr0.2_l21": {
+   "b": 0.95,
+   "tune_cal_bits": 2.129757943054906,
+   "tune_hold_bits": 2.0623427761561763,
+   "tune_hold_minus_B": -0.0780764162834181,
+   "seconds": 1309.5,
+   "n_iter": 1000,
+   "K2": {
+    "cal": {
+     "positions": 471,
+     "max_sum_err": 4.884981308350689e-15,
+     "min_p": 2.195036797338666e-09,
+     "max_fast_err_bits": 8.881784197001252e-16,
+     "pass": true
+    },
+    "hold": {
+     "positions": 529,
+     "max_sum_err": 5.10702591327572e-15,
+     "min_p": 1.5309431350966646e-09,
+     "max_fast_err_bits": 8.881784197001252e-16,
+     "pass": true
+    }
+   }
+  },
+  "hgb_m127_lr0.05_l20": {
+   "b": 0.95,
+   "tune_cal_bits": 2.139951179381605,
+   "tune_hold_bits": 2.072346955358332,
+   "tune_hold_minus_B": -0.06807223708126281,
+   "seconds": 1784.9,
+   "n_iter": 1000,
+   "K2": {
+    "cal": {
+     "positions": 471,
+     "max_sum_err": 4.884981308350689e-15,
+     "min_p": 2.195036797338666e-09,
+     "max_fast_err_bits": 8.881784197001252e-16,
+     "pass": true
+    },
+    "hold": {
+     "positions": 529,
+     "max_sum_err": 5.10702591327572e-15,
+     "min_p": 1.5309431350966646e-09,
+     "max_fast_err_bits": 8.881784197001252e-16,
+     "pass": true
+    }
+   }
+  },
+  "hgb_m127_lr0.05_l21": {
+   "b": 0.95,
+   "tune_cal_bits": 2.1388083445303683,
+   "tune_hold_bits": 2.0721023245616212,
+   "tune_hold_minus_B": -0.0683168678779735,
+   "seconds": 1395.1,
+   "n_iter": 709,
+   "K2": {
+    "cal": {
+     "positions": 471,
+     "max_sum_err": 4.884981308350689e-15,
+     "min_p": 2.195036797338666e-09,
+     "max_fast_err_bits": 8.881784197001252e-16,
+     "pass": true
+    },
+    "hold": {
+     "positions": 529,
+     "max_sum_err": 4.9960036108132044e-15,
+     "min_p": 1.5309431350966646e-09,
+     "max_fast_err_bits": 8.881784197001252e-16,
+     "pass": true
+    }
+   }
+  },
+  "hgb_m127_lr0.2_l20": {
+   "b": 0.95,
+   "tune_cal_bits": 2.175770351872493,
+   "tune_hold_bits": 2.1077129641695582,
+   "tune_hold_minus_B": -0.03270622827003646,
+   "seconds": 153.2,
+   "n_iter": 49,
+   "K2": {
+    "cal": {
+     "positions": 471,
+     "max_sum_err": 4.884981308350689e-15,
+     "min_p": 2.195036797338666e-09,
+     "max_fast_err_bits": 1.7763568394002505e-15,
+     "pass": true
+    },
+    "hold": {
+     "positions": 529,
+     "max_sum_err": 4.9960036108132044e-15,
+     "min_p": 1.5309431350966646e-09,
+     "max_fast_err_bits": 8.881784197001252e-16,
+     "pass": true
+    }
+   }
+  },
+  "hgb_m127_lr0.2_l21": {
+   "b": 0.95,
+   "tune_cal_bits": 2.126933011552261,
+   "tune_hold_bits": 2.0608352190405648,
+   "tune_hold_minus_B": -0.07958397339902935,
+   "seconds": 871.6,
+   "n_iter": 534,
+   "K2": {
+    "cal": {
+     "positions": 471,
+     "max_sum_err": 5.10702591327572e-15,
+     "min_p": 2.195036797338666e-09,
+     "max_fast_err_bits": 1.1102230246251565e-15,
+     "pass": true
+    },
+    "hold": {
+     "positions": 529,
+     "max_sum_err": 4.9960036108132044e-15,
+     "min_p": 1.5309431350966646e-09,
+     "max_fast_err_bits": 8.881784197001252e-16,
+     "pass": true
+    }
+   }
+  }
+ },
+ "K9": {
+  "b": 0.0,
+  "d_hold": 0.04947872646937234,
+  "pass": true
+ },
+ "nofuture": {
+  "positions": 400,
+  "bits_equal": true,
+  "swap_scores_equal": true,
+  "pass": true
+ },
+ "bits_used": 364,
+ "shuffle_seed": 1,
+ "seconds": 7785.5,
+ "env": {
+  "NUMBA_CACHE_DIR": "studies/language_part3/A/tmp/numba",
+  "TMPDIR": "studies/language_part3/A/tmp/tmpdir",
+  "JOBLIB_TEMP_FOLDER": "studies/language_part3/A/tmp/joblib",
+  "MPLCONFIGDIR": "studies/language_part3/A/tmp/mpl",
+  "XDG_CACHE_HOME": "studies/language_part3/A/tmp/xdg",
+  "OMP_NUM_THREADS": "2",
+  "MKL_NUM_THREADS": "2",
+  "OPENBLAS_NUM_THREADS": "2",
+  "NUMBA_NUM_THREADS": "2",
+  "RAYON_NUM_THREADS": "2",
+  "CUDA_VISIBLE_DEVICES": ""
+ },
+ "code_sha256": {
+  "glassbox-lm/studies/language_part3/A/astruct/__init__.py": "06757dce7d0052e3ca702e29b2d68f048357ce301cb036b45d17f99a223c21e6",
+  "glassbox-lm/studies/language_part3/A/astruct/build.py": "672a6fd6f1fe0cfa0284554f98a606c5b05e0b859637c3c7294a72bf9a44f703",
+  "glassbox-lm/studies/language_part3/A/astruct/chain.py": "bc18fffa2c35ad8c68cfd81ba46514fee025d5e5d915f644bbe0b9caa6196c5f",
+  "glassbox-lm/studies/language_part3/A/astruct/data.py": "f87bfb41417ee2dd34042f086e96ed4e29e748764e4e8211ce5b0c61c7e57c78",
+  "glassbox-lm/studies/language_part3/A/astruct/floors.py": "ca83a835b427cf8954a784fde420edbbdbe252ab214d2ea65ecd32a0a3ca80ba",
+  "glassbox-lm/studies/language_part3/A/astruct/gates.py": "0303c10426cd500d8a030e93a04214801f9b8e2823cab04a57e00010564cea4c",
+  "glassbox-lm/studies/language_part3/A/astruct/learners.py": "d3dc8eb6453ca6236b3baa112905968adec25b344e18b57b29dba2cb799c521d",
+  "glassbox-lm/studies/language_part3/A/astruct/paths.py": "728e5d122ec6225a1f384358edabb58ea5f8f96670aa0166fba82f4904dbedd2",
+  "glassbox-lm/studies/language_part3/A/astruct/positions.py": "5855fa0fd0681a5a345b132665e299df5b7381e612102a7a32dcd71c81522d6e",
+  "glassbox-lm/studies/language_part3/A/astruct/rates.py": "19fa964834d190f3dbb4ddec7acd7c4fe5ef42ec48c326ac26bc4cd1148b8bfb",
+  "glassbox-lm/studies/language_part3/A/astruct/readout.py": "e18897d94043ca039010aab8cfac897074da718a9d49ab6d0c3b6d0be64b50b2",
+  "glassbox-lm/studies/language_part3/A/astruct/rows.py": "d6e390c072e7ca167660e9c49623f4425c7bdea94a2d6156e52a0ef511a22220",
+  "glassbox-lm/studies/language_part3/A/astruct/store.py": "780b383137c81da2841f28d96b3eb9d154caa9d4988e9afc86892fe3bea531d2",
+  "glassbox-lm/studies/language_part3/A/astruct/tmrun.py": "11f7ec023a5d7240b413bf1bcab36b5a5fa65f60f3cd3946ffbc0662460b0c7f",
+  "glassbox-lm/studies/language_part3/A/astruct/twins.py": "6f2b1b1aba901d7f1636c931d0373091dd32b84c394abff97fb9d3645ea3dae6",
+  "glassbox-lm/studies/language_part3/A/env.sh": "fcaae93a8ec047ccae44a9fae723e7f4adaa6ff599ba89c7d402695a79a87f77",
+  "glassbox-lm/studies/language_part3/A/freeze.py": "f5379a80cf4f3416b2a7fdf59320aadb8a8fb353a14ad1c58b63fd5f68171c1f",
+  "glassbox-lm/studies/language_part3/A/gate_check.sh": "b2184c0ce5547ca2d8b954aedcad845d7faec058c51a905395136125b17333e8",
+  "glassbox-lm/studies/language_part3/A/k3c_gate.py": "81228d53d87b98223bfdaa8ce4b285070f151c053a64b786325c8155b6a632a0",
+  "glassbox-lm/studies/language_part3/A/k3c_pilot.py": "6705fd5de024c542511533c3a22bab5f9f46b44bf4d35977c87cef29215de724",
+  "glassbox-lm/studies/language_part3/A/k7_clock.py": "f2914c938a10939d70dc30ba9e861d9cf73ed015fbfeb112e069a9b700c47b0a",
+  "glassbox-lm/studies/language_part3/A/listing.py": "e2cc27eae584c30b517df8ac1ebfdda82c5701f7bcde143aa125382bbf60f4ae",
+  "glassbox-lm/studies/language_part3/A/lock_held.sh": "08cb1f1ff68a1004277a20d15615f8e278681107cdd4c5b486d3fc80d7f60bd7",
+  "glassbox-lm/studies/language_part3/A/log_bitlist.sh": "3e8881869c7b29e0ea3349c420b7da1f70b58d615a14ea4280364d5f63dabc11",
+  "glassbox-lm/studies/language_part3/A/run_job.sh": "ebe20827c3027a36e24c08a129b2da49d75611b00b59e44b301d23750bf3216f",
+  "glassbox-lm/studies/language_part3/A/s0_data.py": "7bf5a9a6b0a723d5fc5b095ca45d0d908064a47595683e52fc23764b92233303",
+  "glassbox-lm/studies/language_part3/A/s1_floors.py": "27e0be1fdc36911b04970c8baf963437b6c0a9d3834372770fa43688a463c24c",
+  "glassbox-lm/studies/language_part3/A/s2a_rows.py": "465d142aac2c34d654d7dc0bf6fe622c27a8884e103f2b8965cd7d4f12746e99",
+  "glassbox-lm/studies/language_part3/A/s2b_arm.py": "0a12e1a912c7e146669cd64dd8b02d0a1828b44ba7adac65d512bf0994a3e720",
+  "glassbox-lm/studies/language_part3/A/s2b_twin.py": "8e87a788de3603fb221778a06305a6a02b8731966e83f783a0c46baae28a5065",
+  "glassbox-lm/studies/language_part3/A/s2c_aa.py": "35b68fbd2c9e90d85ecdee46823e41bf7bd9efe91e20159b3679fcd964f619bc",
+  "glassbox-lm/studies/language_part3/A/s2d_gates.py": "9cfaf7f2243b4d99db5f16bcda51d5fbb3d2e832e1823290b25a9abb8c7bea48",
+  "glassbox-lm/studies/tally/src/tally/floor/kn.py": "fcdf25e5b7f080737aac5295cb0c87993ce4bcaaaa72a14d411143ea2d3ccd80",
+  "glassbox-lm/studies/tally/src/tally/floor/kenlm.py": "871c8d309f6eb024e58365ede67b74cf321983c1b3d42bcc08013679b4177ae3",
+  "glassbox-lm/studies/tally/src/tally/floor/mix.py": "29f05bb4c4edaec96aa15ecf590b78729aa8a336b0c5fa9dad8e748ddc631b8a",
+  "glassbox-lm/studies/tally/src/tally/floor/stats.py": "64a4efd9f2a83ab94dd1e07611ac340fac66af29e4f3c67d6ffbe1eb1e005b05",
+  "glassbox-lm/studies/tally/src/tally/floor/aa.py": "044022c4074d6355ffeb91ad4573cd0fff054b11bbf235dc62b41f0eabaf1f8c",
+  "glassbox-lm/studies/tally/src/tally/floor/__init__.py": "456f452d1ba1780bf3a1b2faf22fdcdce2a2def03163faa81ef693dc564266ab",
+  "glassbox-lm/studies/tally/src/tally/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "glassbox-lm/studies/decision_layer/src/dl/tm.py": "f649043f5801605b35174c526b290a0cfbadbdb66ade5bf04dafc122289d3424",
+  "glassbox-lm/studies/decision_layer/src/dl/tm_init.py": "557ff697065297387c0b698ec77ae1159496e10fd9c1547dc79dbf2ee67ef577",
+  "glassbox-lm/studies/decision_layer/src/dl/cpu_tm_fast.py": "bf1c4a9086d76448d9d77cf7775e0bb0e5f4bffc926d777b867f89148279423e",
+  "glassbox-lm/studies/decision_layer/data/tables/c4words_S1000_v1/tokenize_ref.py": "2c3c1aff44ed34e017276221dff31ea29e7f9ab1f8f3a77cd0f193ee36e91803"
+ },
+ "s2a_done_sha256": "ec7fc124336339819aa0e6057e8b35ec275794b3372c0e2f20fbbe1909038962"
+}

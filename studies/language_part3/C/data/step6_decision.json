@@ -1,0 +1,240 @@
+{
+ "AA": {
+  "diff_bpw": 0.002976088479266892,
+  "max_abs": 0.0036,
+  "pass": true
+ },
+ "K0": {
+  "gain_bpw": 0.14564213513897872,
+  "min_gain": 0.0439,
+  "pass": true
+ },
+ "K0b": {
+  "best_learner": "LightGBM",
+  "gap_bpw": 0.003102546091286129,
+  "max_gap": 0.0072,
+  "pass": true
+ },
+ "decision": "PASS: K0 and K0b passed; the GPU TM step may be scheduled",
+ "dup_removed_bpw": {
+  "F": 7.383666616729119,
+  "LR": 7.264325063009779,
+  "LR_shuffled": 7.383666616811828,
+  "LightGBM": 7.2293334305798185,
+  "LightGBM_shuffled": 7.383433438604046,
+  "class_unigram_diagnostic": 7.383413978844153,
+  "twin": 7.229979090073064,
+  "twin_AA": 7.232765695378977,
+  "twin_shuffled": 7.383332507516107
+ },
+ "duplicates": {
+  "dup_share": 0.06434381778741866,
+  "dup_tokens": 4746,
+  "min_len": 8,
+  "split": "valid",
+  "tokens": 73760
+ },
+ "intervals_bits": {
+  "LR - F": {
+   "boot_sd": 0.00525887350511291,
+   "hi": -0.09841899339365083,
+   "level": 0.95,
+   "lo": -0.11890324258896509,
+   "mean": -0.10857384207541554,
+   "n_blocks": 34,
+   "n_boot": 1000,
+   "seed": 0,
+   "tokens": 73760
+  },
+  "LR - twin": {
+   "boot_sd": 0.0035813748185675957,
+   "hi": 0.04435264012121932,
+   "level": 0.95,
+   "lo": 0.02996812443716599,
+   "mean": 0.037068293063563094,
+   "n_blocks": 34,
+   "n_boot": 1000,
+   "seed": 0,
+   "tokens": 73760
+  },
+  "LR_shuffled - F": {
+   "boot_sd": 5.777464365672129e-11,
+   "hi": 3.6437400517078215e-10,
+   "level": 0.95,
+   "lo": 1.4538034696492366e-10,
+   "mean": 2.5565730114547407e-10,
+   "n_blocks": 34,
+   "n_boot": 1000,
+   "seed": 0,
+   "tokens": 73760
+  },
+  "LightGBM - F": {
+   "boot_sd": 0.005190579608759574,
+   "hi": -0.13235536467769324,
+   "level": 0.95,
+   "lo": -0.15294602822949865,
+   "mean": -0.14253958904769082,
+   "n_blocks": 34,
+   "n_boot": 1000,
+   "seed": 0,
+   "tokens": 73760
+  },
+  "LightGBM - twin": {
+   "boot_sd": 0.0033588111087984244,
+   "hi": 0.00991629905668573,
+   "level": 0.95,
+   "lo": -0.003571787676450785,
+   "mean": 0.003102546091287829,
+   "n_blocks": 34,
+   "n_boot": 1000,
+   "seed": 0,
+   "tokens": 73760
+  },
+  "LightGBM_shuffled - F": {
+   "boot_sd": 5.810687125710451e-05,
+   "hi": 4.82900371388072e-06,
+   "level": 0.95,
+   "lo": -0.0002233779447511072,
+   "mean": -0.00010969000605175932,
+   "n_blocks": 34,
+   "n_boot": 1000,
+   "seed": 0,
+   "tokens": 73760
+  },
+  "class_unigram_diagnostic - F": {
+   "boot_sd": 6.0991368608527964e-05,
+   "hi": -8.247149091547843e-06,
+   "level": 0.95,
+   "lo": -0.00024873906122358495,
+   "mean": -0.00012966955966138062,
+   "n_blocks": 34,
+   "n_boot": 1000,
+   "seed": 0,
+   "tokens": 73760
+  },
+  "twin - F": {
+   "boot_sd": 0.004111020651894681,
+   "hi": -0.13753550662186034,
+   "level": 0.95,
+   "lo": -0.15333487253118916,
+   "mean": -0.14564213513897864,
+   "n_blocks": 34,
+   "n_boot": 1000,
+   "seed": 0,
+   "tokens": 73760
+  },
+  "twin_AA - twin": {
+   "boot_sd": 0.000392938802079556,
+   "hi": 0.0037605103815807994,
+   "level": 0.95,
+   "lo": 0.002184839566346195,
+   "mean": 0.0029760884792690975,
+   "n_blocks": 34,
+   "n_boot": 1000,
+   "seed": 0,
+   "tokens": 73760
+  },
+  "twin_shuffled - F": {
+   "boot_sd": 7.199676337023732e-05,
+   "hi": -6.053073504535664e-05,
+   "level": 0.95,
+   "lo": -0.00033643167112920407,
+   "mean": -0.00019650331792860488,
+   "n_blocks": 34,
+   "n_boot": 1000,
+   "seed": 0,
+   "tokens": 73760
+  }
+ },
+ "label": "valid reading for the CPU gates; not a verdict",
+ "learners_run": "studies/language_part3/C/runs/20261021T144303Z_learners",
+ "rare_share": 0.6390591106290673,
+ "rare_split_bpw": {
+  "F": {
+   "other": 6.189063954896617,
+   "rare": 7.536681424941032
+  },
+  "LR": {
+   "other": 6.142567830912765,
+   "rare": 7.393046058187514
+  },
+  "LR_shuffled": {
+   "other": 6.189063955267347,
+   "rare": 7.536681425131695
+  },
+  "LightGBM": {
+   "other": 6.096066250046333,
+   "rare": 7.366160556155818
+  },
+  "LightGBM_shuffled": {
+   "other": 6.189170420538163,
+   "rare": 7.536449650122497
+  },
+  "class_unigram_diagnostic": {
+   "other": 6.189156325007898,
+   "rare": 7.536426347269708
+  },
+  "twin": {
+   "other": 6.082382520229912,
+   "rare": 7.369034267660776
+  },
+  "twin_AA": {
+   "other": 6.086134288296066,
+   "rare": 7.371572251940763
+  },
+  "twin_shuffled": {
+   "other": 6.189175998654485,
+   "rare": 7.536310654088068
+  }
+ },
+ "selected": {
+  "LR_C": 0.1,
+  "LightGBM": {
+   "learning_rate": 0.05,
+   "min_data_in_leaf": 200,
+   "num_leaves": 63
+  },
+  "twin": "TALL5"
+ },
+ "shuffled": {
+  "LR_shuffled": {
+   "diff_vs_F_bpw": 2.5565682904016285e-10,
+   "min_diff": -0.001,
+   "pass": true
+  },
+  "LightGBM_shuffled": {
+   "diff_vs_F_bpw": -0.00010969000605154378,
+   "min_diff": -0.001,
+   "pass": true
+  },
+  "twin_shuffled": {
+   "diff_vs_F_bpw": -0.00019650331792941955,
+   "min_diff": -0.001,
+   "pass": true
+  }
+ },
+ "tokens_valid": 73760,
+ "twin_run": "studies/language_part3/C/runs/20261021T144144Z_twin",
+ "valid_bpw": {
+  "F": 7.050271176771395,
+  "LR": 6.94169733469598,
+  "LR_shuffled": 7.050271177027052,
+  "LightGBM": 6.907731587723703,
+  "LightGBM_shuffled": 7.050161486765344,
+  "class_unigram_diagnostic": 7.050141507211732,
+  "twin": 6.9046290416324165,
+  "twin_AA": 6.907605130111683,
+  "twin_shuffled": 7.050074673453466
+ },
+ "valid_ppl": {
+  "F": 132.5388206248382,
+  "LR": 122.93035012551496,
+  "LR_shuffled": 132.53882064832513,
+  "LightGBM": 120.06997215011882,
+  "LightGBM_shuffled": 132.52874390664084,
+  "class_unigram_diagnostic": 132.5269085590905,
+  "twin": 119.81203659178169,
+  "twin_AA": 120.05944802957657,
+  "twin_shuffled": 132.52076930861605
+ }
+}
