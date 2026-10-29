@@ -24,9 +24,12 @@ from tally.b1 import game, team
 TARGET = 0.01
 HOLDOUT_N = 20_000
 CHUNK = 50_000
-# sample cap per team size (fixed from the timing run; see the registration)
+# Sample cap per team size. Provisional: 2,000,000 for every M, set by hand; no timing run has
+# fixed them and no B1 registration exists (2026-10-25). CAPS_FROM is the run id of the timing
+# run that fixes them; registered runs (--label reg) refuse to start while it is None.
 CAPS = {8: 2_000_000, 16: 2_000_000, 32: 2_000_000, 64: 2_000_000, 128: 2_000_000,
         256: 2_000_000, 512: 2_000_000}
+CAPS_FROM = None
 TEAM_ARMS = {"shared": (0, 0), "selfish": (1, 0), "marginal": (2, 0), "dual": (2, 1), "ab": (2, 2)}
 ARMS = list(TEAM_ARMS) + ["greedy", "random", "flat", "flat_tune", "oracle"]
 
@@ -90,6 +93,9 @@ def main():
     if a.label == "reg":
         assert a.cap is None, "registered runs use the registered caps"
         assert a.registration, "registered runs name their registration"
+        if not CAPS_FROM:
+            raise SystemExit("registered runs need caps fixed by a timing run: CAPS_FROM in "
+                             "tally/b1/run.py is not set")
     cap = a.cap or CAPS[a.M]
     from tally.runlog import Run
 

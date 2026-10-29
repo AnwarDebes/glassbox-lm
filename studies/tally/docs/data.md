@@ -24,7 +24,7 @@ The records of tm_language_model named in the table are the files `../tm_languag
 
 ## Penn Treebank and its splits
 
-The text is the word-level Penn Treebank of the Mikolov preprocessing, one sentence per line, with the token `<unk>`. `src/tally/ptb.py` appends `<eos>` to every sentence and builds the vocabulary as the sorted set of the words of the standard training file, so the word ids do not depend on the split; the vocabulary has 10,000 entries, `<unk>` and `<eos>` included (`metrics.json` of `20261015T072513Z_a1_baseline_check`, key `V`).
+The text is the word-level Penn Treebank of the Mikolov preprocessing, one sentence per line, with the token `<unk>`. `src/tally/ptb.py` appends `<eos>` to every sentence and builds the vocabulary as the sorted set of the words of the standard training file, so the word ids do not depend on the split; the vocabulary has 10,000 entries, `<unk>` and `<eos>` included (`metrics.json` of `20261015T072513Z_a1_baseline_check`, key `V`). Because the standard training file includes the dev-test blocks, the vocabulary is not built from train only: 8 of its words occur only in dev-test (63 positions), and 18 have no train count, of which 10 occur in calib and 2 in valid (registrations/A2.md). The splits are blocks of 100 sentences of that file, not documents.
 
 The splits are those of `src/tally/ptb.py`. The standard training file is cut into blocks of 100 sentences, and a permutation with seed 20261015 assigns 5% of the blocks to the calibration split, 5% to the dev-test split and the rest to the training split. The standard validation file is the tuning split. The standard test file is not opened: the module has no function that reads it. `registrations/T0.md` gives the sizes: 379 blocks with 836,253 tokens for training, 21 blocks with 46,925 tokens for calibration, 21 blocks with 46,411 tokens for dev-test, and 73,760 tokens for validation. The run `20261015T072513Z_a1_baseline_check` records the same token counts for the training, calibration and validation splits (`metrics.json`, key `splits`); no run file that this page cites holds the size of the dev-test split.
 
@@ -49,7 +49,7 @@ The four files in `data/a2_external/` serve the reports on the category codes an
 
 The code `orgroups` reads the word groups of one hierarchical_tm run from a file in a run folder of that study (the rows whose role is `model` and whose run is `20261002T050235Z_e4_head_sa_s1_scoreP100`). The file is not distributed, so this code cannot be rebuilt from a clone.
 
-The folder `data/a2_codes/` holds the codes of the A2 smoke run only: 30 files whose names begin with `smoke_`, each code an array with a JSON file that records the SHA-256 of its sources and of the array itself (`src/tally/floor/codes.py`). These JSON files hold the SHA-256 of the Penn Treebank training and validation files as well.
+The folder `data/a2_codes/` holds the codes of the A2 smoke runs, 30 files whose names begin with `smoke_`, and, since 2026-10-25, the 15 codes of the A2 development run `20261025T114718Z_a2_valid_dev`, 30 files without that prefix (exchange, kmeans200, predefined, topic, orgroups and random_s1 to random_s10; their SHA-256 are listed in `registrations/A2.md`, section Pins). Each code is an array with a JSON file that records the SHA-256 of its sources and of the array itself (`src/tally/floor/codes.py`). These JSON files hold the SHA-256 of the Penn Treebank training and validation files as well. (Updated 2026-10-25: before, this paragraph described the smoke codes only.)
 
 ## Derived files and model files
 
@@ -59,7 +59,7 @@ Trained models are run outputs. The tuning and final runs of T0 hold the trained
 
 ## Known problems of the data
 
-- The Penn Treebank text is pinned to a ref name and not to a commit (see the data page of the repository). The run records of this study hold the SHA-256 of the validation file only, because the run logger keys `data_hashes.json` by file name and both files are named `text.utf8`; the SHA-256 of the training file is recorded in the A2 smoke run and in the code files of `data/a2_codes/`.
+- The Penn Treebank text is pinned to a ref name and not to a commit (see the data page of the repository). The run records of this study before 2026-10-25 hold the SHA-256 of the validation file only, because the run logger keyed `data_hashes.json` by file name and both files are named `text.utf8`; the SHA-256 of the training file is recorded in the A2 smoke run and in the code files of `data/a2_codes/`. Runs from 2026-10-25 on record both texts, keyed by their path relative to the study folder (`../tm_language_model/data/ptb/raw/train/text.utf8`: `5145926136ee9aef6f359b267ac09cc8a920879cd71725de17c490dd111d2998`, `../tm_language_model/data/ptb/raw/validation/text.utf8`: `fadf6277290823f881b7bf39b84e88536c87a859cd629dcfd1d2dfdef06097cf`; `data_hashes.json` of `20261025T113715Z_a1_aa_noise`).
 - The four files in `data/a2_external/` have no recorded download address in this study. Two of them match records of tm_language_model; the Brown corpus and the tagset mapping match none.
 - The Fashion-MNIST test file has a recorded repository and revision, but no recorded address or time of download.
 - In AG News, 8 dev-test texts and 14 validation texts have an exact duplicate in the training split.

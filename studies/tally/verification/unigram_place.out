@@ -1,0 +1,30 @@
+{
+ "unigram": {
+  "calib": 9.486168299830624,
+  "valid": 9.421805808988308
+ },
+ "coalesced_calib": {
+  "counted_calib_bpw": 9.42560720246534,
+  "learned_calib_bpw": 9.158284461992285,
+  "untrained_mean": 9.310456247313983
+ },
+ "coalesced_valid": {
+  "counted_valid_bpw": 9.34851481794768,
+  "learned_valid_bpw": 9.075902537382362,
+  "untrained_mean": 9.23503470639947
+ },
+ "flat_calib": {
+  "counted_calib_bpw": 9.874667009553631,
+  "learned_calib_bpw": 10.743083069248573
+ },
+ "flat_valid": {
+  "counted_valid_bpw": 9.793736610128885,
+  "learned_valid_bpw": 10.644822817851775
+ },
+ "logreg_calib": {
+  "logreg_calib_bpw": 8.340348774961935
+ },
+ "logreg_valid": {
+  "logreg_valid_bpw": 8.240039158656696
+ }
+}

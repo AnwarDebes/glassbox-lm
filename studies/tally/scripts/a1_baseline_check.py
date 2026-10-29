@@ -51,7 +51,8 @@ def main():
            "resets": list(cache.RESETS), "contract_positions": 1000, "contract_splits": CONTRACT_SPLITS,
            "bootstrap": {"n_boot": 1000, "level": 0.95, "seed": 0}, "dup_min_len": 8,
            "cache_select": "valid", "em_fit": "calib", "rule_0p5_applies_to": "KN5 (KN3 reported only)",
-           "count_edges": list(mix.COUNT_EDGES), "bucket_tau": 20.0}
+           "count_edges": list(mix.COUNT_EDGES), "bucket_tau": 20.0,
+           "kenlm": kenlm.info()}   # added 2026-10-25: binaries' sha256, max order, stated commit
     run = Run("a1_baseline_check", cfg, data_files=[ptb.path("train"), ptb.path("valid")])
     T = {}
     t = time.time()

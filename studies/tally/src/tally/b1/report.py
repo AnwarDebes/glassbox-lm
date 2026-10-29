@@ -14,9 +14,14 @@ Second outcome: slope of log ratio against log2 M over the sizes where both arms
 the same seed resamples at every size; "grows" when the 95% interval of the slope is above 0.
 Dual-state trial: reduction = 1 - mean(dual) / mean(marginal, direct) at M = 128, paired
 bootstrap interval.
-    success: reduction >= 0.25 and never ends worse (at no M is the paired mean final excess of
-             dual minus direct above 0 with its 95% interval above 0)
-    kill:    reduction < 0.05
+    success: reduction >= 0.25, never ends worse (at no M is the paired mean final excess of
+             dual minus direct above 0 with its 95% interval above 0), and no dual run at M = 128
+             censored
+    kill:    reduction < 0.05 and no marginal run at M = 128 censored
+    otherwise no claim (the reason is printed).
+A censored dual run enters below its true count, which biases the reduction upward; a censored
+marginal run biases it downward. Changed 2026-10-25: before, the dual line had no censoring
+condition, so dual and marginal runs all censored at the cap gave a reduction of 0, read "kill".
 The fixed-sample A/B arm is reported against both.
 """
 import argparse
@@ -150,14 +155,20 @@ def analyse(runs, label):
         red = 1 - r
         red_ci = [1 - ci[1], 1 - ci[0]]
         cen = int(table(runs, "dual", PRIMARY_M, "censored").sum())
-        if red >= DUAL_SUCCESS and not worse:
+        cen_mg = int(table(runs, "marginal", PRIMARY_M, "censored").sum())
+        if red >= DUAL_SUCCESS and not worse and cen == 0:
             dv = "success"
-        elif red < DUAL_KILL:
+        elif red < DUAL_KILL and cen_mg == 0:
             dv = "kill"
         else:
             dv = "no claim"
+        why = []
+        if cen:
+            why.append(f"{cen} dual runs censored (reduction biased upward; success blocked)")
+        if cen_mg:
+            why.append(f"{cen_mg} marginal runs censored (reduction biased downward; kill blocked)")
         v["dual"] = {"M": PRIMARY_M, "reduction": red, "ci95": red_ci, "ends_worse_at": worse,
-                     "censored_dual": cen, "verdict": dv}
+                     "censored_dual": cen, "censored_marginal": cen_mg, "verdict": dv, "notes": why}
         if complete("ab", PRIMARY_M):
             ab = table(runs, "ab", PRIMARY_M, "samples_to_target")
             v["ab"] = {"ab_over_direct": ratio_ci(ab, mg, idx), "ab_over_dual": ratio_ci(ab, du, idx)}

@@ -34,8 +34,35 @@ From the study folder, with the study's Python:
     python -m tally.b1.report --label smoke
 
 Labels: `smoke` and `timing` for tests, `reg` only for the registered grid (`--registration`
-required, caps fixed in `run.CAPS`). Longer runs go through
-`nice -n 10 ../tm_language_model/scripts/cpu_slot.sh 1 -- ...`.
+required, caps fixed in `run.CAPS`; a `reg` run refuses to start while `run.CAPS_FROM`, the run
+id of the timing run that fixed the caps, is not set). Longer runs go through
+`nice -n 19 ../tm_language_model/scripts/cpu_slot.sh 1 -- ...` with the thread pools capped at 1,
+and start only when `../decision_layer/scripts/cpu_load.py 10` reads at most 4.5 cores; the grid
+launcher `scripts/b1_launch.sh` does this before every start (`B1_DRY_RUN=1` prints its jobs).
+
+## Open before a registration (2026-10-25)
+
+No B1 registration exists. The smoke and calibration runs show four problems that a
+registration has to settle first:
+
+- The shared reward never reached the target in the member calibration: in
+  `20261015T074132Z_b1_smoke_calib2`, which ran the current `calib.py`, all 60 shared runs were
+  censored at 1,000,000 samples, while the selfish and marginal rules reached it in all their
+  runs at the 8 grid points with s at most 3.9. An earlier calibration with three rules
+  (`20261015T072321Z_b1_smoke_calib`, an earlier `calib.py`) has the first five runs of every grid
+  point censored (45 of 45); which rule they used is not recorded (UNVERIFIED). A primary ratio
+  shared / marginal would then be decided by a comparator that does not learn on this game.
+- The team constants of `team.default_params()` (s 3.9, RHO 0.25) were not chosen by a
+  calibration: the three calibrations chose s 2.5 / RHO 1.0, s 3.9 / RHO 1.0 and s 2.5 /
+  RHO 0.5, and RHO 0.25 is in none of their grids.
+- The caps (`run.CAPS`, 2,000,000 samples for every M) are provisional; no timing run has fixed
+  them (`run.CAPS_FROM` is None).
+- The dual-state success line has no interval condition (reduction at least 0.25 and never
+  worse); the primary line has one.
+
+Fixed on 2026-10-25: the dual-state line of `report.py` no longer reads "kill" when the runs
+are censored (both arms at the cap gave a reduction of 0); success is blocked when dual runs at
+M = 128 are censored and kill when marginal runs are (`tests/test_b1_report.py`).
 
 ## Arms
 

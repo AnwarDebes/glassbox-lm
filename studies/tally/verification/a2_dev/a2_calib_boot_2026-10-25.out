@@ -1,0 +1,43 @@
+{
+ "calib_tokens": 46925,
+ "calib_blocks": 21,
+ "mean_bits_diff": -0.11924809493332654,
+ "gain": 0.07933264017158215,
+ "boot_seed0_1000": {
+  "mean": -0.11924809493332654,
+  "lo": -0.13059624687736326,
+  "hi": -0.10782864628430888,
+  "level": 0.95,
+  "n_boot": 1000,
+  "n_blocks": 21,
+  "tokens": 46925,
+  "seed": 0,
+  "boot_sd": 0.005716299580720012
+ },
+ "boot_seed20261025_10000": {
+  "mean": -0.11924809493332654,
+  "lo": -0.13026872266891157,
+  "hi": -0.10836694422156101,
+  "level": 0.95,
+  "n_boot": 10000,
+  "n_blocks": 21,
+  "tokens": 46925,
+  "seed": 20261025,
+  "boot_sd": 0.005632590551623226
+ },
+ "line_bits": -0.07400058144377693,
+ "power_seed0": {
+  "se_bits": 0.005716299580720012,
+  "se_gain_at_line": 0.00376412509073147,
+  "gain_needed_for_80pct_power": 0.05316788767635961,
+  "distance_calib_to_line_se": 7.915525218825277,
+  "distance_with_calib_error_se": 5.597121558884483
+ },
+ "power_seed20261025": {
+  "se_bits": 0.005632590551623226,
+  "se_gain_at_line": 0.0037090035471009147,
+  "gain_needed_for_80pct_power": 0.053121497385240135,
+  "distance_calib_to_line_se": 8.033162196834985,
+  "distance_with_calib_error_se": 5.68030346375344
+ }
+}

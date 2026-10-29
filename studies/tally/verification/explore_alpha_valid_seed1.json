@@ -1,0 +1,56 @@
+{
+ "note": "post hoc, exploratory, valid only; no rule; dev-test not opened",
+ "alphas": [
+  1e-05,
+  0.0001,
+  0.001,
+  0.003,
+  0.01,
+  0.1
+ ],
+ "seeds": {
+  "1": {
+   "run": "20261015T182430Z_t0_final_coal_c2000_s20_seed1",
+   "run_counted_valid_bpw": 9.337852326997757,
+   "run_learned_valid_bpw": 9.057045865297368,
+   "run_alpha": 0.01,
+   "by_alpha": {
+    "1e-05": {
+     "tau": 99.35458819681594,
+     "calib_nll": 4.618881365208683,
+     "valid_bpw": 9.31854212283822
+    },
+    "0.0001": {
+     "tau": 99.09086259073567,
+     "calib_nll": 4.622609722395747,
+     "valid_bpw": 9.324062479882976
+    },
+    "0.001": {
+     "tau": 98.809465506965,
+     "calib_nll": 4.626890883034613,
+     "valid_bpw": 9.330398071260024
+    },
+    "0.003": {
+     "tau": 98.66564087909448,
+     "calib_nll": 4.6291779853328885,
+     "valid_bpw": 9.333781946023263
+    },
+    "0.01": {
+     "tau": 98.4940569366425,
+     "calib_nll": 4.6319285555643415,
+     "valid_bpw": 9.337852326997757
+    },
+    "0.1": {
+     "tau": 98.02259015564434,
+     "calib_nll": 4.6385724283216065,
+     "valid_bpw": 9.34770996095607
+    }
+   },
+   "check_registered_alpha_reproduces_run": true,
+   "alpha_by_calib_within_extended_grid": 1e-05,
+   "valid_bpw_at_that_alpha": 9.31854212283822,
+   "counted_minus_learned_valid_at_that_alpha": 0.26149625754085193,
+   "counted_minus_learned_valid_registered": 0.28080646170038825
+  }
+ }
+}

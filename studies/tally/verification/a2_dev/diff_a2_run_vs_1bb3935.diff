@@ -1,0 +1,797 @@
+diff --git a/studies/tally/scripts/a2_run.py b/studies/tally/scripts/a2_run.py
+index 41a0292..1d58a88 100644
+--- a/studies/tally/scripts/a2_run.py
++++ b/studies/tally/scripts/a2_run.py
+@@ -1,7 +1,8 @@
+ """A2: which category code helps? Class members mixed with KN5 + cache, one arm per code.
+ 
+     python scripts/a2_run.py --split valid                 # development run on valid
+-    python scripts/a2_run.py --split devtest --final       # the one dev-test look (needs a recorded decision)
++    python scripts/a2_run.py --split devtest --final --claim-arm exchange --registration registrations/A2.md
++                                                           # the one dev-test look (after the freeze)
+     python scripts/a2_run.py --split valid --smoke         # tiny sizes, for testing the code
+ 
+ Every arm is the system KN5 + cache + the class members of one code. A class member is a class
+@@ -23,8 +24,43 @@ Reported per arm: bits per token and perplexity on the eval split, on its positi
+ bigram is unseen in train, and without duplicate tokens; the paired difference to the
+ comparator with a 95% block-bootstrap interval. Reported per code, with no verdict: SimLex-999
+ and WS-353 correlation, the synonym-pair sense test, distinct n-gram growth.
++
++The reading (lines SUCCESS_PPL, KILL_PPL, MARGIN_PPL) is computed for one candidate code. On
++valid it is the candidate with the lowest perplexity unless --claim-arm names one (a development
++reading). The dev-test look takes the claim-carrying code CLAIM_ARM, named in the registration
++before the look, so the code that carries the claim is not chosen on dev-test; the candidate that
++is best on dev-test is also reported, with no verdict.
++
++Guards of the dev-test look (added 2026-10-25, before the freeze; tests/test_a2_args.py). Before
++any run folder is made and before any data is read, final_guard() refuses a start unless:
++--split devtest comes with --final and --final with --split devtest; no --smoke and no --name;
++--claim-arm is CLAIM_ARM; --registration is REGISTRATION and its freeze record exists; every file
++the record pins (the registration, every file under src/, the extra files) has its recorded
++sha256 and src/ has no file the record lacks; the extra files include this script, the 30 code
++files, the 8 data files and EXPECT_METRICS; no run folder of a dev-test look of A2 exists; each of
++THREAD_VARS is LOOK_THREADS (as in the development runs), NLTK_DATA is unset, and the installed
++versions of LOCKED equal those in LOCK_FILE.
++During the look: no code is built (a saved code that does not match its source stops the run);
++the cache grid and choice and the mixing weights of every arm, all fitted before the first
++dev-test score, must equal those of the development run EXPECT_METRICS, else the run stops before
++it scores dev-test; and the run stops before any table or metrics file if a contract or the
++future-change test fails. The run records this script and, in the look, the 30 code files in
++data_hashes.json, and saves the per-token log probabilities of every arm in logp.npz, so that a
++recompute needs no second scoring (scripts/a2_recompute.py). A stop after the run folder exists (any
++SystemExit) is written to log.txt and run.json with the state "stopped", the reason and eval_scored,
++whether the eval split had been scored; a crash records eval_scored before the run logger marks it
++crashed. The config records the thread settings, NLTK_DATA and the installed versions.
++Readings with intervals and no verdict, beside the reading: the claim code against none and
++against the mean of the random codes on the positions whose bigram is unseen in train, without
++the duplicate tokens (spans of at least 8 tokens found in train), and on the positions whose word
++has a train count above 0; KN5 alone on the eval split (on dev-test it must equal T0's 7.1760); and
++an interval of the gain that adds a train-side SD (TRAIN_SD_GAIN, an estimate) to the block SD.
+ """
+ import argparse
++import glob
++import hashlib
++import importlib.metadata
++import json
+ import os
+ import sys
+ import time
+@@ -36,7 +72,7 @@ from tally import ptb  # noqa: E402
+ from tally.floor import cache, codeeval, codes, mix, stats  # noqa: E402
+ from tally.floor.classlm import ClassMember  # noqa: E402
+ from tally.floor.kn import KN  # noqa: E402
+-from tally.runlog import Run  # noqa: E402
++from tally.runlog import Run, utc  # noqa: E402
+ 
+ HALF_LIVES = (25, 50, 100, 200, 400, 800, 1600, 3200, np.inf)
+ N_RANDOM = 10
+@@ -45,6 +81,24 @@ DELTA = 0.5
+ CANDIDATES = ("exchange", "kmeans200", "predefined", "topic", "kind_topic", "orgroups")
+ SUCCESS_PPL, KILL_PPL, MARGIN_PPL = 0.05, 0.02, 0.01
+ 
++SCRIPT = os.path.abspath(__file__)
++HOME_STUDY = os.path.dirname(os.path.dirname(SCRIPT))   # where this script lives; fixes the relative data paths
++STUDY_DIR = HOME_STUDY                                  # the study the guard checks (a test may point it elsewhere)
++REGISTRATION = os.path.join("registrations", "A2.md")
++CLAIM_ARM = "exchange"                     # named in registrations/A2.md before the dev-test look
++EXPECT_METRICS = os.path.join("results", "20261025T114718Z_a2_valid_dev", "metrics.json")
++CODE_NAMES = ("exchange", "kmeans200", "predefined", "topic", "orgroups") + tuple(
++    f"random_s{s}" for s in range(1, N_RANDOM + 1))
++SRC_EXT = (".py", ".sh", ".md", ".json", ".toml")
++THREAD_VARS = ("OMP_NUM_THREADS", "MKL_NUM_THREADS", "OPENBLAS_NUM_THREADS", "NUMBA_NUM_THREADS", "RAYON_NUM_THREADS")
++LOOK_THREADS = "2"          # what the commands of the development runs exported for each of THREAD_VARS
++LOCK_FILE = os.path.join("..", "tm_language_model", "env", "tm.lock")
++LOCKED = ("numpy", "scipy", "scikit-learn", "numba", "llvmlite", "nltk")
++# Train-side SD of the gain, an estimate (UNVERIFIED) for the no-rule interval beside the reading: the
++# spread of the calib cross-fit gain over 10 rebuilds that each drop a seeded 5% of the train blocks
++# (0.0022), scaled by the delete-d jackknife factor sqrt((379 - 19) / 19) = 4.35.
++TRAIN_SD_GAIN = 0.0097
++
+ 
+ def arms_of(levels_of):
+     ex = [("exchange", l) for l in range(levels_of["exchange"])]
+@@ -79,17 +133,202 @@ def tune_cache(V, eos, ids, blocks, p_cal, p_val):
+     return best[1], rows
+ 
+ 
++# ---- guards of the dev-test look ----
++
++def sha256_file(p):
++    h = hashlib.sha256()
++    with open(p, "rb") as f:
++        for b in iter(lambda: f.read(1 << 20), b""):
++            h.update(b)
++    return h.hexdigest()
++
++
++def src_hashes(study):
++    """sha256 of every file under study/src that the freeze record covers, keyed as freeze.py keys them."""
++    out = {}
++    for d, dirs, files in os.walk(os.path.join(study, "src")):
++        dirs[:] = sorted(x for x in dirs if x != "__pycache__")
++        for f in sorted(files):
++            if f.endswith(SRC_EXT):
++                p = os.path.join(d, f)
++                out[os.path.relpath(p, study)] = sha256_file(p)
++    return out
++
++
++def code_files():
++    return [os.path.join("data", "a2_codes", f"{n}{e}") for n in CODE_NAMES for e in (".npy", ".json")]
++
++
++def data_files_of():
++    """The data files the run reads, as paths relative to the study folder (as freeze.py keys them)."""
++    ext = [os.path.join(codes.EXTERNAL, *p) for p in (
++        ("simlex999", "SimLex-999.zip"), ("wordsim353", "wordsim353.zip"),
++        ("nltk_data", "corpora", "brown.zip"), ("nltk_data", "taggers", "universal_tagset.zip"))]
++    files = [ptb.path("train"), ptb.path("valid"), *ext, os.path.join(codes.WORDNET_DIR, "corpora", "wordnet.zip"),
++             codes.ORGROUPS_FILE]
++    return [os.path.relpath(p, HOME_STUDY) for p in files]
++
++
++def check_record(rec, study, required_extra):
++    """Differences between the freeze record and the files under study (empty list: all equal)."""
++    errs = []
++    reg = rec.get("registration", {})
++    if list(reg) != [REGISTRATION]:
++        errs.append(f"the record is not the record of {REGISTRATION}: {list(reg)}")
++    for p, h in reg.items():
++        f = os.path.join(study, p)
++        if not os.path.exists(f) or sha256_file(f) != h:
++            errs.append(f"changed after the freeze: {p}")
++    now = src_hashes(study)
++    for p in sorted(set(now) | set(rec.get("src", {}))):
++        if now.get(p) != rec.get("src", {}).get(p):
++            errs.append(f"src differs from the freeze record: {p}")
++    extra = rec.get("extra", {})
++    for p in required_extra:
++        if p not in extra:
++            errs.append(f"not pinned as an extra file: {p}")
++    for p, h in extra.items():
++        f = os.path.join(study, p)
++        if not os.path.exists(f) or sha256_file(f) != h:
++            errs.append(f"changed after the freeze: {p}")
++    return errs
++
++
++def locked_versions(study):
++    """name -> version pinned in the lock file of .venv-tm (lines name==version)."""
++    out = {}
++    with open(os.path.join(study, LOCK_FILE)) as f:
++        for line in f:
++            line = line.split("#")[0].strip()
++            if "==" in line:
++                k, v = line.split("==", 1)
++                out[k.strip().lower()] = v.strip()
++    return out
++
++
++def environment_differences(study):
++    """Thread settings, NLTK_DATA and installed versions that differ from the development runs and the lock."""
++    errs = [f"{k} is {os.environ.get(k)!r}, the development runs used {LOOK_THREADS}"
++            for k in THREAD_VARS if os.environ.get(k) != LOOK_THREADS]
++    if os.environ.get("NLTK_DATA"):
++        errs.append("NLTK_DATA is set; the look reads only the pinned nltk_data")
++    try:
++        lock = locked_versions(study)
++    except OSError:
++        return errs + [f"lock file missing: {LOCK_FILE}"]
++    for pkg in LOCKED:
++        try:
++            have = importlib.metadata.version(pkg)
++        except importlib.metadata.PackageNotFoundError:
++            have = None
++        if have != lock.get(pkg):
++            errs.append(f"{pkg} {have} installed, {lock.get(pkg)} in {LOCK_FILE}")
++    return errs
++
++
++def cache_differences(observed, expected):
++    """The look's cache grid and choice against the development run's (exact)."""
++    errs = []
++    if observed.get("chosen") != expected.get("chosen"):
++        errs.append(f"cache choice {observed.get('chosen')} != {expected.get('chosen')}")
++    if observed.get("grid") != expected.get("grid"):
++        errs.append("cache grid differs from the development run")
++    return errs
++
++
++def weight_differences(lams, steps, expected):
++    """The look's mixing weights (rounded to 5 decimals) and EM steps against the development run's."""
++    errs = []
++    for k in sorted(set(lams) | set(expected["lam"])):
++        if lams.get(k) != expected["lam"].get(k):
++            errs.append(f"weights of {k}: {lams.get(k)} != {expected['lam'].get(k)}")
++        if steps.get(k) != expected["em_steps"].get(k):
++            errs.append(f"EM steps of {k}: {steps.get(k)} != {expected['em_steps'].get(k)}")
++    return errs
++
++
++def train_inclusive(gain, bn, train_sd=TRAIN_SD_GAIN):
++    """gain +- 1.96 sqrt(se_b^2 + train_sd^2), se_b the block-bootstrap SD of bits(code) - bits(none)
++    carried to the gain by the delta method (se_b = boot_sd ln2 2^mean); no rule."""
++    se_b = bn["boot_sd"] * np.log(2) * 2 ** bn["mean"]
++    half = 1.96 * float(np.sqrt(se_b ** 2 + train_sd ** 2))
++    return {"lo": float(gain - half), "hi": float(gain + half), "se_blocks": float(se_b), "train_sd": train_sd}
++
++
++def mark_stopped(run, reason, eval_scored):
++    """Record a stop (SystemExit after the run folder exists) in log.txt and run.json."""
++    when = "after" if eval_scored else "before"
++    run.print(f"STOPPED {when} the first score of the eval split: {reason}")
++    run.meta.update(state="stopped", stop_reason=str(reason), eval_scored=bool(eval_scored), end_utc=utc(),
++                    wall_s=round(time.time() - run.t0, 1))
++    run._dump("run.json", run.meta)
++
++
++def final_guard(a, study=STUDY_DIR):
++    """Problems that forbid this start (empty list: allowed). Reads only the registration, its
++    freeze record and the pinned files; called before any run folder and before any data access."""
++    errs = []
++    if a.split == "devtest" and not a.final:
++        errs.append("devtest is scored only with --final (the one registered look)")
++    if a.final and a.split != "devtest":
++        errs.append("--final is only for --split devtest")
++    if not a.final:
++        return errs
++    if a.smoke:
++        errs.append("no smoke runs on devtest")
++    if a.name:
++        errs.append("--final takes no --name")
++    if a.claim_arm != CLAIM_ARM:
++        errs.append(f"--final needs --claim-arm {CLAIM_ARM}, the code named in {REGISTRATION}")
++    reg = os.path.join(study, REGISTRATION)
++    if not a.registration or os.path.abspath(a.registration) != os.path.abspath(reg):
++        errs.append(f"--final needs --registration {REGISTRATION}")
++    errs += environment_differences(study)
++    done = sorted(glob.glob(os.path.join(study, "results", "*_a2_devtest*")))
++    if done:
++        errs.append(f"a dev-test look of A2 exists already: {[os.path.basename(d) for d in done]}")
++    frozen = os.path.splitext(reg)[0] + ".frozen.json"
++    if not os.path.exists(frozen):
++        errs.append(f"registration not frozen: {os.path.relpath(frozen, study)} missing")
++        return errs
++    with open(frozen) as f:
++        rec = json.load(f)
++    required = [os.path.join("scripts", "a2_run.py"), EXPECT_METRICS] + code_files() + data_files_of()
++    errs += check_record(rec, study, required)
++    return errs
++
++
++def expected_dev(path):
++    """Cache grid, cache choice and mixing weights of the development run that the look must reproduce."""
++    with open(path) as f:
++        m = json.load(f)
++    return {"cache": m["cache"], "lam": {k: v["lam"] for k, v in m["arms"].items()},
++            "em_steps": {k: v["em_steps"] for k, v in m["arms"].items()}}
++
++
++def get_code(name, source, build, log, final):
++    if not final:
++        return codes.get(name, source, build, log)
++    C, meta = codes.load(name, source)
++    if C is None:
++        raise SystemExit(f"code {name}: the saved code does not match its source; the look builds no code")
++    log(f"code {name}: loaded {meta['code_sha256'][:12]} classes {meta['n_classes']}")
++    return C, meta
++
++
+ def main():
+     ap = argparse.ArgumentParser()
+     ap.add_argument("--split", choices=("valid", "devtest"), required=True)
+-    ap.add_argument("--final", action="store_true", help="required for --split devtest")
++    ap.add_argument("--final", action="store_true", help="the one registered dev-test look")
+     ap.add_argument("--smoke", action="store_true", help="tiny sizes, output labelled smoke")
+     ap.add_argument("--name", default=None)
++    ap.add_argument("--claim-arm", choices=CANDIDATES, default=None,
++                    help=f"the code the reading is computed for (with --final: {CLAIM_ARM})")
++    ap.add_argument("--registration", default=None, help=f"with --final: {REGISTRATION}")
+     a = ap.parse_args()
+-    if a.split == "devtest" and not a.final:
+-        sys.exit("devtest is scored only with --final (the one dev-test look, by a recorded decision)")
+-    if a.split == "devtest" and a.smoke:
+-        sys.exit("no smoke runs on devtest")
++    errs = final_guard(a, STUDY_DIR)
++    if errs:
++        sys.exit("refused:\n  " + "\n  ".join(errs))
+     ev = a.split
+     name = a.name or ("a2_smoke" if a.smoke else ("a2_devtest_final" if a.final else "a2_valid_dev"))
+     if a.smoke and "smoke" not in name:
+@@ -101,6 +340,7 @@ def main():
+         ("simlex999", "SimLex-999.zip"), ("wordsim353", "wordsim353.zip"),
+         ("nltk_data", "corpora", "brown.zip"), ("nltk_data", "taggers", "universal_tagset.zip"))]
+     wn_zip = os.path.join(codes.WORDNET_DIR, "corpora", "wordnet.zip")
++    expect = expected_dev(os.path.join(STUDY_DIR, EXPECT_METRICS)) if a.final else None
+     cfg = {"split": ev, "smoke": a.smoke, "exchange_levels": list(S["levels"]),
+            "kmeans": list(S["km"]), "topic_levels": list(S["topic"]), "tagger_iters": S["iters"],
+            "class_order": CLASS_ORDER, "emission_delta": DELTA, "n_random": N_RANDOM,
+@@ -108,213 +348,281 @@ def main():
+            "cache_select": "valid, without class members", "em_fit": "calib, one global weight set",
+            "bootstrap": {"n_boot": 1000, "level": 0.95, "seed": 0}, "dup_min_len": 8,
+            "lines": {"success_ppl": SUCCESS_PPL, "kill_ppl": KILL_PPL, "margin_vs_random_mean_ppl": MARGIN_PPL},
+-           "candidates": list(CANDIDATES), "tm_autoencoder": "no trained one in the repository; arm not run"}
+-    run = Run(name, cfg, data_files=[ptb.path("train"), ptb.path("valid"), *ext, wn_zip,
+-                                     codes.ORGROUPS_FILE])
+-    T, M = {}, {"codes": {}, "members": {}}
+-    t = time.time()
+-    vocab, w2i, ids, blocks = ptb.load()
+-    T["load"] = time.time() - t
+-    V, eos = len(vocab), w2i["<eos>"]
+-    if a.smoke:
+-        nb_tr, nb_ev = S["blocks"]
+-        for s in ("train", "calib", "valid"):
+-            keep = np.isin(blocks[s], np.unique(blocks[s])[:nb_tr if s == "train" else nb_ev])
+-            ids[s], blocks[s] = ids[s][keep], blocks[s][keep]
+-    tr = ids["train"]
+-    run.print("tokens", {s: int(len(ids[s])) for s in ("train", "calib", ev)}, "V", V)
+-    pre = "smoke_" if a.smoke else ""
+-    src = {"train_stream_sha256": codes.stream_hash(tr), "ptb": ptb.source_hashes()}
+-
+-    # ---- codes ----
+-    C = {}
+-    t = time.time()
+-    C["exchange"], M["codes"]["exchange"] = codes.get(
+-        pre + "exchange", src, lambda: codes.exchange_tree(tr, V, eos, S["levels"], log=run.print), run.print)
+-    T["code_exchange"] = time.time() - t
+-    for s in range(1, N_RANDOM + 1):
+-        C[f"random_s{s}"], M["codes"][f"random_s{s}"] = codes.get(
+-            pre + f"random_s{s}", dict(src, base=M["codes"]["exchange"]["code_sha256"]),
+-            lambda s=s: codes.random_code(C["exchange"], eos, s), run.print)
+-    t = time.time()
+-    K1, k, nc = S["km"]
+-    C["kmeans200"], M["codes"]["kmeans200"] = codes.get(
+-        pre + "kmeans200", src, lambda: codes.kmeans200(tr, V, eos, K1, k, nc), run.print)
+-    T["code_kmeans200"] = time.time() - t
+-    t = time.time()
+-    C["predefined"], M["codes"]["predefined"] = codes.get(
+-        pre + "predefined", dict(src, brown=codes.sha256_file(ext[2]), tagset=codes.sha256_file(ext[3]),
+-                                 wordnet=codes.sha256_file(wn_zip), iters=S["iters"]),
+-        lambda: codes.predefined(tr, vocab, eos, S["iters"], log=run.print), run.print)
+-    T["code_predefined"] = time.time() - t
+-    t = time.time()
+-    kf, kc = S["topic"]
+-    C["topic"], M["codes"]["topic"] = codes.get(
+-        pre + "topic", src, lambda: codes.topic(tr, blocks["train"], V, eos, kf, kc), run.print)
+-    T["code_topic"] = time.time() - t
+-    C["orgroups"], M["codes"]["orgroups"] = codes.get(
+-        pre + "orgroups", dict(src, groups=codes.sha256_file(codes.ORGROUPS_FILE)),
+-        lambda: codes.orgroups(vocab, eos), run.print)
+-    levels_of = {n: c.shape[1] for n, c in C.items()}
+-
+-    # ---- word KN5 and cache ----
+-    t = time.time()
+-    kn5 = KN(tr, V, eos, order=5, mode="sent")
+-    T["kn5_build"] = time.time() - t
+-    splits = ("calib", "valid") if ev == "valid" else ("calib", "valid", "devtest")
+-    p_kn = {s: np.exp(kn5.logprob(ids[s])) for s in splits}
+-    t = time.time()
+-    cch, grid = tune_cache(V, eos, ids, blocks, p_kn["calib"], p_kn["valid"])
+-    T["cache_tune"] = time.time() - t
+-    M["cache"] = {"chosen": cch.config(), "grid": grid}
+-    run.print("cache chosen on valid:", cch.config())
+-    p_c = {s: cch.prob(ids[s], blocks[s], p_kn[s])[0] for s in ("calib", ev)}
+-
+-    # ---- class members ----
+-    arms = arms_of(levels_of)
+-    needed = sorted({m for v in arms.values() for m in v})
+-    P_mem, members = {}, {}
+-    t = time.time()
+-    for code, l in needed:
+-        t1 = time.time()
+-        cm = ClassMember(tr, C[code][:, l], eos, CLASS_ORDER, DELTA)
+-        members[(code, l)] = cm
+-        P_mem[(code, l)] = {s: np.exp(cm.logprob(ids[s])) for s in ("calib", ev)}
+-        M["members"][f"{code}:{l}"] = dict(cm.summary(), seconds=round(time.time() - t1, 2))
+-    T["class_members_build_and_score"] = time.time() - t
+-    run.print(f"{len(needed)} class members built and scored in {T['class_members_build_and_score']:.1f} s")
+-
+-    # ---- arms ----
+-    unseen = codeeval.unseen_bigram_mask(tr, ids[ev], eos, V)
+-    t = time.time()
+-    dup_r, dup = stats.duplicate_report(tr, blocks["train"], ids[ev], ev, 8)
+-    T["duplicates"] = time.time() - t
+-    M["duplicates"] = dup_r
+-    M["unseen_bigram_positions"] = {"tokens": int(unseen.sum()), "share": float(unseen.mean())}
+-    LP, R, lams = {}, {}, {}
+-    t = time.time()
+-    for arm, mem in arms.items():
+-        cols = lambda s: [p_kn[s], p_c[s]] + [P_mem[m][s] for m in mem]  # noqa: E731
+-        lam, trace = mix.em(np.stack(cols("calib"), 1))
+-        lp = mix.logprob(np.stack(cols(ev), 1), lam)
+-        LP[arm], lams[arm] = lp, lam
+-        R[arm] = {"members": ["kn5", "cache"] + [f"{c}:{l}" for c, l in mem], "lam": lam.round(5).tolist(),
+-                  "em_steps": len(trace), "all": stats.report(lp, ev),
+-                  "unseen_bigram": stats.report(lp[unseen], ev + " (bigram unseen in train)"),
+-                  "dup_removed": stats.report(lp[~dup], ev + " (duplicate tokens removed)")}
+-    T["em_all_arms"] = time.time() - t
+-    bv = blocks[ev]
+-    base = R["none"]["all"]["ppl"]
+-    for arm in arms:
+-        R[arm]["rel_ppl_vs_none"] = R[arm]["all"]["ppl"] / base - 1
+-        R[arm]["rel_ppl_vs_none_unseen"] = R[arm]["unseen_bigram"]["ppl"] / R["none"]["unseen_bigram"]["ppl"] - 1
+-        if arm != "none":
+-            R[arm]["bits_diff_vs_none"] = stats.block_bootstrap(stats.bits_diff(LP[arm], LP["none"]), bv)
+-    M["arms"] = R
+-
+-    # ---- random codes, best code, margin, dev reading ----
+-    rnd = [f"random_s{s}" for s in range(1, N_RANDOM + 1)]
+-    r_ppl = np.array([R[r]["all"]["ppl"] for r in rnd])
+-    lp_rmean = np.mean([LP[r] for r in rnd], 0)
+-    best = min(CANDIDATES, key=lambda x: R[x]["all"]["ppl"])
+-    gain = 1 - R[best]["all"]["ppl"] / base
+-    marg = 1 - R[best]["all"]["ppl"] / r_ppl.mean()
+-    bb = stats.block_bootstrap(stats.bits_diff(LP[best], lp_rmean), bv)
+-    M["random"] = {"ppl_each": r_ppl.tolist(), "ppl_mean": float(r_ppl.mean()), "ppl_sd": float(r_ppl.std(ddof=1)),
+-                   "ppl_min": float(r_ppl.min()), "ppl_max": float(r_ppl.max()),
+-                   "rel_ppl_mean_vs_none": float(r_ppl.mean() / base - 1)}
+-    M["reading"] = {
+-        "label": "development reading on " + ev + ("" if a.final else "; not a verdict"),
+-        "best_code": best, "best_ppl": R[best]["all"]["ppl"], "none_ppl": base,
+-        "gain_vs_none": gain, "margin_vs_random_mean": marg, "best_minus_random_mean_bits": bb,
+-        "success_line": bool(gain >= SUCCESS_PPL and marg >= MARGIN_PPL and bb["hi"] < 0),
+-        "kill_line": bool(gain < KILL_PPL)}
+-
+-    # ---- contract and future-change test ----
+-    t = time.time()
+-    M["contract"] = {}
+-    for arm in ("none", "kind_topic"):
+-        lam, mem = lams[arm], arms[arm]
+-        for s in ("calib", ev):
+-            def dfn(pos, s=s, lam=lam, mem=mem):
+-                Dk = kn5.dists(ids[s], pos)
+-                D = lam[0] * Dk + lam[1] * cch.dists(ids[s], blocks[s], pos, Dk)
+-                for j, m in enumerate(mem):
+-                    D += lam[2 + j] * members[m].dists(ids[s], pos)
+-                return D
+-            cols = [p_kn[s], p_c[s]] + [P_mem[m][s] for m in mem]
+-            fast = mix.logprob(np.stack(cols, 1), lam)
+-            r = stats.contract(dfn, fast, len(ids[s]), 1000, seed=11, true_ids=ids[s])
+-            M["contract"][f"{arm}_{s}"] = r
+-            run.print(f"contract {arm} {s}", r)
+-    T["contract"] = time.time() - t
+-
+-    def system_logp(x, bl, arm):
+-        pk = np.exp(kn5.logprob(x))
+-        cols = [pk, cch.prob(x, bl, pk)[0]] + [np.exp(members[m].logprob(x)) for m in arms[arm]]
+-        return mix.logprob(np.stack(cols, 1), lams[arm])
+-    t = time.time()
+-    rng = np.random.default_rng(5)
+-    x0, b0 = ids[ev], blocks[ev]
+-    ref = system_logp(x0, b0, "kind_topic")
+-    worst = 0.0
+-    cuts = np.sort(rng.choice(np.arange(10, len(x0) - 10), size=10, replace=False))
+-    for cut in cuts:
+-        x1 = x0.copy()
+-        x1[cut + 1:] = rng.integers(0, V, len(x1) - cut - 1)
+-        x1[cut + 1:][x0[cut + 1:] == eos] = eos       # keep the sentence ends
+-        worst = max(worst, float(np.abs(system_logp(x1, b0, "kind_topic")[:cut + 1] - ref[:cut + 1]).max()))
+-    M["future_change_test"] = {"arm": "kind_topic", "cuts": cuts.tolist(), "max_abs_logp_change_before_cut": worst,
+-                               "pass": bool(worst == 0.0)}
+-    M["shuffled_label_test"] = "the 10 random codes are the shuffled-label control (word labels permuted)"
+-    T["future_change_test"] = time.time() - t
+-    run.print("future-change test", M["future_change_test"])
+-
+-    # ---- code reports (no verdict) ----
+-    t = time.time()
+-    counts = np.bincount(tr, minlength=V)
+-    sl, ws = codeeval.load_simlex(), codeeval.load_ws353()
+-    syn = codeeval.synonym_pairs(vocab, counts, 10 if not a.smoke else 1)
+-    rep = {}
+-    for n in ["exchange", "random_s1", "kmeans200", "predefined", "topic", "orgroups"] + rnd[1:]:
+-        c = C[n]
+-        rep[n] = {"classes": codes.n_classes(c), "simlex": codeeval.similarity(c, w2i, sl),
+-                  "ws353": codeeval.similarity(c, w2i, ws), "sense_test": codeeval.sense_test(c, syn)}
+-    rep["kind_topic"] = {"note": "exchange and topic codes together",
+-                         "simlex": codeeval.similarity(np.concatenate([C["exchange"], C["topic"]], 1), w2i, sl),
+-                         "ws353": codeeval.similarity(np.concatenate([C["exchange"], C["topic"]], 1), w2i, ws)}
+-    for key in ("simlex", "ws353"):
+-        rep["random_mean_" + key] = float(np.mean([rep[r][key]["spearman"] for r in rnd]))
+-    rep["sense_test_synonym_pairs"] = len(syn)
+-    growth = {"words": codeeval.ngram_growth(tr, ids[ev], eos, V + 1)}
+-    for n in ("exchange", "random_s1", "kmeans200", "predefined", "topic", "orgroups"):
+-        for l in range(C[n].shape[1]):
+-            c = C[n][:, l]
+-            growth[f"{n}:{l}"] = codeeval.ngram_growth(c[tr], c[ids[ev]], int(c[eos]), int(c.max()) + 2)
+-    rep["ngram_growth"] = growth
+-    M["code_reports"] = rep
+-    T["code_reports"] = time.time() - t
+-
+-    # ---- table ----
+-    run.print("")
+-    run.print(f"{'arm':18s} {'members':>7s} {'ppl':>9s} {'bits':>8s} {'vs none':>8s} {'95% CI bits diff':>21s} "
+-              f"{'unseen ppl':>11s} {'vs none':>8s}   ({ev}, {len(ids[ev])} tokens incl. <eos>, V = {V}; "
+-              f"unseen-bigram positions {int(unseen.sum())})")
+-    for arm in arms:
+-        r = R[arm]
+-        ci = r.get("bits_diff_vs_none")
+-        cis = f"{ci['mean']:+.4f} [{ci['lo']:+.4f},{ci['hi']:+.4f}]" if ci else ""
+-        run.print(f"{arm:18s} {len(arms[arm]):7d} {r['all']['ppl']:9.3f} {r['all']['bits_per_token']:8.4f} "
+-                  f"{100 * r['rel_ppl_vs_none']:+7.2f}% {cis:>21s} {r['unseen_bigram']['ppl']:11.1f} "
+-                  f"{100 * r['rel_ppl_vs_none_unseen']:+7.2f}%")
+-    run.print("random codes:", {k: round(v, 3) if isinstance(v, float) else v for k, v in M["random"].items()
+-                                 if k != "ppl_each"})
+-    run.print("reading:", M["reading"])
+-    for n in ("exchange", "random_s1", "kmeans200", "predefined", "topic", "orgroups", "kind_topic"):
+-        run.print(f"code {n}: simlex {rep[n]['simlex']}, ws353 {rep[n]['ws353']}")
+-    M["timings_s"] = {k_: round(v, 2) for k_, v in T.items()}
+-    run.print("timings", M["timings_s"])
+-    run.finish(M)
++           "candidates": list(CANDIDATES), "tm_autoencoder": "no saved TM auto-encoder model in the repository and none with a code over V; arm not run",
++           "claim_arm": a.claim_arm, "registration": a.registration, "final": a.final,
++           "expect_metrics": EXPECT_METRICS if a.final else None,
++           "threads": {k: os.environ.get(k) for k in THREAD_VARS}, "nltk_data_env": os.environ.get("NLTK_DATA"),
++           "versions": {p: importlib.metadata.version(p) for p in LOCKED}}
++    dfiles = [ptb.path("train"), ptb.path("valid"), *ext, wn_zip, codes.ORGROUPS_FILE, SCRIPT]
++    if a.final:
++        dfiles += [os.path.join(STUDY_DIR, p) for p in code_files()]
++    run = Run(name, cfg, data_files=dfiles, registration=a.registration)
++    progress = {"eval_scored": False}
++
++    def _body():
++        T, M = {}, {"codes": {}, "members": {}}
++        t = time.time()
++        vocab, w2i, ids, blocks = ptb.load()
++        T["load"] = time.time() - t
++        V, eos = len(vocab), w2i["<eos>"]
++        if a.smoke:
++            nb_tr, nb_ev = S["blocks"]
++            for s in ("train", "calib", "valid"):
++                keep = np.isin(blocks[s], np.unique(blocks[s])[:nb_tr if s == "train" else nb_ev])
++                ids[s], blocks[s] = ids[s][keep], blocks[s][keep]
++        tr = ids["train"]
++        run.print("tokens", {s: int(len(ids[s])) for s in ("train", "calib", ev)}, "V", V)
++        pre = "smoke_" if a.smoke else ""
++        src = {"train_stream_sha256": codes.stream_hash(tr), "ptb": ptb.source_hashes()}
++
++        # ---- codes (built from train; in the look only loaded) ----
++        C = {}
++        t = time.time()
++        C["exchange"], M["codes"]["exchange"] = get_code(
++            pre + "exchange", src, lambda: codes.exchange_tree(tr, V, eos, S["levels"], log=run.print), run.print,
++            a.final)
++        T["code_exchange"] = time.time() - t
++        for s in range(1, N_RANDOM + 1):
++            C[f"random_s{s}"], M["codes"][f"random_s{s}"] = get_code(
++                pre + f"random_s{s}", dict(src, base=M["codes"]["exchange"]["code_sha256"]),
++                lambda s=s: codes.random_code(C["exchange"], eos, s), run.print, a.final)
++        t = time.time()
++        K1, k, nc = S["km"]
++        C["kmeans200"], M["codes"]["kmeans200"] = get_code(
++            pre + "kmeans200", src, lambda: codes.kmeans200(tr, V, eos, K1, k, nc), run.print, a.final)
++        T["code_kmeans200"] = time.time() - t
++        t = time.time()
++        C["predefined"], M["codes"]["predefined"] = get_code(
++            pre + "predefined", dict(src, brown=codes.sha256_file(ext[2]), tagset=codes.sha256_file(ext[3]),
++                                     wordnet=codes.sha256_file(wn_zip), iters=S["iters"]),
++            lambda: codes.predefined(tr, vocab, eos, S["iters"], log=run.print), run.print, a.final)
++        T["code_predefined"] = time.time() - t
++        t = time.time()
++        kf, kc = S["topic"]
++        C["topic"], M["codes"]["topic"] = get_code(
++            pre + "topic", src, lambda: codes.topic(tr, blocks["train"], V, eos, kf, kc), run.print, a.final)
++        T["code_topic"] = time.time() - t
++        C["orgroups"], M["codes"]["orgroups"] = get_code(
++            pre + "orgroups", dict(src, groups=codes.sha256_file(codes.ORGROUPS_FILE)),
++            lambda: codes.orgroups(vocab, eos), run.print, a.final)
++        levels_of = {n: c.shape[1] for n, c in C.items()}
++
++        # ---- word KN5 and cache: calib and valid only, before any score of the eval split ----
++        t = time.time()
++        kn5 = KN(tr, V, eos, order=5, mode="sent")
++        T["kn5_build"] = time.time() - t
++        p_kn = {s: np.exp(kn5.logprob(ids[s])) for s in ("calib", "valid")}
++        t = time.time()
++        cch, grid = tune_cache(V, eos, ids, blocks, p_kn["calib"], p_kn["valid"])
++        T["cache_tune"] = time.time() - t
++        M["cache"] = {"chosen": cch.config(), "grid": grid}
++        run.print("cache chosen on valid:", cch.config())
++        if a.final and cache_differences(M["cache"], expect["cache"]):
++            raise SystemExit(f"{cache_differences(M['cache'], expect['cache'])}; the look stops before it "
++                             "scores dev-test")
++        p_c = {"calib": cch.prob(ids["calib"], blocks["calib"], p_kn["calib"])[0]}
++
++        # ---- class members and mixing weights: calib only ----
++        arms = arms_of(levels_of)
++        needed = sorted({m for v in arms.values() for m in v})
++        P_mem, members = {}, {}
++        t = time.time()
++        for code, l in needed:
++            t1 = time.time()
++            cm = ClassMember(tr, C[code][:, l], eos, CLASS_ORDER, DELTA)
++            members[(code, l)] = cm
++            P_mem[(code, l)] = {"calib": np.exp(cm.logprob(ids["calib"]))}
++            M["members"][f"{code}:{l}"] = dict(cm.summary(), seconds=round(time.time() - t1, 2))
++        T["class_members_build_and_score_calib"] = time.time() - t
++        run.print(f"{len(needed)} class members built and scored on calib in "
++                  f"{T['class_members_build_and_score_calib']:.1f} s")
++        lams, steps = {}, {}
++        t = time.time()
++        for arm, mem in arms.items():
++            lam, trace = mix.em(np.stack([p_kn["calib"], p_c["calib"]] + [P_mem[m]["calib"] for m in mem], 1))
++            lams[arm], steps[arm] = lam, len(trace)
++        T["em_all_arms"] = time.time() - t
++        if a.final:
++            bad = weight_differences({k: v.round(5).tolist() for k, v in lams.items()}, steps, expect)
++            if bad:
++                raise SystemExit(f"{bad}; the look stops before it scores dev-test")
++
++        # ---- the eval split: scored from here on ----
++        progress["eval_scored"] = True
++        t = time.time()
++        if ev not in p_kn:
++            p_kn[ev] = np.exp(kn5.logprob(ids[ev]))
++        p_c[ev] = cch.prob(ids[ev], blocks[ev], p_kn[ev])[0]
++        for m in needed:
++            P_mem[m][ev] = np.exp(members[m].logprob(ids[ev]))
++        T["score_eval_split"] = time.time() - t
++
++        # ---- arms ----
++        unseen = codeeval.unseen_bigram_mask(tr, ids[ev], eos, V)
++        seen_word = np.bincount(tr, minlength=V)[ids[ev]] > 0
++        t = time.time()
++        dup_r, dup = stats.duplicate_report(tr, blocks["train"], ids[ev], ev, 8)
++        T["duplicates"] = time.time() - t
++        M["duplicates"] = dup_r
++        M["unseen_bigram_positions"] = {"tokens": int(unseen.sum()), "share": float(unseen.mean())}
++        M["train_seen_word_positions"] = {"tokens": int(seen_word.sum()), "share": float(seen_word.mean())}
++        LP, R = {}, {}
++        for arm, mem in arms.items():
++            lp = mix.logprob(np.stack([p_kn[ev], p_c[ev]] + [P_mem[m][ev] for m in mem], 1), lams[arm])
++            LP[arm] = lp
++            R[arm] = {"members": ["kn5", "cache"] + [f"{c}:{l}" for c, l in mem], "lam": lams[arm].round(5).tolist(),
++                      "em_steps": steps[arm], "all": stats.report(lp, ev),
++                      "unseen_bigram": stats.report(lp[unseen], ev + " (bigram unseen in train)"),
++                      "dup_removed": stats.report(lp[~dup], ev + " (duplicate tokens removed)")}
++        bv = blocks[ev]
++        base = R["none"]["all"]["ppl"]
++        for arm in arms:
++            R[arm]["rel_ppl_vs_none"] = R[arm]["all"]["ppl"] / base - 1
++            R[arm]["rel_ppl_vs_none_unseen"] = R[arm]["unseen_bigram"]["ppl"] / R["none"]["unseen_bigram"]["ppl"] - 1
++            if arm != "none":
++                R[arm]["bits_diff_vs_none"] = stats.block_bootstrap(stats.bits_diff(LP[arm], LP["none"]), bv)
++        M["arms"] = R
++        M["kn5_alone"] = stats.report(np.log(p_kn[ev]), ev + " (KN5 alone)")
++
++        # ---- random codes, the reading's code, margin, reading ----
++        rnd = [f"random_s{s}" for s in range(1, N_RANDOM + 1)]
++        r_ppl = np.array([R[r]["all"]["ppl"] for r in rnd])
++        lp_rmean = np.mean([LP[r] for r in rnd], 0)
++        best_eval = min(CANDIDATES, key=lambda x: R[x]["all"]["ppl"])
++        best = a.claim_arm or best_eval
++        gain = 1 - R[best]["all"]["ppl"] / base
++        marg = 1 - R[best]["all"]["ppl"] / r_ppl.mean()
++        bb = stats.block_bootstrap(stats.bits_diff(LP[best], lp_rmean), bv)
++        bn = R[best]["bits_diff_vs_none"]
++        M["random"] = {"ppl_each": r_ppl.tolist(), "ppl_mean": float(r_ppl.mean()), "ppl_sd": float(r_ppl.std(ddof=1)),
++                       "ppl_min": float(r_ppl.min()), "ppl_max": float(r_ppl.max()),
++                       "rel_ppl_mean_vs_none": float(r_ppl.mean() / base - 1)}
++        M["reading"] = {
++            "label": ("registered reading of A2 on " + ev) if a.final else ("development reading on " + ev + "; not a verdict"),
++            "code_source": "CLAIM_ARM, named in the registration" if a.final else (
++                "named by --claim-arm" if a.claim_arm else "lowest perplexity among the candidates on " + ev),
++            "best_on_eval_split_no_verdict": best_eval,
++            "best_code": best, "best_ppl": R[best]["all"]["ppl"], "none_ppl": base,
++            "gain_vs_none": gain, "margin_vs_random_mean": marg, "best_minus_random_mean_bits": bb,
++            "gain_interval_from_bits_vs_none_no_rule": [float(1 - 2 ** bn["hi"]), float(1 - 2 ** bn["lo"])],
++            "gain_interval_train_inclusive_no_rule": train_inclusive(gain, bn),
++            "success_line": bool(gain >= SUCCESS_PPL and marg >= MARGIN_PPL and bb["hi"] < 0),
++            "kill_line": bool(gain < KILL_PPL)}
++        M["subsets_no_verdict"] = {}
++        for sname, mask in (("unseen_bigram", unseen), ("duplicates_removed", ~dup), ("train_seen_word", seen_word)):
++            M["subsets_no_verdict"][sname] = {
++                "tokens": int(mask.sum()),
++                "code_minus_none_bits": stats.block_bootstrap(stats.bits_diff(LP[best][mask], LP["none"][mask]), bv[mask]),
++                "code_minus_random_mean_bits": stats.block_bootstrap(stats.bits_diff(LP[best][mask], lp_rmean[mask]),
++                                                                     bv[mask])}
++
++        # ---- contract and future-change test ----
++        t = time.time()
++        M["contract"] = {}
++        for arm in sorted({"none", best, "random_s1"}):
++            lam, mem = lams[arm], arms[arm]
++            for s in ("calib", ev):
++                def dfn(pos, s=s, lam=lam, mem=mem):
++                    Dk = kn5.dists(ids[s], pos)
++                    D = lam[0] * Dk + lam[1] * cch.dists(ids[s], blocks[s], pos, Dk)
++                    for j, m in enumerate(mem):
++                        D += lam[2 + j] * members[m].dists(ids[s], pos)
++                    return D
++                pcs = p_c[s] if s in p_c else cch.prob(ids[s], blocks[s], p_kn[s])[0]
++                cols = [p_kn[s], pcs] + [P_mem[m][s] for m in mem]
++                fast = mix.logprob(np.stack(cols, 1), lam)
++                r = stats.contract(dfn, fast, len(ids[s]), 1000, seed=11, true_ids=ids[s])
++                M["contract"][f"{arm}_{s}"] = r
++                run.print(f"contract {arm} {s}", r)
++        T["contract"] = time.time() - t
++
++        def system_logp(x, bl, arm):
++            pk = np.exp(kn5.logprob(x))
++            cols = [pk, cch.prob(x, bl, pk)[0]] + [np.exp(members[m].logprob(x)) for m in arms[arm]]
++            return mix.logprob(np.stack(cols, 1), lams[arm])
++        t = time.time()
++        rng = np.random.default_rng(5)
++        x0, b0 = ids[ev], blocks[ev]
++        ref = system_logp(x0, b0, best)
++        worst = 0.0
++        cuts = np.sort(rng.choice(np.arange(10, len(x0) - 10), size=10, replace=False))
++        for cut in cuts:
++            x1 = x0.copy()
++            x1[cut + 1:] = rng.integers(0, V, len(x1) - cut - 1)
++            x1[cut + 1:][x0[cut + 1:] == eos] = eos       # keep the sentence ends
++            worst = max(worst, float(np.abs(system_logp(x1, b0, best)[:cut + 1] - ref[:cut + 1]).max()))
++        M["future_change_test"] = {"arm": best, "cuts": cuts.tolist(), "max_abs_logp_change_before_cut": worst,
++                                   "pass": bool(worst == 0.0)}
++        M["shuffled_label_test"] = "the 10 random codes are the shuffled-label control (word labels permuted)"
++        T["future_change_test"] = time.time() - t
++        run.print("future-change test", M["future_change_test"])
++        failed = [k for k, v in M["contract"].items() if not v["pass"]]
++        if failed or not M["future_change_test"]["pass"]:
++            raise SystemExit(f"a check failed (contracts {failed}, future-change test "
++                             f"{M['future_change_test']['pass']}); no table and no metrics are written")
++
++        # ---- code reports (no verdict) ----
++        t = time.time()
++        counts = np.bincount(tr, minlength=V)
++        sl, ws = codeeval.load_simlex(), codeeval.load_ws353()
++        syn = codeeval.synonym_pairs(vocab, counts, 10 if not a.smoke else 1)
++        rep = {}
++        for n in ["exchange", "random_s1", "kmeans200", "predefined", "topic", "orgroups"] + rnd[1:]:
++            c = C[n]
++            rep[n] = {"classes": codes.n_classes(c), "simlex": codeeval.similarity(c, w2i, sl),
++                      "ws353": codeeval.similarity(c, w2i, ws), "sense_test": codeeval.sense_test(c, syn)}
++        rep["kind_topic"] = {"note": "exchange and topic codes together",
++                             "simlex": codeeval.similarity(np.concatenate([C["exchange"], C["topic"]], 1), w2i, sl),
++                             "ws353": codeeval.similarity(np.concatenate([C["exchange"], C["topic"]], 1), w2i, ws)}
++        for key in ("simlex", "ws353"):
++            rep["random_mean_" + key] = float(np.mean([rep[r][key]["spearman"] for r in rnd]))
++        rep["sense_test_synonym_pairs"] = len(syn)
++        growth = {"words": codeeval.ngram_growth(tr, ids[ev], eos, V + 1)}
++        for n in ("exchange", "random_s1", "kmeans200", "predefined", "topic", "orgroups"):
++            for l in range(C[n].shape[1]):
++                c = C[n][:, l]
++                growth[f"{n}:{l}"] = codeeval.ngram_growth(c[tr], c[ids[ev]], int(c[eos]), int(c.max()) + 2)
++        rep["ngram_growth"] = growth
++        M["code_reports"] = rep
++        T["code_reports"] = time.time() - t
++
++        # ---- per-token log probabilities, for a recompute without a second scoring ----
++        np.savez_compressed(run.path("logp.npz"), blocks=bv, unseen_bigram=unseen, duplicate=dup,
++                            train_seen_word=seen_word, kn5_alone=np.log(p_kn[ev]),
++                            **{f"arm__{k}": v for k, v in LP.items()})
++        M["logp_npz_sha256"] = sha256_file(run.path("logp.npz"))
++
++        # ---- table ----
++        run.print("")
++        run.print(f"{'arm':18s} {'members':>7s} {'ppl':>9s} {'bits':>8s} {'vs none':>8s} {'95% CI bits diff':>21s} "
++                  f"{'unseen ppl':>11s} {'vs none':>8s}   ({ev}, {len(ids[ev])} tokens incl. <eos>, V = {V}; "
++                  f"unseen-bigram positions {int(unseen.sum())})")
++        for arm in arms:
++            r = R[arm]
++            ci = r.get("bits_diff_vs_none")
++            cis = f"{ci['mean']:+.4f} [{ci['lo']:+.4f},{ci['hi']:+.4f}]" if ci else ""
++            run.print(f"{arm:18s} {len(arms[arm]):7d} {r['all']['ppl']:9.3f} {r['all']['bits_per_token']:8.4f} "
++                      f"{100 * r['rel_ppl_vs_none']:+7.2f}% {cis:>21s} {r['unseen_bigram']['ppl']:11.1f} "
++                      f"{100 * r['rel_ppl_vs_none_unseen']:+7.2f}%")
++        run.print("random codes:", {k: round(v, 3) if isinstance(v, float) else v for k, v in M["random"].items()
++                                     if k != "ppl_each"})
++        run.print("KN5 alone:", M["kn5_alone"])
++        run.print("reading:", M["reading"])
++        run.print("subsets (no verdict):", M["subsets_no_verdict"])
++        for n in ("exchange", "random_s1", "kmeans200", "predefined", "topic", "orgroups", "kind_topic"):
++            run.print(f"code {n}: simlex {rep[n]['simlex']}, ws353 {rep[n]['ws353']}")
++        M["timings_s"] = {k_: round(v, 2) for k_, v in T.items()}
++        run.print("timings", M["timings_s"])
++        run.finish(M)
++
++    try:
++        _body()
++    except SystemExit as e:
++        mark_stopped(run, e.code, progress["eval_scored"])
++        raise
++    except BaseException:
++        run.meta["eval_scored"] = progress["eval_scored"]
++        raise
+ 
+ 
+ if __name__ == "__main__":

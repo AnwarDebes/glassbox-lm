@@ -17,7 +17,7 @@ member.
 | combine.py | composite rules (Granmo 2023 normalization and variants), team error |
 | run.py | one job: one (arm, dataset, seed), or one member of it |
 | timing.py | one epoch of one member on the real train split (timing only) |
-| launch.py | the whole grid through cpu_slot.sh 1, dependencies respected |
+| launch.py | the whole grid through cpu_slot.sh 1, dependencies respected, each start after the CPU gate |
 | report.py | verdict from the run folders |
 
 ## Data
@@ -82,15 +82,18 @@ Smoke (small subsets, dev-test replaced by a validation slice, label must start 
 
     python -m tally.b6.run --arm member --dataset fmnist --seed 1 --member hog --label b6smoke --smoke 400 --epochs 2
 
-Timing (one member, one epoch on the full train split):
+Timing (one member, one epoch on the full train split; start it only when
+`../decision_layer/scripts/cpu_load.py 10` reads at most 4.5 cores):
 
-    nice -n 10 ../tm_language_model/scripts/cpu_slot.sh 1 -- python -m tally.b6.timing --dataset fmnist --member thresh10
+    nice -n 19 ../tm_language_model/scripts/cpu_slot.sh 1 -- python -m tally.b6.timing --dataset fmnist --member thresh10
 
 Tuning on validation, seed 1 (label must start with b6tune; --t-scale only here):
 
     python -m tally.b6.run --arm member --dataset fmnist --seed 1 --member hog --label b6tune_t1 --epochs 60 --eval-every 5
 
-The grid (after the registration is frozen):
+The grid (after the registration is frozen). The launcher starts each job at nice 19 with the
+thread pools capped at 1, and only after the CPU gate reads at most 4.5 cores (changed
+2026-10-25; the timing runs of 2026-10-15 ran at nice 10):
 
     python -m tally.b6.launch --label b6 --seeds 1-10 --registration registrations/<file>.md --dry-run
     python -m tally.b6.launch --label b6 --seeds 1-10 --registration registrations/<file>.md

@@ -1,0 +1,157 @@
+{
+ "comparison": {
+  "all_match": true,
+  "checks": {
+   "code_is_exchange": true,
+   "freeze_record_still_matches": true,
+   "gain_equal": true,
+   "kn5_alone_as_recorded": true,
+   "kn5_alone_equals_T0": true,
+   "logp_npz_as_recorded": true,
+   "margin_equal": true,
+   "ppl_within_1e-12": true,
+   "registered_label": true,
+   "rescore_within_1e-9": true,
+   "same_arms": true,
+   "same_code": true,
+   "same_kill": true,
+   "same_success": true
+  },
+  "max_rel_ppl_diff": 4.440892098500626e-16,
+  "run_interval": [
+   -0.1293634076316013,
+   -0.09714750517768753
+  ]
+ },
+ "freeze_record_differences": [],
+ "kn5_alone_bits": 7.176025782864251,
+ "logp_npz_sha256": "97b3a12ccb2d8ae4372324780c8a248c6882b9fada4cf88d442807d5ecf974cd",
+ "logp_npz_sha256_recorded": "97b3a12ccb2d8ae4372324780c8a248c6882b9fada4cf88d442807d5ecf974cd",
+ "recompute": {
+  "code": "exchange",
+  "code_minus_random_mean_bits": {
+   "blocks": 21,
+   "hi": -0.09811498016768445,
+   "lo": -0.1283301694409637,
+   "mean": -0.11390121245835164,
+   "n_boot": 10000,
+   "seed": 20261025
+  },
+  "gain": 0.07589658102702845,
+  "kill": false,
+  "margin": 0.07591415395590284,
+  "ppl": {
+   "exchange": 114.82078871056112,
+   "exchange_level0": 123.14993609449095,
+   "exchange_level1": 119.36207829065758,
+   "exchange_level2": 116.3362984942367,
+   "exchange_level3": 118.51051893370018,
+   "kind_topic": 114.82078873283355,
+   "kmeans200": 123.21542301060325,
+   "none": 124.25101601525341,
+   "orgroups": 124.25101296795636,
+   "predefined": 123.31270207847811,
+   "random_s1": 124.251090687797,
+   "random_s10": 124.25407607751225,
+   "random_s2": 124.2510148610937,
+   "random_s3": 124.25101194211712,
+   "random_s4": 124.26002136267404,
+   "random_s5": 124.25354267433126,
+   "random_s6": 124.25100922550224,
+   "random_s7": 124.25101505679817,
+   "random_s8": 124.26016537335278,
+   "random_s9": 124.25084115356023,
+   "topic": 124.19039476899368
+  },
+  "subsets_no_verdict": {
+   "duplicates_removed": {
+    "code_minus_none_bits": {
+     "blocks": 21,
+     "hi": -0.1224136176725249,
+     "lo": -0.1439014222128021,
+     "mean": -0.13325129281791154,
+     "n_boot": 10000,
+     "seed": 20261025
+    },
+    "code_minus_random_mean_bits": {
+     "blocks": 21,
+     "hi": -0.12243302745533606,
+     "lo": -0.14389719608733467,
+     "mean": -0.1332561874329591,
+     "n_boot": 10000,
+     "seed": 20261025
+    },
+    "tokens": 42587
+   },
+   "train_seen_word": {
+    "code_minus_none_bits": {
+     "blocks": 21,
+     "hi": -0.09842074772130548,
+     "lo": -0.1288980707010636,
+     "mean": -0.1143661061040376,
+     "n_boot": 10000,
+     "seed": 20261025
+    },
+    "code_minus_random_mean_bits": {
+     "blocks": 21,
+     "hi": -0.0984634640047566,
+     "lo": -0.12890829742213342,
+     "mean": -0.11439308891737253,
+     "n_boot": 10000,
+     "seed": 20261025
+    },
+    "tokens": 46348
+   },
+   "unseen_bigram": {
+    "code_minus_none_bits": {
+     "blocks": 21,
+     "hi": -0.5903931442881004,
+     "lo": -0.6658079869918437,
+     "mean": -0.6251503834095429,
+     "n_boot": 10000,
+     "seed": 20261025
+    },
+    "code_minus_random_mean_bits": {
+     "blocks": 21,
+     "hi": -0.5895483523026536,
+     "lo": -0.6649433682065001,
+     "mean": -0.6243000814540112,
+     "n_boot": 10000,
+     "seed": 20261025
+    },
+    "tokens": 9695
+   }
+  },
+  "success": true
+ },
+ "rescore": {
+  "max_abs_logp_diff": 0.0,
+  "per_arm": {
+   "exchange": 0.0,
+   "exchange_level0": 0.0,
+   "exchange_level1": 0.0,
+   "exchange_level2": 0.0,
+   "exchange_level3": 0.0,
+   "kind_topic": 0.0,
+   "kmeans200": 0.0,
+   "none": 0.0,
+   "orgroups": 0.0,
+   "predefined": 0.0,
+   "random_s1": 0.0,
+   "random_s10": 0.0,
+   "random_s2": 0.0,
+   "random_s3": 0.0,
+   "random_s4": 0.0,
+   "random_s5": 0.0,
+   "random_s6": 0.0,
+   "random_s7": 0.0,
+   "random_s8": 0.0,
+   "random_s9": 0.0,
+   "topic": 0.0
+  },
+  "within_1e-9": true
+ },
+ "run": "results/20261025T133912Z_a2_devtest_final",
+ "split": "devtest",
+ "utc": "2026-10-25T13:41:23Z"
+}

@@ -11,8 +11,10 @@ Token mapping, the same as the week-0 check of the reference toolkit (sentence m
 lmplz runs with its defaults: modified Kneser-Ney, interpolated unigrams, no pruning.
 
 The binaries are found in tools/kenlm/bin of the workspace (three levels above the study folder),
-or in the folder named by the environment variable KENLM_BIN.
+or in the folder named by the environment variable KENLM_BIN. info() (added 2026-10-25) records
+what can be read about them; KenLM has no version number and the binaries hold no version string.
 """
+import hashlib
 import math
 import os
 import re
@@ -24,6 +26,32 @@ STUDY = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.
 BIN = os.environ.get("KENLM_BIN") or os.path.join(
     os.path.dirname(os.path.dirname(os.path.dirname(STUDY))), "tools", "kenlm", "bin")
 UNK_SUB = "UNKPTB"
+
+
+def info():
+    """What can be read about the binaries in BIN: the folder, the sha256 of lmplz, build_binary
+    and query, and the maximum order that query prints with its usage text. The commit the
+    binaries were built from is not in them; when the README of the tools folder (two levels
+    above BIN) states a 40-digit commit, it is copied with the path it was read from."""
+    out = {"bin": BIN, "sha256": {}, "max_order": None, "source_commit_stated": None, "stated_in": None}
+    for b in ("lmplz", "build_binary", "query"):
+        p = os.path.join(BIN, b)
+        if os.path.exists(p):
+            with open(p, "rb") as f:
+                out["sha256"][b] = hashlib.sha256(f.read()).hexdigest()
+    try:
+        r = subprocess.run([os.path.join(BIN, "query")], capture_output=True, text=True, timeout=60)
+        m = re.search(r"compiled with maximum order (\d+)", r.stdout + r.stderr)
+        out["max_order"] = int(m.group(1)) if m else None
+    except (OSError, subprocess.SubprocessError):
+        pass
+    readme = os.path.join(os.path.dirname(os.path.dirname(BIN)), "README.md")
+    if os.path.exists(readme):
+        with open(readme, encoding="utf8") as f:
+            m = re.search(r"commit `([0-9a-f]{40})`", f.read())
+        if m:
+            out["source_commit_stated"], out["stated_in"] = m.group(1), readme
+    return out
 
 
 def write_text(stream, vocab, eos, path):
