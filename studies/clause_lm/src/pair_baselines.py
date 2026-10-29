@@ -30,14 +30,22 @@ def auc(score, y):
     return float((r[y == 1].sum() - n1 * (n1 + 1) / 2) / (n1 * n0))
 
 
-def ppmi_svd(M, dim=100):
+def ppmi_svd(M, dim=100, seed=0):
+    """Rows of the PPMI matrix of M, reduced to dim SVD dimensions and scaled to unit length.
+
+    The start vector of the ARPACK iteration comes from a generator seeded with `seed` (added 2026-10-25). Without
+    one, scipy.sparse.linalg.svds draws it from operating-system entropy, so every call gave slightly different
+    vectors and, through k-means, other word classes: four calls of the k-means groups of clause_lm.py gave 158, 156,
+    155 and 155 groups on 2026-10-25. The runs of 2026-10-02 used the unseeded call (their scipy version is not
+    recorded), so their numbers are one draw that a rerun cannot repeat."""
     M = M.astype(np.float64)
     tot = M.sum()
     pr, pc = M.sum(1, keepdims=True) / tot, M.sum(0, keepdims=True) / tot
     with np.errstate(divide="ignore", invalid="ignore"):
         pmi = np.log((M / tot) / (pr * pc))
     P = np.where(np.isfinite(pmi) & (pmi > 0), pmi, 0.0)
-    U, S, _ = svds(csr_matrix(P), k=dim)
+    v0 = np.random.default_rng(seed).standard_normal(min(P.shape))
+    U, S, _ = svds(csr_matrix(P), k=dim, v0=v0)
     E = U * np.sqrt(S)
     return E / (np.linalg.norm(E, axis=1, keepdims=True) + 1e-12)
 
@@ -50,7 +58,7 @@ def main(K=1000):
     top = d["top"].astype(np.int64)
     remap = np.full(V, -1); remap[top] = np.arange(K)
     run = Run(f"pair_baselines_K{K}", {"K": K, "context_vocab": "top 2000 words", "svd_dim": 100,
-                                       "kmeans_k": [50, 100, 200], "sim_neighbours": 20},
+                                       "kmeans_k": [50, 100, 200], "sim_neighbours": 20, "svd_seed": 0},
               data_files=[os.path.join(ROOT, "data", f"ptb_pairs_K{K}.npz"), ptb.path("train")])
     Vu, Vw, VY, Vseen = d["Vu"].astype(np.int64), d["Vw"].astype(np.int64), d["VY"].astype(int), d["Vseen"]
     uu = ~Vseen

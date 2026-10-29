@@ -13,7 +13,7 @@ Data hashes (data_full.json and the lexical .npz) go to data_hashes.json / metri
 
 Usage: .venv-cdllm/bin/python src/m5_setup.py [--label-order sorted]
 """
-import argparse, json, os, shutil, subprocess, sys
+import argparse, json, os, shutil, subprocess, sys, time
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from runlog import Run, sha256  # noqa: E402
@@ -34,6 +34,22 @@ def sh(cmd, env=None, cwd=None):
     return p.returncode, p.stdout, p.stderr
 
 
+def file_time_utc(path):
+    """Modification time of a file in UTC, to the second."""
+    return time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(os.path.getmtime(path)))
+
+
+def setup_config(label_order, emb_dir):
+    """The config of the setup record. The download time is read from the data file on every run (its modification
+    time, which is the download time while the file is the one curl wrote); until 2026-10-25 a fixed string was
+    written here, which a rerun after a new download would have recorded as false."""
+    return {"purpose": "M5 step 1 setup record", "prereg": "docs/prereg_M5_step1.md",
+            "work_copy": WORK, "reference_snapshot": REF, "venv_python": PY,
+            "data_url": URL, "data_path": DATA,
+            "data_downloaded_utc": f"{file_time_utc(DATA)} (modification time of the file; downloaded with curl -fsSL)",
+            "label_order": label_order, "emb_dir": emb_dir, "run_env": RUN_ENV, "nice": 19}
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--label-order", default="sorted", choices=["sorted", "first_appearance"])
@@ -41,10 +57,7 @@ def main():
     emb_dir = f"{LL}/work/m5/emb_{a.label_order}"
     env = {**os.environ, **RUN_ENV, "PYTHONPATH": f"{WORK}/src", "CDLLM_LABEL_ORDER": a.label_order}
 
-    config = {"purpose": "M5 step 1 setup record", "prereg": "docs/prereg_M5_step1.md",
-              "work_copy": WORK, "reference_snapshot": REF, "venv_python": PY,
-              "data_url": URL, "data_path": DATA, "data_downloaded_utc": "2026-10-02T19:49:03Z (curl -fsSL)",
-              "label_order": a.label_order, "emb_dir": emb_dir, "run_env": RUN_ENV, "nice": 19}
+    config = setup_config(a.label_order, emb_dir)
     run = Run(f"m5_setup_{a.label_order}", config, data_files=[DATA], script=__file__)
     d = run.dir
     m = {"data_sha256": sha256(DATA), "data_bytes": os.path.getsize(DATA)}

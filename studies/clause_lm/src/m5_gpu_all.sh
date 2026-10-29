@@ -1,4 +1,21 @@
 #!/usr/bin/env bash
+# RETIRED on 2026-10-25 (finish pass): this script exits 3 at once and starts nothing. The text below the exit is
+# kept as the record of the launcher written on 2026-10-02.
+# - Its wait can never end in the published tree: it reads ../hierarchical_tm/queue/{jobs.txt,started.txt,queue.log},
+#   local queue state that was not moved with the reorganisation of 2026-10-11, so thesis_idle() fails and the
+#   script gave up after MAX_WAIT_MIN (exit 3).
+# - The work it was written for is complete: the amended Gate 0, the 11-run grid and the report ran on 2026-10-14
+#   (docs/results.md). On the machine that ran them, src/m5_run.py refuses to run any of those 12 settings again
+#   (their metrics.json files are in work/m5/runs).
+# - The 2026-10-14 runs were started by research/roadmap/run_gate0.sh of the project folder, outside this repository
+#   (sha256 32b61c95b32f9a7177f50e11cd0ca72dfaf435a7baf1feb0d743b102af7fcaa8; last modified at 22:15:14Z, after
+#   the first attempt, whose version of the file was not kept). It runs the steps below without the wait and
+#   without the 10-minute grace period, puts a python3 link first on PATH for scripts/mem_guard.py, and starts
+#   Gate 0 with --after-crash. Its output: research/roadmap/gate0.attempt1_crash.out (the first attempt, exit 127)
+#   and research/roadmap/gate0.out.
+echo "m5_gpu_all.sh: retired on 2026-10-25; M5 step 1 is complete (see the header of this file)" >&2
+exit 3
+
 # M5 step 1 on the GPU (docs/prereg_M5_step1.md, amendment 2026-10-02 21:11 UTC).
 # Thesis first: waits until the hierarchical_tm queue is EMPTY (no unstarted job, no thesis process,
 # last queue.log line "QUEUE EMPTY"/"MPS daemon stopped"), then 10 more idle minutes, then:

@@ -11,6 +11,10 @@ Groups come from either:
   --groups kmeans:K   statistical word classes (k-means on right-context PPMI-SVD vectors of
                       the top-1000 words). This is the class-based baseline the TM must beat.
   --groups PATH       a pair-TM run's groups.json (the G1 lists of its positive clauses).
+Both kinds of groups pass the same filter, keep_groups(): at least MIN_GROUP_WORDS = 2 words. Until 2026-10-25 a
+pair-TM group of a single word was admitted while a k-means group needed two; the k-means run of 2026-10-02 (the M2
+bar) used the filter that both arms now share. A pair-TM clause whose u-side has an empty OR-option fires for every
+word, so it is no word group and is left out before the filter.
 Reported: perplexity and top-1/top-5 for KN3 alone vs KN3 + clauses, overall and by context
 type (trigram seen / trigram unseen).
 """
@@ -24,6 +28,12 @@ from runlog import Run
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LAMS = [0.0, 0.02, 0.05, 0.1, 0.15, 0.2, 0.3, 0.4, 0.5]
+MIN_GROUP_WORDS = 2
+
+
+def keep_groups(groups):
+    """The one group filter of both arms: groups (lists of word ids) with at least MIN_GROUP_WORDS words."""
+    return [list(g) for g in groups if len(g) >= MIN_GROUP_WORDS]
 
 
 def kmeans_groups(K, tr, V, top, k):
@@ -36,7 +46,14 @@ def kmeans_groups(K, tr, V, top, k):
     m = (remap[a] >= 0) & (cmap[b] >= 0)
     R = np.zeros((len(top), 2000)); np.add.at(R, (remap[a[m]], cmap[b[m]]), 1)
     lab = KMeans(k, n_init=4, random_state=0).fit_predict(ppmi_svd(R))
-    return [top[lab == c].tolist() for c in range(k) if (lab == c).sum() >= 2]
+    return keep_groups(top[lab == c].tolist() for c in range(k))
+
+
+def tm_groups(gj, top):
+    """The G1 word groups of a pair-TM groups.json: clauses with an empty u-side OR-option are left out (they fire
+    for every word), then keep_groups()."""
+    return keep_groups(top[np.asarray(g["G1_ids"], dtype=np.int64)].tolist()
+                       for g in gj if g.get("empty_options_G1", 0) == 0)
 
 
 def main():
@@ -52,10 +69,9 @@ def main():
     if a.groups.startswith("kmeans:"):
         groups = kmeans_groups(a.K, tr, V, top, int(a.groups.split(":")[1]))
     else:
-        gj = json.load(open(a.groups))
-        groups = [top[np.array(g["G1_ids"])].tolist() for g in gj if len(g["G1_ids"]) >= 1 and g.get("empty_options_G1", 0) == 0]
+        groups = tm_groups(json.load(open(a.groups)), top)
     run = Run(f"clause_lm_{a.groups.replace(':', '').replace('/', '_')[-40:]}", {**vars(a), "n_groups": len(groups),
-              "lams": LAMS, "crossfit": "2-fold by sentence parity"},
+              "min_group_words": MIN_GROUP_WORDS, "svd_seed": 0, "lams": LAMS, "crossfit": "2-fold by sentence parity"},
               data_files=[ptb.path("train"), ptb.path("valid")])
     # group vote distributions
     stream = np.concatenate([[eos], tr])

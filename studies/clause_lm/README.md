@@ -22,6 +22,8 @@ Only M5 step 1 has a registration, [docs/prereg_M5_step1.md](docs/prereg_M5_step
 
 Running, as preparation. The runs of the study date from 2026-10-02 and 2026-10-14. The n-gram baselines, the pair data, the statistical pair baselines and the clause evaluator each ran once; the evaluator ran with k-means word groups, and no Tsetlin Machine took part in it. In M5 step 1, Gate 0 of the registration, the reproduction of the lexical router, was not met in its one completed run with the numba CPU backend, and the cause is not confirmed. A post hoc retry with a different label order was stopped without a score. The registration was then amended, after the Gate 0 result was known, to repeat Gate 0 with the torch backend on a GPU. That amended Gate 0 ran on 2026-10-14 and was met, and the registered grid of M5 step 1 followed; by the registered rules its verdict is negative. The pair model of M1 was written and not run. M3, M4 and M5 step 2 have no code in the tree and no runs. No Tsetlin Machine has been trained on Penn Treebank in this study.
 
+On 2026-10-25 the code was repaired and tested: the GPU launcher names its interpreters, the pair model scores the same validation pairs as its baselines and reports the pass chosen on a tune half apart from the last pass, both kinds of word groups pass one filter, the SVD of the statistical baselines starts from a seeded vector, and the setup record reads the download time from the file. The study now has tests (section [Tests](#tests)). A dev plan to find the cause of the failed Gate 0 on the validation split ([docs/plan_gate0_cause_2026-10-25.md](docs/plan_gate0_cause_2026-10-25.md)) was frozen and run the same day. With the negative-class erosion removed from the torch kernel, the three seeds reached validation accuracies of 0.7717 to 0.7753 with structurally healthy models; by the plan's rules that is outcome row 2, with no cause statement ([results](docs/results.md#gate-0-cause-check-of-2026-10-25)). The expectation written before the runs (a degenerate model near 0.55) did not come true. M1, M2, M3, M4 and M5 step 2 were not run in that pass; the [results page](docs/results.md#status-after-the-finish-pass-of-2026-10-25) gives the cost and the chance of each.
+
 ## What was found
 
 The results so far are bars for later work, a reproduction that met its gate only under a post hoc amendment, and one negative registered result on the router. None of them is a result about a Tsetlin Machine language model.
@@ -38,9 +40,9 @@ The study is not self-contained. It reaches data, scripts and queue files of the
 
 The Penn Treebank text comes from the tm_language_model study: `src/ptb.py` reads `../tm_language_model/data/ptb/raw/<split>/text.utf8`, and every Penn Treebank script of this study loads its data through that module.
 
-GPU jobs start through scripts of the tm_language_model study. `src/launch_gpu.sh` changes into `../tm_language_model`, sources its `env/env.sh`, and starts the job through its `scripts/mem_guard.py` and `scripts/gpu_run.sh exclusive`, with the interpreter of its `.venv-htm` environment (lock file `../tm_language_model/env/htm.lock`). `src/m5_run.py` puts the same `scripts/mem_guard.py` and `scripts/gpu_run.sh exclusive` in front of its training command when it is called with `--backend torch_gpu`, with the interpreter of this study's `.venv-cdllm-gpu` environment and without sourcing `env/env.sh`, and `src/m5_gpu_all.sh` takes the GPU lock through the same `gpu_run.sh`. `src/pair_tm.py` imports the package PyHierarchicalTsetlinMachineCUDA, which that environment provides.
+GPU jobs start through scripts of the tm_language_model study. `src/launch_gpu.sh` changes into `../tm_language_model`, sources its `env/env.sh`, and starts the job through its `scripts/mem_guard.py` and `scripts/gpu_run.sh exclusive`. Since 2026-10-25 both interpreters are explicit: the job runs under `CLM_JOB_PYTHON`, by default `../decision_layer/.venv-htm/bin/python`, and the memory guard under `CLM_GUARD_PYTHON` (default: the job's interpreter), because the `.venv-htm` of `../tm_language_model` that the script first named does not exist, and the guard, started by its `#!/usr/bin/env python3` line, ended with exit status 127 where no `python3` is on the search path. `CLM_DRY_RUN=1` prints the command without starting it. The whole chain runs at nice 19, and the thread pools of OpenMP, OpenBLAS, MKL, numexpr, numba and rayon are set to 2 after `env/env.sh`, which only caps them at 6. `src/m5_run.py` puts the same `scripts/mem_guard.py` and `scripts/gpu_run.sh exclusive` in front of its training command when it is called with `--backend torch_gpu`, with the interpreter of this study's `.venv-cdllm-gpu` environment and without sourcing `env/env.sh`; it still starts the guard by its first line, so that path needs a `python3` first on the search path. `src/pair_tm.py` imports the package PyHierarchicalTsetlinMachineCUDA, which `../decision_layer/.venv-htm` provides.
 
-`src/m5_gpu_all.sh` waits on queue files of the hierarchical_tm study. It reads `../hierarchical_tm/queue/jobs.txt`, `started.txt` and `queue.log`, which are local queue state and are not distributed, checks that no process with the name of one of that study's drivers or queue runners is alive, and requires the last line of `queue.log` to contain `QUEUE EMPTY` or `MPS daemon stopped`. The runs of 2026-10-14 were started by a launcher that runs the same steps without this wait, because the hierarchical_tm study had finished and the wait could not end ([results page](docs/results.md#amended-gate-0-and-the-grid)).
+`src/m5_gpu_all.sh` was retired on 2026-10-25: it now exits with status 3 at once and starts nothing, and its text is kept as the record of the launcher written on 2026-10-02. It waited on queue files of the hierarchical_tm study (`../hierarchical_tm/queue/jobs.txt`, `started.txt` and `queue.log`, local queue state that is not distributed), so its wait could not end once that study had finished. The runs of 2026-10-14 were started by `research/roadmap/run_gate0.sh` of the project folder, outside this repository, which runs the same steps without the wait and puts a `python3` link first on the search path; its header in `src/m5_gpu_all.sh` gives its SHA-256 and its output files ([results page](docs/results.md#amended-gate-0-and-the-grid)).
 
 These launchers describe one workstation with a single GPU that the studies share through a lock. On another machine they document how the jobs were ordered; they are not a portable tool.
 
@@ -52,6 +54,9 @@ clause_lm/
   docs/
     prereg_M5_step1.md      registration of M5 step 1, with its amendment
     results.md              results page: statuses, run folders, numbers
+    data.md                 data card: datasets, derived files, hashes, known problems
+    plan_gate0_cause_2026-10-25.md   dev plan, frozen and run 2026-10-25: the cause of the failed Gate 0 (validation only; outcome row 2)
+    plan_gate0_cause_2026-10-25.frozen.json   its freeze record
   src/
     ptb.py                  Penn Treebank loader (reads the tm_language_model data)
     runlog.py               run logging (study rule 4)
@@ -60,24 +65,29 @@ clause_lm/
     clause_lm.py            evaluator: clause votes on top of the trigram model (M2)
     pairs_data.py           builds the pair data (M1)
     pair_baselines.py       statistical baselines for the pair task (M1)
-    pair_tm.py              pair model, a hierarchical Tsetlin Machine (M1); not run
+    pair_tm.py              pair model, a hierarchical Tsetlin Machine (M1); not run on Penn Treebank
     m5_setup.py             M5 step 1: setup record
     m5_run.py               M5 step 1: one training run inside a run folder
     m5_setup_torch.py       M5 step 1: setup and timing probe, torch backend on the CPU
     m5_grid.sh              M5 step 1: the grid after Gate 0
     m5_report.py            M5 step 1: aggregation and the registered rules
-    m5_gpu_all.sh           M5 step 1: launcher for the amended Gate 0 and the grid on a GPU
+    m5_gpu_all.sh           M5 step 1: launcher for the amended Gate 0 and the grid on a GPU; retired
+    gate0_cause.py          Gate 0 cause check: kernel variants, validation split only (frozen plan)
+    gate0_cause_report.py   the rules of that plan, applied to its run folders (pins, freeze time, outcome table)
     launch_gpu.sh           wrapper for one GPU job (study rule 3)
     pdftext.py              PDF text extractor, used to check quotations against their sources
     clause_driven_llm/
       cdllm_data__init__.py           loader added to the upstream package
       train_controller.state1.patch   change to the upstream training script, first recorded state
       train_controller.patch          change to the upstream training script, second recorded state
+  scripts/
+    freeze.py               freezes a plan: <plan>.frozen.json with the time, the plan's and the pinned files' SHA-256
+  tests/                    plain-script tests (section Tests); toyutil.py holds their shared helpers
 ```
 
 The code also reads and writes four local folders inside the study folder: `results/` (run folders), `data/` (the pair data), `work/` (the work copy of Clause-Driven-LLM and the outputs of M5) and `references/` (the reference copy of Clause-Driven-LLM). The repository ignores all four, and none is distributed.
 
-`src/m5_run.py` as published is a later revision than the one that produced the two Gate 0 run folders of 2026-10-02: the backends `torch` and `torch_gpu` were added after those runs, as the dates in its docstring show, and the first paragraph of the docstring still describes the earlier state. The copies of the script inside those two run folders are the earlier revision. The copies inside the run folders of 2026-10-14 are byte identical to the published `src/m5_run.py`, and the copy of `src/m5_report.py` in the report run of that day to the published file. No other file in `src/` imports `src/pdftext.py`.
+`src/m5_run.py` as published is a later revision than the one that produced the two Gate 0 run folders of 2026-10-02: the backends `torch` and `torch_gpu` were added after those runs, as the dates in its docstring show. The copies of the script inside those two run folders are the earlier revision. The copies inside the run folders of 2026-10-14 have the code of the published `src/m5_run.py`: on 2026-10-25 the stale first paragraph of its docstring was rewritten and a note on the memory guard added, so the file's SHA-256 changed from `23d53448afcb76c675c4dcf5600b3508edf7e6f0fe6a9a9fe4109de78d73f6b3` (the value of the 13 copies) to `35b7098e22015d8793b35864de5a6b999061882e95b7c6e4977fd2eaf682b494`, while its code, compared as parsed syntax without docstrings, is unchanged (`tests/test_m5_files_unchanged.py`). The copy of `src/m5_report.py` in the report run of that day and the copies of `src/runlog.py` are byte identical to the published files. No other file in `src/` imports `src/pdftext.py`.
 
 ## Upstream dependency: Clause-Driven-LLM
 
@@ -137,7 +147,7 @@ Each freeze also lists Clause-Driven-LLM itself, as an editable install of the w
 
 Freeze C lists in addition the CUDA runtime packages nvidia-cublas-cu12 12.4.5.8, nvidia-cuda-cupti-cu12 12.4.127, nvidia-cuda-nvrtc-cu12 12.4.127, nvidia-cuda-runtime-cu12 12.4.127, nvidia-cudnn-cu12 9.1.0.70, nvidia-cufft-cu12 11.2.1.3, nvidia-curand-cu12 10.3.5.147, nvidia-cusolver-cu12 11.6.1.9, nvidia-cusparse-cu12 12.3.1.170, nvidia-cusparselt-cu12 0.6.2, nvidia-nccl-cu12 2.21.5, nvidia-nvjitlink-cu12 12.4.127 and nvidia-nvtx-cu12 12.4.127.
 
-`src/launch_gpu.sh` and `src/pair_tm.py` belong to a different environment, `.venv-htm` of the tm_language_model study, whose versions are in `../tm_language_model/env/htm.lock`.
+`src/launch_gpu.sh` and `src/pair_tm.py` were written for `.venv-htm` of the tm_language_model study, whose versions are in `../tm_language_model/env/htm.lock`. That environment does not exist in the published tree: it was not moved with the reorganisation of 2026-10-11. Since 2026-10-25 `src/launch_gpu.sh` uses `../decision_layer/.venv-htm` by default, read-only (nothing is installed into it); it holds PyHierarchicalTsetlinMachineCUDA 0.3.2 at commit `5b4a223`, the commit that `src/pair_tm.py` names, and its package list is `../decision_layer/env_htm_freeze.txt`. `../tm_language_model/env/htm_install.sh` builds the original environment from the lock file and refuses to overwrite one that exists. `.venv-tm` of tm_language_model holds the same package at another commit (0.3.1, `c85ca4e`) and is not the environment of this study. `src/gate0_cause.py` runs in `.venv-cdllm-gpu` (torch variants) or `.venv-cdllm` (numba variants).
 
 ## Study rules
 
@@ -167,8 +177,30 @@ The scripts of M5 step 1 read three more local folders: the reference copy of Cl
 
 ## What a clone contains
 
-A clone holds the code, the registration and the results page. It does not hold the 23 run folders, the Penn Treebank text, the pair data, the CLINC150 file, the copies of Clause-Driven-LLM, the virtual environments or the queue files of the hierarchical_tm study. No number on the results page can therefore be checked from a clone alone; the run ids can be compared with [../../docs/run-index.md](../../docs/run-index.md).
+A clone holds the code, the registration and the results page. It does not hold the 29 run folders, the Penn Treebank text, the pair data, the CLINC150 file, the copies of Clause-Driven-LLM, the virtual environments or the queue files of the hierarchical_tm study. No number on the results page can therefore be checked from a clone alone; the run ids can be compared with [../../docs/run-index.md](../../docs/run-index.md).
 
-Recomputing the Penn Treebank numbers needs the Penn Treebank text at the place `src/ptb.py` expects. Recomputing the Gate 0 run needs the two copies of Clause-Driven-LLM prepared as described above, the CLINC150 file, and environment A. The amended Gate 0 and the grid need in addition environment C, a GPU, and a `python3` first on the search path, which the memory guard of tm_language_model starts under; without it the first attempt of 2026-10-14 ended at its start. Whether such a rerun gives the recorded numbers has not been tested. Two known reasons for a difference are that the published `src/m5_run.py` is a later revision than the one that ran, and that the feature vocabulary has ties at its cut-off, which the setup script notes can resolve differently across numpy versions and CPUs.
+Recomputing the Penn Treebank numbers needs the Penn Treebank text at the place `src/ptb.py` expects. Recomputing the Gate 0 run needs the two copies of Clause-Driven-LLM prepared as described above, the CLINC150 file, and environment A. The amended Gate 0 and the grid need in addition environment C, a GPU, and a `python3` first on the search path, which the memory guard of tm_language_model starts under when `src/m5_run.py` calls it; without it the first attempt of 2026-10-14 ended at its start. Whether such a rerun gives the recorded numbers has not been tested. Two known reasons for a difference are that the published `src/m5_run.py` is a later revision than the one that ran, and that the feature vocabulary has ties at its cut-off, which the setup script notes can resolve differently across numpy versions and CPUs.
 
-The study has no tests.
+## Tests
+
+The tests are plain scripts in `tests/`, added on 2026-10-25. Each says in its docstring how it is run; all run on the CPU with `CUDA_VISIBLE_DEVICES=` set, from the study folder, with `.venv-cdllm/bin/python` (the Gate 0 driver test with `.venv-cdllm-gpu/bin/python`). Run folders of the tests go to temporary folders, never into `results/`, and no test reads the test split of Penn Treebank or of CLINC150.
+
+| Test | What it checks |
+|---|---|
+| `tests/test_kn.py` | `src/kn.py` against a dictionary-based Kneser-Ney trigram on a toy corpus: every distribution sums to 1, the walk visits every position once, and `src/ngram_baselines.py` gives the same perplexity |
+| `tests/test_ptb.py` | `src/ptb.py` refuses the test split before it opens a file, and reads train and valid as documented |
+| `tests/test_runlog.py` | `src/runlog.py`: the run folder, its files and the data hashes |
+| `tests/test_pairs_data.py` | `src/pairs_data.py` on a toy corpus against an independent computation of positives, negatives and seen flags |
+| `tests/test_clause_lm.py` | `src/clause_lm.py` on a toy corpus: the trigram model alone when no group is given, and one group filter for both kinds of groups |
+| `tests/test_clause_lm_ptb_valid.py` | `src/clause_lm.py` on Penn Treebank train and validation: the recorded trigram numbers of 2026-10-02 exactly, and the same k-means groups in two calls and from the earlier version of the script |
+| `tests/test_ppmi_svd.py` | the PPMI-SVD vectors of `src/pair_baselines.py` are the same in two calls |
+| `tests/test_pair_tm.py` | the helpers of `src/pair_tm.py`, and `main()` end to end against a stand-in for the GPU package |
+| `tests/test_launch_gpu.py` | `src/launch_gpu.sh`: arguments, interpreters, nice 19, the thread pools at 2 and the launch chain, with a stub in place of the GPU lock |
+| `tests/test_m5_gpu_all_retired.py` | `src/m5_gpu_all.sh` exits at once and starts nothing |
+| `tests/test_m5_setup_time.py` | `src/m5_setup.py` reads the download time from the data file |
+| `tests/test_m5_files_unchanged.py` | the code of `src/m5_run.py`, `src/m5_report.py` and `src/runlog.py` equals the copies in the run folders of 2026-10-14 |
+| `tests/test_gate0_cause.py` | `src/gate0_cause.py`: both kernel variants on toy problems, the statistics of the saved Gate 0 models, that only training and validation arrays are read, the call counts of the variant's function, the driver's refusals, and that the checker's pinned values equal the files and environments they pin |
+| `tests/test_gate0_cause_report.py` | `src/gate0_cause_report.py`: the rules, every refusal, the rerun rule and every row of the outcome table of the Gate 0 cause plan, on made-up run folders |
+| `tests/test_freeze.py` | `scripts/freeze.py`: the freeze record, the check of the plan's pins, `--check`, and every refusal |
+
+Five tests use local files that a clone does not hold: `tests/test_clause_lm_ptb_valid.py` (the Penn Treebank text, the pair data and a run folder), `tests/test_m5_setup_time.py` and `tests/test_m5_files_unchanged.py` (run folders, the CLINC150 file), `tests/test_gate0_cause.py` (the work copy of Clause-Driven-LLM, the saved models and the feature file) and `tests/test_launch_gpu.py` (`../decision_layer/.venv-htm`). Without them they print what is missing and skip the parts that need it. The results page lists the test runs of 2026-10-25.

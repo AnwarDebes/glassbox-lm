@@ -1,10 +1,14 @@
 """Run ONE M5 step 1 training (docs/prereg_M5_step1.md) inside a runlog Run.
 
-Wraps work/Clause-Driven-LLM/scripts/train_controller.py (val-accuracy patch only)
-with the locked settings, CPU only: CUDA_VISIBLE_DEVICES="", --backend numba,
-nice -n 19, NUMBA/OMP/MKL/OPENBLAS threads = 2. Records config, data hashes
+Wraps work/Clause-Driven-LLM/scripts/train_controller.py as patched in the work copy
+(the validation-accuracy lines; for --backend torch and torch_gpu also the --device
+argument of the second patch) with the locked settings. The default backend is numba
+on the CPU: CUDA_VISIBLE_DEVICES="", --backend numba, nice -n 19, NUMBA/OMP/MKL/OPENBLAS
+threads = 2; the torch backends are described below. Records config, data hashes
 (data_full.json + the lexical .npz), stdout/stderr, the run's metrics.json and
 wall time in results/<UTC>_m5_.../.
+(This paragraph was rewritten on 2026-10-25; the copies of this file in the run folders
+of 2026-10-14 hold the earlier wording. The code is unchanged.)
 
 No reruns: refuses if the run's out-dir already exists, unless --after-crash
 is given (a rerun after a crash).
@@ -16,6 +20,9 @@ Usage: .venv-cdllm/bin/python src/m5_run.py --s 8 --seed 42 [--gate0] [--label-o
 the recorded Clause-Driven-LLM results used (upstream paper/report.tex:303). It uses .venv-cdllm-gpu (torch 2.6.0+cu124, sm_70 built)
 and the tm_language_model chain timeout 15m -> mem_guard 12 GiB -> gpu_run.sh exclusive -> nice 19. It shares the GPU with the
 hierarchical_tm study and is started only when the queue of that study is empty.
+scripts/mem_guard.py is started by its '#!/usr/bin/env python3' line, so torch_gpu needs a python3 first on PATH
+(the runs of 2026-10-14 put a link there; src/m5_gpu_all.sh names the launcher). The code of this file was left as
+it ran; src/launch_gpu.sh, which other GPU jobs use, names its interpreters since 2026-10-25.
 """
 import argparse, json, os, platform, shutil, subprocess, sys, time
 
