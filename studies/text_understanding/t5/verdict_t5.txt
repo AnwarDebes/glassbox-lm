@@ -1,0 +1,89 @@
+REGISTRATION_T5.md verdict, VAL accuracy in points, mean of seeds (1, 2); 42 rows from studies/text_understanding/t5/results_t5.jsonl
+
+== clinc150 (test 2 flat potion existsT val, seeds 1-2: 94.63)
+  wordsV         82.62 (seeds 82.57 / 82.67; best epochs [40, 40]); bits 4564, on per val sentence 8.24, val tokens without code 0.030, val sentences without code 10; vs test 2 existsT -12.01
+  potionV_K512   93.12 (seeds 93.10 / 93.13; best epochs [40, 40]); bits 3542, on per val sentence 1788.86, val tokens without code 0.030, val sentences without code 10; vs test 2 existsT -1.51
+  ppmiV_K512     86.06 (seeds 85.80 / 86.33; best epochs [36, 36]); bits 3101, on per val sentence 1753.47, val tokens without code 0.030, val sentences without code 10; vs test 2 existsT -8.56
+  ppmiV_K86      66.15 (seeds 66.00 / 66.30; best epochs [34, 40]); bits 511, on per val sentence 292.81, val tokens without code 0.030, val sentences without code 10; vs test 2 existsT -28.48
+  potionV_K86    89.70 (seeds 89.83 / 89.57; best epochs [40, 38]); bits 595, on per val sentence 301.25, val tokens without code 0.030, val sentences without code 10; vs test 2 existsT -4.93
+  R1             45.15 (seeds 45.30 / 45.00; best epochs [38, 38]); bits 600, on per val sentence 538.41, val tokens without code 0.057, val sentences without code 13; vs test 2 existsT -49.48
+  R3a            85.62 (seeds 85.57 / 85.67; best epochs [40, 36]); bits 3476, on per val sentence 1814.94, val tokens without code 0.057, val sentences without code 13; vs test 2 existsT -9.01
+
+== banking77 (test 2 flat potion existsT val, seeds 1-2: 91.53)
+  wordsV         79.91 (seeds 79.66 / 80.16; best epochs [38, 40]); bits 4564, on per val sentence 12.72, val tokens without code 0.008, val sentences without code 0; vs test 2 existsT -11.62
+  potionV_K512   91.03 (seeds 91.33 / 90.73; best epochs [38, 36]); bits 3364, on per val sentence 1754.86, val tokens without code 0.008, val sentences without code 0; vs test 2 existsT -0.50
+  ppmiV_K512     84.50 (seeds 84.45 / 84.55; best epochs [38, 38]); bits 2615, on per val sentence 1480.64, val tokens without code 0.008, val sentences without code 0; vs test 2 existsT -7.03
+  ppmiV_K86      71.73 (seeds 71.98 / 71.49; best epochs [40, 40]); bits 410, on per val sentence 234.65, val tokens without code 0.008, val sentences without code 0; vs test 2 existsT -19.80
+  potionV_K86    87.04 (seeds 87.14 / 86.94; best epochs [32, 20]); bits 569, on per val sentence 296.97, val tokens without code 0.008, val sentences without code 0; vs test 2 existsT -4.49
+  R1             31.10 (seeds 30.51 / 31.70; best epochs [38, 38]); bits 600, on per val sentence 578.11, val tokens without code 0.011, val sentences without code 0; vs test 2 existsT -60.43
+  R3a            85.19 (seeds 84.75 / 85.64; best epochs [36, 38]); bits 3311, on per val sentence 1759.19, val tokens without code 0.011, val sentences without code 0; vs test 2 existsT -6.34
+
+== hwu64 (test 2 flat potion existsT val, seeds 1-2: 91.27)
+  wordsV         79.98 (seeds 79.65 / 80.30; best epochs [40, 38]); bits 4564, on per val sentence 6.49, val tokens without code 0.035, val sentences without code 2; vs test 2 existsT -11.29
+  potionV_K512   89.78 (seeds 89.50 / 90.06; best epochs [40, 36]); bits 3576, on per val sentence 1785.72, val tokens without code 0.035, val sentences without code 2; vs test 2 existsT -1.48
+  ppmiV_K512     84.58 (seeds 84.76 / 84.39; best epochs [34, 36]); bits 3466, on per val sentence 1814.55, val tokens without code 0.035, val sentences without code 2; vs test 2 existsT -6.69
+  ppmiV_K86      75.61 (seeds 75.84 / 75.37; best epochs [40, 40]); bits 581, on per val sentence 307.82, val tokens without code 0.035, val sentences without code 2; vs test 2 existsT -15.66
+  potionV_K86    87.69 (seeds 87.55 / 87.83; best epochs [38, 24]); bits 601, on per val sentence 299.45, val tokens without code 0.035, val sentences without code 2; vs test 2 existsT -3.58
+  R1             48.00 (seeds 46.19 / 49.81; best epochs [34, 40]); bits 600, on per val sentence 477.4, val tokens without code 0.077, val sentences without code 5; vs test 2 existsT -43.27
+  R3a            81.41 (seeds 81.60 / 81.23; best epochs [40, 40]); bits 3540, on per val sentence 1811.95, val tokens without code 0.077, val sentences without code 5; vs test 2 existsT -9.85
+
+== bars (G = potionV_K512 - wordsV)
+  R1 clinc150: R1 - wordsV -37.47 (G 10.50: -357.0% of G); R1 - ppmiV_K86 -21.00 -> gap 25% no, gap 50% no, count +0.5 no
+  R1 banking77: R1 - wordsV -48.80 (G 11.12: -438.9% of G); R1 - ppmiV_K86 -40.63 -> gap 25% no, gap 50% no, count +0.5 no
+  R1 hwu64: R1 - wordsV -31.98 (G 9.80: -326.1% of G); R1 - ppmiV_K86 -27.61 -> gap 25% no, gap 50% no, count +0.5 no
+  H5a (R1): gap >= 25% on 0 of 3, gap >= 50% on 0 of 3, beats ppmiV_K86 by >= 0.5 on 0 of 3 (both on: none) -> works NOT MET, strong NOT MET
+  R3a clinc150: R3a - wordsV +3.00 (G 10.50: 28.6% of G); R3a - ppmiV_K512 -0.44 -> gap 25% yes, gap 50% no, count +0.5 no
+  R3a banking77: R3a - wordsV +5.28 (G 11.12: 47.5% of G); R3a - ppmiV_K512 +0.69 -> gap 25% yes, gap 50% no, count +0.5 yes
+  R3a hwu64: R3a - wordsV +1.44 (G 9.80: 14.7% of G); R3a - ppmiV_K512 -3.16 -> gap 25% no, gap 50% no, count +0.5 no
+  H5b (R3a): gap >= 25% on 2 of 3, gap >= 50% on 0 of 3, beats ppmiV_K512 by >= 0.5 on 1 of 3 (both on: banking77) -> works NOT MET, strong NOT MET
+  report: potionV_K86 - R1 (same K) {'clinc150': '+44.55', 'banking77': '+55.93', 'hwu64': '+39.69'}
+
+== bit counts (seed 1 rows; Amendment 1: a twin more than 15% away from its TM-AE view is reported)
+  clinc150 ppmiV_K86 511 vs R1 600: -14.8% (within 15%; twin)
+  banking77 ppmiV_K86 410 vs R1 600: -31.7% (BEYOND 15%; twin)
+  hwu64 ppmiV_K86 581 vs R1 600: -3.2% (within 15%; twin)
+  clinc150 potionV_K86 595 vs R1 600: -0.8% (within 15%; report only)
+  banking77 potionV_K86 569 vs R1 600: -5.2% (within 15%; report only)
+  hwu64 potionV_K86 601 vs R1 600: +0.2% (within 15%; report only)
+  clinc150 ppmiV_K512 3101 vs R3a 3476: -10.8% (within 15%; twin)
+  banking77 ppmiV_K512 2615 vs R3a 3311: -21.0% (BEYOND 15%; twin)
+  hwu64 ppmiV_K512 3466 vs R3a 3540: -2.1% (within 15%; twin)
+  clinc150 potionV_K512 3542 vs R3a 3476: +1.9% (within 15%; report only)
+  banking77 potionV_K512 3364 vs R3a 3311: +1.6% (within 15%; report only)
+  hwu64 potionV_K512 3576 vs R3a 3540: +1.0% (within 15%; report only)
+
+== checks
+  rows with a script or table hash that differs: 0
+  TM-AE: completed, 2000 of 2000 rounds, checkpoint tmae_ckpt_r2000.npz (2000 rounds), train 2.19 h wall, 0.86 ms per update; R1 / R3a tables from this checkpoint: yes
+  TM-AE final weight histogram: {'<=-100': 57, '-99..-10': 1500055, '-9..-2': 1018743, '-1': 22207, '0': 15846, '1': 12380, '2..9': 60979, '10..99': 106139, '>=100': 1994}
+  R1 table: 1373 tokens without a code (30.1%), bits per token mean 37.05 max 316; clauses without a literal 0, literals per clause mean 15.29 max 18
+  probe 'balance': R1 bits 181; R3a neighbours: hasn 0.704, updated 0.697, yet 0.691, gone 0.637, deposited 0.635; R1 Jaccard: is 0.324, gone 0.323, s 0.319, hold 0.316, isn 0.315
+      clause 577 (weight 113, 12 literals): ' AND , AND . AND ? AND a AND i AND the AND to ...
+      clause 261 (weight 95, 13 literals): ' AND . AND ? AND a AND i AND the AND and AND to ...
+  probe 'transfer': R1 bits 247; R3a neighbours: yet 0.659, deposited 0.658, withdrawal 0.627, hasn 0.624, deposit 0.618; R1 Jaccard: account 0.482, money 0.466, just 0.456, still 0.442, made 0.441
+      clause 533 (weight 87, 11 literals): ' AND . AND ? AND a AND i AND the AND to AND is ...
+      clause 256 (weight 71, 16 literals): ' AND . AND ? AND a AND i AND the AND to AND is ...
+  probe 'alarm': R1 bits 23; R3a neighbours: seven 0.753, hundred 0.715, movies 0.707, ten 0.694, thirty 0.694; R1 Jaccard: reminders 0.486, seven 0.444, event 0.425, movies 0.421, appointment 0.409
+      clause 563 (weight 51, 14 literals): ' AND a AND i AND the AND to AND is AND for AND on ...
+      clause 271 (weight 48, 15 literals): ' AND a AND i AND the AND of AND and AND in AND to ...
+  probe 'weather': R1 bits 12; R3a neighbours: lower 0.613, traffic 0.594, twitter 0.576, thirty 0.556, write 0.541; R1 Jaccard: electric 0.242, income 0.235, classical 0.231, traffic 0.227, stock 0.227
+      clause 192 (weight 17, 14 literals): ' AND a AND i AND s AND the AND of AND and AND in ...
+      clause 42 (weight 16, 10 literals): ' AND a AND i AND the AND to AND is AND on AND my ...
+  probe 'french': R1 bits 2; R3a neighbours: developed 0.832, maintenance 0.832, guidance 0.832, commands 0.832, ring 0.744; R1 Jaccard: developed 0.5, jr 0.5, maintenance 0.5, rings 0.5, guidance 0.5
+      clause 316 (weight 3, 15 literals): ' AND , AND . AND a AND i AND t AND the AND in ...
+      clause 233 (weight 2, 14 literals): , AND . AND ? AND a AND i AND and AND to AND is ...
+  probe 'card': R1 bits 261; R3a neighbours: my 0.479, something 0.47, a 0.469, declined 0.462, ? 0.461; R1 Jaccard: ? 0.408, up 0.406, work 0.396, bought 0.394, it 0.392
+      clause 499 (weight 151, 13 literals): , AND . AND ? AND a AND i AND the AND in AND to ...
+      clause 168 (weight 136, 14 literals): ' AND ? AND a AND i AND the AND in AND to AND for ...
+  probe 'music': R1 bits 37; R3a neighbours: song 0.738, 5th 0.686, nine 0.662, stock 0.637, movies 0.634; R1 Jaccard: email 0.554, game 0.533, twenty 0.49, thirty 0.483, song 0.456
+      clause 89 (weight 61, 12 literals): a AND i AND the AND and AND is AND for AND you AND my ...
+      clause 139 (weight 41, 11 literals): a AND i AND the AND and AND in AND to AND is AND you ...
+  probe 'flight': R1 bits 69; R3a neighbours: airlines 0.808, denver 0.745, york 0.724, june 0.715, rental 0.693; R1 Jaccard: denver 0.779, paris 0.724, room 0.696, luggage 0.696, list 0.66
+      clause 409 (weight 133, 11 literals): ' AND a AND i AND the AND and AND to AND for AND you ...
+      clause 206 (weight 104, 14 literals): ' AND a AND i AND the AND and AND to AND is AND for ...
+  probe 'cancel': R1 bits 200; R3a neighbours: stop 0.672, item 0.593, quite 0.592, large 0.591, side 0.585; R1 Jaccard: immediately 0.38, . 0.374, make 0.373, correct 0.37, urgent 0.362
+      clause 114 (weight 108, 11 literals): ' AND . AND ? AND a AND i AND the AND to AND is ...
+      clause 533 (weight 99, 11 literals): ' AND . AND ? AND a AND i AND the AND to AND is ...
+  probe 'email': R1 bits 50; R3a neighbours: eight 0.683, thirty 0.66, twenty 0.646, mark 0.64, india 0.638; R1 Jaccard: thirty 0.619, event 0.585, food 0.577, twenty 0.561, music 0.554
+      clause 192 (weight 88, 14 literals): ' AND a AND i AND s AND the AND of AND and AND in ...
+      clause 268 (weight 88, 13 literals): ' AND a AND i AND the AND of AND and AND to AND is ...

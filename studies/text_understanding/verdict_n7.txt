@@ -1,0 +1,79 @@
+REGISTRATION_N7.md verdict: 125 test rows from studies/text_understanding/results_n7_test.jsonl
+
+== trec (non-TM references: CNN-non-static 93.6 (Kim 2014 T2), SWEM-max 89.0 (Shen 2018 T8), BERT-base 97.20 (Sun 2019))
+   published TM: Yadav bag of words 88.05, Yadav TM+GloVe best 90.04, best stated-protocol TM 91.61
+   bow                  S1  79.93 +- 1.12 | S2  81.00 +- 1.30 | bits 6000, on share train 0.002 test 0.001, best val epochs [93, 95, 93, 97, 88]
+   existsT_potion       S1  83.32 +- 0.58 | S2  84.24 +- 1.03 | bits 3356, on share train 0.511 test 0.412, best val epochs [68, 79, 71, 74, 79]
+   existsT_glove        S1  83.18 +- 0.25 | S2  84.00 +- 0.37 | bits 2737, on share train 0.536 test 0.463, best val epochs [68, 40, 47, 97, 51]
+   bow+existsT_potion   S1  83.77 +- 0.24 | S2  83.64 +- 1.42 | bits 9356, on share train 0.184 test 0.149, best val epochs [40, 94, 76, 63, 86]
+   bow+existsT_glove    S1  83.36 +- 0.57 | S2  84.68 +- 0.76 | bits 8737, on share train 0.169 test 0.146, best val epochs [71, 71, 88, 100, 99]
+
+== mr (non-TM references: CNN-non-static 77.75, Bi-LSTM 77.68 (TextGCN T2, same split), BERT 85.7 (BertGCN, same split))
+   published TM: Yadav bag of words 75.14, Yadav TM+GloVe best 77.51, best stated-protocol TM 77.51
+   bow                  S1  63.55 +- 0.99 | S2  64.10 +- 2.43 | bits 5000, on share train 0.004 test 0.004, best val epochs [61, 93, 99, 70, 78]
+   existsT_potion       S1  70.18 +- 0.53 | S2  70.03 +- 0.93 | bits 3491, on share train 0.510 test 0.509, best val epochs [89, 70, 9, 6, 43]
+   existsT_glove        S1  70.95 +- 1.31 | S2  70.97 +- 1.62 | bits 3374, on share train 0.522 test 0.522, best val epochs [34, 97, 59, 19, 28]
+   bow+existsT_potion   S1  71.41 +- 1.77 | S2  71.49 +- 1.15 | bits 8491, on share train 0.212 test 0.211, best val epochs [58, 39, 76, 38, 57]
+   bow+existsT_glove    S1  72.24 +- 0.52 | S2  72.43 +- 0.90 | bits 8374, on share train 0.212 test 0.213, best val epochs [73, 84, 86, 93, 100]
+
+== r52 (non-TM references: Bi-LSTM 90.54, TextGCN 93.56 (TextGCN T2), BERT 96.4 (BertGCN))
+   published TM: Yadav bag of words 84.62, Yadav TM+GloVe best 89.14, best stated-protocol TM 89.53
+   bow                  S1  88.87 +- 0.23 | S2  88.97 +- 0.23 | bits 6000, on share train 0.010 test 0.009, best val epochs [58, 91, 79, 71, 67]
+   existsT_potion       S1  85.58 +- 0.37 | S2  85.63 +- 0.31 | bits 3283, on share train 0.522 test 0.508, best val epochs [97, 77, 63, 65, 98]
+   existsT_glove        S1  86.65 +- 0.23 | S2  86.73 +- 0.41 | bits 3113, on share train 0.528 test 0.511, best val epochs [48, 73, 61, 26, 89]
+   bow+existsT_potion   S1  88.75 +- 0.26 | S2  88.79 +- 0.55 | bits 9283, on share train 0.191 test 0.186, best val epochs [86, 95, 70, 92, 58]
+   bow+existsT_glove    S1  88.87 +- 0.26 | S2  88.96 +- 0.52 | bits 9113, on share train 0.187 test 0.180, best val epochs [84, 78, 57, 78, 59]
+
+== r8 (non-TM references: Bi-LSTM 96.31, TextGCN 97.07 (TextGCN T2), BERT 97.8 (BertGCN))
+   published TM: Yadav bag of words 96.16, Yadav TM+GloVe best 97.5, best stated-protocol TM 97.5
+   bow                  S1  94.97 +- 0.04 | S2  94.95 +- 0.26 | bits 5000, on share train 0.011 test 0.010, best val epochs [38, 68, 60, 86, 32]
+   existsT_potion       S1  94.40 +- 0.17 | S2  94.42 +- 0.38 | bits 3229, on share train 0.525 test 0.509, best val epochs [26, 88, 34, 41, 79]
+   existsT_glove        S1  94.33 +- 0.24 | S2  94.25 +- 0.48 | bits 3050, on share train 0.534 test 0.517, best val epochs [23, 97, 73, 52, 97]
+   bow+existsT_potion   S1  95.22 +- 0.21 | S2  95.20 +- 0.33 | bits 8229, on share train 0.213 test 0.206, best val epochs [64, 64, 40, 39, 36]
+   bow+existsT_glove    S1  95.49 +- 0.19 | S2  95.48 +- 0.25 | bits 8050, on share train 0.209 test 0.202, best val epochs [61, 32, 70, 98, 98]
+
+== sst2 (non-TM references: CNN-non-static 87.2 (Kim 2014 T2), SWEM-max 83.6 (Shen 2018 T8), BERT-base 93.5 (Devlin 2019, GLUE test))
+   published TM: Sparse TM 78.93 (average of the last 25 epochs, split not stated)
+   bow                  S1  62.74 +- 3.47 | S2  62.36 +- 4.09 | bits 5000, on share train 0.003 test 0.003, best val epochs [62, 97, 32, 99, 99]
+   existsT_potion       S1  77.84 +- 1.63 | S2  77.98 +- 1.70 | bits 3519, on share train 0.509 test 0.512, best val epochs [58, 89, 58, 55, 13]
+   existsT_glove        S1  73.15 +- 1.27 | S2  74.05 +- 1.87 | bits 3382, on share train 0.524 test 0.528, best val epochs [52, 64, 60, 20, 34]
+   bow+existsT_potion   S1  75.71 +- 2.76 | S2  76.54 +- 1.98 | bits 8519, on share train 0.212 test 0.213, best val epochs [29, 48, 22, 72, 8]
+   bow+existsT_glove    S1  73.54 +- 5.17 | S2  73.95 +- 4.44 | bits 8382, on share train 0.213 test 0.215, best val epochs [11, 40, 19, 32, 37]
+
+== bars (S1, mean of 5 seeds)
+   A trec: our bag of words 79.93 vs Yadav's 88.05 (-8.12, below) -> OUTSIDE 2.0
+   B trec: bow+existsT_glove 83.36 vs Yadav TM+GloVe 90.04 (-6.68) -> not above
+   C trec: bow+existsT_potion 83.77 vs Yadav TM+GloVe 90.04 (-6.27), vs best stated-protocol TM 91.61 (-7.84)
+   A mr: our bag of words 63.55 vs Yadav's 75.14 (-11.59, below) -> OUTSIDE 2.0
+   B mr: bow+existsT_glove 72.24 vs Yadav TM+GloVe 77.51 (-5.27) -> not above
+   C mr: bow+existsT_potion 71.41 vs Yadav TM+GloVe 77.51 (-6.10), vs best stated-protocol TM 77.51 (-6.10)
+   A r52: our bag of words 88.87 vs Yadav's 84.62 (+4.25, above) -> OUTSIDE 2.0
+   B r52: bow+existsT_glove 88.87 vs Yadav TM+GloVe 89.14 (-0.27) -> not above
+   C r52: bow+existsT_potion 88.75 vs Yadav TM+GloVe 89.14 (-0.39), vs best stated-protocol TM 89.53 (-0.78)
+   A r8: our bag of words 94.97 vs Yadav's 96.16 (-1.19, below) -> within 2.0
+   B r8: bow+existsT_glove 95.49 vs Yadav TM+GloVe 97.5 (-2.01) -> not above
+   C r8: bow+existsT_potion 95.22 vs Yadav TM+GloVe 97.5 (-2.28), vs best stated-protocol TM 97.5 (-2.28)
+   A calibration (within 2.0 on >= 3 of 4): 1 of 4 -> DOES NOT HOLD
+   B same table (above on >= 3 of 4): 0 of 4 -> NOT MET
+   C potion (above on >= 3 of 4): 0 of 4 -> NOT MET; strong (above best stated-protocol TM on >= 3 of 4): 0 of 4 -> NOT MET
+
+== internal bars (S2 = test at the best val epoch, paired over seeds 1-5; S1 beside it)
+   D_potion trec: bow+existsT_potion - bow S2 +2.64 (seeds > 0: 5 of 5) -> adds; S1 +3.84 (seeds > 0: 5 of 5)
+   D_potion mr: bow+existsT_potion - bow S2 +7.39 (seeds > 0: 5 of 5) -> adds; S1 +7.86 (seeds > 0: 5 of 5)
+   D_potion r52: bow+existsT_potion - bow S2 -0.19 (seeds > 0: 1 of 5) -> does not add; S1 -0.12 (seeds > 0: 3 of 5)
+   D_potion r8: bow+existsT_potion - bow S2 +0.26 (seeds > 0: 3 of 5) -> does not add; S1 +0.25 (seeds > 0: 4 of 5)
+   D_potion sst2: bow+existsT_potion - bow S2 +14.18 (seeds > 0: 5 of 5) -> adds; S1 +12.97 (seeds > 0: 5 of 5)
+   D_potion: adds on 3 of 5 sets -> MET
+   D_glove trec: bow+existsT_glove - bow S2 +3.68 (seeds > 0: 5 of 5) -> adds; S1 +3.43 (seeds > 0: 5 of 5)
+   D_glove mr: bow+existsT_glove - bow S2 +8.33 (seeds > 0: 5 of 5) -> adds; S1 +8.70 (seeds > 0: 5 of 5)
+   D_glove r52: bow+existsT_glove - bow S2 -0.02 (seeds > 0: 3 of 5) -> does not add; S1 +0.01 (seeds > 0: 3 of 5)
+   D_glove r8: bow+existsT_glove - bow S2 +0.54 (seeds > 0: 5 of 5) -> adds; S1 +0.52 (seeds > 0: 5 of 5)
+   D_glove sst2: bow+existsT_glove - bow S2 +11.59 (seeds > 0: 5 of 5) -> adds; S1 +10.80 (seeds > 0: 5 of 5)
+   D_glove: adds on 4 of 5 sets -> MET
+   E trec: bow+existsT_potion - bow+existsT_glove S2 -1.04 (seeds > 0: 2 of 5) -> does not add; S1 +0.41 (seeds > 0: 4 of 5)
+   E mr: bow+existsT_potion - bow+existsT_glove S2 -0.94 (seeds > 0: 1 of 5) -> does not add; S1 -0.83 (seeds > 0: 2 of 5)
+   E r52: bow+existsT_potion - bow+existsT_glove S2 -0.17 (seeds > 0: 1 of 5) -> does not add; S1 -0.13 (seeds > 0: 0 of 5)
+   E r8: bow+existsT_potion - bow+existsT_glove S2 -0.28 (seeds > 0: 2 of 5) -> does not add; S1 -0.27 (seeds > 0: 1 of 5)
+   E sst2: bow+existsT_potion - bow+existsT_glove S2 +2.59 (seeds > 0: 2 of 5) -> does not add; S1 +2.17 (seeds > 0: 2 of 5)
+   E: adds on 0 of 5 sets -> NOT MET
+   SST-2 (no bar): bow+existsT_potion 75.71, bow+existsT_glove 73.54 vs Sparse TM 78.93

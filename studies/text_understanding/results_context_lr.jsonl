@@ -1,0 +1,2 @@
+{"step": "slot context check (exploratory, val only)", "bits": "W+S+P+N+P2+N2+G", "prev_label": false, "n_features": 26668, "n_train": 79732, "wd": 0.0001, "val_f1": 0.7582, "val_precision": 0.7512, "val_recall": 0.7654, "total_s": 285.8}
+{"step": "slot context check (exploratory, val only)", "bits": "W+S+P+N+G", "prev_label": true, "n_features": 19602, "n_train": 79732, "wd": 0.0001, "val_f1": 0.7607, "val_precision": 0.7696, "val_recall": 0.752, "total_s": 313.6}

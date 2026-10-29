@@ -1,0 +1,22 @@
+{
+ "potion-8m": {
+  "seconds": 0.123,
+  "queries_per_s": 24455.6
+ },
+ "potion-32m": {
+  "seconds": 0.114,
+  "queries_per_s": 26277.7
+ },
+ "static-retr": {
+  "seconds": 0.13,
+  "queries_per_s": 23129.3
+ },
+ "minilm": {
+  "seconds": 13.258,
+  "queries_per_s": 226.3
+ },
+ "bge-base": {
+  "seconds": 87.562,
+  "queries_per_s": 34.3
+ }
+}

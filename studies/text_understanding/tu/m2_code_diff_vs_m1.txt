@@ -1,0 +1,1514 @@
+=== m1_feats.py -> m2_feats.py
+parent b1ce94f4cc77338ec047b310c83d7eddc6a0f96b7b1e0273dc17f4f0e5075456  m1_feats.py
+copy   d0561d1204a34d46d49d7f4ce097dbcc444e7e13e5a50d4069e348110ebce6b1  m2_feats.py
+--- m1_feats.py
++++ m2_feats.py
+@@ -1,18 +1,24 @@
+ #!/usr/bin/env python
+-"""M1, the registered test (tu/PLAN_M1.md "Features"): the features of every arm of one set and one table, from ONE
+-k-means, with the TEST split included.
++"""M2, the registered test on MTOP English (tu/PLAN_M2.md "Features"): the features of one table on MTOP English,
++from ONE k-means, with the TEST split included.
+ 
+-    python -I -B m1_feats.py --dataset clinc150 --table wordtab:TABLE.npz --arms a3B:none,a3B_3c:FILE --out-root tu/m1/feats
+-    python -I -B m1_feats.py --dataset clinc150 --table potion --arms potion:none --out-root tu/m1/feats
++    python -I -B m2_feats.py --dataset mtop_en --table wordtab:TABLE.npz --arms a3B:none --out-root tu/m2/feats
++    python -I -B m2_feats.py --dataset mtop_en --table potion --arms potion:none --out-root tu/m2/feats
+ 
+-tu/c3x_feats.py (95be26c7abb8103a) with these changes and nothing else:
+-(1) the splits are train, val, test, oos_train, oos_val (never oos_test); "test" is pooled with the same table, concepts
+-    and thresholds as the other splits, and y_test is written;
+-(2) --table potion builds the potion-base-32M features by exists_tm.features' path (its tokenizer and its static
+-    embedding rows; the HF snapshot exists_tm.HF_ID at exists_tm.REV, read with HF_HUB_OFFLINE=1);
+-(3) the k-means centroids are saved beside each arm's cache (<set>__p32tok_K512.centroids.npy), and the meta records
+-    the splits.
+-The k-means and the thresholds are still fit on the ORIGINAL training tokens only. Refuses to overwrite.
++tu/m1_feats.py (bb93c24f72edfe67) with these changes and nothing else (dataset changes only):
++(1) the dataset comes from m2_data.load (MTOP English from the pinned zip: train = en/train, val = en/eval, test =
++    en/test; the classes are en/train's top-level intents; an eval or test intent not in en/train has label -1) in
++    place of dl.data.load; --load FILE.py:function (tests, the code check and the dry runs only) still takes a
++    stand-in (m2_standin.py:load for the CLINC150 code check, m2_data.py:load_standin or m2_standin.py:mtop_small for
++    MTOP), loaded under the module name "m2_hook";
++(2) the meta's code-hash key is "m2_feats_sha256", and the meta records the loader's unseen-intent counts
++    ("unseen_intents", null for a stand-in).
++Unchanged from M1: the splits train, val, test (and oos_train, oos_val where a set has them; never oos_test); "test"
++is pooled with the same table, concepts and thresholds as the other splits, and y_test is written; --table potion
++builds the potion-base-32M features by exists_tm.features' path (the HF snapshot exists_tm.HF_ID at exists_tm.REV,
++read with HF_HUB_OFFLINE=1); the k-means centroids are saved beside each arm's cache; the k-means and the thresholds
++are fit on the ORIGINAL training tokens only. The arms with paraphrases (kept files) still work, but M2 uses none.
++Refuses to overwrite.
+ """
+ 
+ from __future__ import annotations
+@@ -36,23 +42,25 @@
+ EMB = HERE.parent
+ sys.path.insert(0, str(EMB))
+ sys.path.insert(0, str(EMB / "w1"))
++sys.path.insert(0, str(HERE))
+ sys.path.insert(0, f"{_REPO_ROOT}/studies/decision_layer/src")
+ import exists_tm as X
++import m2_data
+ import wordtab_feats as WF
+ from dl.boolean import _spherical_kmeans
+-from dl.data import load
+ 
+ SPLITS = ("train", "val", "test", "oos_train", "oos_val")  # never oos_test
+ 
+ 
+ def load_ds(name: str, hook: str = ""):
+-    """dl.data.load, or (tests only) FILE.py:function, a stand-in dataset whose "test" is not the real test split."""
++    """m2_data.load (MTOP English), or (tests, code check, dry runs) FILE.py:function, a stand-in dataset whose "test"
++    is not the real test split."""
+     if not hook:
+-        return load(name)
++        return m2_data.load(name)
+     import importlib.util
+ 
+     path, fn = hook.rsplit(":", 1)
+-    spec = importlib.util.spec_from_file_location("m1_standin", path)
++    spec = importlib.util.spec_from_file_location("m2_hook", path)
+     mod = importlib.util.module_from_spec(spec)
+     spec.loader.exec_module(mod)
+     return getattr(mod, fn)(name)
+@@ -117,7 +125,7 @@
+     ap.add_argument("--out-root", type=Path, required=True)
+     ap.add_argument("--K", type=int, default=512)
+     ap.add_argument("--device", default="cuda", help="cpu only for a functional test")
+-    ap.add_argument("--load", default="", help="tests only: FILE.py:function returning a stand-in dataset")
++    ap.add_argument("--load", default="", help="tests, code check, dry runs: FILE.py:function returning a stand-in dataset")
+     args = ap.parse_args()
+     t0 = time.time()
+     dev = args.device
+@@ -183,12 +191,13 @@
+         out["n_orig"] = np.asarray(n_orig)
+         meta = {"concepts": names, "thresholds": th, "train_vocab": len(vocab), "K": args.K,
+                 "members": np.bincount(a, minlength=args.K).tolist(), "dataset": args.dataset, "table": tab.name,
+-                "table_sha256": tab.sha, "m1_feats_sha256": WF.sha256_file(Path(__file__).resolve())[:16],
++                "table_sha256": tab.sha, "m2_feats_sha256": WF.sha256_file(Path(__file__).resolve())[:16],
+                 "arm": arm, "n_orig": n_orig, "n_aug": len(texts), "kept": path, "kept_sha256": ksha, "splits": splits,
+                 "kmeans_run_id": run_id, "concepts_sha16": hashlib.sha256(json.dumps(names).encode()).hexdigest()[:16],
+                 "thresholds_sha16": hashlib.sha256(json.dumps(th).encode()).hexdigest()[:16], "arms_in_this_run": [x for x, _ in arms],
+                 "aug_sentences_without_token": int(sum(1 for x in ids_aug if not x)),
+-                "test_sentences_without_token": int(sum(1 for x in ids["test"] if not x))}
++                "test_sentences_without_token": int(sum(1 for x in ids["test"] if not x)),
++                "unseen_intents": ds.sources.get("unseen_intents")}
+         npz, mjs, cnp = outs[arm]
+         npz.parent.mkdir(parents=True, exist_ok=True)
+         np.savez(npz, **out)
+
+=== m1_tm.py -> m2_tm.py
+parent 12405a6f280309b973dd7bf174971cd840697b5fa6ee6e74adfe63f3a7705028  m1_tm.py
+copy   ab032bdf3ec4cf7e98a4099d14db6e0458e43864159e83a3f320a38dc703e4fa  m2_tm.py
+--- m1_tm.py
++++ m2_tm.py
+@@ -1,21 +1,27 @@
+ #!/usr/bin/env python
+-"""M1, the registered test (tu/PLAN_M1.md "Arms"): the TM reader of one arm, set and seed, with ONE read of the test
+-split at the val-best epoch.
++"""M2, the registered test on MTOP English (tu/PLAN_M2.md "Arms"): the TM reader of one arm and seed, with ONE read
++of the test split at the val-best epoch.
+ 
+-    python -I -B m1_tm.py --dataset clinc150 --view existsT --seed 7 --s 8 --emb-dir tu/m1/feats/a3B --tag m1 [--repeat 5]
++    python -I -B m2_tm.py --dataset mtop_en --view existsT --seed 7 --s 8 --emb-dir tu/m2/feats/a3B --tag m2
+ 
+-tu/c3x_exists_tm.py (818427505f045f8c) with these changes and nothing else:
+-(1) after the fit (dl.tm keeps and restores the best-val state, as in confirm_tm.py), the test split is predicted once
+-    and its accuracy is recorded; the test predictions go to <out-dir>/preds/<key>.npy, where <key> is in the row;
+-(2) the cache must contain test rows and name its table (tu/m1_feats.py writes both; the archive potion cache of test 2
+-    is no longer accepted);
+-(3) rows go to <out-dir>/results_m1_tm.jsonl (default tu/m1) and rules to <out-dir>/rules_m1.txt, and record
+-    "study": "M1", the UTC time, and the sha256 of this file, exists_tm.py and the cache;
+-(4) --device and --smoke exist for the CPU tests only (--smoke: 200 clauses, T 200, 2 epochs, and its rows say so);
+-    --load (the tests and the chain's code check only) takes a stand-in dataset whose "test" is a copy of val
+-    (m1_standin.py), so such a run reads no test text or label.
+-The thermometer is fit on the first n_orig training rows (the originals), as in c3x_exists_tm.py; --repeat K repeats the
+-original rows K times (only for a cache without paraphrases).
++tu/m1_tm.py (06ccf8eba7505de7) with these changes and nothing else (dataset changes only):
++(1) the dataset comes from m2_feats.load_ds: m2_data.load (MTOP English) by default; --load FILE.py:function (tests,
++    the code check and the dry runs only) takes a stand-in whose "test" is a copy of val (m2_standin.py:load for the
++    CLINC150 code check; m2_data.py:load_standin or m2_standin.py:mtop_small for MTOP), so such a run reads no test
++    text or label;
++(2) the hard set: hardset.json lists val losses for banking77, clinc150 and hwu64 only, and M1's code raised a KeyError
++    for any other set. Rule: when hardset.json has no entry for the dataset (MTOP), "lost_fixed" and "won_kept" are
++    null and "hardset" says so; for the CLINC150 code check they are computed as in M1;
++(3) labels -1 (an eval or test intent not in en/train) count as errors, as in dl.tm's val accuracy and in the test
++    accuracy below; the descriptive "examples" field names such a label "(not a train intent)" instead of indexing the
++    class list with -1; the row records "n_classes" and the loader's "unseen_intents";
++(4) rows go to <out-dir>/results_m2_tm.jsonl (default tu/m2) and rules to <out-dir>/rules_m2.txt, with "study": "M2"
++    and the sha256 key "m2_tm.py".
++Unchanged from M1: after the fit (dl.tm keeps and restores the best-val state), the test split is predicted once and
++the predictions go to <out-dir>/preds/<key>.npy, written exclusively (one test read per run); the cache must contain
++test rows and name its table; --device and --smoke exist for the CPU tests and the dry runs only (--smoke: 200
++clauses, T 200, 2 epochs, and its rows say so); the thermometer is fit on the first n_orig training rows; --repeat K
++repeats the original rows K times (M2 does not use it).
+ """
+ 
+ from __future__ import annotations
+@@ -43,7 +49,9 @@
+ from dl.explain import decision_receipt, top_rules
+ from dl.tm import TMConfig
+ from dl.tm_init import make_tm
+-from m1_feats import load_ds
++from m2_feats import load_ds
++
++UNSEEN = "(not a train intent)"
+ 
+ 
+ def sha16(p: Path) -> str:
+@@ -54,6 +62,10 @@
+     return h.hexdigest()[:16]
+ 
+ 
++def name_of(intents: list[str], y: int) -> str:
++    return intents[y] if y >= 0 else UNSEEN
++
++
+ def main() -> None:
+     ap = argparse.ArgumentParser()
+     ap.add_argument("--dataset", required=True)
+@@ -63,16 +75,16 @@
+     ap.add_argument("--tag", default="")
+     ap.add_argument("--s", type=float, default=8.0)
+     ap.add_argument("--repeat", type=int, default=1)
+-    ap.add_argument("--out-dir", type=Path, default=HERE / "m1")
++    ap.add_argument("--out-dir", type=Path, default=HERE / "m2")
+     ap.add_argument("--device", default="cuda", help="cpu only for the tests")
+-    ap.add_argument("--smoke", action="store_true", help="tests only: 200 clauses, T 200, 2 epochs")
+-    ap.add_argument("--load", default="", help="tests only: FILE.py:function returning a stand-in dataset")
++    ap.add_argument("--smoke", action="store_true", help="tests and dry runs only: 200 clauses, T 200, 2 epochs")
++    ap.add_argument("--load", default="", help="tests, code check, dry runs: FILE.py:function returning a stand-in dataset")
+     args = ap.parse_args()
+ 
+     t0 = time.time()
+     dev = args.device
+     cache = args.emb_dir / f"{args.dataset}__p32tok_K512.npz"
+-    assert cache.exists(), f"{cache} missing: build it with m1_feats.py first"
++    assert cache.exists(), f"{cache} missing: build it with m2_feats.py first"
+     assert json.loads(cache.with_suffix(".meta.json").read_text()).get("table"), "the cache meta names no table"
+     F, meta = X.features(args.dataset, 512, args.emb_dir, dev)
+     assert "test__exists" in F and "y_test" in F, "the cache has no test rows"
+@@ -107,18 +119,20 @@
+     pdir.mkdir(parents=True, exist_ok=True)
+     with open(ppath, "xb") as f:  # exclusive: one test read per run
+         np.save(f, pt.astype(np.int16))
+-    hs = json.loads((EMB / "hardset.json").read_text())[args.dataset]
+-    rec = {"tag": args.tag, "study": "M1", "smoke": bool(args.smoke), "repeat": args.repeat, "arm": meta.get("arm", "orig"),
++    hs = json.loads((EMB / "hardset.json").read_text()).get(args.dataset)  # None for MTOP: no hard set (rule (2))
++    rec = {"tag": args.tag, "study": "M2", "smoke": bool(args.smoke), "repeat": args.repeat, "arm": meta.get("arm", "orig"),
+            "n_orig": n_orig, "n_train": len(ytr), "s": args.s, "emb_dir": str(args.emb_dir), "table": meta.get("table"),
+            "table_sha256": meta.get("table_sha256"), "kmeans_run_id": meta.get("kmeans_run_id"), "dataset": args.dataset,
+            "view": args.view, "seed": args.seed, "n_bits": int(Btr.shape[1]), "on_share": round(float(Btr.mean()), 3),
+            "cfg": asdict(cfg), "val_acc": round(tm.best_val, 4), "val_acc_check": round(float((pv == yva).mean()), 4),
+            "best_epoch": getattr(tm, "best_epoch", None), "test_acc": round(float((pt == yte).mean()), 4),
+            "n_test": len(pt), "preds": str(ppath), "train_s": round(tm.train_seconds, 1),
+-           "lost_fixed": round(float((pv[hs["lost"]] == yva[hs["lost"]]).mean()), 4),
+-           "won_kept": round(float((pv[hs["won"]] == yva[hs["won"]]).mean()), 4),
++           "n_classes": C, "unseen_intents": ds.sources.get("unseen_intents"),
++           "hardset": "hardset.json" if hs is not None else f"none: hardset.json has no entry for {args.dataset}",
++           "lost_fixed": round(float((pv[hs["lost"]] == yva[hs["lost"]]).mean()), 4) if hs is not None else None,
++           "won_kept": round(float((pv[hs["won"]] == yva[hs["won"]]).mean()), 4) if hs is not None else None,
+            "curve": [(h["epoch"], round(h["val_acc"], 4)) for h in tm.history], "stats": tm.stats(),
+-           "sha256": {"m1_tm.py": sha16(Path(__file__).resolve()), "exists_tm.py": sha16(EMB / "exists_tm.py"),
++           "sha256": {"m2_tm.py": sha16(Path(__file__).resolve()), "exists_tm.py": sha16(EMB / "exists_tm.py"),
+                       "cache": sha16(cache)}}
+     if "oos_val__mean" in F:
+         Xin = torch.as_tensor(Bva, dtype=torch.uint8, device=dev)
+@@ -127,10 +141,11 @@
+         is_oos = np.r_[np.zeros(len(Bva)), np.ones(len(F["oos_val__mean"]))]
+         rec["oos_auroc_val_max_sum"] = round(X.auroc(is_oos, -np.sort(S, 1)[:, -1]), 4)
+     vt = ds.texts["val"]
+-    rec["examples"] = {t: {"true": ds.intents[yva[vt.index(t)]], "tm": ds.intents[pv[vt.index(t)]]} for t in X.EXAMPLES if t in vt}
++    rec["examples"] = {t: {"true": name_of(ds.intents, int(yva[vt.index(t)])), "tm": name_of(ds.intents, int(pv[vt.index(t)]))}
++                       for t in X.EXAMPLES if t in vt}
+     rec["utc"] = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+     rec["total_s"] = round(time.time() - t0, 1)
+-    with open(args.out_dir / "results_m1_tm.jsonl", "a") as f:
++    with open(args.out_dir / "results_m2_tm.jsonl", "a") as f:
+         f.write(json.dumps(rec) + "\n")
+     st = tm.state()
+     classes = [ds.intents.index(c) for c in X.SHOW.get(args.dataset, []) if c in ds.intents]
+@@ -139,7 +154,7 @@
+         if t in vt:
+             lines.append(f"receipt for {t!r}:\n" + decision_receipt(st["ta"], st["w"], Bva[vt.index(t)], names, ds.intents,
+                                                                      n_states=cfg.n_states, top=2))
+-    with open(args.out_dir / "rules_m1.txt", "a") as f:
++    with open(args.out_dir / "rules_m2.txt", "a") as f:
+         f.write(f"=== {key} {rec['table']} {args.view} s {args.s} val {rec['val_acc']}\n" + "\n".join(lines) + "\n")
+     print(json.dumps({k: v for k, v in rec.items() if k not in ("cfg", "curve", "stats", "examples")}))
+ 
+
+=== m1_lr.py -> m2_lr.py
+parent 7a6af17acd959653b646baf226eedd935c8d290891fbf81186eaf5170d59c372  m1_lr.py
+copy   6b734635e257853c063e37e2741f4dadd76527b60b273fb4d5239fdba7c0b017  m2_lr.py
+--- m1_lr.py
++++ m2_lr.py
+@@ -1,18 +1,19 @@
+ #!/usr/bin/env python
+-"""M1, the registered test (tu/PLAN_M1.md "Arms"): the LR probe of one arm and set, C picked on val, with ONE read of
+-the test split at that C.
++"""M2, the registered test on MTOP English (tu/PLAN_M2.md "Arms"): the LR probe of one arm, C picked on en/eval, with
++ONE read of the test split at that C.
+ 
+-    python -I -B m1_lr.py --name a3B --dataset clinc150 --emb-dir tu/m1/feats/a3B
++    python -I -B m2_lr.py --name a3B --dataset mtop_en --emb-dir tu/m2/feats/a3B
+ 
+-tu/c3x_lr.py (e18dbfd965df158d) with these changes and nothing else:
+-(1) after C is picked on val (the same fits in the same order as exists_tm.best_logreg: the first C with the strictly
+-    highest val accuracy; every C's val accuracy kept as "acc_by_C"), the fit at that C predicts the test split once;
+-    its accuracy is recorded and the predictions go to <out-dir>/preds/lr_<name>_<set>.npy;
+-(2) the cache must contain test rows and name its table (tu/m1_feats.py);
+-(3) rows go to <out-dir>/results_m1_lr.jsonl (default tu/m1) and record "study": "M1"; the hash keys name the files
+-    themselves ("m1_lr.py", "exists_tm.py", "cache"; the record fix for c3_lr.py's "w2_lr.py" key);
+-(4) --device exists for the CPU tests only; --load (the tests and the chain's code check only) takes a stand-in
+-    dataset whose "test" is a copy of val (m1_standin.py).
++tu/m1_lr.py (d2a41815a2ccc568) with these changes and nothing else (dataset changes only):
++(1) the dataset comes from m2_feats.load_ds: m2_data.load (MTOP English) by default; --load FILE.py:function (tests,
++    the code check and the dry runs only) takes a stand-in whose "test" is a copy of val;
++(2) labels -1 (an eval or test intent not in en/train) count as errors, as every accuracy below computes them; the row
++    records "n_classes" and the loader's "unseen_intents";
++(3) rows go to <out-dir>/results_m2_lr.jsonl (default tu/m2) with "study": "M2" and the sha256 key "m2_lr.py".
++Unchanged from M1: C in {1, 10, 100} is picked on val (the same fits in the same order as exists_tm.best_logreg: the
++first C with the strictly highest val accuracy; every C's val accuracy kept as "acc_by_C"); the fit at that C
++predicts the test split once and the predictions go to <out-dir>/preds/lr_<name>_<set>.npy, written exclusively (one
++test read per arm); the cache must contain test rows and name its table; --device exists for the CPU tests only.
+ """
+ 
+ from __future__ import annotations
+@@ -34,8 +35,8 @@
+ sys.path.insert(0, str(HERE))
+ sys.path.insert(0, f"{_REPO_ROOT}/studies/decision_layer/src")
+ import exists_tm as X
+-from m1_feats import load_ds
+-from m1_tm import sha16
++from m2_feats import load_ds
++from m2_tm import sha16
+ 
+ 
+ def main() -> None:
+@@ -43,9 +44,9 @@
+     ap.add_argument("--name", required=True)
+     ap.add_argument("--dataset", required=True)
+     ap.add_argument("--emb-dir", type=Path, required=True)
+-    ap.add_argument("--out-dir", type=Path, default=HERE / "m1")
++    ap.add_argument("--out-dir", type=Path, default=HERE / "m2")
+     ap.add_argument("--device", default="cuda", help="cpu only for the tests")
+-    ap.add_argument("--load", default="", help="tests only: FILE.py:function returning a stand-in dataset")
++    ap.add_argument("--load", default="", help="tests, code check, dry runs: FILE.py:function returning a stand-in dataset")
+     args = ap.parse_args()
+     t0 = time.time()
+     dev = args.device
+@@ -83,14 +84,15 @@
+     pdir.mkdir(parents=True, exist_ok=True)
+     with open(ppath, "xb") as f:  # exclusive: one test read per arm
+         np.save(f, pt.astype(np.int16))
+-    rec = {"study": "M1", "arm": meta.get("arm", "orig"), "n_orig": n_orig, "n_train": len(ytr),
++    rec = {"study": "M2", "arm": meta.get("arm", "orig"), "n_orig": n_orig, "n_train": len(ytr),
+            "probe": "logistic regression (C 1/10/100, best on val)", "name": args.name, "dataset": args.dataset,
+            "table": meta.get("table"), "table_sha256": meta.get("table_sha256"), "kmeans_run_id": meta.get("kmeans_run_id"),
+            "view": "existsT", "n_bits": int(Btr.shape[1]), "on_share": round(float(Btr.mean()), 3), "lr_val": acc, "C": c,
+            "acc_by_C": acc_by_C, "lr_test": round(float((pt == yte).mean()), 4), "n_test": len(pt), "preds": str(ppath),
++           "n_classes": C, "unseen_intents": ds.sources.get("unseen_intents"),
+            "utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()), "seconds": round(time.time() - t0, 1),
+-           "sha256": {"m1_lr.py": sha16(Path(__file__).resolve()), "exists_tm.py": sha16(EMB / "exists_tm.py"), "cache": sha16(cache)}}
+-    with open(args.out_dir / "results_m1_lr.jsonl", "a") as f:
++           "sha256": {"m2_lr.py": sha16(Path(__file__).resolve()), "exists_tm.py": sha16(EMB / "exists_tm.py"), "cache": sha16(cache)}}
++    with open(args.out_dir / "results_m2_lr.jsonl", "a") as f:
+         f.write(json.dumps(rec) + "\n")
+     print(json.dumps(rec))
+ 
+
+=== m1_verdict.py -> m2_verdict.py
+parent d32188aaf86a3c8d2db11ac27c55d50f63973b9bfffe7fa9c0eb7fb7f067c442  m1_verdict.py
+copy   e8d186ff4bdb678da696602fb544bf356891943ccf0bfa883eda8e4118f05a4e  m2_verdict.py
+--- m1_verdict.py
++++ m2_verdict.py
+@@ -1,36 +1,67 @@
+ #!/usr/bin/env python
+-"""M1, the verdict (tu/PLAN_M1.md "Hypotheses"): H1, H2, H3a, H3b and the descriptive lines, always for all 3 sets.
++"""M2, the verdict (tu/PLAN_M2.md "Hypotheses"): H1 and H2 on MTOP English's test split, and the lines with no rule.
+ 
+-    python -I -B m1_verdict.py --m1 tu/m1 --overlap tu/m1/overlap_m1.json
++    python -I -B m2_verdict.py --m2 tu/m2 --matched fresh/mtop_test_matched_v1.json --overlap fresh/mtop_overlap.json
+ 
+-Input: <m1>/results_m1_tm.jsonl (tag "m1", seeds 7-9, s 8), <m1>/results_m1_lr.jsonl, the test predictions they name,
+-the test labels, and the step-0 overlap file. Every number is computed from the saved predictions (each row's
+-test_acc must equal its predictions' accuracy rounded to 4 decimals). Points throughout.
+-- TM value of a configuration = the mean over seeds 7-9 of its test accuracy. LR = its one fit.
+-- H1, per set: a3B - C4 >= +0.5 with TM AND with LR.
+-- H2, per set: a3B - potion >= -0.5 with TM AND with LR ("within 0.5 points of potion-base-32M"; never "beats").
+-- H3a, per set: LR a3B_3c - LR a3B >= +0.5 (augmentation with 3c's paraphrases helps).
+-- H3b, per set: LR a3B_3c - LR a3B_twin >= +0.5 (the paraphrases beat the EDA copies of the same rows).
+-- A hypothesis is MET when it holds on the point estimates on at least 2 of 3 sets. "strong" on a set when the lower
+-  end of the 95% interval clears the same bar with every probe the hypothesis uses; STRONG when that holds on at least
+-  2 of 3 sets. The interval: a paired bootstrap over test examples, 10,000 resamples per set, numpy
+-  default_rng([20261021, set index]); one index draw per resample is shared by every comparison of that set and by
+-  seeds 7-9 (the TM statistic is the seed-averaged paired difference on the drawn examples); percentiles 2.5 / 97.5.
+-  LIMIT: the interval resamples test examples only and leaves out the variance between training seeds. So beside
+-  every TM interval the three per-seed differences and the paired SE over seeds are given, and every TM
+-  configuration's seed SD, so a reader can see when one seed carries a gain.
+-- The four hypotheses are separate claims with no correction for multiplicity: meeting one says nothing about another.
+-- Descriptive (no bar): TM a3B_3c - a3B (repeat 1, as registered on val), a3B_3c - a3B repeat 5 (matched updates),
+-  a3B repeat 5 - a3B, a3B_3c - a3B_twin, a3B_twin - a3B; the R2 ablation a3B_3c - C4_3c (TM and LR); LR a3B_twin - a3B;
+-  each with its interval and, for TM, the paired SE over seeds; every configuration's val mean beside its test mean;
+-  each arm's test accuracy without the step-0 matched test texts.
++Input: <m2>/results_m2_tm.jsonl (tag "m2", seeds 7-9, s 8), <m2>/results_m2_lr.jsonl, the test predictions they name,
++the test labels and IDs (m2_data.load: the registered read of en/test), the frozen matched list and (for the c4_fit
++line) its source overlap file. Every number is computed from the saved predictions (each row's test accuracy must
++equal its predictions' accuracy rounded to 4 decimals). Points throughout.
++
++tu/m1_verdict.py (d32188aaf86a3c8d) with these changes (one dataset, M2's arms and rules) and nothing else:
++(1) one set, mtop_en, so there is no 2-of-3 rule. A hypothesis is MET when its bar holds on the point estimates with
++    BOTH probes (TM = the mean over seeds 7-9 of its test accuracy; LR = its one fit), and STRONG when the lower end of
++    the registered 95% interval clears the same bar with both probes (M1's definition).
++    - H1: a3B - C4 >= +0.5 with TM and with LR.
++    - H2, one-sided, no upper bound: a3B - potion >= -0.5 with TM and with LR.
++    The claim sentences are written by claim() from the numbers (review of draft 1, design MAJOR 1, M1 addendum item 4):
++    H1 met: "a3B - C4 is at least +0.5 points on MTOP English with the TM (+x [l, u]) and with LR (+y [l, u]) (point
++    estimates)", plus "the lower ends of the item-level 95% intervals clear +0.5" only when STRONG; H2 met: "a3B is no
++    more than 0.5 points below potion-base-32M on MTOP English with the TM and with LR (point estimates; one-sided;
++    ...)"; not met: one clause per probe with its interval, "holds" or "below the bar", and "A true difference inside
++    the interval is not ruled out". Never "beats", never "within 0.5 points", never "statistically non-inferior".
++    After the re-check of draft 2 (2026-10-25): a MET hypothesis that is not STRONG gets the fixed clause "not STRONG: a
++    point-estimate result, weak evidence (...)" (MINOR A), and every claim sentence ends with its arms' provenance
++    (a3B network-free at run time with bge-base-en-v1.5@a5beb1e3 as teacher at training time; C4 no neural network at
++    any stage; potion-base-32M@1e5a03f8 distilled from bge-base-en-v1.5 by its authors, the teacher family a3B shares;
++    MINOR B).
++(2) arms C4, a3B and potion only. Descriptive (no rule): TM minus LR per arm (the seed-averaged TM correctness minus
++    LR's on the same items), with the per-seed differences; every comparison's en/eval difference (best-epoch val
++    numbers, optimistic) beside its test difference.
++(3) the registered interval: a paired bootstrap over test items, 10,000 resamples, numpy default_rng([20261025, 0]);
++    one index draw per resample, shared by every comparison and by seeds 7-9; percentiles 2.5 / 97.5 (M1's method).
++(4) beside it, with no rule: a seed-inclusive two-level interval for every comparison with a TM side, numpy
++    default_rng([20261025, 1]): per resample one item draw (shared by every comparison), then for each TM
++    configuration its 3 seeds drawn with replacement from seeds 7-9 (independently per configuration; one draw per
++    configuration per resample, shared by the comparisons that use it). LR (one fit) has no seed level and is printed
++    "no seed level". When a hypothesis is STRONG but a TM probe's seed-inclusive lower end misses the bar, the flag
++    reads "MET (STRONG on the item-level interval only)" (a fixed qualifier; the outcome is unchanged).
++(5) a test or val item whose intent is not in en/train has label -1 and counts as an error for every arm; the counts
++    and the number of train intents are reported.
++(6) secondary (no rule): every comparison and arm on the test items NOT in the frozen matched list
++    (fresh/mtop_test_matched_v1.json: positions = 0-based rows of en/test.txt), with an item-only interval
++    (default_rng([20261025, 2])); with --overlap, the same without only the c4_fit pool's items (a3B's teacher-fit
++    sentences, the one pool an M2 arm's training touched; default_rng([20261025, 3])). The lists must fit the test
++    split (n_test, counts, positions in range, the IDs at the positions; the c4_fit union inside the list and of its
++    stated size). A list or overlap file that does not fit marks the lines that use it NOT EVALUABLE, with the reasons,
++    and H1 and H2 are written all the same (re-check of draft 2, MINOR E: these files feed no rule, and the 12 test
++    reads have happened by then). The "paraphrase_exact" items (55 in the frozen list) get their own line.
++(7) rows must carry tag "m2" and dataset "mtop_en"; each arm's rows must name its table (C4 = ppw_S1000_d500_e0.5
++    e1771d9eaf4a07f7, a3B = a3B_d768 4a1ed2aed7aa4ce7, potion = potion-base-32M at 1e5a03f8), and the TM seeds and the
++    LR fit of an arm must share one feature cache (one kmeans_run_id); the outputs are verdict_m2.json and
++    verdict_m2.txt, the text with one per-probe table of the four rule parts.
+ Refuses to write unless every configuration has exactly seeds 7, 8 and 9, one row each, s 8, no smoke row, and the
+-same TM settings apart from the seed; and every LR arm has exactly one row. Refuses to overwrite.
++same TM settings apart from the seed; every LR arm has exactly one row; and every prediction file has n_test entries
++(a missing run leaves H1 and H2 NOT EVALUABLE: no rerun after a test read). Refuses to overwrite. Exit codes: 2
++overwrite, 3 rows, 4 predictions (the earlier exit 5 for the matched list or the overlap file is gone, see (6)). Under
++the per-probe table the text prints each rule part with its per-seed differences and seed SE, as M1's verdict text did
++(MINOR G).
+ """
+ 
+ from __future__ import annotations
+ 
+ import argparse
++import hashlib
+ import json
+ import math
+ import sys
+@@ -38,68 +69,169 @@
+ 
+ import numpy as np
+ 
+-SETS = ("clinc150", "banking77", "hwu64")
++SET = "mtop_en"
+ SEEDS = (7, 8, 9)
+-TM_CONFIGS = (("C4", 1), ("a3B", 1), ("potion", 1), ("a3B_3c", 1), ("C4_3c", 1), ("a3B_twin", 1), ("a3B", 5))
+-LR_ARMS = ("C4", "a3B", "potion", "a3B_3c", "C4_3c", "a3B_twin")
+-N_BOOT, BOOT_SEED, CHUNK = 10_000, 20261021, 250
++TM_CONFIGS = (("C4", 1), ("a3B", 1), ("potion", 1))
++LR_ARMS = ("C4", "a3B", "potion")
++N_BOOT, BOOT_SEED, CHUNK = 10_000, 20261025, 250
+ EPS = 1e-9
+-# (name, probe, a, b, bar or None); a TM side is (arm, repeat)
++MATCHED_V1_SHA256 = "1ea621f8c8a67ff05c76c4b30a595bdc2f650ddfc85586c4bf3d1462b8d98405"
++EXPECTED_TABLE = {"C4": ("ppw_S1000_d500_e0.5", "e1771d9eaf4a07f7"), "a3B": ("a3B_d768", "4a1ed2aed7aa4ce7"),
++                  "potion": ("potion-base-32M", "minishlab/potion-base-32M@1e5a03f8eeb2c98b928fbbd846f22f816360919f")}
++# (name, probe, a, b, bar or None); a TM side is (arm, repeat), an LR side is the arm's name
+ COMPARISONS = (
+     ("H1_tm", "tm", ("a3B", 1), ("C4", 1), 0.5), ("H1_lr", "lr", "a3B", "C4", 0.5),
+     ("H2_tm", "tm", ("a3B", 1), ("potion", 1), -0.5), ("H2_lr", "lr", "a3B", "potion", -0.5),
+-    ("H3a_lr", "lr", "a3B_3c", "a3B", 0.5), ("H3b_lr", "lr", "a3B_3c", "a3B_twin", 0.5),
+-    ("tm_3c_minus_a3B", "tm", ("a3B_3c", 1), ("a3B", 1), None),
+-    ("tm_3c_minus_a3B_repeat5", "tm", ("a3B_3c", 1), ("a3B", 5), None),
+-    ("tm_a3B_repeat5_minus_a3B", "tm", ("a3B", 5), ("a3B", 1), None),
+-    ("tm_3c_minus_twin", "tm", ("a3B_3c", 1), ("a3B_twin", 1), None),
+-    ("tm_twin_minus_a3B", "tm", ("a3B_twin", 1), ("a3B", 1), None),
+-    ("tm_ablation_a3B_3c_minus_C4_3c", "tm", ("a3B_3c", 1), ("C4_3c", 1), None),
+-    ("lr_ablation_a3B_3c_minus_C4_3c", "lr", "a3B_3c", "C4_3c", None),
+-    ("lr_twin_minus_a3B", "lr", "a3B_twin", "a3B", None),
++    ("tm_minus_lr_C4", "tm-lr", ("C4", 1), "C4", None),
++    ("tm_minus_lr_a3B", "tm-lr", ("a3B", 1), "a3B", None),
++    ("tm_minus_lr_potion", "tm-lr", ("potion", 1), "potion", None),
+ )
+-HYP = {"H1": ("H1_tm", "H1_lr"), "H2": ("H2_tm", "H2_lr"), "H3a": ("H3a_lr",), "H3b": ("H3b_lr",)}
+-
+-
+-def show(n: str, point: dict, ci: dict, se: dict, per: dict) -> str:
+-    """One comparison as text: the point, the interval and, for TM, the per-seed differences and the seed SE."""
+-    s = f"{n} {point[n]:+.2f} [{ci[n][0]:+.2f}, {ci[n][1]:+.2f}]"
+-    if n in se:
+-        s += f" (per seed {', '.join(f'{v:+.2f}' for v in per[n])}; seed SE {se[n]:.2f})"
+-    return s
++HYP = {"H1": ("H1_tm", "H1_lr"), "H2": ("H2_tm", "H2_lr")}
++RULE = {"H1": "a3B - C4 >= +0.5 points with TM and with LR",
++        "H2": "a3B - potion >= -0.5 points with TM and with LR, one-sided (no upper bound)"}
++WEAK = {"H1": ("not STRONG: a point-estimate result, weak evidence (tu/PLAN_M2.md Power: at no true gain H1 is MET in "
++               "0.4-10.5% of runs)"),
++        "H2": ("not STRONG: a point-estimate result, weak evidence (tu/PLAN_M2.md Power: at a true -1.0 H2 is MET in "
++               "0.1-7.8% of runs)")}
++TAIL = {"H1": ("Provenance: a3B is network-free at run time, with bge-base-en-v1.5@a5beb1e3 as teacher at training time; "
++               "C4 uses no neural network at any stage."),
++        "H2": ("Provenance: a3B is network-free at run time, with bge-base-en-v1.5@a5beb1e3 as teacher at training time; "
++               "potion-base-32M@1e5a03f8 is distilled from bge-base-en-v1.5 by its authors, so the two share the teacher "
++               "family.")}
++PROVENANCE = (
++    "MTOP English en/test, read once by this registered run (use count 0 -> 1); numbers on MTOP English only, never "
++    "pooled with M1's three reused splits. C4 (ppw_S1000_d500_e0.5): no neural network at any stage. a3B (a3B_d768): "
++    "network-free at run time, bge-base-en-v1.5@a5beb1e3 as teacher at training time. potion-base-32M@1e5a03f8: the "
++    "published static table, distilled from bge-base-en-v1.5 by its authors (the teacher revision they used is not "
++    "known). MTEB's English classification tasks include MTOP intent and domain, so MTOP texts in the teacher's or "
++    "potion's training data, or model selection on MTOP's test split by their developers, cannot be ruled out; teacher "
++    "contamination would inflate H1 (a3B has the teacher, C4 does not) and affects H2 less (both share the teacher).")
++
++
++def iv(ci) -> str:
++    return "no seed level" if ci is None else f"[{ci[0]:+.2f}, {ci[1]:+.2f}]"
++
++
++def show(n: str, comp: dict) -> str:
++    """One comparison as text: the point, the registered interval, the seed-inclusive interval (or "no seed level")
++    and, for a TM side, the per-seed differences and the seed SE."""
++    c = comp[n]
++    s = f"{n} {c['point']:+.2f} {iv(c['ci95'])}"
++    s += " (no seed level" if c["ci95_seed_inclusive"] is None else f" (seed-inclusive {iv(c['ci95_seed_inclusive'])}"
++    if "seed_se" in c:
++        s += f"; per seed {', '.join(f'{v:+.2f}' for v in c['per_seed'])}; seed SE {c['seed_se']:.2f}"
++    return s + f"; en/eval {c['val_point_best_epoch']:+.2f})"
++
++
++def claim(h: str, hyp: dict, comp: dict) -> str:
++    """The claim sentence of a hypothesis, written from the numbers (see (1))."""
++    tm, lr = HYP[h]
++    ct, cl = comp[tm], comp[lr]
++    if hyp[h]["met"]:
++        if h == "H1":
++            s = (f"H1 MET: a3B - C4 is at least +0.5 points on MTOP English with the TM ({ct['point']:+.2f} {iv(ct['ci95'])}) "
++                 f"and with LR ({cl['point']:+.2f} {iv(cl['ci95'])}) (point estimates)")
++        else:
++            s = ("H2 MET: a3B is no more than 0.5 points below potion-base-32M on MTOP English with the TM and with LR "
++                 f"(point estimates; one-sided; TM {ct['point']:+.2f} {iv(ct['ci95'])}, LR {cl['point']:+.2f} {iv(cl['ci95'])})")
++        if hyp[h]["strong"]:
++            s += f"; the lower ends of the item-level 95% intervals clear {ct['bar']:+.1f}"
++            if hyp[h]["strong_item_level_only"]:
++                s += (f" (on the item-level interval only: the TM's seed-inclusive lower end is "
++                      f"{ct['ci95_seed_inclusive'][0]:+.2f})")
++        else:
++            s += f"; {WEAK[h]}"
++        return s + ". " + TAIL[h]
++    diff = "a3B - C4" if h == "H1" else "a3B - potion"
++    parts = [f"with {name}, {diff} is {c['point']:+.2f} {iv(c['ci95'])}: "
++             + ("holds" if c["point"] >= c["bar"] - EPS else "below the bar") for name, c in (("the TM", ct), ("LR", cl))]
++    return (f"{h} NOT MET (the registered rule {RULE[h]} was not met): " + "; ".join(parts)
++            + ". A true difference inside the interval is not ruled out. " + TAIL[h])
+ 
+ 
+ def check_rows(tm: list[dict], lr: list[dict]) -> list[str]:
+     errs = []
+     if any(r.get("smoke") for r in tm):
+         errs.append("a smoke row is in the TM results")
+-    rows = [r for r in tm if r.get("tag") == "m1"]
++    for r in tm:
++        if r.get("tag") != "m2" or r.get("dataset") != SET:
++            errs.append(f"TM row with tag {r.get('tag')!r} and dataset {r.get('dataset')!r}: expected 'm2' and {SET!r}")
++    for r in lr:
++        if r.get("dataset") != SET:
++            errs.append(f"LR row {r.get('name')!r} with dataset {r.get('dataset')!r}: expected {SET!r}")
++    rows = [r for r in tm if r.get("tag") == "m2" and r.get("dataset") == SET]
++    lrs = [r for r in lr if r.get("dataset") == SET]
+     cfg0 = None
+-    for d in SETS:
+-        for arm, rep in TM_CONFIGS:
+-            got = [r for r in rows if r["dataset"] == d and r["arm"] == arm and r["repeat"] == rep]
+-            seeds = sorted(r["seed"] for r in got)
+-            if seeds != list(SEEDS):
+-                errs.append(f"TM {d} {arm} repeat {rep}: seeds {seeds}, expected {list(SEEDS)}")
+-            for r in got:
+-                if r["s"] != 8.0:
+-                    errs.append(f"TM {d} {arm} repeat {rep} seed {r['seed']}: s {r['s']}")
+-                c = {k: v for k, v in r["cfg"].items() if k != "seed"}
+-                if cfg0 is None:
+-                    cfg0 = c
+-                elif c != cfg0:
+-                    errs.append(f"TM {d} {arm} repeat {rep} seed {r['seed']}: TM settings differ")
+-        for arm in LR_ARMS:
+-            n = sum(1 for r in lr if r["dataset"] == d and r["name"] == arm)
+-            if n != 1:
+-                errs.append(f"LR {d} {arm}: {n} rows, expected 1")
++    for arm, rep in TM_CONFIGS:
++        got = [r for r in rows if r["arm"] == arm and r["repeat"] == rep]
++        seeds = sorted(r["seed"] for r in got)
++        if seeds != list(SEEDS):
++            errs.append(f"TM {arm} repeat {rep}: seeds {seeds}, expected {list(SEEDS)}")
++        for r in got:
++            if r["s"] != 8.0:
++                errs.append(f"TM {arm} repeat {rep} seed {r['seed']}: s {r['s']}")
++            c = {k: v for k, v in r["cfg"].items() if k != "seed"}
++            if cfg0 is None:
++                cfg0 = c
++            elif c != cfg0:
++                errs.append(f"TM {arm} repeat {rep} seed {r['seed']}: TM settings differ")
++            if (r.get("table"), r.get("table_sha256")) != EXPECTED_TABLE[arm]:
++                errs.append(f"TM {arm} seed {r['seed']}: table {r.get('table')} {r.get('table_sha256')}, expected "
++                            f"{EXPECTED_TABLE[arm][0]} {EXPECTED_TABLE[arm][1]}")
++    extra = sorted({(r["arm"], r["repeat"]) for r in rows} - set(TM_CONFIGS))
++    if extra:
++        errs.append(f"TM rows of configurations not in M2: {extra}")
++    for arm in LR_ARMS:
++        got = [r for r in lrs if r["name"] == arm]
++        if len(got) != 1:
++            errs.append(f"LR {arm}: {len(got)} rows, expected 1")
++        for r in got:
++            if r.get("arm") != arm or (r.get("table"), r.get("table_sha256")) != EXPECTED_TABLE[arm]:
++                errs.append(f"LR {arm}: arm {r.get('arm')!r}, table {r.get('table')} {r.get('table_sha256')}, expected "
++                            f"{arm} {EXPECTED_TABLE[arm][0]} {EXPECTED_TABLE[arm][1]}")
++        caches = {r.get("kmeans_run_id") for r in rows if r["arm"] == arm} | {r.get("kmeans_run_id") for r in got}
++        if len(caches) > 1:
++            errs.append(f"arm {arm}: its TM and LR rows come from {len(caches)} feature caches (kmeans_run_id {sorted(map(str, caches))})")
++    return errs
++
++
++def check_matched(m: dict, n: int, ids: list[str] | None) -> list[str]:
++    errs = []
++    pos, para = m.get("positions", []), m.get("paraphrase_exact", {}).get("positions", [])
++    if m.get("n_test") != n:
++        errs.append(f"matched list n_test {m.get('n_test')} != test items {n}")
++    if m.get("n_left_out") != len(pos) or m.get("n_kept") != n - len(pos) or len(set(pos)) != len(pos):
++        errs.append("matched list counts do not fit its positions")
++    if any(not (0 <= p < n) for p in pos + para):
++        errs.append("a matched position is outside the test split")
++    if ids is None:
++        errs.append("the loaded test split has no IDs to check the matched list against")
++    elif len(ids) != n:
++        errs.append(f"{len(ids)} test IDs for {n} test items")
++    elif not errs:
++        if [ids[p] for p in pos] != list(m.get("ids", [])):
++            errs.append("the IDs at the matched positions differ from the list's IDs")
++        if [ids[p] for p in para] != list(m.get("paraphrase_exact", {}).get("ids", [])):
++            errs.append("the IDs at the paraphrase_exact positions differ from the list's IDs")
+     return errs
+ 
+ 
+-def boot_intervals(D: dict[str, np.ndarray], set_index: int) -> dict[str, tuple[float, float]]:
+-    """95% percentile intervals (points) of mean(D[name][idx]) over N_BOOT shared index draws."""
++def c4_fit_positions(ov: dict, m: dict, n: int) -> tuple[list[int], list[str]]:
++    c4 = sorted({int(i) for k in ("exact", "order_free", "one_edit") for i in ov["hits"]["test"]["c4_fit"][k]})
++    errs = []
++    if ov.get("mtop_sizes", {}).get("test") != n:
++        errs.append(f"overlap file test size {ov.get('mtop_sizes', {}).get('test')} != test items {n}")
++    if len(c4) != m.get("per_pool_union", {}).get("c4_fit"):
++        errs.append(f"c4_fit union {len(c4)} != the matched list's per_pool_union c4_fit {m.get('per_pool_union', {}).get('c4_fit')}")
++    if not set(c4) <= set(m.get("positions", [])):
++        errs.append("a c4_fit position is not in the matched list")
++    return c4, errs
++
++
++def boot_items(D: dict[str, np.ndarray], stream: int) -> dict[str, tuple[float, float]]:
++    """95% percentile intervals (points) of mean(D[name][idx]) over N_BOOT shared index draws (M1's method)."""
+     n = len(next(iter(D.values())))
+-    rng = np.random.default_rng([BOOT_SEED, set_index])
++    rng = np.random.default_rng([BOOT_SEED, stream])
+     stats = {k: [] for k in D}
+     for _ in range(N_BOOT // CHUNK):
+         idx = rng.integers(0, n, size=(CHUNK, n))
+@@ -112,112 +244,265 @@
+     return out
+ 
+ 
++def boot_two_level(ok_tm: dict, ok_lr: dict, stream: int) -> dict[str, tuple[float, float] | None]:
++    """The seed-inclusive interval (no rule): items, then seeds within each TM configuration (see (4)); None for the
++    LR-only comparisons, which have no seed level."""
++    n = len(next(iter(ok_lr.values())))
++    rng = np.random.default_rng([BOOT_SEED, stream])
++    stats = {name: [] for name, *_ in COMPARISONS}
++    cols = np.arange(CHUNK)[:, None]
++    for _ in range(N_BOOT // CHUNK):
++        idx = rng.integers(0, n, size=(CHUNK, n))
++        acc = {}
++        for key in TM_CONFIGS:
++            m = ok_tm[key]  # seeds x items
++            per = np.stack([m[j][idx].mean(1) for j in range(m.shape[0])])  # seeds x CHUNK
++            pick = rng.integers(0, m.shape[0], size=(CHUNK, m.shape[0]))
++            acc[key] = per[pick, cols].mean(1)
++        for arm in LR_ARMS:
++            acc[arm] = ok_lr[arm][idx].mean(1)
++        for name, _probe, x, z, _bar in COMPARISONS:
++            stats[name].append(acc[x] - acc[z])
++    out = {}
++    for name, probe, _x, _z, _bar in COMPARISONS:
++        if probe == "lr":
++            out[name] = None
++            continue
++        s = 100 * np.concatenate(stats[name])
++        out[name] = (round(float(np.percentile(s, 2.5)), 4), round(float(np.percentile(s, 97.5)), 4))
++    return out
++
++
++def diffs(ok_tm: dict, ok_lr: dict, keep: np.ndarray | None = None):
++    """Per comparison: the per-item difference D (seed-averaged for TM), the point, and for TM the per-seed values and
++    the paired seed SE."""
++    D, point, se, per = {}, {}, {}, {}
++    for name, probe, x, z, _bar in COMPARISONS:
++        if probe == "lr":
++            d = ok_lr[x] - ok_lr[z]
++            d = d if keep is None else d[keep]
++            D[name] = d
++        else:
++            diff = ok_tm[x] - (ok_tm[z] if probe == "tm" else ok_lr[z][None, :])  # seeds x items
++            diff = diff if keep is None else diff[:, keep]
++            D[name] = diff.mean(0)
++            per_seed = 100 * diff.mean(1)
++            per[name] = [round(float(v), 4) for v in per_seed]
++            se[name] = round(float(per_seed.std(ddof=1) / math.sqrt(len(SEEDS))), 4)
++        point[name] = round(float(100 * D[name].mean()), 4)
++    return D, point, se, per
++
++
++def val_points(T: dict, L: dict) -> dict[str, float]:
++    """Each comparison's en/eval difference (best-epoch val accuracies of the same rows; descriptive, optimistic)."""
++    vt = {key: 100 * sum(T[key][s]["val_acc"] for s in SEEDS) / len(SEEDS) for key in TM_CONFIGS}
++    vl = {arm: 100 * L[arm]["lr_val"] for arm in LR_ARMS}
++    out = {}
++    for name, probe, x, z, _bar in COMPARISONS:
++        a = vt[x] if probe in ("tm", "tm-lr") else vl[x]
++        b = vt[z] if probe == "tm" else vl[z]
++        out[name] = round(a - b, 4)
++    return out
++
++
+ def main() -> int:
+     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
+-    ap.add_argument("--m1", type=Path, required=True)
+-    ap.add_argument("--overlap", type=Path, default=None)
++    ap.add_argument("--m2", type=Path, required=True)
++    ap.add_argument("--matched", type=Path, required=True, help="the frozen matched list (fresh/mtop_test_matched_v1.json)")
++    ap.add_argument("--overlap", type=Path, default=None, help="its source overlap file (fresh/mtop_overlap.json), for the c4_fit line")
+     ap.add_argument("--labels", default="", help="tests only: FILE.py:function returning a stand-in dataset")
+     a = ap.parse_args()
+-    outj, outt = a.m1 / "verdict_m1.json", a.m1 / "verdict_m1.txt"
++    outj, outt = a.m2 / "verdict_m2.json", a.m2 / "verdict_m2.txt"
+     for p in (outj, outt):
+         if p.exists():
+             print(f"refusing to overwrite {p}", file=sys.stderr)
+             return 2
+-    tm = [json.loads(x) for x in (a.m1 / "results_m1_tm.jsonl").read_text().splitlines() if x.strip()]
+-    lr = [json.loads(x) for x in (a.m1 / "results_m1_lr.jsonl").read_text().splitlines() if x.strip()]
++    tm = [json.loads(x) for x in (a.m2 / "results_m2_tm.jsonl").read_text().splitlines() if x.strip()]
++    lr = [json.loads(x) for x in (a.m2 / "results_m2_lr.jsonl").read_text().splitlines() if x.strip()]
+     errs = check_rows(tm, lr)
+     if errs:
+-        print("REFUSED:\n" + "\n".join(errs), file=sys.stderr)
++        print("REFUSED:\n" + "\n".join(errs) + "\nH1 and H2 are NOT EVALUABLE from these rows (tu/PLAN_M2.md: a run that "
++              "failed after its test read is not rerun).", file=sys.stderr)
+         return 3
+-    ov = json.loads(a.overlap.read_text()) if a.overlap else None
+     sys.path.insert(0, str(Path(__file__).resolve().parent))
+-    from m1_feats import load_ds
++    from m2_feats import load_ds
+ 
+-    T = {(d, arm, rep): {r["seed"]: r for r in tm if r.get("tag") == "m1" and r["dataset"] == d and r["arm"] == arm
+-                          and r["repeat"] == rep} for d in SETS for arm, rep in TM_CONFIGS}
+-    L = {(d, arm): next(r for r in lr if r["dataset"] == d and r["name"] == arm) for d in SETS for arm in LR_ARMS}
+-    res, lines = {"sets": {}, "hypotheses": {}, "bootstrap": {"resamples": N_BOOT, "seed": BOOT_SEED}}, []
+-    count = {h: [0, 0] for h in HYP}  # [met, strong]
+-    for si, d in enumerate(SETS):
+-        y = load_ds(d, a.labels).labels["test"]
+-        ok_tm, ok_lr = {}, {}
+-        for arm, rep in TM_CONFIGS:
+-            rows = T[(d, arm, rep)]
+-            m = np.stack([(np.load(rows[s]["preds"]) == y) for s in SEEDS]).astype(np.float64)
+-            for j, s in enumerate(SEEDS):
+-                if round(float(m[j].mean()), 4) != rows[s]["test_acc"]:
+-                    print(f"REFUSED: {d} {arm}@{rep} seed {s}: predictions give {m[j].mean():.4f}, row {rows[s]['test_acc']}",
+-                          file=sys.stderr)
+-                    return 4
+-            ok_tm[(arm, rep)] = m
+-        for arm in LR_ARMS:
+-            m = (np.load(L[(d, arm)]["preds"]) == y).astype(np.float64)
+-            if round(float(m.mean()), 4) != L[(d, arm)]["lr_test"]:
+-                print(f"REFUSED: {d} LR {arm}: predictions give {m.mean():.4f}, row {L[(d, arm)]['lr_test']}", file=sys.stderr)
++    ds = load_ds(SET, a.labels)
++    y = np.asarray(ds.labels["test"])
++    n = len(y)
++    mbytes = a.matched.read_bytes()
++    try:
++        matched = json.loads(mbytes)
++        m_errs = check_matched(matched, n, getattr(ds, "ids", {}).get("test"))
++    except (ValueError, TypeError, AttributeError) as e:
++        matched, m_errs = {}, [f"the matched list is unreadable: {type(e).__name__}: {e}"]
++    c4pos, obytes, o_errs = None, None, []
++    if a.overlap is not None:
++        obytes = a.overlap.read_bytes()
++        try:
++            c4pos, o_errs = c4_fit_positions(json.loads(obytes), matched, n)
++        except (ValueError, TypeError, KeyError, AttributeError) as e:
++            o_errs = [f"the overlap file is unreadable: {type(e).__name__}: {e}"]
++    T = {key: {r["seed"]: r for r in tm if r["arm"] == key[0] and r["repeat"] == key[1]} for key in TM_CONFIGS}
++    L = {arm: next(r for r in lr if r["name"] == arm) for arm in LR_ARMS}
++    ok_tm, ok_lr = {}, {}
++    for key in TM_CONFIGS:
++        preds = [np.load(T[key][s]["preds"]) for s in SEEDS]
++        if any(len(p) != n for p in preds):
++            print(f"REFUSED: {key[0]}@{key[1]}: a prediction file does not have {n} entries", file=sys.stderr)
++            return 4
++        m = np.stack([(p == y) for p in preds]).astype(np.float64)
++        for j, s in enumerate(SEEDS):
++            if round(float(m[j].mean()), 4) != T[key][s]["test_acc"]:
++                print(f"REFUSED: {key[0]}@{key[1]} seed {s}: predictions give {m[j].mean():.4f}, row {T[key][s]['test_acc']}",
++                      file=sys.stderr)
+                 return 4
+-            ok_lr[arm] = m
+-        D, point, se, per = {}, {}, {}, {}
+-        for name, probe, x, z, _bar in COMPARISONS:
+-            if probe == "tm":
+-                diff = ok_tm[x] - ok_tm[z]  # seeds x examples
+-                D[name] = diff.mean(0)
+-                per_seed = 100 * diff.mean(1)
+-                per[name] = [round(float(v), 4) for v in per_seed]
+-                se[name] = round(float(per_seed.std(ddof=1) / math.sqrt(len(SEEDS))), 4)
+-            else:
+-                D[name] = ok_lr[x] - ok_lr[z]
+-            point[name] = round(float(100 * D[name].mean()), 4)
+-        ci = boot_intervals(D, si)
+-        comp = {name: {"point": point[name], "ci95": ci[name],
+-                       **({"per_seed": per[name], "seed_se": se[name]} if name in se else {}),
+-                       **({"bar": bar} if bar is not None else {})} for name, _p, _x, _z, bar in COMPARISONS}
+-        hyp = {}
+-        for h, parts in HYP.items():
+-            met = all(point[p] >= comp[p]["bar"] - EPS for p in parts)
+-            strong = all(ci[p][0] >= comp[p]["bar"] - EPS for p in parts)
+-            hyp[h] = {"met": met, "strong": strong}
+-            count[h][0] += met
+-            count[h][1] += strong
+-        means = {f"{arm}@{rep}": {"test": round(float(100 * ok_tm[(arm, rep)].mean()), 4),
+-                                  "test_per_seed": [round(float(100 * v), 4) for v in ok_tm[(arm, rep)].mean(1)],
+-                                  "test_seed_sd": round(float(100 * ok_tm[(arm, rep)].mean(1).std(ddof=1)), 4),
+-                                  "val": round(100 * sum(T[(d, arm, rep)][s]["val_acc"] for s in SEEDS) / len(SEEDS), 4)}
+-                 for arm, rep in TM_CONFIGS}
+-        lrm = {arm: {"test": round(float(100 * ok_lr[arm].mean()), 4), "val": round(100 * L[(d, arm)]["lr_val"], 4),
+-                     "C": L[(d, arm)]["C"]} for arm in LR_ARMS}
+-        without = None
+-        if ov is not None:
+-            keep = np.ones(len(y), bool)
+-            keep[ov["sets"][d]["matched_test_idx"]] = False
+-            without = {"n_dropped": int((~keep).sum()),
+-                       "tm": {f"{arm}@{rep}": round(float(100 * ok_tm[(arm, rep)][:, keep].mean()), 4) for arm, rep in TM_CONFIGS},
+-                       "lr": {arm: round(float(100 * ok_lr[arm][keep].mean()), 4) for arm in LR_ARMS}}
+-        res["sets"][d] = {"n_test": len(y), "hypotheses": hyp, "comparisons": comp, "tm": means, "lr": lrm,
+-                          "without_matched_test_texts": without}
+-        lines.append(f"{d} (n_test {len(y)}): TM " + " / ".join(f"{k} {v['test']:.2f} (seed SD {v['test_seed_sd']:.2f})"
+-                                                              for k, v in means.items())
+-                     + "; LR " + " / ".join(f"{k} {v['test']:.2f}" for k, v in lrm.items()))
+-        for h, parts in HYP.items():
+-            lines.append(f"  {h} {'meets' if hyp[h]['met'] else 'misses'}{' (strong)' if hyp[h]['strong'] else ''}: "
+-                         + "; ".join(show(p, point, ci, se, per) for p in parts))
+-        lines.append("  descriptive: " + "; ".join(show(n, point, ci, se, per) for n, _p, _x, _z, bar in COMPARISONS
+-                                                  if bar is None))
++        ok_tm[key] = m
++    for arm in LR_ARMS:
++        p = np.load(L[arm]["preds"])
++        if len(p) != n:
++            print(f"REFUSED: LR {arm}: the prediction file does not have {n} entries", file=sys.stderr)
++            return 4
++        m = (p == y).astype(np.float64)
++        if round(float(m.mean()), 4) != L[arm]["lr_test"]:
++            print(f"REFUSED: LR {arm}: predictions give {m.mean():.4f}, row {L[arm]['lr_test']}", file=sys.stderr)
++            return 4
++        ok_lr[arm] = m
++    D, point, se, per = diffs(ok_tm, ok_lr)
++    ci = boot_items(D, 0)
++    ci2 = boot_two_level(ok_tm, ok_lr, 1)
++    vp = val_points(T, L)
++    comp = {name: {"point": point[name], "ci95": ci[name], "ci95_seed_inclusive": ci2[name],
++                   **({"per_seed": per[name], "seed_se": se[name]} if name in se else {}),
++                   "val_point_best_epoch": vp[name], **({"bar": bar} if bar is not None else {})}
++            for name, _p, _x, _z, bar in COMPARISONS}
++    hyp = {}
++    for h, parts in HYP.items():
++        met = all(point[p] >= comp[p]["bar"] - EPS for p in parts)
++        strong = all(ci[p][0] >= comp[p]["bar"] - EPS for p in parts)  # M1's definition, not conditioned on met
++        seed_miss = any(ci2[p] is not None and ci2[p][0] < comp[p]["bar"] - EPS for p in parts)
++        hyp[h] = {"met": met, "strong": strong, "strong_item_level_only": bool(strong and seed_miss), "rule": RULE[h],
++                  "per_probe": {p: {"holds": point[p] >= comp[p]["bar"] - EPS, "lower_clears": ci[p][0] >= comp[p]["bar"] - EPS,
++                                    "seed_inclusive_lower_clears": (None if ci2[p] is None else ci2[p][0] >= comp[p]["bar"] - EPS)}
++                                for p in parts}}
++    for h in HYP:
++        hyp[h]["claim"] = claim(h, hyp, comp)
++    yv = np.asarray(ds.labels["val"])
++    means = {f"{arm}@{rep}": {"test": round(float(100 * ok_tm[(arm, rep)].mean()), 4),
++                              "test_per_seed": [round(float(100 * v), 4) for v in ok_tm[(arm, rep)].mean(1)],
++                              "test_seed_sd": round(float(100 * ok_tm[(arm, rep)].mean(1).std(ddof=1)), 4),
++                              "val": round(100 * sum(T[(arm, rep)][s]["val_acc"] for s in SEEDS) / len(SEEDS), 4),
++                              "best_epochs": [T[(arm, rep)][s].get("best_epoch") for s in SEEDS]}
++             for arm, rep in TM_CONFIGS}
++    lrm = {arm: {"test": round(float(100 * ok_lr[arm].mean()), 4), "val": round(100 * L[arm]["lr_val"], 4),
++                 "C": L[arm]["C"], "acc_by_C": L[arm].get("acc_by_C")} for arm in LR_ARMS}
++
++    def subset(keep: np.ndarray, stream: int, rule: str, pools: str) -> dict:
++        Dk, pk, _sek, perk = diffs(ok_tm, ok_lr, keep)
++        cik = boot_items(Dk, stream)
++        return {"rule": rule, "pools": pools, "n_left_out": int((~keep).sum()), "n_kept": int(keep.sum()),
++                "comparisons": {k: {"point": pk[k], "ci95_items": cik[k], **({"per_seed": perk[k]} if k in perk else {})}
++                                for k in pk},
++                "tm": {f"{arm}@{rep}": round(float(100 * ok_tm[(arm, rep)][:, keep].mean()), 4) for arm, rep in TM_CONFIGS},
++                "lr": {arm: round(float(100 * ok_lr[arm][keep].mean()), 4) for arm in LR_ARMS}}
++
++    ne = lambda reasons: {"rule": "none (descriptive)", "status": "not evaluable", "reasons": reasons}
++    ppu = matched.get("per_pool_union", {})
++    pools = (f"c4_fit {ppu.get('c4_fit', '?')} (3a's C4 fit sentences: a3B's teacher-fit input, the one pool an M2 arm's "
++             f"training touched); ours_train_val {ppu.get('ours_train_val', '?')} and paraphrases {ppu.get('paraphrases', '?')} "
++             "(no M2 arm trained on them); the pools overlap")
++    if m_errs:
++        secondary, para = ne(m_errs), ne(m_errs)
++    else:
++        keep = np.ones(n, bool)
++        keep[matched["positions"]] = False
++        secondary = {**subset(keep, 2, "none (descriptive; not a contamination control for most pools)", pools),
++                     "status": "evaluated"}
++        pp = np.asarray(matched.get("paraphrase_exact", {}).get("positions", []), dtype=np.int64)
++        para = {"rule": "none (descriptive; no M2 arm trains on paraphrases)", "status": "evaluated", "n": int(len(pp)),
++                "tm": {f"{arm}@{rep}": (round(float(100 * ok_tm[(arm, rep)][:, pp].mean()), 4) if len(pp) else None)
++                       for arm, rep in TM_CONFIGS},
++                "lr": {arm: (round(float(100 * ok_lr[arm][pp].mean()), 4) if len(pp) else None) for arm in LR_ARMS}}
++    sec_c4 = None
++    if a.overlap is not None:
++        if m_errs or o_errs:
++            sec_c4 = ne(m_errs + o_errs)
++        else:
++            kc = np.ones(n, bool)
++            kc[c4pos] = False
++            sec_c4 = {**subset(kc, 3, "none (descriptive)", "c4_fit only (from fresh/mtop_overlap.json)"), "status": "evaluated"}
++    counts = {"n_test": n, "n_val": int(len(yv)), "train_intents": len(ds.intents),
++              "test_items_intent_not_in_train": int((y < 0).sum()), "val_items_intent_not_in_train": int((yv < 0).sum())}
++
++    def flag(h: str) -> str:
++        if hyp[h]["met"]:
++            if hyp[h]["strong"]:
++                return "MET (STRONG on the item-level interval only)" if hyp[h]["strong_item_level_only"] else "MET (STRONG)"
++            return "MET (not strong)"
++        return "NOT MET (the interval lower ends clear the bar)" if hyp[h]["strong"] else "NOT MET"
++
++    head = "VERDICT M2 (MTOP English test, first use): " + "; ".join(f"{h} {flag(h)}" for h in HYP)
++    res = {"headline": head, "set": SET, "hypotheses": hyp, "comparisons": comp, "tm": means, "lr": lrm, "counts": counts,
++           "secondary_without_matched": secondary, "secondary_without_c4_fit": sec_c4, "paraphrase_exact_items": para,
++           "bootstrap": {"resamples": N_BOOT, "registered": f"default_rng([{BOOT_SEED}, 0]), items only",
++                         "seed_inclusive": f"default_rng([{BOOT_SEED}, 1]), items then seeds within each TM configuration",
++                         "secondary": f"default_rng([{BOOT_SEED}, 2]), items only",
++                         "secondary_c4_fit": f"default_rng([{BOOT_SEED}, 3]), items only"},
++           "matched": {"path": str(a.matched), "sha256": hashlib.sha256(mbytes).hexdigest(),
++                       "is_frozen_v1": hashlib.sha256(mbytes).hexdigest() == MATCHED_V1_SHA256},
++           "overlap": ({"path": str(a.overlap), "sha256": hashlib.sha256(obytes).hexdigest()} if obytes is not None else None),
++           "multiplicity": ("H1 and H2 are separate claims with no multiplicity correction; each stands alone. No combined "
++                            "line; no claim rests on any one rule being met."),
++           "interval_limit": ("Registered 95% intervals: paired bootstrap over test items (10,000 resamples, "
++                              f"default_rng([{BOOT_SEED}, 0])); they leave out the variance between training seeds, the "
++                              "k-means and C, so the per-seed differences, the seed SDs and a seed-inclusive two-level "
++                              "interval (no rule; LR has no seed level) are given beside every TM number."),
++           "provenance": PROVENANCE}
++    lines = [head, PROVENANCE, res["multiplicity"], res["interval_limit"],
++             f"n_test {n}; train intents {counts['train_intents']}; test items whose intent is not in en/train "
++             f"{counts['test_items_intent_not_in_train']} (an error for every arm); val items {counts['val_items_intent_not_in_train']}.",
++             "TM (mean of seeds 7-9): " + " / ".join(f"{k} {v['test']:.2f} (per seed {', '.join(f'{x:.2f}' for x in v['test_per_seed'])};"
++                                                       f" seed SD {v['test_seed_sd']:.2f}; val {v['val']:.2f})" for k, v in means.items()),
++             "LR (C picked on en/eval): " + " / ".join(f"{k} {v['test']:.2f} (C {v['C']:g}; val {v['val']:.2f})" for k, v in lrm.items()),
++             "",
++             "| Rule | Probe | Point | Bar | Holds | Item-level 95% (registered) | Lower clears | Seed-inclusive 95% (no rule) | Lower clears | en/eval (best epoch) |",
++             "|---|---|---|---|---|---|---|---|---|---|"]
++    yn = lambda b: "-" if b is None else ("yes" if b else "no")
++    for h, parts in HYP.items():
++        for p in parts:
++            c, pp_ = comp[p], hyp[h]["per_probe"][p]
++            lines.append(f"| {h} | {'TM' if p.endswith('_tm') else 'LR'} | {c['point']:+.2f} | {c['bar']:+.1f} | {yn(pp_['holds'])} | "
++                         f"{iv(c['ci95'])} | {yn(pp_['lower_clears'])} | {iv(c['ci95_seed_inclusive'])} | "
++                         f"{yn(pp_['seed_inclusive_lower_clears'])} | {c['val_point_best_epoch']:+.2f} |")
++    lines.append("")
++    lines.append("  rule parts (per-seed differences and seed SE for TM): " + "; ".join(show(p, comp) for h in HYP for p in HYP[h]))
+     for h in HYP:
+-        res["hypotheses"][h] = {"sets_met": count[h][0], "met": count[h][0] >= 2, "sets_strong": count[h][1],
+-                                "strong": count[h][1] >= 2}
+-    head = "VERDICT M1 (test): " + "; ".join(
+-        f"{h} {'MET' if count[h][0] >= 2 else 'NOT MET'} ({count[h][0]} of 3{', STRONG' if count[h][1] >= 2 else ''}"
+-        f"{f', strong on {count[h][1]}' if 0 < count[h][1] < 2 else ''})" for h in HYP)
+-    res["headline"] = head
+-    res["multiplicity"] = "H1, H2, H3a and H3b are separate claims with no correction; meeting one says nothing about another."
+-    res["interval_limit"] = ("95% intervals: paired bootstrap over test examples (10,000 resamples, default_rng([20261021, "
+-                             "set index])); they leave out the variance between training seeds, so the per-seed differences "
+-                             "and seed SDs are given beside every TM number.")
++        lines.append(f"  {hyp[h]['claim']}")
++    lines.append("  descriptive (no rule): " + "; ".join(show(nm, comp) for nm, _p, _x, _z, bar in COMPARISONS if bar is None))
++    for label, sec in (("secondary (no rule), without the frozen matched list v1", secondary),
++                       ("secondary (no rule), without the c4_fit pool only", sec_c4)):
++        if sec is None:
++            continue
++        if sec["status"] == "not evaluable":
++            lines.append(f"  {label}: NOT EVALUABLE ({'; '.join(sec['reasons'])}); H1 and H2 above do not use it")
++            continue
++        lines.append(f"  {label}: {sec['n_left_out']} left out (pools: {sec['pools']}), n {sec['n_kept']}: "
++                     + "; ".join(f"{k} {v['point']:+.2f} [{v['ci95_items'][0]:+.2f}, {v['ci95_items'][1]:+.2f}]"
++                                 for k, v in sec["comparisons"].items())
++                     + "; TM " + " / ".join(f"{k} {v:.2f}" for k, v in sec["tm"].items())
++                     + "; LR " + " / ".join(f"{k} {v:.2f}" for k, v in sec["lr"].items()))
++    if para["status"] == "not evaluable":
++        lines.append(f"  the paraphrase-exact items (no rule): NOT EVALUABLE ({'; '.join(para['reasons'])})")
++    elif para["n"]:
++        lines.append(f"  the {para['n']} paraphrase-exact items (no rule; no M2 arm trains on paraphrases): TM "
++                     + " / ".join(f"{k} {v:.2f}" for k, v in para["tm"].items()) + "; LR "
++                     + " / ".join(f"{k} {v:.2f}" for k, v in para["lr"].items()))
++    if m_errs or o_errs:
++        print("WARNING: secondary lines NOT EVALUABLE (H1 and H2 are written): " + "; ".join(m_errs + o_errs), file=sys.stderr)
+     with open(outj, "x") as f:
+         f.write(json.dumps(res, indent=1) + "\n")
+     with open(outt, "x") as f:
+-        f.write(head + "\n" + res["multiplicity"] + "\n" + res["interval_limit"] + "\n" + "\n".join(lines) + "\n")
+-    print(head)
++        f.write("\n".join(lines) + "\n")
+     print("\n".join(lines))
+     return 0
+ 
+
+=== m1_chain.sh -> m2_chain.sh
+parent 3643c2daa6bd74e5c6a975cc0d3fda432e523493a8713b7982c5a3c4fa5e1631  m1_chain.sh
+copy   af4f3f13b6db56ac660145eb6140cba90cfd587b9bbb6ba9da7404b85fecbb94  m2_chain.sh
+--- m1_chain.sh
++++ m2_chain.sh
+@@ -1,56 +1,71 @@
+ #!/usr/bin/env bash
+ REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd)"  # published copy: the repository root
+-# M1, the registered test of the text-understanding stack (tu/PLAN_M1.md): one GPU job, alone, after the speed block's
+-# first part, on the queue's go (the go file below). Step 0 (m1_overlap.py) ran on the CPU before the freeze; its
+-# output is pinned.
++# M2, the registered test on MTOP English (tu/PLAN_M2.md): one GPU job, alone, on the queue's go (the go file
++# below), after the freeze. Launch: setsid nohup nice -n 19 bash tu/m2_chain.sh > /dev/null 2>&1 &
++# tu/m1_chain.sh (1db3b6461cfe3bab) with these changes (one dataset, M2's arms) and nothing else:
++#   - one set, mtop_en (the loader m2_data.load); arms C4, a3B and potion only; no paraphrase, twin or repeat arm;
++#   - the code check runs FIRST, before any step that reads an MTOP file (in M1 it ran after the features), so a broken
++#     copy stops the chain while MTOP's test split is untouched;
++#   - before the go: the frozen matched list must exist (M1 checked its step-0 file);
++#   - the pins are full sha256 values (M1 compared the first 16 hex characters);
++#   - names: tu/m2, runs_m2.log, results_m2_*.jsonl, verdict_m2.*, tu/.m2/gpu_go, hooks M2_*.
++#   After the review of draft 1 (2026-10-25):
++#   - every step and the code-check comparison run under nice -n 19 (data MAJOR 2; M1 had no nice);
++#   - the code-check comparison is tu/m2_codecheck.py (tested; it adds best_epoch, the full curve and C to M1's
++#     inline comparison; design MINOR 10);
++#   - tu/m2_freeze_check.py runs before the go (and in --dry): the pins file must equal the frozen plan's pins block
++#     literally, and it must pin PLAN_M2.md itself (design MAJOR 2);
++#   - the verdict also reads fresh/mtop_overlap.json, for the c4_fit line (no rule).
+ # Steps (each skipped when its output exists, so the job can be started again; nothing is overwritten, and a run whose
+ # test predictions exist cannot run again: one test read per run):
+-#   1. m1_feats.py per set and table, ONE k-means each: a3B (arms a3B, a3B_3c, a3B_twin), C4 (C4, C4_3c), potion;
+-#   2. code check: 3c's CLINC150 rebuilt-original cache with "test" := val (m1_check_cache.py, the stand-in dataset
+-#      m1_standin.py:load; no test text or label is read): m1_tm.py (seed 4, s 8) and m1_lr.py must give 3c's 3c-ref and
+-#      ref_rebuilt rows exactly, and the same number again on that "test"; else stop;
+-#   3. TM (m1_tm.py, 4,000 clauses, T 4,000, 40 epochs, s 8, seeds 7-9): C4, a3B, potion, a3B_3c, C4_3c, a3B_twin and
+-#      a3B repeat 5, on every set;
+-#   4. LR (m1_lr.py): C4, a3B, potion, a3B_3c, C4_3c, a3B_twin, on every set;
+-#   5. m1_verdict.py.
++#   1. code check: 3c's CLINC150 cache with "test" := val (m2_check_cache.py, the stand-in dataset m2_standin.py:load,
++#      which loads CLINC150's test split into memory and replaces it with val before any use; no MTOP file is read):
++#      m2_tm.py (seed 4, s 8) and m2_lr.py must give 3c's 3c-ref and ref_rebuilt rows exactly (m2_codecheck.py);
++#   2. m2_feats.py on mtop_en, ONE k-means per table: C4 (ppw_S1000), a3B (a3B_d768), potion;
++#   3. TM (m2_tm.py, 4,000 clauses, T 4,000, 40 epochs, batch 128, s 8, seeds 7-9): C4, a3B, potion;
++#   4. LR (m2_lr.py, C in 1/10/100 on en/eval): C4, a3B, potion;
++#   5. m2_verdict.py (H1, H2, the lines with no rule).
+ # Before every step: the pinned hashes and the CPU gate (cpu_load.py over 10 s at most 4.5 cores, re-checked when the
+-# last check is over 5 min old). Every way out appends "m1 chain end: <branch> <UTC> exit <code>" to the log (the
+-# handoff line for the queue). Log tu/m1/runs_m1.log. Test hooks (tests/test_m1_chain.sh only): M1_DIR, M1_GO,
+-# M1_PINS, M1_STEP_CMD, M1_LOAD, M1_GATE_SLEEP, M1_GO_SLEEP, M1_SKIP_CODECHECK, M1_NO_NVSMI. Sleeps run as
+-# 'sleep & wait', so TERM ends a waiting chain at once; to end a running step too, signal the chain's process group.
++# last check is over 5 min old). Every way out appends "m2 chain end: <branch> <UTC> exit <code>" to the log (the
++# handoff line for the queue). Log tu/m2/runs_m2.log. Test hooks (tests/test_m2_chain.sh only): M2_DIR, M2_GO,
++# M2_PINS, M2_PLAN, M2_MATCHED, M2_STEP_CMD, M2_LOAD, M2_GATE_SLEEP, M2_GO_SLEEP, M2_SKIP_CODECHECK, M2_NO_NVSMI. Sleeps
++# run as 'sleep & wait', so TERM ends a waiting chain at once; to end a running step too, signal the process group.
++# Dry listing (no step runs, nothing is logged; the pins and the freeze check are read): bash tu/m2_chain.sh --dry
+ emb=${REPO_ROOT}/studies/text_understanding
+ tu=$emb/tu
+ c3=$tu/c3
+-cx=$tu/c3x
+-m1=${M1_DIR:-$tu/m1}
++m2=${M2_DIR:-$tu/m2}
+ py=${REPO_ROOT}/studies/decision_layer/.venv-dl/bin/python
+ load=${REPO_ROOT}/studies/decision_layer/scripts/cpu_load.py
+-log=$m1/runs_m1.log
+-go=${M1_GO:-$tu/.m1/gpu_go}
+-pins=${M1_PINS:-$m1/pins.sh}  # written at the freeze: check lines for every code and input file
+-read -r -a STEP_CMD <<< "${M1_STEP_CMD:-$py -I -B}"
+-read -r -a LOADCMD <<< "${M1_LOAD:-$py -I $load 10}"
+-gate_sleep=${M1_GATE_SLEEP:-120}
+-SETS="clinc150 banking77 hwu64"
++log=$m2/runs_m2.log
++go=${M2_GO:-$tu/.m2/gpu_go}
++pins=${M2_PINS:-$m2/pins.sh}  # written at the freeze: check lines for every code and input file
++plan=${M2_PLAN:-$tu/PLAN_M2.md}
++matched=${M2_MATCHED:-$emb/fresh/mtop_test_matched_v1.json}
++overlap=$emb/fresh/mtop_overlap.json
++read -r -a STEP_CMD <<< "${M2_STEP_CMD:-$py -I -B}"
++read -r -a LOADCMD <<< "${M2_LOAD:-$py -I $load 10}"
++gate_sleep=${M2_GATE_SLEEP:-120}
++SET=mtop_en
+ A3B=$tu/a3/tables/a3B_d768.npz
+ C4=$emb/w1/tables/ppw_S1000_d500_e0.5.npz
+-STANDIN=$tu/m1_standin.py:load
++STANDIN=$tu/m2_standin.py:load
+ export OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1
+ export RAYON_NUM_THREADS=2 TOKENIZERS_PARALLELISM=false HF_HUB_OFFLINE=1
+ DRY=0; [ "${1:-}" = --dry ] && DRY=1
+ BRANCH=start
+ last_gate=-1000
+ ts() { date -u +%Y-%m-%dT%H:%M:%SZ; }
+-mkdir -p "$m1"
++mkdir -p "$m2"
+ end_line() { local e=$? line
+-  line="m1 chain end: $BRANCH $(ts) exit $e"
++  line="m2 chain end: $BRANCH $(ts) exit $e"
+   if [ "$DRY" = 1 ]; then echo "$line"; else echo "$line" >> "$log"; fi
+   exit "$e"; }
+ trap end_line EXIT
+ trap 'exit 143' TERM
+ trap 'exit 130' INT
+ stop() { if [ "$DRY" = 1 ]; then echo "STOP: $1"; else echo "$(ts) STOP: $1" >> "$log"; fi; exit 1; }
+-check() { [ "$(sha256sum "$1" | cut -c1-16)" = "$2" ] || stop "$1 changed"; }
++check() { [ "$(sha256sum "$1" | cut -c1-64)" = "$2" ] || stop "$1 changed"; }
+ # shellcheck source=/dev/null
+ checks() { [ -e "$pins" ] || stop "no pins file"; . "$pins"; }
+ gate() { local line c
+@@ -64,87 +79,75 @@
+   [ "$DRY" = 1 ] && { echo "dry: would run $name: $*"; return 0; }
+   gate; checks
+   echo "$(ts) start $name: $*" >> "$log"
+-  (cd /tmp && "${STEP_CMD[@]}" "$@" < /dev/null >> "$log" 2>&1)
++  (cd /tmp && nice -n 19 "${STEP_CMD[@]}" "$@" < /dev/null >> "$log" 2>&1)
+   e=$?
+   echo "$(ts) end $name exit $e" >> "$log"
+   [ $e -eq 0 ] || stop "$name exit $e"; }
+-have_tm() { [ -e "$1/results_m1_tm.jsonl" ] || return 1
++have_tm() { [ -e "$1/results_m2_tm.jsonl" ] || return 1
+   "$py" -I -c "
+ import json, sys
+ f, tag, arm, d, sd, rep = sys.argv[1:7]
+ ok = any(r.get('tag') == tag and r.get('arm') == arm and r['dataset'] == d and r['seed'] == int(sd) and r.get('repeat', 1) == int(rep)
+          for r in map(json.loads, open(f)))
+ sys.exit(0 if ok else 1)
+-" "$1/results_m1_tm.jsonl" "${@:2}"; }
+-have_lr() { [ -e "$1/results_m1_lr.jsonl" ] || return 1
++" "$1/results_m2_tm.jsonl" "${@:2}"; }
++have_lr() { [ -e "$1/results_m2_lr.jsonl" ] || return 1
+   "$py" -I -c "
+ import json, sys
+ f, name, d = sys.argv[1:4]
+ sys.exit(0 if any(r.get('name') == name and r['dataset'] == d for r in map(json.loads, open(f))) else 1)
+-" "$1/results_m1_lr.jsonl" "${@:2}"; }
++" "$1/results_m2_lr.jsonl" "${@:2}"; }
+ BRANCH=pins
+-if [ $DRY = 1 ]; then checks; echo "dry: pins ok"; else
++if [ $DRY = 1 ]; then
+   checks
+-  [ -e "$m1/overlap_m1.json" ] || stop "no step-0 overlap file"
++  "$py" -I -B "$tu/m2_freeze_check.py" --plan "$plan" --pins "$pins" || stop "freeze check: the pins differ from the registration"
++  echo "dry: pins ok"
++else
++  checks
++  "$py" -I -B "$tu/m2_freeze_check.py" --plan "$plan" --pins "$pins" >> "$log" 2>&1 || stop "freeze check: the pins differ from the registration"
++  [ -e "$matched" ] || stop "no frozen matched list"
+   BRANCH=wait-go
+-  until [ -e "$go" ]; do sleep "${M1_GO_SLEEP:-60}" & wait $!; done
++  until [ -e "$go" ]; do sleep "${M2_GO_SLEEP:-60}" & wait $!; done
+   echo "$(ts) GPU go: $(head -c 300 "$go")" >> "$log"
+-  echo "$(ts) chain $(sha256sum "$0" | cut -c1-16), pins $(sha256sum "$pins" | cut -c1-16)" >> "$log"
+-  [ -n "${M1_NO_NVSMI:-}" ] || echo "$(ts) GPU at the start: $(nvidia-smi --query-gpu=memory.used,utilization.gpu --format=csv,noheader)" >> "$log"
++  echo "$(ts) chain $(sha256sum "$0" | cut -c1-64), pins $(sha256sum "$pins" | cut -c1-64)" >> "$log"
++  [ -n "${M2_NO_NVSMI:-}" ] || echo "$(ts) GPU at the start: $(nvidia-smi --query-gpu=memory.used,utilization.gpu --format=csv,noheader)" >> "$log"
+ fi
+-# 1. features, one k-means per set and table
+-BRANCH=feats
+-for d in $SETS; do
+-  [ -e "$m1/feats/a3B/${d}__p32tok_K512.npz" ] || step feats $tu/m1_feats.py --dataset "$d" --table wordtab:$A3B \
+-    --arms "a3B:none,a3B_3c:$c3/kept_F.jsonl,a3B_twin:$cx/twin_kept.jsonl" --out-root "$m1/feats"
+-  [ -e "$m1/feats/C4/${d}__p32tok_K512.npz" ] || step feats $tu/m1_feats.py --dataset "$d" --table wordtab:$C4 \
+-    --arms "C4:none,C4_3c:$c3/kept_F.jsonl" --out-root "$m1/feats"
+-  [ -e "$m1/feats/potion/${d}__p32tok_K512.npz" ] || step feats $tu/m1_feats.py --dataset "$d" --table potion \
+-    --arms "potion:none" --out-root "$m1/feats"
+-done
+-# 2. code check on 3c's own rebuilt-original cache, "test" := val (no test text or label is read)
++# 1. code check on 3c's own rebuilt-original cache, "test" := val (no MTOP file is read)
+ BRANCH=code-check
+-ck=$m1/check
+-[ -e "$ck/clinc150__p32tok_K512.npz" ] || step check-cache $tu/m1_check_cache.py --src $c3/feats/orig --out "$ck"
+-have_tm "$ck" m1-check orig clinc150 4 1 || step tm $tu/m1_tm.py --dataset clinc150 --view existsT --seed 4 --s 8 \
+-  --emb-dir "$ck" --tag m1-check --out-dir "$ck" --load "$STANDIN"
+-have_lr "$ck" check clinc150 || step lr $tu/m1_lr.py --name check --dataset clinc150 --emb-dir "$ck" --out-dir "$ck" --load "$STANDIN"
+-if [ $DRY = 0 ] && [ -z "${M1_SKIP_CODECHECK:-}" ]; then
+-  "$py" -I -c "
+-import json, sys
+-c3, ck = sys.argv[1:3]
+-a = [r for r in map(json.loads, open(ck + '/results_m1_tm.jsonl')) if r.get('tag') == 'm1-check']
+-b = [r for r in map(json.loads, open(c3 + '/results_c3_val.jsonl')) if r.get('tag') == '3c-ref' and r['dataset'] == 'clinc150' and r['seed'] == 4]
+-la = [r for r in map(json.loads, open(ck + '/results_m1_lr.jsonl')) if r.get('name') == 'check']
+-lb = [r for r in map(json.loads, open(c3 + '/results_c3_lr.jsonl')) if r.get('name') == 'ref_rebuilt' and r['dataset'] == 'clinc150']
+-assert len(a) == len(b) == len(la) == len(lb) == 1, (len(a), len(b), len(la), len(lb))
+-print('code check', a[0]['val_acc'], b[0]['val_acc'], a[0]['test_acc'], la[0]['lr_val'], lb[0]['lr_val'], la[0]['lr_test'])
+-ok = a[0]['val_acc'] == b[0]['val_acc'] == a[0]['test_acc'] and la[0]['lr_val'] == lb[0]['lr_val'] == la[0]['lr_test']
+-sys.exit(0 if ok else 1)
+-" "$c3" "$ck" >> "$log" 2>&1 || stop "code check: m1_tm.py or m1_lr.py does not give 3c's rows"
++ck=$m2/check
++[ -e "$ck/clinc150__p32tok_K512.npz" ] || step check-cache $tu/m2_check_cache.py --src $c3/feats/orig --out "$ck"
++have_tm "$ck" m2-check orig clinc150 4 1 || step tm $tu/m2_tm.py --dataset clinc150 --view existsT --seed 4 --s 8 \
++  --emb-dir "$ck" --tag m2-check --out-dir "$ck" --load "$STANDIN"
++have_lr "$ck" check clinc150 || step lr $tu/m2_lr.py --name check --dataset clinc150 --emb-dir "$ck" --out-dir "$ck" --load "$STANDIN"
++if [ $DRY = 0 ] && [ -z "${M2_SKIP_CODECHECK:-}" ]; then
++  nice -n 19 "$py" -I -B "$tu/m2_codecheck.py" --c3 "$c3" --ck "$ck" >> "$log" 2>&1 \
++    || stop "code check: m2_tm.py or m2_lr.py does not give 3c's rows"
+   echo "$(ts) code check passed" >> "$log"
+ fi
++# 2. features, one k-means per table, on MTOP English (the first step that reads an MTOP file)
++BRANCH=feats
++[ -e "$m2/feats/C4/${SET}__p32tok_K512.npz" ] || step feats $tu/m2_feats.py --dataset "$SET" --table wordtab:$C4 \
++  --arms "C4:none" --out-root "$m2/feats"
++[ -e "$m2/feats/a3B/${SET}__p32tok_K512.npz" ] || step feats $tu/m2_feats.py --dataset "$SET" --table wordtab:$A3B \
++  --arms "a3B:none" --out-root "$m2/feats"
++[ -e "$m2/feats/potion/${SET}__p32tok_K512.npz" ] || step feats $tu/m2_feats.py --dataset "$SET" --table potion \
++  --arms "potion:none" --out-root "$m2/feats"
+ # 3. TM, seeds 7-9, s 8
+ BRANCH=tm
+-for d in $SETS; do
+-  for ar in C4:1 a3B:1 potion:1 a3B_3c:1 C4_3c:1 a3B_twin:1 a3B:5; do
+-    arm=${ar%%:*}; rep=${ar##*:}
+-    for sd in 7 8 9; do
+-      have_tm "$m1" m1 "$arm" "$d" "$sd" "$rep" || step tm $tu/m1_tm.py --dataset "$d" --view existsT --seed "$sd" --s 8 \
+-        --emb-dir "$m1/feats/$arm" --tag m1 --repeat "$rep" --out-dir "$m1"
+-    done
++for arm in C4 a3B potion; do
++  for sd in 7 8 9; do
++    have_tm "$m2" m2 "$arm" "$SET" "$sd" 1 || step tm $tu/m2_tm.py --dataset "$SET" --view existsT --seed "$sd" --s 8 \
++      --emb-dir "$m2/feats/$arm" --tag m2 --out-dir "$m2"
+   done
+ done
+ # 4. LR
+ BRANCH=lr
+-for d in $SETS; do
+-  for arm in C4 a3B potion a3B_3c C4_3c a3B_twin; do
+-    have_lr "$m1" "$arm" "$d" || step lr $tu/m1_lr.py --name "$arm" --dataset "$d" --emb-dir "$m1/feats/$arm" --out-dir "$m1"
+-  done
++for arm in C4 a3B potion; do
++  have_lr "$m2" "$arm" "$SET" || step lr $tu/m2_lr.py --name "$arm" --dataset "$SET" --emb-dir "$m2/feats/$arm" --out-dir "$m2"
+ done
+ # 5. verdict
+ BRANCH=verdict
+-[ -e "$m1/verdict_m1.json" ] || step verdict $tu/m1_verdict.py --m1 "$m1" --overlap "$m1/overlap_m1.json"
++[ -e "$m2/verdict_m2.json" ] || step verdict $tu/m2_verdict.py --m2 "$m2" --matched "$matched" --overlap "$overlap"
+ BRANCH="done"
+-[ $DRY = 1 ] || echo "$(ts) m1 done" >> "$log"
++[ $DRY = 1 ] || echo "$(ts) m2 done" >> "$log"
+ exit 0
+
+=== m1_write_pins.sh -> m2_write_pins.sh
+parent 2614278eaa5686a62c78f0fee699041ae0d816dd0695d73c6e99a54256ffafc5  m1_write_pins.sh
+copy   5b78483ca2915831bdfd8a7b8b7349392bdca050785dc4b67b630ebd11bf987f  m2_write_pins.sh
+--- m1_write_pins.sh
++++ m2_write_pins.sh
+@@ -1,32 +1,72 @@
+ #!/usr/bin/env bash
+ REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd)"  # published copy: the repository root
+-# M1: writes tu/m1/pins.sh, one "check <file> <sha256 first 16>" line per code and input file that m1_chain.sh uses.
+-# The hashes are read here with sha256sum, never typed. An earlier pins.sh is kept as pins_<UTC>.sh, never overwritten.
+-# Run: bash tu/m1_write_pins.sh
++# M2: the pins of the registered run. tu/m1_write_pins.sh (33d289fe82d1a62c) with these changes: M2's file list (no
++# paraphrase, twin, overlap or old-set test files; the MTOP zip, the frozen matched list and its source overlap file,
++# the code check's cache meta, cpu_load.py, the M1 parents with the saved diff, and the venv's version files added),
++# full sha256 values (M1 wrote the first 16 hex characters), and, after the review of draft 1 (2026-10-25), three modes:
++#   bash tu/m2_write_pins.sh --list
++#       prints the file list, one absolute path per line (the GPU dry run hashes these files when it starts);
++#   bash tu/m2_write_pins.sh --block tu/m2_dry/<UTC>/dry_summary.json
++#       prints the sha256sum block for the plan's "## Pins" section: every file of the list except PLAN_M2.md, plus the
++#       dry run's summary (read here with sha256sum, never typed);
++#   bash tu/m2_write_pins.sh tu/m2_dry/<UTC>/dry_summary.json        (at the freeze; the summary is required)
++#       writes tu/m2/pins.sh, one "check <file> <full sha256>" line per file of the list (PLAN_M2.md included) and the
++#       summary, but only if tu/m2_freeze_check.py passes on it (the plan's block equals the pins, the plan pins itself,
++#       the dry summary passed and recorded the same code); otherwise nothing is written and the exit is 1. An earlier
++#       pins.sh is kept as pins_<UTC>.sh, never overwritten.
++# Every path argument may be relative to the working directory: the dry summary, the plan and the output are resolved
++# with realpath first, so pins.sh and the block hold absolute paths only (re-check of draft 2, MINOR D; the chain reads
++# the pins from its own working directory). Run every command from glassbox-lm/studies/text_understanding, as tu/PLAN_M2.md says.
++# Test hooks (tests/test_m2_chain.sh only): M2_PINS_OUT (another output path), M2_PLAN (another plan path).
+ set -eu
+ emb=${REPO_ROOT}/studies/text_understanding
+ tu=$emb/tu
+ dl=${REPO_ROOT}/studies/decision_layer
+ raw=$dl/data/raw
++sp=$dl/.venv-dl/lib/python3.11/site-packages
+ pot=${HOME}/.cache/huggingface/hub/models--minishlab--potion-base-32M/snapshots/1e5a03f8eeb2c98b928fbbd846f22f816360919f
+-out=$tu/m1/pins.sh
++py=$dl/.venv-dl/bin/python
++out=$(realpath -m "${M2_PINS_OUT:-$tu/m2/pins.sh}")
++plan=$(realpath -m "${M2_PLAN:-$tu/PLAN_M2.md}")
+ FILES=(
+-  "$tu/m1_chain.sh" "$tu/m1_feats.py" "$tu/m1_tm.py" "$tu/m1_lr.py" "$tu/m1_verdict.py" "$tu/m1_standin.py"
+-  "$tu/m1_check_cache.py" "$tu/m1_overlap.py" "$tu/m1_write_pins.sh" "$tu/PLAN_M1.md"
+-  "$emb/exists_tm.py" "$emb/w1/wordtab_feats.py" "$emb/w1/build_corpus_c4.py" "$tu/c3_common.py" "$tu/a3_teacher.py"
++  "$tu/m2_chain.sh" "$tu/m2_feats.py" "$tu/m2_tm.py" "$tu/m2_lr.py" "$tu/m2_verdict.py" "$tu/m2_standin.py"
++  "$tu/m2_check_cache.py" "$tu/m2_data.py" "$tu/m2_write_pins.sh" "$tu/m2_dry_gpu.sh" "$tu/m2_audit_run.py"
++  "$tu/m2_codecheck.py" "$tu/m2_freeze_check.py" "$tu/m2_code_diff.sh" "$tu/m2_code_diff_vs_m1.txt" "$plan"
++  "$tu/tests/test_m2.py" "$tu/tests/test_m2_chain.sh" "$tu/tests/test_m2_data.py"
++  "$tu/m1_feats.py" "$tu/m1_tm.py" "$tu/m1_lr.py" "$tu/m1_verdict.py" "$tu/m1_chain.sh" "$tu/m1_write_pins.sh"
++  "$tu/m1_check_cache.py" "$tu/m1_standin.py" "$tu/archive/m2_data_draft0_f4d2a44b.py"
++  "$emb/exists_tm.py" "$emb/w1/wordtab_feats.py"
+   "$dl/src/dl/tm.py" "$dl/src/dl/tm_init.py" "$dl/src/dl/boolean.py" "$dl/src/dl/data.py" "$dl/src/dl/linear.py"
+-  "$dl/src/dl/explain.py"
+-  "$tu/a3/tables/a3B_d768.npz" "$emb/w1/tables/ppw_S1000_d500_e0.5.npz" "$tu/c3/kept_F.jsonl" "$tu/c3x/twin_kept.jsonl"
+-  "$tu/c3/feats/orig/clinc150__p32tok_K512.npz" "$tu/c3/results_c3_val.jsonl" "$tu/c3/results_c3_lr.jsonl"
+-  "$tu/m1/overlap_m1.json" "$emb/hardset.json"
+-  "$raw/clinc150_data_full.json" "$raw/banking77_train.parquet" "$raw/banking77_test.parquet"
+-  "$raw/banking77_label_names.json" "$raw/hwu64_train.parquet" "$raw/hwu64_val.parquet" "$raw/hwu64_test.parquet"
++  "$dl/src/dl/explain.py" "$dl/scripts/cpu_load.py"
++  "$tu/a3/tables/a3B_d768.npz" "$emb/w1/tables/ppw_S1000_d500_e0.5.npz"
++  "$emb/data_untrusted/mtop/s3v_qLlhqQW2ypnQQXRE/mtop.zip" "$emb/fresh/mtop_test_matched_v1.json" "$emb/fresh/mtop_overlap.json"
++  "$tu/c3/feats/orig/clinc150__p32tok_K512.npz" "$tu/c3/feats/orig/clinc150__p32tok_K512.meta.json"
++  "$tu/c3/results_c3_val.jsonl" "$tu/c3/results_c3_lr.jsonl" "$emb/hardset.json" "$raw/clinc150_data_full.json"
+   "$pot/model.safetensors" "$pot/modules.json" "$pot/tokenizer.json"
++  "$sp/torch/version.py" "$sp/numpy/version.py" "$sp/sentence_transformers/__init__.py" "$sp/tokenizers/__init__.py"
++  "$sp/transformers/__init__.py" "$sp/safetensors/__init__.py" "$sp/huggingface_hub/__init__.py"
+ )
++if [ "${1:-}" = --list ]; then printf '%s\n' "${FILES[@]}"; exit 0; fi
++if [ "${1:-}" = --block ]; then
++  [ $# -eq 2 ] && [ -e "$2" ] || { echo "usage: m2_write_pins.sh --block DRY_SUMMARY (an existing file)" >&2; exit 2; }
++  dry=$(realpath "$2")
++  for f in "${FILES[@]}"; do [ "$f" = "$plan" ] && continue; [ -e "$f" ] || { echo "missing: $f" >&2; exit 1; }; done
++  for f in "${FILES[@]}" "$dry"; do [ "$f" = "$plan" ] || sha256sum "$f"; done
++  exit 0
++fi
++[ $# -eq 1 ] && [ -e "$1" ] || { echo "usage: m2_write_pins.sh DRY_SUMMARY (the GPU dry run's dry_summary.json is required)" >&2; exit 2; }
++dry=$(realpath "$1")
++FILES+=("$dry")
+ for f in "${FILES[@]}"; do [ -e "$f" ] || { echo "missing: $f" >&2; exit 1; }; done
+-[ -e "$out" ] && mv -n "$out" "$tu/m1/pins_$(date -u +%Y%m%dT%H%M%SZ).sh"
++mkdir -p "$(dirname "$out")"
++tmp=$(mktemp "$(dirname "$out")/.pins_tmp.XXXXXX")
+ {
+-  echo "# pins for m1_chain.sh, written $(date -u +%Y-%m-%dT%H:%M:%SZ) by m1_write_pins.sh; every line stops the chain if its file changed"
+-  for f in "${FILES[@]}"; do echo "check $f $(sha256sum "$f" | cut -c1-16)"; done
+-} > "$out"
+-echo "wrote $out: $(grep -c '^check ' "$out") files, sha256 $(sha256sum "$out" | cut -c1-16)"
++  echo "# pins for m2_chain.sh, written $(date -u +%Y-%m-%dT%H:%M:%SZ) by m2_write_pins.sh; every line stops the chain if its file changed"
++  for f in "${FILES[@]}"; do echo "check $f $(sha256sum "$f" | cut -c1-64)"; done
++} > "$tmp"
++if ! "$py" -I -B "$tu/m2_freeze_check.py" --plan "$plan" --pins "$tmp" --dry "$dry"; then
++  rm -f "$tmp"; echo "m2_write_pins.sh: the freeze check refused; no pins file written" >&2; exit 1
++fi
++[ -e "$out" ] && mv -n "$out" "$(dirname "$out")/pins_$(date -u +%Y%m%dT%H%M%SZ).sh"
++mv "$tmp" "$out"
++echo "wrote $out: $(grep -c '^check ' "$out") files, sha256 $(sha256sum "$out" | cut -c1-64)"
+
+=== m1_check_cache.py -> m2_check_cache.py
+parent 6eccc2b88763d531fd41819264b0f2311c1893149e41cd6f12e33bab7653a5bb  m1_check_cache.py
+copy   d2804841d943ecf7587a5203c406fdb6792da4584e33efc83070ac244ae18247  m2_check_cache.py
+--- m1_check_cache.py
++++ m2_check_cache.py
+@@ -1,11 +1,12 @@
+ #!/usr/bin/env python
+-"""M1 code check input (tu/PLAN_M1.md; no test text or label is read): 3c's CLINC150 rebuilt-original cache
+-(tu/c3/feats/orig) copied into M1's format, with "test" := a copy of val. m1_tm.py and m1_lr.py on it, with the stand-in
+-dataset m1_standin.py:load, must give 3c's 3c-ref (seed 4, s 8) and ref_rebuilt rows exactly on val, and the same
+-number again on this "test".
++"""M2 code check input (tu/PLAN_M2.md; no test text or label is read): 3c's CLINC150 rebuilt-original cache
++(tu/c3/feats/orig) copied into M2's format, with "test" := a copy of val. m2_tm.py and m2_lr.py on it, with the stand-in
++dataset m2_standin.py:load, must give 3c's 3c-ref (seed 4, s 8) and ref_rebuilt rows exactly on val, and the same
++number again on this "test". No MTOP file is read.
+ 
+-    python -I -B m1_check_cache.py --src tu/c3/feats/orig --out tu/m1/check
++    python -I -B m2_check_cache.py --src tu/c3/feats/orig --out tu/m2/check
+ 
++tu/m1_check_cache.py (6eccc2b88763d531) with one change and nothing else: the meta key is "m2_code_check".
+ Refuses to overwrite.
+ """
+ 
+@@ -39,7 +40,7 @@
+             out["test__" + k[len("val__"):]] = z[k]
+     out["y_test"] = z["y_val"]
+     meta = json.loads((a.src / f"{name}.meta.json").read_text())
+-    meta["m1_code_check"] = {"src": str(a.src), "test_is_a_copy_of_val": True}
++    meta["m2_code_check"] = {"src": str(a.src), "test_is_a_copy_of_val": True}
+     a.out.mkdir(parents=True, exist_ok=True)
+     np.savez(dst, **out)
+     dmeta.write_text(json.dumps(meta))
+
+=== m1_standin.py -> m2_standin.py
+parent 2afa433218886b56b7df54d0f3eac9559ae7c9453a76fd1c0a250661415e6a2e  m1_standin.py
+copy   ce1e18f2e2d991ed1957510bbe2f7c93bd506d352d0b51a383da202b2663acb4  m2_standin.py
+--- m1_standin.py
++++ m2_standin.py
+@@ -1,9 +1,16 @@
+-"""M1 stand-in datasets for the code check and the CPU tests only (tu/PLAN_M1.md). dl.data.load loads every split into
+-memory; the stand-in then replaces the test split with a copy of val (texts and labels) before any code uses it. So a
+-run on a stand-in uses no test text and no test label, and its "test" accuracy must equal its val accuracy.
++"""M2 stand-in datasets for the code check, the dry runs and the CPU tests only (tu/PLAN_M2.md).
+ 
+-- load(name): the full train and val; test := val.
+-- load_small(name): train cut to its first 1,500 rows (for the CPU tests); val as is; test := val.
++tu/m1_standin.py (d295f9ddba944c4d) with one addition and nothing else changed:
++- load(name) and load_small(name) are M1's, for the code check on 3c's CLINC150 rows: dl.data.load loads every split
++  into memory; the stand-in then replaces the test split with a copy of val (texts and labels) before any code uses
++  it. So a run on a stand-in uses no test text and no test label, and its "test" accuracy must equal its val accuracy.
++- added: mtop_small(name): m2_data.load_standin (real MTOP en/train and en/eval texts, labels = sha256(text) mod 20,
++  the intent column never used, en/test.txt never opened, test := val) with train cut to its first 1,500 rows, for
++  the CPU smoke of the MTOP data path. The full-size stand-in is m2_data.py:load_standin itself.
++- added after the review of draft 1 (2026-10-25; design MINOR 6, data MINOR 3): mtop_unseen(name) and
++  mtop_small_unseen(name): the same stand-ins with every 40th en/eval label set to -1 (an intent not in train), and
++  test := val again, so the -1 path runs through m2_feats.py, m2_tm.py and m2_lr.py in the dry runs; sources records
++  the counts as m2_data.load does ("unseen_intents").
+ """
+ 
+ from __future__ import annotations
+@@ -11,8 +18,10 @@
+ _REPO_ROOT = _os.path.normpath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), "../../.."))
+ 
+ import sys
++from pathlib import Path
+ 
+ sys.path.insert(0, f"{_REPO_ROOT}/studies/decision_layer/src")
++sys.path.insert(0, str(Path(__file__).resolve().parent))
+ from dl.data import IntentData
+ from dl.data import load as _load
+ 
+@@ -30,3 +39,34 @@
+     ds.texts["train"] = ds.texts["train"][:n]
+     ds.labels["train"] = ds.labels["train"][:n]
+     return ds
++
++
++def mtop_small(name: str, n: int = 1500) -> IntentData:
++    import m2_data
++
++    ds = m2_data.load_standin(name)
++    ds.texts["train"] = ds.texts["train"][:n]
++    ds.labels["train"] = ds.labels["train"][:n]
++    ds.ids["train"] = ds.ids["train"][:n]
++    return ds
++
++
++def _with_unseen(ds: IntentData, every: int = 40) -> IntentData:
++    """Every `every`-th val label := -1; test := val (texts, labels, IDs); the counts in sources."""
++    ds.labels["val"] = ds.labels["val"].copy()
++    ds.labels["val"][::every] = -1
++    ds.texts["test"], ds.labels["test"] = list(ds.texts["val"]), ds.labels["val"].copy()
++    ds.ids["test"] = list(ds.ids["val"])
++    k = int((ds.labels["val"] < 0).sum())
++    ds.sources["unseen_intents"] = str({"val": k, "test": k})
++    return ds
++
++
++def mtop_unseen(name: str) -> IntentData:
++    import m2_data
++
++    return _with_unseen(m2_data.load_standin(name))
++
++
++def mtop_small_unseen(name: str, n: int = 1500) -> IntentData:
++    return _with_unseen(mtop_small(name, n))
+
+=== archive/m2_data_draft0_f4d2a44b.py -> m2_data.py
+parent 8696685bba916e10a5d45f349f45cbe17c71d30c722091ec9aa033b98c9303dc  archive/m2_data_draft0_f4d2a44b.py
+copy   e57f5a3ba06f3aca337b71fa5256fd210e351d865a3d1a2ffa44591aac39bad9  m2_data.py
+--- archive/m2_data_draft0_f4d2a44b.py
++++ m2_data.py
+@@ -1,19 +1,26 @@
+ """M2 (tu/PLAN_M2.md): the MTOP English loader, as a dl.data.IntentData, for the --load hook of the M2 scripts.
+ 
+ The official zip (fresh/NOTE_2026-10-23_mtop.md) is read in memory, never extracted, with its sha256 checked first.
+-Only three of the eight TSV columns are read: 1 (ID), 2 (the top-level intent) and 4 (the utterance).
++Only three of the eight TSV columns are used: 1 (ID), 2 (the top-level intent) and 4 (the utterance).
+ 
+ - load(name): name "mtop_en". Splits train (en/train), val (en/eval) and test (en/test). The classes are the sorted
+   distinct intents of en/train; an eval or test item whose intent is not among them gets label -1, which no model can
+   predict, so it counts as an error (the count is in sources["unseen_intents"]). For the registered run only: it reads
+   the test labels.
+-- load_standin(name): the same texts and IDs, but the labels are a stand-in (the sha256 of the text, mod 20) and no
+-  label column is read at all; test := a copy of val. For the tests and the dry run before the freeze.
++- load_standin(name): the same train and val texts and IDs, but the labels are a stand-in (the sha256 of the text,
++  mod 20): the intent column is never used, and en/test.txt is never opened; test := a copy of val (texts, labels,
++  IDs). For the tests and the dry runs before the freeze.
++- Both attach the utterance IDs (column 1) per split as the attribute `ids` (dict split -> list of str, row order),
++  which m2_verdict.py checks against the frozen matched list's IDs.
++
++Changes after draft 0 (2026-10-25, finish pass; the file was f4d2a44b1120b878 before): (1) the pin check compares
++resolved paths, so a relative Path or a str path to the pinned zip is hash-checked too (before, a relative Path
++skipped the check and a str path raised AttributeError; tests/test_m2_data.py shows both runs); (2) the `ids` attribute.
+ """
+ 
+ from __future__ import annotations
+ import os as _os  # published copy: paths are found from this file's place in the repository
+-_REPO_ROOT = _os.path.normpath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), "../../../.."))
++_REPO_ROOT = _os.path.normpath(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), "../../.."))
+ 
+ import hashlib
+ import sys
+@@ -37,31 +44,38 @@
+     return rows
+ 
+ 
+-def _open(zip_path: Path) -> zipfile.ZipFile:
+-    h = hashlib.sha256(zip_path.read_bytes()).hexdigest()
+-    assert h == ZIP_SHA256 or zip_path != ZIP, f"{zip_path}: sha256 {h} is not the pinned one"
+-    return zipfile.ZipFile(zip_path)
++def _open(zip_path) -> tuple[zipfile.ZipFile, str]:
++    p = Path(zip_path)
++    h = hashlib.sha256(p.read_bytes()).hexdigest()
++    assert h == ZIP_SHA256 or p.resolve() != Path(ZIP).resolve(), f"{p}: sha256 {h} is not the pinned one"
++    return zipfile.ZipFile(p), h
+ 
+ 
+-def load(name: str, zip_path: Path = ZIP) -> IntentData:
++def load(name: str, zip_path=ZIP) -> IntentData:
+     assert name == "mtop_en", name
+-    z = _open(zip_path)
++    z, h = _open(zip_path)
+     rows = {sp: _rows(z, m) for sp, m in FILES.items()}
+     intents = sorted({r[INTENT] for r in rows["train"]})
+     idx = {k: i for i, k in enumerate(intents)}
+     texts = {sp: [r[UTT] for r in rs] for sp, rs in rows.items()}
+     labels = {sp: np.array([idx.get(r[INTENT], -1) for r in rs], dtype=np.int64) for sp, rs in rows.items()}
+     unseen = {sp: int((labels[sp] < 0).sum()) for sp in ("val", "test")}
+-    src = {Path(zip_path).name: hashlib.sha256(Path(zip_path).read_bytes()).hexdigest(), "unseen_intents": str(unseen)}
+-    return IntentData(name, intents, texts, labels, src)
++    src = {Path(zip_path).name: h, "unseen_intents": str(unseen)}
++    d = IntentData(name, intents, texts, labels, src)
++    d.ids = {sp: [r[ID] for r in rs] for sp, rs in rows.items()}
++    return d
+ 
+ 
+-def load_standin(name: str, zip_path: Path = ZIP, n_classes: int = 20) -> IntentData:
+-    """No label column is read: labels = sha256(text) mod n_classes; test := val."""
++def load_standin(name: str, zip_path=ZIP, n_classes: int = 20) -> IntentData:
++    """No label column is used and en/test.txt is never opened: labels = sha256(text) mod n_classes; test := val."""
+     assert name == "mtop_en", name
+-    z = _open(zip_path)
+-    texts = {sp: [r[UTT] for r in _rows(z, m)] for sp, m in FILES.items() if sp != "test"}
++    z, _h = _open(zip_path)
++    rows = {sp: _rows(z, m) for sp, m in FILES.items() if sp != "test"}
++    texts = {sp: [r[UTT] for r in rs] for sp, rs in rows.items()}
+     lab = lambda t: int(hashlib.sha256(t.encode("utf-8")).hexdigest(), 16) % n_classes
+     labels = {sp: np.array([lab(t) for t in ts], dtype=np.int64) for sp, ts in texts.items()}
+     texts["test"], labels["test"] = list(texts["val"]), labels["val"].copy()
+-    return IntentData(name, [f"standin_{i}" for i in range(n_classes)], texts, labels, {"standin": "labels are text hashes"})
++    d = IntentData(name, [f"standin_{i}" for i in range(n_classes)], texts, labels, {"standin": "labels are text hashes"})
++    d.ids = {sp: [r[ID] for r in rs] for sp, rs in rows.items()}
++    d.ids["test"] = list(d.ids["val"])
++    return d
+
+=== files with no M1 parent: m2_audit_run.py m2_dry_gpu.sh m2_codecheck.py m2_freeze_check.py m2_code_diff.sh

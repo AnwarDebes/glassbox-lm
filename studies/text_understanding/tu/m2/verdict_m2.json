@@ -1,0 +1,464 @@
+{
+ "headline": "VERDICT M2 (MTOP English test, first use): H1 NOT MET; H2 MET (not strong)",
+ "set": "mtop_en",
+ "hypotheses": {
+  "H1": {
+   "met": false,
+   "strong": false,
+   "strong_item_level_only": false,
+   "rule": "a3B - C4 >= +0.5 points with TM and with LR",
+   "per_probe": {
+    "H1_tm": {
+     "holds": true,
+     "lower_clears": false,
+     "seed_inclusive_lower_clears": false
+    },
+    "H1_lr": {
+     "holds": false,
+     "lower_clears": false,
+     "seed_inclusive_lower_clears": null
+    }
+   },
+   "claim": "H1 NOT MET (the registered rule a3B - C4 >= +0.5 points with TM and with LR was not met): with the TM, a3B - C4 is +0.75 [+0.24, +1.27]: holds; with LR, a3B - C4 is +0.43 [-0.23, +1.07]: below the bar. A true difference inside the interval is not ruled out. Provenance: a3B is network-free at run time, with bge-base-en-v1.5@a5beb1e3 as teacher at training time; C4 uses no neural network at any stage."
+  },
+  "H2": {
+   "met": true,
+   "strong": false,
+   "strong_item_level_only": false,
+   "rule": "a3B - potion >= -0.5 points with TM and with LR, one-sided (no upper bound)",
+   "per_probe": {
+    "H2_tm": {
+     "holds": true,
+     "lower_clears": false,
+     "seed_inclusive_lower_clears": false
+    },
+    "H2_lr": {
+     "holds": true,
+     "lower_clears": false,
+     "seed_inclusive_lower_clears": null
+    }
+   },
+   "claim": "H2 MET: a3B is no more than 0.5 points below potion-base-32M on MTOP English with the TM and with LR (point estimates; one-sided; TM -0.28 [-0.71, +0.14], LR -0.41 [-1.00, +0.18]); not STRONG: a point-estimate result, weak evidence (tu/PLAN_M2.md Power: at a true -1.0 H2 is MET in 0.1-7.8% of runs). Provenance: a3B is network-free at run time, with bge-base-en-v1.5@a5beb1e3 as teacher at training time; potion-base-32M@1e5a03f8 is distilled from bge-base-en-v1.5 by its authors, so the two share the teacher family."
+  }
+ },
+ "comparisons": {
+  "H1_tm": {
+   "point": 0.7524,
+   "ci95": [
+    0.2432,
+    1.2694
+   ],
+   "ci95_seed_inclusive": [
+    0.1824,
+    1.3224
+   ],
+   "per_seed": [
+    0.6156,
+    0.7068,
+    0.9348
+   ],
+   "seed_se": 0.0949,
+   "val_point_best_epoch": 1.33,
+   "bar": 0.5
+  },
+  "H1_lr": {
+   "point": 0.4332,
+   "ci95": [
+    -0.228,
+    1.0716
+   ],
+   "ci95_seed_inclusive": null,
+   "val_point_best_epoch": 0.49,
+   "bar": 0.5
+  },
+  "H2_tm": {
+   "point": -0.2812,
+   "ci95": [
+    -0.7068,
+    0.1444
+   ],
+   "ci95_seed_inclusive": [
+    -0.8058,
+    0.2584
+   ],
+   "per_seed": [
+    -0.1824,
+    -0.1824,
+    -0.4788
+   ],
+   "seed_se": 0.0988,
+   "val_point_best_epoch": 0.2233,
+   "bar": -0.5
+  },
+  "H2_lr": {
+   "point": -0.4104,
+   "ci95": [
+    -1.0032,
+    0.1824
+   ],
+   "ci95_seed_inclusive": null,
+   "val_point_best_epoch": -0.67,
+   "bar": -0.5
+  },
+  "tm_minus_lr_C4": {
+   "point": -0.1292,
+   "ci95": [
+    -0.608,
+    0.3496
+   ],
+   "ci95_seed_inclusive": [
+    -0.6308,
+    0.38
+   ],
+   "per_seed": [
+    -0.0684,
+    -0.0912,
+    -0.228
+   ],
+   "seed_se": 0.0498,
+   "val_point_best_epoch": -0.3633
+  },
+  "tm_minus_lr_a3B": {
+   "point": 0.19,
+   "ci95": [
+    -0.2584,
+    0.631
+   ],
+   "ci95_seed_inclusive": [
+    -0.2888,
+    0.6688
+   ],
+   "per_seed": [
+    0.114,
+    0.1824,
+    0.2736
+   ],
+   "seed_se": 0.0462,
+   "val_point_best_epoch": 0.4767
+  },
+  "tm_minus_lr_potion": {
+   "point": 0.0608,
+   "ci95": [
+    -0.3876,
+    0.5244
+   ],
+   "ci95_seed_inclusive": [
+    -0.4788,
+    0.5928
+   ],
+   "per_seed": [
+    -0.114,
+    -0.0456,
+    0.342
+   ],
+   "seed_se": 0.142,
+   "val_point_best_epoch": -0.4167
+  }
+ },
+ "tm": {
+  "C4@1": {
+   "test": 92.9397,
+   "test_per_seed": [
+    93.0005,
+    92.9777,
+    92.8409
+   ],
+   "test_seed_sd": 0.0863,
+   "val": 93.3767,
+   "best_epochs": [
+    38,
+    38,
+    32
+   ]
+  },
+  "a3B@1": {
+   "test": 93.6921,
+   "test_per_seed": [
+    93.6161,
+    93.6845,
+    93.7756
+   ],
+   "test_seed_sd": 0.0801,
+   "val": 94.7067,
+   "best_epochs": [
+    34,
+    32,
+    40
+   ]
+  },
+  "potion@1": {
+   "test": 93.9732,
+   "test_per_seed": [
+    93.7984,
+    93.8668,
+    94.2544
+   ],
+   "test_seed_sd": 0.2459,
+   "val": 94.4833,
+   "best_epochs": [
+    34,
+    32,
+    40
+   ]
+  }
+ },
+ "lr": {
+  "C4": {
+   "test": 93.0689,
+   "val": 93.74,
+   "C": 100.0,
+   "acc_by_C": {
+    "1.0": 0.9365,
+    "10.0": 0.9365,
+    "100.0": 0.9374
+   }
+  },
+  "a3B": {
+   "test": 93.5021,
+   "val": 94.23,
+   "C": 100.0,
+   "acc_by_C": {
+    "1.0": 0.94,
+    "10.0": 0.9405,
+    "100.0": 0.9423
+   }
+  },
+  "potion": {
+   "test": 93.9124,
+   "val": 94.9,
+   "C": 10.0,
+   "acc_by_C": {
+    "1.0": 0.9477,
+    "10.0": 0.949,
+    "100.0": 0.949
+   }
+  }
+ },
+ "counts": {
+  "n_test": 4386,
+  "n_val": 2235,
+  "train_intents": 113,
+  "test_items_intent_not_in_train": 0,
+  "val_items_intent_not_in_train": 0
+ },
+ "secondary_without_matched": {
+  "rule": "none (descriptive; not a contamination control for most pools)",
+  "pools": "c4_fit 108 (3a's C4 fit sentences: a3B's teacher-fit input, the one pool an M2 arm's training touched); ours_train_val 427 and paraphrases 589 (no M2 arm trained on them); the pools overlap",
+  "n_left_out": 676,
+  "n_kept": 3710,
+  "comparisons": {
+   "H1_tm": {
+    "point": 0.7637,
+    "ci95_items": [
+     0.2064,
+     1.312
+    ],
+    "per_seed": [
+     0.593,
+     0.8086,
+     0.8895
+    ]
+   },
+   "H1_lr": {
+    "point": 0.4313,
+    "ci95_items": [
+     -0.2695,
+     1.1321
+    ]
+   },
+   "H2_tm": {
+    "point": -0.2606,
+    "ci95_items": [
+     -0.7457,
+     0.2156
+    ],
+    "per_seed": [
+     -0.1078,
+     -0.1348,
+     -0.5391
+    ]
+   },
+   "H2_lr": {
+    "point": -0.2965,
+    "ci95_items": [
+     -0.9434,
+     0.3504
+    ]
+   },
+   "tm_minus_lr_C4": {
+    "point": -0.0898,
+    "ci95_items": [
+     -0.6199,
+     0.4403
+    ],
+    "per_seed": [
+     0.0539,
+     -0.1348,
+     -0.1887
+    ]
+   },
+   "tm_minus_lr_a3B": {
+    "point": 0.2426,
+    "ci95_items": [
+     -0.2516,
+     0.7278
+    ],
+    "per_seed": [
+     0.2156,
+     0.2426,
+     0.2695
+    ]
+   },
+   "tm_minus_lr_potion": {
+    "point": 0.2066,
+    "ci95_items": [
+     -0.2965,
+     0.7188
+    ],
+    "per_seed": [
+     0.027,
+     0.0809,
+     0.5121
+    ]
+   }
+  },
+  "tm": {
+   "C4@1": 92.5517,
+   "a3B@1": 93.3154,
+   "potion@1": 93.5759
+  },
+  "lr": {
+   "C4": 92.6415,
+   "a3B": 93.0728,
+   "potion": 93.3693
+  },
+  "status": "evaluated"
+ },
+ "secondary_without_c4_fit": {
+  "rule": "none (descriptive)",
+  "pools": "c4_fit only (from fresh/mtop_overlap.json)",
+  "n_left_out": 108,
+  "n_kept": 4278,
+  "comparisons": {
+   "H1_tm": {
+    "point": 0.787,
+    "ci95_items": [
+     0.2727,
+     1.2934
+    ],
+    "per_seed": [
+     0.6078,
+     0.8181,
+     0.935
+    ]
+   },
+   "H1_lr": {
+    "point": 0.4208,
+    "ci95_items": [
+     -0.2104,
+     1.0519
+    ]
+   },
+   "H2_tm": {
+    "point": -0.2805,
+    "ci95_items": [
+     -0.7246,
+     0.1403
+    ],
+    "per_seed": [
+     -0.187,
+     -0.1169,
+     -0.5376
+    ]
+   },
+   "H2_lr": {
+    "point": -0.3506,
+    "ci95_items": [
+     -0.935,
+     0.2338
+    ]
+   },
+   "tm_minus_lr_C4": {
+    "point": -0.1558,
+    "ci95_items": [
+     -0.6233,
+     0.335
+    ],
+    "per_seed": [
+     -0.0468,
+     -0.1636,
+     -0.2571
+    ]
+   },
+   "tm_minus_lr_a3B": {
+    "point": 0.2104,
+    "ci95_items": [
+     -0.2415,
+     0.6623
+    ],
+    "per_seed": [
+     0.1403,
+     0.2338,
+     0.2571
+    ]
+   },
+   "tm_minus_lr_potion": {
+    "point": 0.1403,
+    "ci95_items": [
+     -0.2961,
+     0.6
+    ],
+    "per_seed": [
+     -0.0234,
+     0.0,
+     0.4441
+    ]
+   }
+  },
+  "tm": {
+   "C4@1": 92.9952,
+   "a3B@1": 93.7821,
+   "potion@1": 94.0626
+  },
+  "lr": {
+   "C4": 93.151,
+   "a3B": 93.5718,
+   "potion": 93.9224
+  },
+  "status": "evaluated"
+ },
+ "paraphrase_exact_items": {
+  "rule": "none (descriptive; no M2 arm trains on paraphrases)",
+  "status": "evaluated",
+  "n": 55,
+  "tm": {
+   "C4@1": 98.7879,
+   "a3B@1": 96.9697,
+   "potion@1": 98.1818
+  },
+  "lr": {
+   "C4": 100.0,
+   "a3B": 96.3636,
+   "potion": 100.0
+  }
+ },
+ "bootstrap": {
+  "resamples": 10000,
+  "registered": "default_rng([20261025, 0]), items only",
+  "seed_inclusive": "default_rng([20261025, 1]), items then seeds within each TM configuration",
+  "secondary": "default_rng([20261025, 2]), items only",
+  "secondary_c4_fit": "default_rng([20261025, 3]), items only"
+ },
+ "matched": {
+  "path": "studies/text_understanding/fresh/mtop_test_matched_v1.json",
+  "sha256": "1ea621f8c8a67ff05c76c4b30a595bdc2f650ddfc85586c4bf3d1462b8d98405",
+  "is_frozen_v1": true
+ },
+ "overlap": {
+  "path": "studies/text_understanding/fresh/mtop_overlap.json",
+  "sha256": "aba34b7e710108552d01b9123b8c6230f786852985cd634e1e6e867212a4b8ff"
+ },
+ "multiplicity": "H1 and H2 are separate claims with no multiplicity correction; each stands alone. No combined line; no claim rests on any one rule being met.",
+ "interval_limit": "Registered 95% intervals: paired bootstrap over test items (10,000 resamples, default_rng([20261025, 0])); they leave out the variance between training seeds, the k-means and C, so the per-seed differences, the seed SDs and a seed-inclusive two-level interval (no rule; LR has no seed level) are given beside every TM number.",
+ "provenance": "MTOP English en/test, read once by this registered run (use count 0 -> 1); numbers on MTOP English only, never pooled with M1's three reused splits. C4 (ppw_S1000_d500_e0.5): no neural network at any stage. a3B (a3B_d768): network-free at run time, bge-base-en-v1.5@a5beb1e3 as teacher at training time. potion-base-32M@1e5a03f8: the published static table, distilled from bge-base-en-v1.5 by its authors (the teacher revision they used is not known). MTEB's English classification tasks include MTOP intent and domain, so MTOP texts in the teacher's or potion's training data, or model selection on MTOP's test split by their developers, cannot be ruled out; teacher contamination would inflate H1 (a3B has the teacher, C4 does not) and affects H2 less (both share the teacher)."
+}

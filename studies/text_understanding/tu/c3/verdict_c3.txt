@@ -1,0 +1,4 @@
+clinc150 (s 8; +60,444 paraphrases on 15,000): 3c-F TM 95.28 vs 94.49 (+0.79, paired [0.77, 0.4, 1.2], share None), LR 95.80 vs 95.03 (+0.77, share None) -> meets the bar; 3c-C LR +0.60; potion TM 94.45, LR 94.73; reference rows: rebuilt originals
+banking77 (s 8; +37,296 paraphrases on 9,000): 3c-F TM 92.55 vs 91.56 (+1.00, paired [1.49, 1.1, 0.4], share 7.293), LR 92.22 vs 91.53 (+0.69, share None) -> meets the bar; 3c-C LR +0.29; potion TM 91.69, LR 91.03; reference rows: rebuilt originals
+hwu64 (s 16; +35,110 paraphrases on 8,954): 3c-F TM 89.96 vs 88.88 (+1.08, paired [0.84, 1.39, 1.02], share 0.472), LR 89.96 vs 90.33 (-0.37, share -0.44) -> misses the bar; 3c-C LR -1.02; potion TM 91.17, LR 91.17; reference rows: rebuilt originals
+VERDICT 3c: PASS (2 of 3 sets at +0.5 with both probes)

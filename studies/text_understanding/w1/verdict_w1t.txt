@@ -1,0 +1,28 @@
+REGISTRATION_W1T.md verdict: 100 test rows
+== trec: | existsT_c4words S2 85.72 +- 1.14 S1 84.72 | existsT_potion S2 84.24 +- 1.03 S1 83.32 | existsT_glove S2 84.00 +- 0.37 S1 83.18 | bow S2 81.00 +- 1.30 S1 79.93
+== mr: | existsT_c4words S2 68.01 +- 0.70 S1 68.05 | existsT_potion S2 70.03 +- 0.93 S1 70.18 | existsT_glove S2 70.97 +- 1.62 S1 70.95 | bow S2 64.10 +- 2.43 S1 63.55
+== sst2: | existsT_c4words S2 73.98 +- 1.54 S1 73.28 | existsT_potion S2 77.98 +- 1.70 S1 77.84 | existsT_glove S2 74.05 +- 1.87 S1 73.15 | bow S2 62.36 +- 4.09 S1 62.74
+== r52: | existsT_c4words S2 86.92 +- 0.53 S1 86.56 | existsT_potion S2 85.63 +- 0.31 S1 85.58 | existsT_glove S2 86.73 +- 0.41 S1 86.65 | bow S2 88.97 +- 0.23 S1 88.87
+== r8: | existsT_c4words S2 94.92 +- 0.10 S1 94.76 | existsT_potion S2 94.42 +- 0.38 S1 94.40 | existsT_glove S2 94.25 +- 0.48 S1 94.33 | bow S2 94.95 +- 0.26 S1 94.97
+
+== word control against potion (primary) and against GloVe 42B, S2 paired by seed
+   word - potion trec: S2 +1.48 (seeds > 0: 4 of 5) | S1 +1.41
+   word - potion mr: S2 -2.03 (seeds > 0: 0 of 5) | S1 -2.13
+   word - potion sst2: S2 -4.00 (seeds > 0: 0 of 5) | S1 -4.56
+   word - potion r52: S2 +1.29 (seeds > 0: 5 of 5) | S1 +0.97
+   word - potion r8: S2 +0.50 (seeds > 0: 5 of 5) | S1 +0.35
+   word vs potion: within 1.0 on 3 of 5, within 2.0 on 3 of 5 -> REACHES POTION
+   word - GloVe 42B trec: S2 +1.72 (seeds > 0: 4 of 5) | S1 +1.54
+   word - GloVe 42B mr: S2 -2.96 (seeds > 0: 0 of 5) | S1 -2.90
+   word - GloVe 42B sst2: S2 -0.06 (seeds > 0: 2 of 5) | S1 +0.13
+   word - GloVe 42B r52: S2 +0.19 (seeds > 0: 3 of 5) | S1 -0.09
+   word - GloVe 42B r8: S2 +0.66 (seeds > 0: 5 of 5) | S1 +0.43
+   word vs GloVe 42B: within 1.0 on 4 of 5, within 2.0 on 4 of 5 -> REACHES GLOVE 42B
+
+== word control against bow (N7's D rule, S2 paired by seed)
+   word - bow trec: S2 +4.72 (seeds > 0: 5 of 5) -> adds
+   word - bow mr: S2 +3.91 (seeds > 0: 5 of 5) -> adds
+   word - bow sst2: S2 +11.62 (seeds > 0: 5 of 5) -> adds
+   word - bow r52: S2 -2.05 (seeds > 0: 0 of 5) -> does not add
+   word - bow r8: S2 -0.03 (seeds > 0: 2 of 5) -> does not add
+   adds on 3 of 5 sets -> MET

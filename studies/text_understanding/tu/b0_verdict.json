@@ -1,0 +1,99 @@
+{
+ "clinc150": {
+  "c4": {
+   "pick": 8.0,
+   "s8_mean": 92.29,
+   "pick_mean": 92.29,
+   "paired": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "gain": 0.0,
+   "helps": false
+  },
+  "potion": {
+   "pick": 8.0,
+   "s8_mean": 94.45,
+   "pick_mean": 94.45,
+   "paired": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "gain": 0.0,
+   "helps": false
+  },
+  "gap_s8": 2.16,
+  "gap_picks": 2.16,
+  "closes": false,
+  "share_closed": 0.0
+ },
+ "banking77": {
+  "c4": {
+   "pick": 8.0,
+   "s8_mean": 88.37,
+   "pick_mean": 88.37,
+   "paired": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "gain": 0.0,
+   "helps": false
+  },
+  "potion": {
+   "pick": 8.0,
+   "s8_mean": 91.69,
+   "pick_mean": 91.69,
+   "paired": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "gain": 0.0,
+   "helps": false
+  },
+  "gap_s8": 3.32,
+  "gap_picks": 3.32,
+  "closes": false,
+  "share_closed": 0.0
+ },
+ "hwu64": {
+  "c4": {
+   "pick": 8.0,
+   "s8_mean": 89.03,
+   "pick_mean": 89.03,
+   "paired": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "gain": 0.0,
+   "helps": false
+  },
+  "potion": {
+   "pick": 8.0,
+   "s8_mean": 91.17,
+   "pick_mean": 91.17,
+   "paired": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "gain": 0.0,
+   "helps": false
+  },
+  "gap_s8": 2.14,
+  "gap_picks": 2.14,
+  "closes": false,
+  "share_closed": 0.0
+ },
+ "summary": {
+  "helps_sets": {
+   "c4": 0,
+   "potion": 0
+  },
+  "closes_sets": 0
+ }
+}

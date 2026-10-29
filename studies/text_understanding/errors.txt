@@ -1,0 +1,26 @@
+{"lr_val_static": 0.9333, "C_static": 30.0, "lr_val_minilm": 0.961, "C_minilm": 10.0, "static_wrong_minilm_right": 124, "minilm_wrong_static_right": 41, "neg_share_lost": 0.016, "neg_share_all_val": 0.033}
+'on what day, month and year did i get new tires'  true=last_maintenance  static=spending_history
+'how can up my credit limit'  true=credit_limit_change  static=credit_limit
+'how can i say "cancel my order" in french'  true=translate  static=cancel
+'what kind of insurance do i have'  true=insurance  static=insurance_change
+'is chocolate good for you'  true=nutrition_info  static=restaurant_reviews
+'what did i do with my phone'  true=find_phone  static=user_name
+'take one hundred and fifty bucks from my wells fargo checking account and put it in my wells fargo savings account'  true=transfer  static=balance
+'what month does my card stop working'  true=expiration_date  static=damaged_card
+'travel time to bend, oregon'  true=distance  static=time
+'i need my earned income form for paying taxes'  true=w2  static=taxes
+'whats the travel time to redmond right now'  true=distance  static=time
+'i need 2000 to go to my chase checking from my mellon bank savings account'  true=transfer  static=balance
+'can you get a call started to martha'  true=make_call  static=change_ai_name
+'put a device with my phone'  true=sync_device  static=find_phone
+'when did i get my check last'  true=payday  static=last_maintenance
+'who is your superior, please'  true=who_do_you_work_for  static=what_is_your_name
+'will my debit card go bad any time soon'  true=expiration_date  static=replacement_card_duration
+'are butter and oil interchangable'  true=ingredient_substitution  static=oil_change_how
+'do i have more than $100 in my pnc account'  true=balance  static=transfer
+'what is there to do in craberra'  true=travel_suggestion  static=recipe
+"i need to make a reservation to long horn's, can i"  true=accept_reservations  static=cancel_reservation
+'what day is the cable bill owed on'  true=bill_due  static=bill_balance
+'i ordered new light bulbs online when will they get here'  true=order_status  static=order
+'have i added anything to my todo list'  true=todo_list  static=todo_list_update
+'tell me how are you'  true=greeting  static=what_is_your_name

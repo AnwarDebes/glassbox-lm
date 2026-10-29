@@ -1,0 +1,170 @@
+{
+ "label": "P0-T, post hoc after the P0 NO-GO, dev only, C4 only",
+ "T_grid": [
+  "1000",
+  "22",
+  "60",
+  "200"
+ ],
+ "pick_T": "1000",
+ "pick_balanced_acc": 52.331,
+ "linear_balanced_acc": 63.656,
+ "counting_balanced_acc": 58.645,
+ "difference_pick_minus_linear": -11.325,
+ "go": false,
+ "rule": "GO when the best T's final balanced accuracy >= ridge - 2.0 (P0's rule, unchanged)",
+ "curves": {
+  "1000": [
+   {
+    "epoch": 1,
+    "seconds": 514.8,
+    "balanced_acc": 52.145,
+    "bit_acc": 68.733,
+    "constant_outputs": 0,
+    "implied_cos": 0.5461,
+    "on_share_pred": 0.5351,
+    "on_share_target": 0.5121
+   },
+   {
+    "epoch": 2,
+    "seconds": 1045.6,
+    "balanced_acc": 52.458,
+    "bit_acc": 68.275,
+    "constant_outputs": 0,
+    "implied_cos": 0.5343,
+    "on_share_pred": 0.5096,
+    "on_share_target": 0.5121
+   },
+   {
+    "epoch": 3,
+    "seconds": 1555.3,
+    "balanced_acc": 52.331,
+    "bit_acc": 67.562,
+    "constant_outputs": 0,
+    "implied_cos": 0.5151,
+    "on_share_pred": 0.5129,
+    "on_share_target": 0.5121
+   }
+  ],
+  "22": [
+   {
+    "epoch": 1,
+    "seconds": 427.8,
+    "balanced_acc": 50.95,
+    "bit_acc": 53.053,
+    "constant_outputs": 0,
+    "implied_cos": 0.0936,
+    "on_share_pred": 0.5196,
+    "on_share_target": 0.5121
+   },
+   {
+    "epoch": 2,
+    "seconds": 849.8,
+    "balanced_acc": 50.946,
+    "bit_acc": 55.116,
+    "constant_outputs": 0,
+    "implied_cos": 0.157,
+    "on_share_pred": 0.5108,
+    "on_share_target": 0.5121
+   },
+   {
+    "epoch": 3,
+    "seconds": 1273.0,
+    "balanced_acc": 51.06,
+    "bit_acc": 54.243,
+    "constant_outputs": 0,
+    "implied_cos": 0.1305,
+    "on_share_pred": 0.5143,
+    "on_share_target": 0.5121
+   }
+  ],
+  "60": [
+   {
+    "epoch": 1,
+    "seconds": 429.9,
+    "balanced_acc": 50.966,
+    "bit_acc": 54.453,
+    "constant_outputs": 0,
+    "implied_cos": 0.1366,
+    "on_share_pred": 0.4814,
+    "on_share_target": 0.5121
+   },
+   {
+    "epoch": 2,
+    "seconds": 871.3,
+    "balanced_acc": 50.834,
+    "bit_acc": 53.372,
+    "constant_outputs": 0,
+    "implied_cos": 0.1035,
+    "on_share_pred": 0.5083,
+    "on_share_target": 0.5121
+   },
+   {
+    "epoch": 3,
+    "seconds": 1323.2,
+    "balanced_acc": 51.168,
+    "bit_acc": 53.015,
+    "constant_outputs": 0,
+    "implied_cos": 0.0927,
+    "on_share_pred": 0.4774,
+    "on_share_target": 0.5121
+   }
+  ],
+  "200": [
+   {
+    "epoch": 1,
+    "seconds": 425.8,
+    "balanced_acc": 51.328,
+    "bit_acc": 55.053,
+    "constant_outputs": 0,
+    "implied_cos": 0.1549,
+    "on_share_pred": 0.4966,
+    "on_share_target": 0.5121
+   },
+   {
+    "epoch": 2,
+    "seconds": 849.6,
+    "balanced_acc": 51.358,
+    "bit_acc": 55.088,
+    "constant_outputs": 0,
+    "implied_cos": 0.1558,
+    "on_share_pred": 0.5314,
+    "on_share_target": 0.5121
+   },
+   {
+    "epoch": 3,
+    "seconds": 1273.5,
+    "balanced_acc": 51.07,
+    "bit_acc": 55.225,
+    "constant_outputs": 0,
+    "implied_cos": 0.1602,
+    "on_share_pred": 0.4871,
+    "on_share_target": 0.5121
+   }
+  ]
+ },
+ "seconds": {
+  "1000": 1556.0,
+  "22": 1273.6,
+  "60": 1324.2,
+  "200": 1274.2
+ },
+ "settings": {
+  "clauses": 1000,
+  "s": 8,
+  "R": 4,
+  "batch": 1024,
+  "epochs": 3,
+  "seed": 1,
+  "bits": 64
+ },
+ "inputs_sha16": {
+  "p0_verdict.json": "7b9297bd5cb77186",
+  "twins.twins.json": "66b2fc1b408db8a1",
+  "tm_s8.json": "e7aaf539296803e7",
+  "train64.npz": "2d01afddccf5c3f4",
+  "held64.npz": "848f09bd3b141efb"
+ },
+ "b3_p0t.py": "eb53f689e3446ee5",
+ "utc": "2026-10-21T11:33:59Z"
+}

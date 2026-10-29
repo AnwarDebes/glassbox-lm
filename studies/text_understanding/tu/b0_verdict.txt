@@ -1,0 +1,4 @@
+clinc150: C4 table s8 92.29 vs s8 92.29 (gain +0.00, paired [0.0, 0.0, 0.0], helps False); potion s8 94.45 vs s8 94.45 (gain +0.00, paired [0.0, 0.0, 0.0], helps False); gap s8 2.16 -> picks 2.16, closes False, share 0.0
+banking77: C4 table s8 88.37 vs s8 88.37 (gain +0.00, paired [0.0, 0.0, 0.0], helps False); potion s8 91.69 vs s8 91.69 (gain +0.00, paired [0.0, 0.0, 0.0], helps False); gap s8 3.32 -> picks 3.32, closes False, share 0.0
+hwu64: C4 table s8 89.03 vs s8 89.03 (gain +0.00, paired [0.0, 0.0, 0.0], helps False); potion s8 91.17 vs s8 91.17 (gain +0.00, paired [0.0, 0.0, 0.0], helps False); gap s8 2.14 -> picks 2.14, closes False, share 0.0
+tuning helps: C4 table on 0 of 3 sets, potion on 0 of 3; tuning closes the gap on 0 of 3 sets

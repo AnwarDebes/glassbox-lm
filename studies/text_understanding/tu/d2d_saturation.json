@@ -1,0 +1,264 @@
+{
+ "clinc150": {
+  "n": 3000,
+  "max_words": 24,
+  "median_words": 8.0,
+  "potion": {
+   "bins": [
+    {
+     "bin": "1-5",
+     "count": 553,
+     "on_share": 0.3567,
+     "top_share": 0.08
+    },
+    {
+     "bin": "6-10",
+     "count": 1740,
+     "on_share": 0.5103,
+     "top_share": 0.1365
+    },
+    {
+     "bin": "11-15",
+     "count": 577,
+     "on_share": 0.6241,
+     "top_share": 0.1944
+    },
+    {
+     "bin": "16-20",
+     "count": 105,
+     "on_share": 0.6935,
+     "top_share": 0.2462
+    },
+    {
+     "bin": "21-30",
+     "count": 25,
+     "on_share": 0.7353,
+     "top_share": 0.2941
+    }
+   ],
+   "spearman_length_on": 0.888,
+   "on_share_all": 0.5122,
+   "n_bits": 3531
+  },
+  "ppw_S1000": {
+   "bins": [
+    {
+     "bin": "1-5",
+     "count": 553,
+     "on_share": 0.3382,
+     "top_share": 0.083
+    },
+    {
+     "bin": "6-10",
+     "count": 1740,
+     "on_share": 0.5214,
+     "top_share": 0.1494
+    },
+    {
+     "bin": "11-15",
+     "count": 577,
+     "on_share": 0.6486,
+     "top_share": 0.2192
+    },
+    {
+     "bin": "16-20",
+     "count": 105,
+     "on_share": 0.7363,
+     "top_share": 0.3013
+    },
+    {
+     "bin": "21-30",
+     "count": 25,
+     "on_share": 0.7797,
+     "top_share": 0.3617
+    }
+   ],
+   "spearman_length_on": 0.879,
+   "on_share_all": 0.5218,
+   "n_bits": 3439
+  }
+ },
+ "banking77": {
+  "n": 1003,
+  "max_words": 74,
+  "median_words": 11.0,
+  "potion": {
+   "bins": [
+    {
+     "bin": "1-5",
+     "count": 20,
+     "on_share": 0.3328,
+     "top_share": 0.0808
+    },
+    {
+     "bin": "6-10",
+     "count": 455,
+     "on_share": 0.4334,
+     "top_share": 0.1114
+    },
+    {
+     "bin": "11-15",
+     "count": 307,
+     "on_share": 0.5395,
+     "top_share": 0.1569
+    },
+    {
+     "bin": "16-20",
+     "count": 91,
+     "on_share": 0.6231,
+     "top_share": 0.2079
+    },
+    {
+     "bin": "21-30",
+     "count": 69,
+     "on_share": 0.7088,
+     "top_share": 0.2801
+    },
+    {
+     "bin": "31-50",
+     "count": 54,
+     "on_share": 0.793,
+     "top_share": 0.3845
+    },
+    {
+     "bin": "51-+",
+     "count": 7,
+     "on_share": 0.861,
+     "top_share": 0.4961
+    }
+   ],
+   "spearman_length_on": 0.906,
+   "on_share_all": 0.5224,
+   "n_bits": 3383
+  },
+  "ppw_S1000": {
+   "bins": [
+    {
+     "bin": "1-5",
+     "count": 20,
+     "on_share": 0.3001,
+     "top_share": 0.0812
+    },
+    {
+     "bin": "6-10",
+     "count": 455,
+     "on_share": 0.4448,
+     "top_share": 0.1242
+    },
+    {
+     "bin": "11-15",
+     "count": 307,
+     "on_share": 0.5576,
+     "top_share": 0.1782
+    },
+    {
+     "bin": "16-20",
+     "count": 91,
+     "on_share": 0.6511,
+     "top_share": 0.2413
+    },
+    {
+     "bin": "21-30",
+     "count": 69,
+     "on_share": 0.726,
+     "top_share": 0.3288
+    },
+    {
+     "bin": "31-50",
+     "count": 54,
+     "on_share": 0.802,
+     "top_share": 0.4209
+    },
+    {
+     "bin": "51-+",
+     "count": 7,
+     "on_share": 0.8745,
+     "top_share": 0.5366
+    }
+   ],
+   "spearman_length_on": 0.894,
+   "on_share_all": 0.5368,
+   "n_bits": 3234
+  }
+ },
+ "hwu64": {
+  "n": 1076,
+  "max_words": 21,
+  "median_words": 6.0,
+  "potion": {
+   "bins": [
+    {
+     "bin": "1-5",
+     "count": 411,
+     "on_share": 0.4059,
+     "top_share": 0.0985
+    },
+    {
+     "bin": "6-10",
+     "count": 554,
+     "on_share": 0.5442,
+     "top_share": 0.1463
+    },
+    {
+     "bin": "11-15",
+     "count": 100,
+     "on_share": 0.6484,
+     "top_share": 0.2063
+    },
+    {
+     "bin": "16-20",
+     "count": 10,
+     "on_share": 0.7194,
+     "top_share": 0.2861
+    },
+    {
+     "bin": "21-30",
+     "count": 1,
+     "on_share": 0.7853,
+     "top_share": 0.3457
+    }
+   ],
+   "spearman_length_on": 0.858,
+   "on_share_all": 0.5029,
+   "n_bits": 3573
+  },
+  "ppw_S1000": {
+   "bins": [
+    {
+     "bin": "1-5",
+     "count": 411,
+     "on_share": 0.3943,
+     "top_share": 0.1001
+    },
+    {
+     "bin": "6-10",
+     "count": 554,
+     "on_share": 0.5726,
+     "top_share": 0.1611
+    },
+    {
+     "bin": "11-15",
+     "count": 100,
+     "on_share": 0.6736,
+     "top_share": 0.2343
+    },
+    {
+     "bin": "16-20",
+     "count": 10,
+     "on_share": 0.733,
+     "top_share": 0.2896
+    },
+    {
+     "bin": "21-30",
+     "count": 1,
+     "on_share": 0.8037,
+     "top_share": 0.3691
+    }
+   ],
+   "spearman_length_on": 0.871,
+   "on_share_all": 0.5156,
+   "n_bits": 3505
+  }
+ },
+ "seconds": 2.7
+}

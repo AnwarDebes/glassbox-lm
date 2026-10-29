@@ -1,0 +1,42 @@
+== banking77 (published lr_mean 79.95)
+  lr_mean          wF1  79.94 (sd 1.09; [80.02, 78.28, 81.34, 79.92, 80.14]), acc  80.26
+  lr_existsT       wF1  72.29 (sd 1.63; [73.15, 69.57, 73.3, 73.45, 71.98]), acc  73.03
+  tm_existsT       wF1  73.21 (sd 1.63; [71.52, 72.54, 75.88, 72.81, 73.32]), acc  74.16, epochs [68, 72, 112, 92, 116]
+  tm_mean+existsT  wF1  77.15 (sd 1.01; [75.75, 76.97, 77.85, 76.84, 78.36]), acc  77.85, epochs [96, 104, 68, 112, 112]
+  tm_mean          wF1  76.09 (sd 1.38; [74.62, 74.6, 77.25, 76.59, 77.37]), acc  76.76, epochs [64, 92, 116, 120, 108]
+  R0 reproduction: 79.94 vs 79.95 (-0.01) -> PASS
+  P1a lr_existsT - lr_mean: -7.65 (draws > 0: 0 of 5)
+  P1b tm_existsT - lr_mean: -6.73 (draws > 0: 0 of 5)
+  P1c tm_mean+existsT - lr_mean: -2.79 (draws > 0: 0 of 5)
+  report tm_existsT - lr_existsT: +0.92 (draws > 0: 3 of 5)
+  report tm_mean - lr_mean: -3.85 (draws > 0: 0 of 5)
+== clinc_oos (published lr_mean 68.11)
+  lr_mean          wF1  67.72 (sd 2.08; [65.67, 66.78, 66.24, 69.98, 69.92]), acc  69.95
+  lr_existsT       wF1  63.37 (sd 2.97; [61.82, 64.94, 58.95, 66.36, 64.76]), acc  65.74
+  tm_existsT       wF1  59.32 (sd 2.08; [57.11, 59.76, 57.86, 59.35, 62.51]), acc  63.67, epochs [104, 88, 116, 80, 112]
+  tm_mean+existsT  wF1  61.16 (sd 1.67; [60.74, 60.39, 59.01, 62.55, 63.12]), acc  65.63, epochs [108, 100, 100, 96, 104]
+  tm_mean          wF1  58.72 (sd 2.06; [57.15, 58.15, 56.79, 59.73, 61.79]), acc  63.54, epochs [88, 108, 112, 120, 104]
+  R0 reproduction: 67.72 vs 68.11 (-0.39) -> PASS
+  P1a lr_existsT - lr_mean: -4.35 (draws > 0: 0 of 5)
+  P1b tm_existsT - lr_mean: -8.40 (draws > 0: 0 of 5)
+  P1c tm_mean+existsT - lr_mean: -6.56 (draws > 0: 0 of 5)
+  report tm_existsT - lr_existsT: -4.05 (draws > 0: 0 of 5)
+  report tm_mean - lr_mean: -9.00 (draws > 0: 0 of 5)
+== massive_intent (published lr_mean 73.83)
+  lr_mean          wF1  73.57 (sd 1.12; [74.5, 72.1, 73.08, 74.86, 73.29]), acc  73.91
+  lr_existsT       wF1  71.36 (sd 1.82; [72.93, 68.98, 69.84, 72.33, 72.73]), acc  72.14
+  tm_existsT       wF1  71.37 (sd 1.17; [72.18, 69.77, 70.96, 71.13, 72.81]), acc  72.52, epochs [120, 64, 80, 96, 92]
+  tm_mean+existsT  wF1  72.55 (sd 1.43; [73.59, 70.51, 71.65, 73.1, 73.92]), acc  73.68, epochs [104, 60, 56, 72, 92]
+  tm_mean          wF1  69.69 (sd 0.88; [70.13, 68.12, 70.21, 69.92, 70.05]), acc  70.87, epochs [68, 56, 108, 80, 112]
+  R0 reproduction: 73.57 vs 73.83 (-0.26) -> PASS
+  P1a lr_existsT - lr_mean: -2.20 (draws > 0: 0 of 5)
+  P1b tm_existsT - lr_mean: -2.20 (draws > 0: 0 of 5)
+  P1c tm_mean+existsT - lr_mean: -1.01 (draws > 0: 1 of 5)
+  report tm_existsT - lr_existsT: +0.01 (draws > 0: 3 of 5)
+  report tm_mean - lr_mean: -3.88 (draws > 0: 0 of 5)
+
+complete datasets: 3 of 3
+R0 within 2.0 of the published number: 3 of 3
+P1a (lr_existsT > lr_mean on >= 2 of 3): 0 of 3 -> NOT MET
+P1b (tm_existsT > lr_mean on >= 2 of 3): 0 of 3 -> NOT MET; strong (3 of 3 and >= published where R0 passed): NOT MET
+P1c (tm_mean+existsT > lr_mean on >= 2 of 3): 0 of 3 -> NOT MET

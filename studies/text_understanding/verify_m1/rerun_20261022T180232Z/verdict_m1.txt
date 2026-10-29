@@ -1,0 +1,21 @@
+VERDICT M1 (test): H1 MET (3 of 3, STRONG); H2 MET (3 of 3); H3a MET (3 of 3, strong on 1); H3b MET (3 of 3, STRONG)
+H1, H2, H3a and H3b are separate claims with no correction; meeting one says nothing about another.
+95% intervals: paired bootstrap over test examples (10,000 resamples, default_rng([20261021, set index])); they leave out the variance between training seeds, so the per-seed differences and seed SDs are given beside every TM number.
+clinc150 (n_test 4500): TM C4@1 91.99 (seed SD 0.21) / a3B@1 93.59 (seed SD 0.03) / potion@1 93.53 (seed SD 0.10) / a3B_3c@1 94.93 (seed SD 0.10) / C4_3c@1 93.60 (seed SD 0.12) / a3B_twin@1 93.93 (seed SD 0.31) / a3B@5 93.79 (seed SD 0.22); LR C4 91.78 / a3B 93.78 / potion 93.78 / a3B_3c 95.00 / C4_3c 94.20 / a3B_twin 93.31
+  H1 meets (strong): H1_tm +1.60 [+1.05, +2.13] (per seed +1.69, +1.76, +1.36; seed SE 0.12); H1_lr +2.00 [+1.33, +2.64]
+  H2 meets: H2_tm +0.06 [-0.40, +0.50] (per seed +0.04, -0.02, +0.16; seed SE 0.05); H2_lr +0.00 [-0.56, +0.56]
+  H3a meets (strong): H3a_lr +1.22 [+0.73, +1.71]
+  H3b meets (strong): H3b_lr +1.69 [+1.09, +2.31]
+  descriptive: tm_3c_minus_a3B +1.34 [+0.95, +1.75] (per seed +1.20, +1.42, +1.40; seed SE 0.07); tm_3c_minus_a3B_repeat5 +1.15 [+0.75, +1.56] (per seed +0.78, +1.36, +1.31; seed SE 0.19); tm_a3B_repeat5_minus_a3B +0.19 [-0.07, +0.45] (per seed +0.42, +0.07, +0.09; seed SE 0.12); tm_3c_minus_twin +1.00 [+0.59, +1.42] (per seed +0.53, +1.29, +1.18; seed SE 0.24); tm_twin_minus_a3B +0.34 [+0.01, +0.70] (per seed +0.67, +0.13, +0.22; seed SE 0.17); tm_ablation_a3B_3c_minus_C4_3c +1.33 [+0.90, +1.79] (per seed +1.24, +1.27, +1.49; seed SE 0.08); lr_ablation_a3B_3c_minus_C4_3c +0.80 [+0.24, +1.36]; lr_twin_minus_a3B -0.47 [-1.00, +0.07]
+banking77 (n_test 3080): TM C4@1 89.17 (seed SD 0.18) / a3B@1 90.89 (seed SD 0.44) / potion@1 91.36 (seed SD 0.15) / a3B_3c@1 91.46 (seed SD 0.22) / C4_3c@1 90.14 (seed SD 0.12) / a3B_twin@1 91.30 (seed SD 0.49) / a3B@5 91.21 (seed SD 0.05); LR C4 88.99 / a3B 90.68 / potion 90.75 / a3B_3c 91.85 / C4_3c 90.58 / a3B_twin 89.58
+  H1 meets (strong): H1_tm +1.72 [+1.03, +2.40] (per seed +2.01, +1.23, +1.92; seed SE 0.25); H1_lr +1.69 [+0.75, +2.60]
+  H2 meets: H2_tm -0.48 [-1.00, +0.05] (per seed -0.16, -0.94, -0.32; seed SE 0.24); H2_lr -0.06 [-0.81, +0.68]
+  H3a meets: H3a_lr +1.17 [+0.45, +1.92]
+  H3b meets (strong): H3b_lr +2.27 [+1.43, +3.12]
+  descriptive: tm_3c_minus_a3B +0.57 [-0.01, +1.17] (per seed +0.00, +1.27, +0.45; seed SE 0.37); tm_3c_minus_a3B_repeat5 +0.25 [-0.35, +0.85] (per seed +0.16, +0.45, +0.13; seed SE 0.10); tm_a3B_repeat5_minus_a3B +0.32 [-0.09, +0.75] (per seed -0.16, +0.81, +0.32; seed SE 0.28); tm_3c_minus_twin +0.16 [-0.42, +0.76] (per seed -0.42, +0.94, -0.03; seed SE 0.41); tm_twin_minus_a3B +0.41 [-0.04, +0.85] (per seed +0.42, +0.32, +0.49; seed SE 0.05); tm_ablation_a3B_3c_minus_C4_3c +1.32 [+0.73, +1.95] (per seed +1.33, +1.53, +1.10; seed SE 0.12); lr_ablation_a3B_3c_minus_C4_3c +1.27 [+0.55, +2.01]; lr_twin_minus_a3B -1.10 [-1.82, -0.39]
+hwu64 (n_test 1076): TM C4@1 86.56 (seed SD 0.83) / a3B@1 88.72 (seed SD 0.56) / potion@1 88.14 (seed SD 0.44) / a3B_3c@1 89.65 (seed SD 0.78) / C4_3c@1 88.10 (seed SD 0.48) / a3B_twin@1 88.29 (seed SD 0.57) / a3B@5 88.38 (seed SD 0.34); LR C4 87.36 / a3B 89.59 / potion 89.03 / a3B_3c 90.33 / C4_3c 89.13 / a3B_twin 87.83
+  H1 meets (strong): H1_tm +2.17 [+0.93, +3.44] (per seed +2.32, +1.12, +3.07; seed SE 0.57); H1_lr +2.23 [+0.65, +3.81]
+  H2 meets: H2_tm +0.59 [-0.46, +1.64] (per seed +1.02, +0.56, +0.19; seed SE 0.24); H2_lr +0.56 [-0.84, +1.95]
+  H3a meets: H3a_lr +0.74 [-0.46, +2.04]
+  H3b meets (strong): H3b_lr +2.51 [+1.12, +4.00]
+  descriptive: tm_3c_minus_a3B +0.93 [-0.03, +1.92] (per seed -0.56, +1.86, +1.49; seed SE 0.75); tm_3c_minus_a3B_repeat5 +1.27 [+0.37, +2.23] (per seed +0.09, +1.58, +2.14; seed SE 0.61); tm_a3B_repeat5_minus_a3B -0.34 [-1.08, +0.37] (per seed -0.65, +0.28, -0.65; seed SE 0.31); tm_3c_minus_twin +1.36 [+0.37, +2.39] (per seed +0.74, +2.14, +1.21; seed SE 0.41); tm_twin_minus_a3B -0.43 [-1.15, +0.28] (per seed -1.30, -0.28, +0.28; seed SE 0.46); tm_ablation_a3B_3c_minus_C4_3c +1.55 [+0.50, +2.60] (per seed +0.37, +1.67, +2.60; seed SE 0.65); lr_ablation_a3B_3c_minus_C4_3c +1.21 [-0.19, +2.70]; lr_twin_minus_a3B -1.77 [-3.25, -0.28]

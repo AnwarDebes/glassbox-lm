@@ -1,0 +1,25 @@
+clinc150:
+  TM: ppw_S1000 92.29 / J 92.18 / Jshift 91.74 / P 91.17 / potion 94.60
+  LR: ppw_S1000 92.73 / J 92.57 / Jshift 92.33 / P 91.90 / potion 94.73
+  J - ppw_S1000: TM -0.11, LR -0.16 -> misses +0.5 with both
+  J - Jshift:    TM +0.44, LR +0.24 -> misses +0.5 with both
+  TM gap to potion closed by J: -5% (ppw_S1000 -2.31 from potion, J -2.42)
+  LR gap to potion closed by J: -8% (ppw_S1000 -2.00 from potion, J -2.16)
+  TM seeds: ppw_S1000 [92.2, 92.13, 92.53]; J [91.97, 92.1, 92.47]; Jshift [91.87, 91.77, 91.57]; P [91.1, 91.13, 91.27]; potion [94.43, 94.83, 94.53]
+banking77:
+  TM: ppw_S1000 87.91 / J 88.14 / Jshift 88.33 / P 87.54 / potion 91.46
+  LR: ppw_S1000 87.34 / J 88.53 / Jshift 87.14 / P 86.94 / potion 91.03
+  J - ppw_S1000: TM +0.23, LR +1.19 -> misses +0.5 with both
+  J - Jshift:    TM -0.20, LR +1.39 -> misses +0.5 with both
+  TM gap to potion closed by J: +6% (ppw_S1000 -3.56 from potion, J -3.33)
+  LR gap to potion closed by J: +32% (ppw_S1000 -3.69 from potion, J -2.50)
+  TM seeds: ppw_S1000 [88.04, 87.84, 87.84]; J [87.84, 88.04, 88.53]; Jshift [88.33, 87.54, 89.13]; P [87.44, 87.54, 87.64]; potion [91.53, 91.53, 91.33]
+hwu64:
+  TM: ppw_S1000 89.34 / J 89.25 / Jshift 88.69 / P 88.13 / potion 91.23
+  LR: ppw_S1000 88.85 / J 89.03 / Jshift 89.78 / P 88.01 / potion 91.17
+  J - ppw_S1000: TM -0.09, LR +0.18 -> misses +0.5 with both
+  J - Jshift:    TM +0.56, LR -0.75 -> misses +0.5 with both
+  TM gap to potion closed by J: -5% (ppw_S1000 -1.89 from potion, J -1.98)
+  LR gap to potion closed by J: +8% (ppw_S1000 -2.32 from potion, J -2.14)
+  TM seeds: ppw_S1000 [89.03, 89.5, 89.5]; J [89.31, 89.59, 88.85]; Jshift [87.92, 89.22, 88.94]; P [88.75, 88.1, 87.55]; potion [90.99, 91.54, 91.17]
+words: J - ppw_S1000 >= +0.5 with both probes on 0 of 3 sets -> FAIL; pair link (J - Jshift >= +0.5 with both) on 0 of 3 -> not credited (a gain may come from the document topic)

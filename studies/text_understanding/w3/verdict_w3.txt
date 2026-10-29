@@ -1,0 +1,28 @@
+clinc150:
+  TM: ppw_S1000 92.29 / CF 87.99 / RF 92.10 / CFrand 88.43 / potion 94.60
+  LR: ppw_S1000 92.73 / CF 88.27 / RF 92.00 / CFrand 88.47 / potion 94.73
+  CF - ppw_S1000: TM -4.30, LR -4.46; CF - CFrand: TM -0.44, LR -0.20 -> misses the bar
+  CF TM: -4.30 over ppw_S1000, -186% of the gap to potion
+  CF LR: -4.46 over ppw_S1000, -223% of the gap to potion
+  RF TM: -0.19 over ppw_S1000, -8% of the gap to potion
+  RF LR: -0.73 over ppw_S1000, -37% of the gap to potion
+  TM seeds: ppw_S1000 [92.2, 92.13, 92.53]; CF [88.03, 87.97, 87.97]; RF [92.1, 91.93, 92.27]; CFrand [88.77, 88.1, 88.43]; potion [94.43, 94.83, 94.53]
+banking77:
+  TM: ppw_S1000 87.91 / CF 87.07 / RF 88.86 / CFrand 86.74 / potion 91.46
+  LR: ppw_S1000 87.34 / CF 86.44 / RF 87.94 / CFrand 86.14 / potion 91.03
+  CF - ppw_S1000: TM -0.83, LR -0.90; CF - CFrand: TM +0.33, LR +0.30 -> misses the bar
+  CF TM: -0.83 over ppw_S1000, -23% of the gap to potion
+  CF LR: -0.90 over ppw_S1000, -24% of the gap to potion
+  RF TM: +0.96 over ppw_S1000, +27% of the gap to potion
+  RF LR: +0.60 over ppw_S1000, +16% of the gap to potion
+  TM seeds: ppw_S1000 [88.04, 87.84, 87.84]; CF [86.74, 87.04, 87.44]; RF [88.83, 88.53, 89.23]; CFrand [86.84, 86.64, 86.74]; potion [91.53, 91.53, 91.33]
+hwu64:
+  TM: ppw_S1000 89.34 / CF 86.09 / RF 89.13 / CFrand 85.72 / potion 91.23
+  LR: ppw_S1000 88.85 / CF 85.97 / RF 88.94 / CFrand 84.39 / potion 91.17
+  CF - ppw_S1000: TM -3.25, LR -2.88; CF - CFrand: TM +0.37, LR +1.58 -> misses the bar
+  CF TM: -3.25 over ppw_S1000, -172% of the gap to potion
+  CF LR: -2.88 over ppw_S1000, -124% of the gap to potion
+  RF TM: -0.22 over ppw_S1000, -11% of the gap to potion
+  RF LR: +0.09 over ppw_S1000, +4% of the gap to potion
+  TM seeds: ppw_S1000 [89.03, 89.5, 89.5]; CF [86.34, 85.59, 86.34]; RF [89.31, 88.66, 89.41]; CFrand [85.5, 85.97, 85.69]; potion [90.99, 91.54, 91.17]
+words: CF beats ppw_S1000 by +0.5 and CFrand by +0.3 with both probes on 0 of 3 sets -> FAIL

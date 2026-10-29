@@ -1,0 +1,29 @@
+REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../../.." && pwd)"  # published copy: the repository root
+# pins for c3x_chain.sh, written 2026-10-21T11:37:41Z with tu/c3x/NOTE_2026-10-21_followups.md; every line stops the chain if its file changed
+check ${REPO_ROOT}/studies/text_understanding/tu/c3x_feats.py 95be26c7abb8103a
+check ${REPO_ROOT}/studies/text_understanding/tu/c3x_exists_tm.py 818427505f045f8c
+check ${REPO_ROOT}/studies/text_understanding/tu/c3x_lr.py 772a490bd57fdb70
+check ${REPO_ROOT}/studies/text_understanding/tu/c3x_report.py 6b80a1a5e510cfbc
+check ${REPO_ROOT}/studies/text_understanding/tu/c3x_twin.py 0453a542afce2a60
+check ${REPO_ROOT}/studies/text_understanding/tu/c3x_rk.py c8504a6aa13c7f42
+check ${REPO_ROOT}/studies/text_understanding/tu/c3x_chain.sh 5cdfe10203b8bb0b
+check ${REPO_ROOT}/studies/text_understanding/tu/c3_exists_tm.py 6474ebb07393f433
+check ${REPO_ROOT}/studies/text_understanding/tu/c3_lr.py db03297a64b0aa6a
+check ${REPO_ROOT}/studies/text_understanding/exists_tm.py 7da0aee9f4eef796
+check ${REPO_ROOT}/studies/text_understanding/w1/wordtab_feats.py 001a93b259a1b34f
+check ${REPO_ROOT}/studies/text_understanding/w1/mo_tm.py 4d85663b1556ccf2
+check ${REPO_ROOT}/studies/decision_layer/src/dl/tm.py f649043f5801605b
+check ${REPO_ROOT}/studies/decision_layer/src/dl/tm_init.py 557ff69706529738
+check ${REPO_ROOT}/studies/decision_layer/src/dl/boolean.py b5f5917f390da8a6
+check ${REPO_ROOT}/studies/decision_layer/src/dl/data.py 0c4f8d22576e817c
+check ${REPO_ROOT}/studies/decision_layer/src/dl/linear.py e3ef06b96ef60740
+check ${REPO_ROOT}/studies/decision_layer/src/dl/explain.py 1b6f79a8965f3185
+check ${REPO_ROOT}/studies/text_understanding/tu/a3/tables/a3B_d768.npz 4a1ed2aed7aa4ce7
+check ${REPO_ROOT}/studies/text_understanding/tu/c3/kept_F.jsonl d359ea5aad34dfea
+check ${REPO_ROOT}/studies/text_understanding/tu/c3x/twin_kept.jsonl 37326506ae233a3f
+check ${REPO_ROOT}/studies/text_understanding/tu/c3x/kept_F_rk_clinc150.jsonl 25a1c51657090221
+check ${REPO_ROOT}/studies/text_understanding/tu/c3/base.json ec1bad4d8e54a0e3
+check ${REPO_ROOT}/studies/text_understanding/tu/c3/verdict_c3.json e641a7e81c328e1f
+check ${REPO_ROOT}/studies/text_understanding/tu/c3/results_c3_val.jsonl 4c7cda604f41e0c6
+check ${REPO_ROOT}/studies/text_understanding/tu/c3/results_c3_lr.jsonl de04f93a52a076fe
+check ${REPO_ROOT}/studies/text_understanding/tu/c3/feats/orig/clinc150__p32tok_K512.npz a59544c7915b2367

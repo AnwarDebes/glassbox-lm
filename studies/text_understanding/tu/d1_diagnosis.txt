@@ -1,0 +1,22 @@
+== clinc150: val 3000; LR ppw_S1000 0.9263, potion 0.9477, MiniLM bits 0.9577 (C 1.0)
+  potion_only              n  113  N 7  R 68  T 13  P 20  X 21
+  ppw_only                 n   49  N 2  R 32  T 5  P 8  X 8
+  minilm_only_vs_potion    n   91  N 2  R 51  T 7  P 21  X 17
+  potion_only_vs_minilm    n   61  N 6  R 35  T 8  P 15  X 8
+  minilm_only_vs_ppw       n  150  N 6  R 84  T 14  P 32  X 31
+  all val                     N 119  R 1158  T 112  P 311  X 1459
+== banking77: val 1003; LR ppw_S1000 0.8734, potion 0.9093, MiniLM bits 0.9292 (C 10.0)
+  potion_only              n   52  N 10  R 21  T 2  P 6  X 21
+  ppw_only                 n   16  N 5  R 5  T 0  P 4  X 4
+  minilm_only_vs_potion    n   37  N 13  R 14  T 1  P 8  X 6
+  potion_only_vs_minilm    n   17  N 7  R 6  T 0  P 5  X 2
+  minilm_only_vs_ppw       n   70  N 17  R 27  T 3  P 10  X 23
+  all val                     N 258  R 230  T 14  P 78  X 511
+== hwu64: val 1076; LR ppw_S1000 0.8885, potion 0.9117, MiniLM bits 0.9061 (C 100.0)
+  potion_only              n   47  N 5  R 29  T 3  P 8  X 6
+  ppw_only                 n   22  N 0  R 11  T 0  P 9  X 2
+  minilm_only_vs_potion    n   32  N 1  R 17  T 1  P 10  X 4
+  potion_only_vs_minilm    n   38  N 2  R 27  T 1  P 4  X 7
+  minilm_only_vs_ppw       n   59  N 6  R 34  T 3  P 11  X 9
+  all val                     N 52  R 417  T 49  P 93  X 527
+hand-check file: 200 rows (potion-only and MiniLM-only-vs-potion, stratified); 1090 s

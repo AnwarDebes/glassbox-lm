@@ -1,0 +1,18 @@
+=== m2_C4_mtop_en_r1_s7 ppw_S1000_d500_e0.5 existsT s 8.0 val 0.9333
+
+=== m2_C4_mtop_en_r1_s8 ppw_S1000_d500_e0.5 existsT s 8.0 val 0.9351
+
+=== m2_C4_mtop_en_r1_s9 ppw_S1000_d500_e0.5 existsT s 8.0 val 0.9329
+
+=== m2_a3B_mtop_en_r1_s7 a3B_d768 existsT s 8.0 val 0.9463
+
+=== m2_a3B_mtop_en_r1_s8 a3B_d768 existsT s 8.0 val 0.9481
+
+=== m2_a3B_mtop_en_r1_s9 a3B_d768 existsT s 8.0 val 0.9468
+
+=== m2_potion_mtop_en_r1_s7 potion-base-32M existsT s 8.0 val 0.9441
+
+=== m2_potion_mtop_en_r1_s8 potion-base-32M existsT s 8.0 val 0.9436
+
+=== m2_potion_mtop_en_r1_s9 potion-base-32M existsT s 8.0 val 0.9468
+

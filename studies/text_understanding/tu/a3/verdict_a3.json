@@ -1,0 +1,112 @@
+{
+ "clinc150": {
+  "s_c4": 8.0,
+  "s_potion": 8.0,
+  "tm_ppw": 92.29,
+  "tm_potion": 94.45,
+  "lr_ppw": 92.73,
+  "lr_ppw_w2_row": 92.73,
+  "lr_potion": 94.73,
+  "a3B_d768": {
+   "tm": 94.49,
+   "tm_gain": 2.2,
+   "tm_paired": [
+    2.23,
+    2.5,
+    1.87
+   ],
+   "lr": 95.03,
+   "lr_gain": 2.3,
+   "tm_share_of_gap": 1.02,
+   "lr_share_of_gap": 1.15
+  },
+  "a3A_d768": {
+   "tm": 93.43,
+   "tm_gain": 1.14,
+   "tm_paired": [
+    1.23,
+    0.87,
+    1.33
+   ],
+   "lr": 93.67,
+   "lr_gain": 0.94,
+   "tm_share_of_gap": 0.53,
+   "lr_share_of_gap": 0.47
+  },
+  "pass": true
+ },
+ "banking77": {
+  "s_c4": 8.0,
+  "s_potion": 8.0,
+  "tm_ppw": 88.37,
+  "tm_potion": 91.69,
+  "lr_ppw": 87.34,
+  "lr_ppw_w2_row": 87.34,
+  "lr_potion": 91.03,
+  "a3B_d768": {
+   "tm": 91.56,
+   "tm_gain": 3.19,
+   "tm_paired": [
+    2.1,
+    3.48,
+    3.98
+   ],
+   "lr": 91.53,
+   "lr_gain": 4.19,
+   "tm_share_of_gap": 0.959,
+   "lr_share_of_gap": 1.136
+  },
+  "a3A_d768": {
+   "tm": 89.6,
+   "tm_gain": 1.23,
+   "tm_paired": [
+    0.7,
+    1.59,
+    1.39
+   ],
+   "lr": 89.23,
+   "lr_gain": 1.89,
+   "tm_share_of_gap": 0.369,
+   "lr_share_of_gap": 0.512
+  },
+  "pass": true
+ },
+ "hwu64": {
+  "s_c4": 8.0,
+  "s_potion": 8.0,
+  "tm_ppw": 89.03,
+  "tm_potion": 91.17,
+  "lr_ppw": 88.85,
+  "lr_ppw_w2_row": 88.85,
+  "lr_potion": 91.17,
+  "a3B_d768": {
+   "tm": 90.27,
+   "tm_gain": 1.24,
+   "tm_paired": [
+    1.58,
+    1.58,
+    0.55
+   ],
+   "lr": 90.24,
+   "lr_gain": 1.39,
+   "tm_share_of_gap": 0.578,
+   "lr_share_of_gap": 0.599
+  },
+  "a3A_d768": {
+   "tm": 89.68,
+   "tm_gain": 0.65,
+   "tm_paired": [
+    0.65,
+    0.56,
+    0.74
+   ],
+   "lr": 89.87,
+   "lr_gain": 1.02,
+   "tm_share_of_gap": 0.304,
+   "lr_share_of_gap": 0.44
+  },
+  "pass": true
+ },
+ "verdict": "PASS",
+ "sets_meeting_bar": 3
+}

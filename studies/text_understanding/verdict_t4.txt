@@ -1,0 +1,17 @@
+TM seeds [1, 2, 3]: test span F1 [69.48, 70.54, 69.97], mean 70.00 (val [0.7309, 0.7298, 0.7261], best epochs [52, 50, 48])
+LR twin W+S+P+N+G 73.57; frozen MiniLM probe minilm3 65.95; LR words only W 17.79
+H1 (TM > minilm3): MET (+4.05); strong (every seed > minilm3): MET
+H2 (TM >= 0.90 x LR twin): MET (ratio 0.951)
+
+per slot type (test span F1; gold spans):
+type                 TM seed 1     TM seed 2     TM seed 3  LR W+S+P+N+G    LR minilm3
+date (416)                83.4          84.3          84.3          85.3          79.6
+place_name (281)          73.2          75.7          72.2          76.1          71.1
+event_name (260)          64.0          67.4          67.2          70.5          65.5
+person (219)              80.3          78.9          80.7          83.8          79.6
+time (193)                69.8          71.4          71.2          70.1          64.5
+media_type (128)          78.3          76.3          79.7          80.2          69.5
+business_name (92)          54.6          61.1          56.1          59.3          55.2
+weather_descriptor (82)          70.9          72.0          69.0          74.9          66.7
+food_type (72)            56.1          63.5          62.1          59.2          48.7
+transport_type (65)          89.7          86.1          89.7          93.7          88.7

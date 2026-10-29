@@ -1,0 +1,16 @@
+gate: 2026-10-21T07:52:29Z cores 1.20 over 10.0 s; throttled 0 of 100 periods (limit 3.5, check 1)
+start 2026-10-21T07:52:29Z: studies/decision_layer/.venv-dl/bin/python -I -B studies/text_understanding/tu/tests/test_b3_verdict.py
+PASS PASS: exit 0
+PASS PASS: verdict and 3 sets
+PASS PASS: the TM gain over base is +1.00 with paired seeds
+PASS PASS: the paired SE of identical shifts is 0
+FAIL PASS: the text file has the verdict line: 
+PASS FAIL part 1: reason named
+PASS FAIL part 2: a linear re-encoding
+PASS FAIL part 3: the second set of concept bits
+PASS both probes are needed: an LR gain of +0.3 over base fails part 1 on 2 sets
+PASS edges: +0.5 over base and +0.3 over both twins pass
+PASS a missing row stops the verdict (exit 1, no file)
+PASS an existing verdict is refused (exit 2)
+b3_verdict tests: 11 passed, 1 failed
+end 2026-10-21T07:52:29Z exit 1

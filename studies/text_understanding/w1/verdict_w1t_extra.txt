@@ -1,0 +1,10 @@
+reference arms: N7's registered test rows, results_n7_test.jsonl sha256 77b65abed26cf59a; REGISTRATION_N7.md f849d4975ef5cd33; verdict_n7.txt db0855c1de8fbaa3
+   75 rows (views existsT_potion, existsT_glove, bow); code hashes stored in them: ['{"exists_tm.py": "7da0aee9f4eef796", "glove_feats.py": "7b5e8760e1f5e107", "n7_tm.py": "3d715305b119b57b"}']
+   seeds per set and view: {mr/bow: [1, 2, 3, 4, 5], mr/existsT_glove: [1, 2, 3, 4, 5], mr/existsT_potion: [1, 2, 3, 4, 5], r52/bow: [1, 2, 3, 4, 5], r52/existsT_glove: [1, 2, 3, 4, 5], r52/existsT_potion: [1, 2, 3, 4, 5], r8/bow: [1, 2, 3, 4, 5], r8/existsT_glove: [1, 2, 3, 4, 5], r8/existsT_potion: [1, 2, 3, 4, 5], sst2/bow: [1, 2, 3, 4, 5], sst2/existsT_glove: [1, 2, 3, 4, 5], sst2/existsT_potion: [1, 2, 3, 4, 5], trec/bow: [1, 2, 3, 4, 5], trec/existsT_glove: [1, 2, 3, 4, 5], trec/existsT_potion: [1, 2, 3, 4, 5]}
+drift check: carved-val S1 (mean val accuracy, epochs 51-100) of the word arm, test run vs W1-S val run
+   trec: s1 80.488 (W1-S 80.488, diff +0.000) s2 80.518 (W1-S 80.518, diff +0.000) s3 81.133 (W1-S 81.133, diff +0.000) s4 81.376 (no W1-S row) s5 81.101 (no W1-S row)
+   mr: s1 65.961 (W1-S 65.961, diff +0.000) s2 66.138 (W1-S 66.138, diff +0.000) s3 67.453 (W1-S 67.453, diff +0.000) s4 69.067 (no W1-S row) s5 66.761 (no W1-S row)
+   sst2: s1 70.647 (W1-S 70.647, diff +0.000) s2 76.575 (W1-S 76.575, diff +0.000) s3 74.257 (W1-S 74.257, diff +0.000) s4 73.210 (no W1-S row) s5 73.665 (no W1-S row)
+   r52: s1 88.527 (W1-S 88.527, diff +0.000) s2 88.725 (W1-S 88.725, diff +0.000) s3 89.522 (W1-S 89.522, diff +0.000) s4 89.660 (no W1-S row) s5 88.369 (no W1-S row)
+   r8: s1 92.296 (W1-S 92.296, diff +0.000) s2 93.103 (W1-S 93.103, diff +0.000) s3 94.318 (W1-S 94.318, diff +0.000) s4 93.099 (no W1-S row) s5 93.413 (no W1-S row)
+train and val bits equal the W1-S val-run cache in every test row: True
