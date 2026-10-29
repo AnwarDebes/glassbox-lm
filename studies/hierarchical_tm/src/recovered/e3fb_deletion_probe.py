@@ -6,7 +6,18 @@ K OR-groups of the number of true options, an empty option always true; class su
 +-T; prediction = argmax, ties to class 0, as the package predicts). The rebuild must reproduce the run's logged final
 dev accuracy exactly. Accepted = predicted class 1 (slide10).
 Prediction (fixed before any seed existed): a template rule rejects >= 95% of deletion texts; a blacklist accepts > 50%.
-Usage: python e3fb_deletion_probe.py [--texts-only] RUN_DIR ..."""
+Usage: python e3fb_deletion_probe.py [--texts-only] RUN_DIR ...
+
+Note of 2026-10-25 (HTM-B4): this copy is the first of the two versions of the script, the one of the run
+20261003T001721Z_e3fb_deletion_probe_posthoc_exploratory, and its reading (r["reading"] below) has one part only: a model
+that accepts at most 5% of the deletion texts is called "template-like", even when it also rejects the intact sentences,
+as the s 5 screen run does; docs/results.md reads that run as "reject-all (degenerate)". The later version, in probe/ of
+20261003T015449Z_e3fb_flat_C768_check2b_eval_and_probe_v2_exploratory (not distributed), uses the two-part rule of the
+amendment of 3 Oct 2026, 02:18 CEST (docs/registrations.md): "reject-all (degenerate)" if it accepts fewer than 90% of the
+intact sentences and at most 5% of the deletion texts; "template-like" if it accepts at least 90% of the intact sentences
+and at most 5% of the deletion texts; "blacklist-like (accepts > 50% of deletions)" above 50% of the deletion texts;
+"neither (between)" otherwise. The two versions differ only in that reading, in their docstring and in two path
+constants. The code below is unchanged."""
 import json, os, shutil, sys
 import numpy as np
 import scipy.sparse as sp

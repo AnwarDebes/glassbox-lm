@@ -8,7 +8,7 @@ The study ran the procedure with the package PyHierarchicalTsetlinMachineCUDA (p
 
 ## Status
 
-Finished. The study ran from 1 to 3 Oct 2026 and is frozen: the [run index](../../docs/run-index.md) holds no run of this study after 3 Oct 2026, and the pass rules and registrations are published with their registered content (each carries its own publication note). The code is published as it stood at the end of the study, apart from edits for publication: the working copies held references to unpublished working notes and plans, paths of the workstation and remarks on day-to-day work, and these were removed or reworded. The sections below name the files concerned.
+Finished. The study ran from 1 to 3 Oct 2026 and is frozen. Its only later runs, listed in the [run index](../../docs/run-index.md), are those of the two checks registered after it ended, on 25 and 26 Oct 2026: the reproduction check of the freeze rule (HTM-01) and L2 at `s` 100 with A = 8 (HTM-03). The pass rules and registrations are published with their registered content (each carries its own publication note). The code is published as it stood at the end of the study, apart from edits for publication: the working copies held references to unpublished working notes and plans, paths of the workstation and remarks on day-to-day work, and these were removed or reworded. The sections below name the files concerned. The bug fixes of 2026-10-25, made after the study ended, are listed in the section on the changes after the study.
 
 ## What the study found
 
@@ -44,8 +44,8 @@ This study is not self-contained. Its jobs start through the run logger, the env
 | memory guard | `scripts/mem_guard.py` | the same four scripts |
 | GPU lock, modes `exclusive` and `shared` | `scripts/gpu_run.sh` | the same four scripts |
 | environment script (CUDA paths, thread caps, hash seed) | `env/env.sh` | the same four scripts, which source it |
-| virtualenv of the GPU jobs | `.venv-htm`, built by `env/htm_install.sh` and frozen in `env/htm.lock` | the same four scripts; the shell scripts in `src/recovered/` call `.venv-htm/bin/python` by relative path |
-| virtualenv of the CPU scripts | `.venv-tm` | `queue/gpu_share_test.sh` (its analysis step), `src/test_wiki_groups.py` and `src/test_e5a.py` (the command in their docstrings), `src/build_agnews.py` and `src/lr_agnews.py` (named in their docstrings) |
+| virtualenv of the GPU jobs | `.venv-htm`, built by `env/htm_install.sh` and frozen in `env/htm.lock` | the same four scripts, through `src/interpreters.sh` since 2026-10-25 (section on the environment); the shell scripts in `src/recovered/` call `.venv-htm/bin/python` by relative path |
+| virtualenv of the CPU scripts | `.venv-tm` | the four scripts, which start the run logger and the memory guard with its interpreter since 2026-10-25 (`src/interpreters.sh`); `queue/gpu_share_test.sh` (its analysis step), `src/test_wiki_groups.py`, `src/test_e5a.py`, `src/test_data_checks.py` and `src/test_launchers.py` (the command in their docstrings), `src/build_agnews.py` and `src/lr_agnews.py` (named in their docstrings) |
 | package `tmlm` (`tmlm.common.runlog.validate_metrics`) | `src/` | `src/test_wiki_groups.py`, which puts that folder on the import path |
 | WikiText-103 raw text | `data/wikitext103/raw` | `src/build_pairs.py`, `src/feas_slide11/prep_data.py` |
 | WordNet 3.0 | `data/concept_eval/nltk_data` | `src/wiki_groups.py` |
@@ -66,25 +66,25 @@ hierarchical_tm/
     feas_slide11/               the eight probe scripts of 2026-10-01
     recovered/                  thirteen analysis scripts recovered from run folders
   queue/                        the two GPU queues and the GPU-sharing test
-  docs/                         registrations, results, two data cards
+  docs/                         registrations (of the study and after it), results, the changes after the study, the reproduction check, two data cards
 ```
 
 The folders `results/` (run folders) and `data/` (datasets) belong to the study and are local: they are not part of the repository.
 
 ### src/
 
-- Training drivers: `src/htm_driver.py` (pair tasks, hierarchical and flat model) and `src/text_driver.py` (one text to one class: the news topics and the direct-label fallback of slide 10). `src/launch.sh` starts one GPU job.
+- Training drivers: `src/htm_driver.py` (pair tasks, hierarchical and flat model) and `src/text_driver.py` (one text to one class: the news topics and the direct-label fallback of slide 10). `src/launch.sh` starts one GPU job; `src/interpreters.sh` (added on 2026-10-25) sets the interpreters of the launchers.
 - Data: `src/build_pairs.py` and `src/build_ns_all.py` (Wikipedia pairs), `src/pairdata.py` (loader), `src/build_agnews.py` (news topics), `src/pcp_world.py` and `src/export_pcp.py` (the artificial tests L1 to L3), `src/slide10.py` (generator of the slide-10 sentence family and scorer of Check 2b).
 - Checks of the data and of the package: `src/data_checks.py` and `src/check_ns_all.py` (Check 1b and the baselines), `src/run_demo_seeded.py` (Check 1a).
 - Registered selection rules: `src/apply_rules.py` (headline `s` and number of passes), `src/e5a_choice.py` (the `s` of the news-topic test).
 - Scoring: `src/score_saved.py` (re-scores a saved model; the one final test), `src/final_test_report.py` (main table of the final test and its dry run on dev), `src/crossfit_acc.py` and `src/crossfit_splits.py` (the accuracies of Check 2a), `src/pcp_recovery.py` and `src/pcp_purity.py` (group recovery and purity), `src/npmi_groups.py` and `src/wiki_groups.py` (word-group scores of Checks 2c, 4a and 4b), `src/e5a_check2c.py` (accuracy part of Check 2c), `src/lr_agnews.py` (logistic-regression baseline), `src/compare_runs.py` (two runs that must train identically).
-- CPU tests: `src/test_e5a.py` and `src/test_wiki_groups.py`.
+- CPU tests: `src/test_e5a.py` and `src/test_wiki_groups.py`; since 2026-10-25 also `src/test_data_checks.py` (the length features of Check 1b, on synthetic rows) and `src/test_launchers.py` (the launchers and their chain, with stand-in jobs and no GPU).
 
 ### src/feas_slide11/
 
 The eight scripts of the feasibility probe of 2026-10-01, which came before this study: `train_tm.py`, `prep_data.py`, `baselines.py`, `posthoc.py`, `launch.sh`, `queue2.sh`, `queue3.sh` and `queue4.sh`. The 27 runs of these scripts (run ids that contain `feas_slide11`) used pair data with a sampling bias. They are flagged as biased exploratory in the run index, and no number from them is used as a result. The pair data of this study was built anew by `src/build_pairs.py`.
 
-The launcher copies `train_tm.py`, `prep_data.py` and `launch.sh` into the run folder after the run has ended, and none of the copies of the probe scripts is listed in the manifest of its run. Before the edits for publication, the retained scripts compared with the copies in the 27 run folders as follows:
+The launcher copies `train_tm.py`, `prep_data.py` and `launch.sh` into the run folder after the run has ended (since 2026-10-25 also `src/interpreters.sh`), and none of the copies of the probe scripts is listed in the manifest of its run. Before the edits for publication, the retained scripts compared with the copies in the 27 run folders as follows:
 
 | script | distinct versions in the run folders | published version |
 |---|---|---|
@@ -124,7 +124,7 @@ Where two versions exist, the published one is the version of the run folder nam
 
 ### docs/
 
-[docs/registrations.md](docs/registrations.md), [docs/results.md](docs/results.md) and the two data cards named below.
+[docs/registrations.md](docs/registrations.md), [docs/results.md](docs/results.md), the pages written after the study ([changes](docs/changes_after_the_study.md), [registrations](docs/registrations_after_the_study.md) and the [reproduction check](docs/reproduction_after_the_study.md)) and the two data cards named below.
 
 ## Inputs that are not distributed
 
@@ -161,7 +161,12 @@ The lock file lists the remaining packages. It also holds the tm_language_model 
 
 The environment record that the run logger writes into a run folder (`env.json`) describes the interpreter of the logger. For the GPU jobs of this study that was the interpreter of `.venv-tm`, while the job itself ran under `.venv-htm/bin/python`. The environment record of a GPU job therefore names the logging interpreter and not the environment of the job, and the package versions of the GPU jobs are those of `env/htm.lock`.
 
-The launchers start `scripts/mem_guard.py` and `scripts/run_logged.py` of the tm_language_model study directly. In the published files both scripts begin with `#!/usr/bin/env python3`, so a `python3` with the environment of that study has to be on the `PATH` when a launcher is started.
+In the recorded runs the launchers started `scripts/mem_guard.py` and `scripts/run_logged.py` of the tm_language_model study by name. In the published files both scripts begin with `#!/usr/bin/env python3`, so a `python3` with the environment of that study had to be on the `PATH`. On the workstation of 2026-10-25 there was none, and `../tm_language_model/.venv-htm` did not exist, so every launcher stopped before its job started (bug HTM-B1 of the finish pass). Since 2026-10-25 the launchers take two interpreters from `src/interpreters.sh`, and a value set by the caller wins:
+
+- `HTM_PY`, the interpreter of the job: `../tm_language_model/.venv-htm/bin/python` when that file exists (the interpreter of the recorded runs), else `../decision_layer/.venv-htm/bin/python`. That virtualenv belongs to the decision_layer study, pins the same package commit 5b4a223 and the same versions of numpy, scipy, scikit-learn, pycuda, scikit-image and networkx as `env/htm.lock`, and is used only by its path: nothing is installed into it.
+- `HTM_TOOL_PY`, the interpreter that starts `scripts/mem_guard.py` and `scripts/run_logged.py`: `../tm_language_model/.venv-tm/bin/python`, the interpreter of the run logger in the recorded runs.
+
+A launcher stops with exit status 127 when either interpreter is not an executable file, and it writes `HTM_PY` into the run config as `job_python`, because `env.json` names the logging interpreter. When `HTM_PY` lies in `../decision_layer/`, `src/interpreters.sh` also exports `PYTHONDONTWRITEBYTECODE=1`, so that no bytecode is written into that study's virtualenv. `src/test_launchers.py` runs the four launchers and the serial queue on the CPU with stand-in jobs, fake `nvidia-smi` and `nvidia-cuda-mps-control` commands and all run folders in a scratch folder.
 
 ## How the jobs were started
 
@@ -182,6 +187,8 @@ The CPU tests are started from this folder (commands from their docstrings):
 ```
 ../tm_language_model/.venv-tm/bin/python src/test_e5a.py
 ../tm_language_model/.venv-tm/bin/python src/test_wiki_groups.py
+PYTHONDONTWRITEBYTECODE=1 ../tm_language_model/.venv-tm/bin/python src/test_data_checks.py
+PYTHONDONTWRITEBYTECODE=1 ../tm_language_model/.venv-tm/bin/python src/test_launchers.py
 ```
 
 The one final test consisted of two steps (commands from the docstrings of the two scripts and from the frozen settings of docs/registrations.md):
@@ -199,7 +206,7 @@ The code cites two rules of the study by number; the numbers are those of the ru
 
 ### Study rule 4: GPU jobs
 
-One GPU job runs at a time, or at most two at once under NVIDIA MPS. A single job is wrapped in this order: `timeout`, then `scripts/mem_guard.py --scope group --limit-gib N`, then `scripts/run_logged.py`, then `scripts/gpu_run.sh exclusive`, then the Python interpreter of `.venv-htm`. The scripts are those of `studies/tm_language_model`. `src/launch.sh` builds this chain, and the serial queue `queue/run_queue.sh` runs a job list through it.
+One GPU job runs at a time, or at most two at once under NVIDIA MPS. A single job is wrapped in this order: `timeout`, then `scripts/mem_guard.py --scope group --limit-gib N`, then `scripts/run_logged.py`, then `scripts/gpu_run.sh exclusive`, then the Python interpreter of `.venv-htm` (since 2026-10-25 `HTM_PY`, with the two helper scripts started by `HTM_TOOL_PY`; see the section on the environment). The scripts are those of `studies/tm_language_model`. `src/launch.sh` builds this chain, and the serial queue `queue/run_queue.sh` runs a job list through it.
 
 Under MPS the chain is the same with three differences. The lock mode is `gpu_run.sh shared`, which lets the two jobs overlap. The MPS environment variables are set. A job stops only through its own `--max-minutes` option: the outer `timeout` is a distant last resort, and a running MPS client is never killed, because on the Volta GPU of the recorded runs one killed client can take down the others. `queue/run_queue_mps.sh` builds this chain.
 
@@ -245,6 +252,18 @@ Publication note: the record was edited for publication on 2026-10-10 and 2026-1
 
 The [hash table](../../docs/hash-table.md) at the repository root gives the SHA-256 as registered and as published for each pinned script. The hash check that the final test ran on 2 Oct 2026 refers to the files as they stood then.
 
+Two pinned scripts were changed on 2026-10-25, after the study had ended (next section): `queue/run_queue_mps.sh` (bugs HTM-B1 and HTM-B5) and `src/data_checks.py` (bug HTM-B2). The record keeps its values, so these two files no longer match their pins. One consequence: `src/final_test_report.py --hashes frozen_settings_hashes.json` now refuses to run, because it hashes `src/data_checks.py`; a dev run without `--hashes` is not affected, and the change in `src/data_checks.py` touches no function that the report uses.
+
+## Changes after the study (2026-10-25)
+
+A finish pass of 2026-10-25 fixed four bugs and documentation gaps that an inventory of the published tree had found. No run of the study and no registered rule changed. Each change is marked in its file with the date. The full dated note, with the registered pins that these fixes break, is [docs/changes_after_the_study.md](docs/changes_after_the_study.md). Two registrations written after the study for runs of 25 and 26 Oct 2026, the reproduction check of the freeze rule and L2 at `s` 100 with A = 8, are in [docs/registrations_after_the_study.md](docs/registrations_after_the_study.md); the outcome of the reproduction check is in [docs/reproduction_after_the_study.md](docs/reproduction_after_the_study.md), and that of L2 with A = 8 on the results page.
+
+- HTM-B1, the launchers could not start (no `python3` on `PATH`, no `../tm_language_model/.venv-htm`): `src/interpreters.sh` is new, and `src/launch.sh`, `queue/run_queue_mps.sh`, `queue/gpu_share_test.sh` and `src/feas_slide11/launch.sh` take their interpreters from it (section on the environment); a second change of the same day exports `PYTHONDONTWRITEBYTECODE=1` when the job interpreter is the borrowed one of decision_layer. Tested by `src/test_launchers.py`, which fails on the versions before the change.
+- HTM-B2, `length_feats` of `src/data_checks.py` subtracted unsigned counts, so |len A - len B| wrapped around to about 1.8e19 whenever B was longer: the counts are now cast to signed integers first. Tested by `src/test_data_checks.py`, which fails on the version before the fix. The function feeds the length-only checks of Check 1b (`src/data_checks.py`, `src/check_ns_all.py`) and of Check 4b part 1 (`src/wiki_groups.py`). A dev re-run of the three, with the old function first and then the fixed one, gave every logged value back exactly with the old function, and with the fixed one moved the accuracies by at most 0.0011 and the AUCs by at most 0.0028, with every interval still including 0.50, so no verdict changes.
+- HTM-B4: `src/recovered/e3fb_deletion_probe.py` has a note at its top on the two-part reading of its later version; its code is unchanged.
+- HTM-B5: the path variables of `queue/run_queue.sh`, `queue/run_queue_mps.sh` and `queue/gpu_share_test.sh` are quoted, so a path with a space no longer breaks them; the argument lists that are split on purpose stay unquoted.
+- Documentation: the data card states that the splits are by article index without deduplication by content, and the results page cites the files that hold three outcomes it had called uncited or unreadable (the free reproducibility check, the flat comparison of the Check 2b fallback, and seeds 1 and 2 of the slide-6 claim).
+
 ## Claims that are not made
 
 gates.md refers to this list. On the strength of this study the repository does not claim:
@@ -256,4 +275,4 @@ gates.md refers to this list. On the strength of this study the repository does 
 - that the package has a bug. Where the code works around a behaviour of the package (an empty option counts as true; the `load()` of the package does not restore four options, as the docstring of `src/score_saved.py` describes), whether that behaviour is intended is a question about the design of the package.
 - that anything here is a "first" or "unique". gates.md fixes the wording for novelty.
 
-gates.md also sends to this list any number that does not reproduce within 0.02. The reproduction was not run, so this rule has put no number on the list: the run index holds no run of this study after 3 Oct 2026.
+gates.md also sends to this list any number that does not reproduce within 0.02. The rule was applied after the study ended, on 25 and 26 Oct 2026 (HTM-01, [outcome](docs/reproduction_after_the_study.md)): all 124 page numbers it re-checked reproduced exactly, so it has put no number on the list. The other 559 numbers of the results page were not re-checked.

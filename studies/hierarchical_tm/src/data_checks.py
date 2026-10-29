@@ -127,7 +127,9 @@ def scores(p, idf2, W):
 
 
 def length_feats(p):
-    la, lb = np.asarray(p["A"].sum(1)).ravel(), np.asarray(p["B"].sum(1)).ravel()
+    # The counts are cast to signed integers before the difference (fix of 2026-10-25, HTM-B2): scipy sums the uint8
+    # 0/1 matrices of pairdata.ids_to_csr in uint64, where la - lb wrapped around to about 1.8e19 whenever lb > la.
+    la, lb = (np.asarray(p[k].sum(1)).ravel().astype(np.int64) for k in ("A", "B"))
     return np.c_[la, lb, np.abs(la - lb), np.minimum(la, lb), np.maximum(la, lb)].astype(float)
 
 
