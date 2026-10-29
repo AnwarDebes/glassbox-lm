@@ -226,3 +226,73 @@ recomputations of results of decision_layer were added in `studies/decision_laye
 and each was rerun on the published scripts. The tests of both studies were run on the published
 files; those that need the GPU were not. Run folders, result files, run logs and datasets are not
 distributed ([known limitations](docs/known-limitations.md)).
+
+## 25 and 26 Oct 2026: the finish pass
+
+A finish pass ran the registered and frozen work that could run on this machine in two days, fixed the bugs that an
+inventory of the published tree had found, and added tests. Every new number below was recomputed independently from
+its run files before it was written into its results page (the records of the pass are outside the repository).
+Negative results are reported like positive ones. The open items are listed in the [roadmap](research/roadmap.md).
+
+**tm_language_model.** Two amendments of the pre-registration were frozen before their runs. Under A11 the receipts of
+the registered generations were re-checked with a checker that binds every decision to its run (seed, temperature,
+mode and step order): all 11,400 receipts pass and all 1,412 tampered receipts fail, so H2.4 and Gate 3 are met
+without the earlier qualifier on forged draws. Under A12 the WikiText-103 test split was read once (access 113): the
+count-vote core, KN-5 plus document caches in clause form with no Tsetlin-learned clauses, scores 1.2478 bits per
+byte, 0.1241 below KN-5 and 0.1054 below KN-5 plus a document unigram cache, so H8.3 and H8.4 are met. H3.5 is met at
+the registered 200 steps, and H2.2 and H2.3 hold in a logged run of the parity tests (30 passed). Three rows are not
+met: part (c) of H8.8 (a median of 879,895 training tokens per second against 1 million), H8.9 (pruning loses 0.0280
+bits per byte at 22.2% of the bytes) and H9.6 (weighted R-squared -1.735), which closes the gate G1 T1. H8.11 and part
+(a) of H8.8 were read as met from their run files, where no verdict had been recorded. Of the 91 registered
+hypotheses, 15 are now met, 14 not met, 5 not judged and 57 not run. Fixes: `env/env.sh` puts the study's interpreter
+first on `PATH` (the helper scripts had exited with status 127 on a machine with no `python3`); `make test` keeps off
+the GPU and `make test-gpu` runs the GPU tests; `make smoke` runs a new end-to-end smoke test; the test-read driver
+saves its outputs even when it fails after the read.
+
+**tally.** The registration A2 was frozen and its one look at dev-test ran: the exchange-class code lowers the
+perplexity of a Kneser-Ney 5-gram with a cache by 7.59% (95% interval over dev-test blocks 6.51% to 8.58%), and the
+success line is met. The one code taken from a Tsetlin Machine (`orgroups`) added nothing, and that reading is
+uninformative by construction. The A/A noise runs of A1 measure the train-side noise of the floor. The LSTM baseline
+of C3 had been under-trained by its loss. The rerun with the paper's loss and clips gives 90.99 to 92.12 for the
+medium model (paper 86.2) and, on 6 of 10 seeds, 86.22 to 87.05 for the large model (paper 82.2); the other 4 large
+seeds collapsed in their first epoch, so the reference does not reproduce the paper. The B1 report no longer reads
+censored runs as a kill, the launchers of B1 and B6 start jobs at nice 19 behind the CPU gate, and the run logger
+marks killed runs and records the hashes of both Penn Treebank texts.
+
+**clause_lm.** A frozen dev plan checked the cause of the failed Gate 0. The driver check is met (0.8186666666666667,
+the recorded value, and a byte-identical model), but removing the negative-class erosion from the torch kernel did not
+reproduce the numba model: arm A is mixed (0.7753, 0.7717 and 0.7747, healthy structure below the 0.78 bar), so there
+is no cause statement, and the expectation written before the runs did not come true. The study gained plain-script
+tests, a freeze tool and a launcher that names its interpreters.
+
+**decision_layer.** The dev plan e86 (clause dropout) finished under a dated note and is closed as a dead end: dropout
+is kept on no dataset. The dev plan e87 ran its Part B bar under a dated note: with clauses of at most 3 literals the
+C4 agent stays more than 2.0 points below LR on dev on all three datasets (0 of 3 seeds each), so short receipts cost
+it its accuracy; Part A and the kill rule have not run. The dev plan e80 (view B plus the customer's last 3
+utterances) ran under a dated note and is not taken: STAR -0.40 points against a bar of +0.5, at view B's s 16. The
+rule R2c.3 is now reported as not met, read from the rule output written with its run. The data card gives what the
+local download cache shows for each encoder.
+
+**hierarchical_tm.** Four bugs of the published tree were fixed after the study, with no run or registered rule
+changed (the study README lists them): the launchers could not start on this workstation and now take their
+interpreters from `src/interpreters.sh`; the length feature of `src/data_checks.py` wrapped around for unsigned
+counts, and a dev re-run of the three length-only checks changes no verdict; the queue scripts quote their path
+variables; the published copy of the deletion probe is annotated. Two new CPU tests cover the first two fixes and fail
+on the versions before them. The freeze rule of gates.md was applied after the study ended, on 25 and 26 Oct 2026: 124
+of the 683 numbers of the results page were re-checked on the GPU, all exactly, and the other 559 were not re-checked;
+the two news retrains of Check 2c missed the tolerance on their time per text alone, so Check 2c is marked "not
+reproduced in the sample" ([outcome page](studies/hierarchical_tm/docs/reproduction_after_the_study.md)). The
+registered prediction for L2 with 8 options per OR-group, tested after the study ended (exploratory, 3 seeds), fails:
+purity and recovery rise, but dev AUC falls by 0.25.
+
+**The glass box page.** The page gave the 65th and later new words of a chapter one shared id; it now has 256 slots,
+and the held-out perplexity per token of the CVTM-core moves from 165.91 to 170.38 (Kneser-Ney 5-gram: 193.20 to
+193.29). The qualifier cells of `live/study.json` are parsed cell by cell, sampling no longer writes an empty slot,
+the page gained keyboard, screen-reader and reduced-motion fixes, and new tests cover the data, the text handling, the
+page and the export.
+
+**Shared pages.** The licences and revisions of the cached datasets and models are on the data page; the known
+limitations, the results overview, the roadmap and the counts of the README follow the results above, and the
+README gives tally's two verdicts in its text, its status table and its results table; the [run
+index](docs/run-index.md) lists the 109 run folders of 25 and 26 Oct; the [hash table](docs/hash-table.md) lists the
+pinned files changed in the pass.

@@ -3,46 +3,53 @@ name: Glass box
 on:
   push:
     branches: [main]
-    paths: ["live/**", ".github/workflows/pages.yml"]
+    # the tests also read the results page of tm_language_model (live/study.json must match it)
+    paths: ["live/**", ".github/workflows/pages.yml", "studies/tm_language_model/docs/results.md"]
   workflow_dispatch:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: pages
-  cancel-in-progress: true
 
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
-          node-version: 20
-      - name: The browser model matches the study's code
+          node-version: lts/*
+          check-latest: true
+      - name: Install the test tools (jsdom, pinned by live/package-lock.json)
+        working-directory: live
+        run: npm ci
+      - name: The browser model, the data files and the page match the study's code
         working-directory: live
         run: npm test
 
   deploy:
     needs: test
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    # one deployment at a time, and a running deployment is never cut off
+    concurrency:
+      group: pages
+      cancel-in-progress: false
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Assemble the site
         run: |
           mkdir _site
           cp -r live/. _site/
-          rm -rf _site/tests _site/package.json _site/export.py
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
+          rm -rf _site/tests _site/package.json _site/package-lock.json _site/export.py _site/node_modules
+      - uses: actions/configure-pages@v6
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: _site
       - id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5

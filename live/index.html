@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>glassbox-lm: every next word, a sum of votes you can read</title>
-<meta name="description" content="The count floor of the glassbox-lm programme, counted in your browser from ten public-domain books: a Kneser-Ney 5-gram written as clause votes, a memory of your own text, every probability traced to the passages it was counted from.">
+<meta name="description" content="The count model of the first glassbox-lm study (its CVTM-core), counted in your browser from ten public-domain books: a Kneser-Ney 5-gram written as clause votes, a memory of your own text, every probability traced to the passages it was counted from.">
 <meta name="theme-color" content="#0a1120">
 <meta property="og:type" content="website">
 <meta property="og:title" content="glassbox-lm: every next word, a sum of votes you can read">
@@ -43,13 +43,14 @@
       <p class="lede">Before a language model made of logical clauses can matter, it has to beat a model that only counts. This page builds that model in your tab: it reads ten public-domain books, counts every pattern of up to five words, and predicts the next word as an exact sum of clause votes, each one traced back to the pages it was counted from.</p>
       <div class="hero-row">
         <a class="go" href="#box">Open the glass box</a>
-        <p class="status" id="status"><span class="dot" aria-hidden="true"></span><span id="status-t">Reading ten books…</span></p>
+        <p class="status" id="status" role="status"><span class="dot" aria-hidden="true"></span><span id="status-t">Reading ten books…</span></p>
       </div>
     </div>
     <figure class="ticker" id="ticker" aria-label="The model completing famous first lines">
       <div class="tk-book" id="tk-book">&nbsp;</div>
       <p class="tk-text"><span id="tk-text"></span><span class="tk-next" id="tk-next"></span><span class="caret" aria-hidden="true"></span></p>
       <div class="tk-clause" id="tk-clause">&nbsp;</div>
+      <button type="button" class="tk-pause" id="tk-pause" aria-pressed="false">Pause motion</button>
     </figure>
   </section>
 
@@ -65,7 +66,7 @@
         <textarea id="text" spellcheck="false" aria-label="Your text" rows="6">It is a truth universally</textarea>
         <div class="ctx" id="ctx" aria-label="The last four words, the context the clauses read"></div>
         <div class="actions">
-          <button type="button" class="btn" id="accept" title="Tab">Take <b id="accept-w">the guess</b></button>
+          <button type="button" class="btn" id="accept">Take <b id="accept-w">the guess</b></button>
           <button type="button" class="btn ghost" id="write">Write 12 words</button>
           <button type="button" class="btn ghost" id="undo" disabled>Undo</button>
         </div>
@@ -125,13 +126,13 @@
     <header class="sec-head">
       <p class="kicker">4 · what the programme measured</p>
       <h2 id="s-title">Ninety-one claims, written down before the runs</h2>
-      <p>The first study of glassbox-lm wrote down 91 hypotheses with thresholds before the runs they govern, and reports each one as it came out: 12 met, 11 not met, 7 not judged, 61 never run. Writing them down first is what makes a negative result count.</p>
+      <p>The first study of glassbox-lm wrote down 91 hypotheses with thresholds before the runs they govern, and reports each one as it came out: <span data-count="met">15</span> met, <span data-count="not met">14</span> not met, <span data-count="not judged">5</span> not judged, <span data-count="not run">57</span> never run. Writing them down first is what makes a negative result count.</p>
     </header>
     <div class="s-grid">
       <div class="panel ids-panel">
-        <div class="ids" id="ids" role="img" aria-label="The 91 registered hypotheses of tm_language_model by status"></div>
-        <div class="ids-legend"><span><i class="st met"></i>12 met</span><span><i class="st notmet"></i>11 not met</span><span><i class="st nj"></i>7 not judged</span><span><i class="st nr"></i>61 not run</span></div>
-        <p class="id-tip" id="id-tip">Point at a square to read the hypothesis.</p>
+        <div class="ids" id="ids" role="group" aria-label="The 91 registered hypotheses of tm_language_model by status; choose one to read it"></div>
+        <div class="ids-legend"><span><i class="st met"></i><span data-count="met">15</span> met</span><span><i class="st notmet"></i><span data-count="not met">14</span> not met</span><span><i class="st nj"></i><span data-count="not judged">5</span> not judged</span><span><i class="st nr"></i><span data-count="not run">57</span> not run</span></div>
+        <p class="id-tip" id="id-tip" aria-live="polite">Point at a square, or move to it with the Tab key, to read the hypothesis.</p>
       </div>
       <div class="results">
         <article class="res bad">
@@ -149,7 +150,7 @@
         <article class="res mixed">
           <p class="res-k">H8.1 met, against its own signed votes</p>
           <p class="res-v"><b>1.8280</b> vs <b>2.1749</b></p>
-          <p class="res-t">bits per byte when the learned clauses vote by counts instead of their trained votes: counting beat the trained votes, and still sat at the level of a bigram model (1.8073).</p>
+          <p class="res-t">bits per byte when the learned clauses vote by counts instead of their trained votes: counting beat the trained votes, and still sat at the level of a bigram model (1.8073 in an exploratory run). The causal arm uses a bank seen in the exploratory evaluation.</p>
           <p class="res-r">run <code>20260924T062704Z_cvtm_H8_1_causal_cp20M</code></p>
         </article>
         <article class="res good">
@@ -160,17 +161,21 @@
         </article>
       </div>
     </div>
-    <p class="s-foot">The second study, hierarchical_tm, ended mostly negative as well: its single final test scored AUC 0.735 on same-article pairs, below 0.817 for plain word overlap. Every id, qualifier and run is in the <a href="https://github.com/AnwarDebes/glassbox-lm/blob/main/docs/results-overview.md" target="_blank" rel="noopener">results overview</a>.</p>
+    <p class="s-foot">The second study, hierarchical_tm, ended mostly negative as well: its single final test scored AUC 0.735 on same-article pairs, below 0.817 for plain word overlap. A reproduction check after the study re-checked 124 of the 683 numbers of its results page, all exactly.</p>
+    <p class="s-foot">The third study, clause_lm, prepares a word-level model whose clauses are AND-rules over OR-groups of words. Its one registered question, about the parameter s of a Tsetlin router on CLINC150 (M5 step 1), has a negative answer by its own rules (mean test accuracy 0.8201 against the required 0.848), resting on a gate that was amended after its first result; the language-model steps M1 to M4 have not run. Of its 12 ids, 4 are met, 3 not met and 5 not run.</p>
+    <p class="s-foot">The fourth study, decision_layer, asks where Tsetlin Machines fail on language and what works when an encoder does the language and a Tsetlin Machine makes the decision: 72 of its 107 registered ids are met, 32 not met and 3 not run. Agents that choose the next action in customer-service dialogues come within the registered 2-point margin of an agent built on the bge-large encoder without a neural network at run time (STAR +0.06, ABCD -1.00 points, R19) and, with a word table counted from C4 text, without one at any stage (within 0.10 and 0.29 points of the Model2Vec agent, R21). The Tsetlin Machine itself often stays below logistic regression on the same bits (1.55 to 2.49 points on MultiWOZ, R24), and the STAR and ABCD test splits had been read many times before R22 and R23.</p>
+    <p class="s-foot">The fifth study, tally, repeated H8.1 with the Tsetlin Machine library of the CAIR group (tmu) on Penn Treebank: here the learned votes beat the counted read-out of the same clauses by 0.25 bits per word (+0.251, 95% interval +0.222 to +0.280, registered test T0, not met), the opposite of H8.1, and logistic regression on the same clause outputs is far ahead of both. Its count floor, which has no Tsetlin Machine in it, gained 7.59% from an exchange-class code added to a Kneser-Ney 5-gram with a cache (A2, met on its dev-test split).</p>
+    <p class="s-foot">Every id, qualifier and run is in the <a href="https://github.com/AnwarDebes/glassbox-lm/blob/main/docs/results-overview.md" target="_blank" rel="noopener">results overview</a>.</p>
   </section>
 
   <section class="scope" aria-labelledby="scope-title">
     <h2 id="scope-title">Read this before quoting a number</h2>
     <ul>
-      <li><b>A reimplementation, checked.</b> The model on this page is the CVTM-core of the study (section 11 of its engine specification) written again in JavaScript. A test runs the study's own Python code on the same tokens: every probability agrees to within 4 × 10<sup>−15</sup>.</li>
+      <li><b>A reimplementation, checked.</b> The model on this page is the CVTM-core of the study (section 11 of its engine specification) written again in JavaScript. A test compares it with the study's own Python code on the same tokens: at 2,500 sampled held-out positions every probability agrees to within 4 × 10<sup>−15</sup>, and over all 58,266 positions the totals agree to within 10<sup>−9</sup>.</li>
       <li><b>A different corpus.</b> Ten public-domain books, lowercase words, 678,041 counted tokens. The study used WikiText-103 with byte-level subwords. Perplexities here are per word and are not comparable with its bits per byte.</li>
-      <li><b>No Tsetlin Machine runs here.</b> This is the floor the study measured its Tsetlin Machine language model against. That model stayed above it, which here means worse.</li>
+      <li><b>No Tsetlin Machine runs here.</b> This is the floor the study measured its Tsetlin Machine language model against. That model stayed above it, which here means worse. The count floor that the programme designs for its later studies adds word-category codes, which this page does not have.</li>
       <li><b>Fitted the study's way.</b> The weights of the memory come from the study's MAP-EM on 14 training chapters, chosen by the study's residue rule (10 percent instead of 1, because there are 208 chapters instead of 28,472 articles).</li>
-      <li><b>New words.</b> A word the books never use gets one of 64 slots: the counts have never seen it, the memory can learn it from your text.</li>
+      <li><b>New words.</b> A word the books never use gets one of 256 slots: the counts have never seen it, the memory can learn it from your text. A held-out chapter has at most 160 such words; in a text with more than 256, the later ones share the last slot.</li>
     </ul>
   </section>
 </main>

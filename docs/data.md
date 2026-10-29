@@ -14,17 +14,17 @@ The fifteen hash records are the files `studies/tm_language_model/docs/notes/pre
 
 | Dataset | Source and version recorded | Expected at | Record | Licence |
 |---|---|---|---|---|
-| WikiText-103, raw text | Hugging Face dataset `Salesforce/wikitext`, configuration `wikitext-103-raw-v1`; revision not recorded | `data/hf_cache/` (download cache) and `data/wikitext103/raw/<split>/` | main | licence to be confirmed |
+| WikiText-103, raw text | Hugging Face dataset `Salesforce/wikitext`, configuration `wikitext-103-raw-v1`; no run record holds the revision; the local download cache holds snapshot `b08601e04326c79dfdd32d625aee71d232d685c3`, which its `refs/main` named when the cache folder was written on 2026-09-19 | `data/hf_cache/` (download cache) and `data/wikitext103/raw/<split>/` | main | the dataset card of that snapshot gives cc-by-sa-3.0 and gfdl in its metadata and CC BY-SA 4.0 in its text (read on 2026-10-25 from the local download cache) |
 | BPE tokenizers (derived) | trained on the WikiText-103 train split, vocabulary sizes 2000, 8000, 16000 and 32000 | `data/tokenizers/bpe_<V>/tokenizer.json` | main | derived from WikiText-103 |
 | Token stores and cluster codes (derived) | WikiText-103 encoded with these tokenizers; cluster codes from the train split | `data/wikitext103/bpe<V>/<split>/` | main | derived from WikiText-103 |
 | Frozen evaluation mask sets (derived) | validation and test split, a subword and a whole-word variant | `data/wikitext103/bpe<V>/evalsets/<split>_<variant>.npz` | main | derived from WikiText-103 |
 | Paragraph pairs (derived) | pairs of paragraphs inside one split, BPE 8000 | `data/wikitext103/pairs_bpe8000/<split>.npz` | main | derived from WikiText-103 |
 | Contamination report (derived) | overlap of 8-grams and 13-grams of the validation and test splits with the train split, BPE 8000 | `data/wikitext103/contamination_bpe8000/<split>_<n>gram.npz` | main | derived from WikiText-103 |
-| Penn Treebank, word level | Hugging Face dataset `ptb-text-only/ptb_text_only` at the ref `refs/convert/parquet`; the commit behind the ref is not recorded | `data/ptb/raw/<split>/` and `data/ptb/bpe<V>/<split>/` | none in the repository, see below | licence to be confirmed |
+| Penn Treebank, word level | Hugging Face dataset `ptb-text-only/ptb_text_only` at the ref `refs/convert/parquet`; no run record holds the commit; in the local download caches the ref names `6407078f2e6eef147f4a2f2a81ef599f24fc5dfb` | `data/ptb/raw/<split>/` and `data/ptb/bpe<V>/<split>/` | none in the repository, see below | other: "LDC User Agreement for Non-Members", and "Dataset provided for research purposes only", according to the dataset card (snapshot `d29c6b61aa5ff8d6d0dc52b98da60237292c1fcc`, the `main` branch, in the default Hugging Face cache; read on 2026-10-25) |
 | BLiMP | `nyu-mll/blimp`, revision `877fba0801ffb7cbd8c39c1ff314a46f053f6036` | the default Hugging Face cache, outside the study folder | `-A4-blimp` | cc-by-4.0, as the record gives it |
-| AG News | `fancyzhx/ag_news`, revision `eb185aade064a813bc0b7f42de02595523103ca4`, files `data/train-00000-of-00001.parquet` and `data/test-00000-of-00001.parquet` | `data/hf_cache/hub/datasets--fancyzhx--ag_news/snapshots/<revision>/` | `-A6-agnews`, `-A7-agnews`, `-A7-agnews-test` | licence to be confirmed: the records disagree, see the known problems |
-| SST-2 | `nyu-mll/glue`, revision `bcdcba79d07bc864c1c254ccfcedcce55bcc9a8c`, files `sst2/train-00000-of-00001.parquet` and `sst2/validation-00000-of-00001.parquet` | `data/hf_cache/hub/datasets--nyu-mll--glue/snapshots/<revision>/` | `-A6-sst2`, `-A7-sst2` | licence to be confirmed: the records give "unknown" for the SST-2 card and note that the GLUE card refers to the original licences |
-| TREC | `CogComp/trec`, revision `65752bf53af25bc935a0dce92fb5b6c930728450`, files `default/train/0000.parquet` and `default/test/0000.parquet` | `data/hf_cache/hub/datasets--CogComp--trec/snapshots/<revision>/` | `-A6-trec`, `-A7-trec`, `-A7-trec-test` | licence to be confirmed: the records give "unknown (dataset card)" |
+| AG News | `fancyzhx/ag_news`, revision `eb185aade064a813bc0b7f42de02595523103ca4`, files `data/train-00000-of-00001.parquet` and `data/test-00000-of-00001.parquet` | `data/hf_cache/hub/datasets--fancyzhx--ag_news/snapshots/<revision>/` | `-A6-agnews`, `-A7-agnews`, `-A7-agnews-test` | unknown, according to the dataset card of the pinned snapshot in the local download cache (read on 2026-10-25); the records disagree, see the known problems |
+| SST-2 | `nyu-mll/glue`, revision `bcdcba79d07bc864c1c254ccfcedcce55bcc9a8c`, files `sst2/train-00000-of-00001.parquet` and `sst2/validation-00000-of-00001.parquet` | `data/hf_cache/hub/datasets--nyu-mll--glue/snapshots/<revision>/` | `-A6-sst2`, `-A7-sst2` | other, according to the GLUE dataset card of the pinned snapshot in the local download cache, which refers users to the original licence of each dataset (read on 2026-10-25); the records give "unknown" for the SST-2 card |
+| TREC | `CogComp/trec`, revision `65752bf53af25bc935a0dce92fb5b6c930728450`, files `default/train/0000.parquet` and `default/test/0000.parquet` | `data/hf_cache/hub/datasets--CogComp--trec/snapshots/<revision>/` | `-A6-trec`, `-A7-trec`, `-A7-trec-test` | unknown, as the records give it; the dataset card in the local download cache (snapshot `eb1e45c1ba990fecca7cf84b67ce845edbcf49bf`, later than the data files; read on 2026-10-25) says the same |
 | MEN | archive `MEN.tar.gz` of `http://clic.cimec.unitn.it/~elia.bruni/MEN`; no version beyond the hash of the archive | `data/concept_eval/men/` | `-A6-men` | Creative Commons Attribution 2.0, according to the record (`licence.txt` inside the archive) |
 | SimLex-999 | `https://fh295.github.io/SimLex-999.zip`; no version beyond the hash of the archive | `data/concept_eval/simlex999/` | `-A6-simlex999` | licence to be confirmed: the record says that neither the dataset page nor the archive states one |
 | WordSim-353 | `https://gabrilovich.com/resources/data/wordsim353/wordsim353.zip`; no version beyond the hash of the archive | `data/concept_eval/wordsim353/` | `-A6-ws353` | Creative Commons Attribution 4.0 International, according to the record (stated on the dataset page) |
@@ -99,7 +99,7 @@ The two sentence families are derived from the project proposal. The files that 
 
 The eight scripts in `studies/hierarchical_tm/src/feas_slide11/` belong to a feasibility probe of 2026-10-01 that came before the study. Its script `prep_data.py` wrote pair files named `pairs_F<F>.npz` into its own folder; these files are not the pair data of the study.
 
-The pair data is derived from WikiText-103 and the news data from AG News. For both sources the licence is to be confirmed (see the table of the tm_language_model study).
+The pair data is derived from WikiText-103 and the news data from AG News; the table of the tm_language_model study gives what the dataset cards say about their licences.
 
 ## studies/clause_lm
 
@@ -107,14 +107,14 @@ The study has no hash record in the repository. Its run logger writes the SHA-25
 
 | Data | Source and version recorded | Obtained by | Expected at | Hash and where it is recorded | Licence |
 |---|---|---|---|---|---|
-| Penn Treebank text | the raw store of the tm_language_model study, see above | built there | `../tm_language_model/data/ptb/raw/<split>/text.utf8` | train and validation text as in the table above; `data_hashes.json` of `20261002T170451Z_ngram_baselines` holds the same two values | licence to be confirmed |
+| Penn Treebank text | the raw store of the tm_language_model study, see above | built there | `../tm_language_model/data/ptb/raw/<split>/text.utf8` | train and validation text as in the table above; `data_hashes.json` of `20261002T170451Z_ngram_baselines` holds the same two values | as the Penn Treebank row of the tm_language_model table: "LDC User Agreement for Non-Members", research purposes only, according to the dataset card |
 | Pair data (derived) | adjacent word pairs of the Penn Treebank text among the K = 1000 most frequent training words | `studies/clause_lm/src/pairs_data.py` | `data/ptb_pairs_K1000.npz` and `data/vocab_K1000.json` | pair file `be3836fc4b1a7a8f8578a0557779256e1018560875703da331bead90d207bdc4`, in `data_hashes.json` of `20261002T171904Z_pair_baselines_K1000` | derived from Penn Treebank |
 | CLINC150 | `https://raw.githubusercontent.com/clinc/oos-eval/master/data/data_full.json`, branch `master`; commit not recorded | downloaded on 2026-10-02; `studies/clause_lm/src/m5_setup.py` names the address and the path and records the hash of the file it finds there | `work/Clause-Driven-LLM/data/clinc150_data_full.json` | `36923c3705a59e08fe9c3883d8bc2dd966ef93e22cb78ac41171782a698d56e0`, 2,495,390 bytes, in `data_hashes.json` and `metrics.json` of `20261002T195152Z_m5_setup_sorted` | licence to be confirmed |
 | Lexical features of CLINC150 (derived) | computed from the CLINC150 file by the feature script of Clause-Driven-LLM | `studies/clause_lm/src/m5_setup.py` | `work/m5/emb_<label order>/clinc150__lexical.npz` | `npz_sha256` in `metrics.json` of the setup runs | derived from CLINC150 |
 
 `studies/clause_lm/src/ptb.py` reads the file `text.utf8` of a split, appends `<eos>` to every sentence and treats the split as one token stream; its loader refuses the test split. `studies/clause_lm/src/pairs_data.py` keeps the pairs whose two words are both among the K most frequent words, adds one negative pair per positive pair with a second word drawn from a smoothed unigram distribution, and marks every validation pair as seen or unseen in the training text. Run `20261002T171456Z_pairs_data_K1000` built 1,158,614 training pairs and 93,766 validation pairs, positives and negatives together (`metrics.json`: `n_train_pairs`, `n_valid_pairs`).
 
-The CLINC150 file sits inside the work copy of Clause-Driven-LLM, which is not distributed; the page of [upstream repositories](upstream-repositories.md) says how that copy relates to the public repository. Banking77, a second dataset that Clause-Driven-LLM supports, was not downloaded (`pytest_test_data.txt` of run `20261002T195152Z_m5_setup_sorted` reports its test as skipped for that reason).
+The CLINC150 file sits inside the work copy of Clause-Driven-LLM, which is not distributed; the page of [upstream repositories](upstream-repositories.md) says how that copy relates to the public repository. Banking77, a second dataset that Clause-Driven-LLM supports, was not downloaded (`pytest_test_data.txt` of run `20261002T195152Z_m5_setup_sorted` reports its test as skipped for that reason). The study keeps its own data card since 2026-10-25, [studies/clause_lm/docs/data.md](../studies/clause_lm/docs/data.md).
 
 ## studies/decision_layer
 
@@ -123,6 +123,36 @@ The study keeps its own data card, [studies/decision_layer/docs/data.md](../stud
 ## studies/tally
 
 The study keeps its own data card, [studies/tally/docs/data.md](../studies/tally/docs/data.md). It covers the Penn Treebank text, which the study reads from the raw store of tm_language_model and cuts into its own splits (`studies/tally/src/tally/ptb.py`); WordNet 3.0, SimLex-999, WordSim-353, the Brown corpus and the universal tagset mapping that A2 reads; the OR-groups of a run of hierarchical_tm; Fashion-MNIST and AG News for B6; and the KenLM files that A1 writes. Its run logger writes the SHA-256 of the data files of a run into `data_hashes.json` in the run folder. The Penn Treebank runs hold the value of the validation text only, because the training and the validation file have the same name; the data card gives both values and where each is recorded.
+
+## live (the glass box page)
+
+The page reads ten books of Project Gutenberg as plain text, from
+`https://www.gutenberg.org/cache/epub/<id>/pg<id>.txt` (`live/export.py`, function `fetch`; `--cache DIR` reads the
+files from a folder or downloads missing ones into it). `export.py` keeps the text between the `*** START OF` and
+`*** END OF` lines, so the Project Gutenberg header and licence text are removed, drops the contents pages and the
+illustration captions, and prints the SHA-256 of each file; `live/corpus.json` records it. The files of the first
+export (2026-10-21) were not kept. The files below were downloaded on 2026-10-25 between 11:20:00 and 11:20:09
+UTC. With the 64 document-word slots of 2026-10-21, `export.py` run on them reproduces the data files of that day
+byte for byte except the fit time in `core.json` (`tokens_sha256` b1d68e1f3a91ad31084b55e170c43a9c103a0515ee8f400e1859cb8cd76297ca); the
+current data files, with 256 slots, were written from the same files (`tokens_sha256` 04af85be2c7fe0e7d623c6cce4c149827e625957c82b71bfe163660f29904476).
+
+| File | Book | SHA-256 |
+|---|---|---|
+| `pg98.txt` | A Tale of Two Cities | `d54c2b80d40a40b982cd88852c6180bb944d95acdb028af3d0e01a1750681784` |
+| `pg1342.txt` | Pride and Prejudice | `3f6bb9d6f78e0293b56acd4714dd68cb7d6d1d293402031ce9d5a216bcaf9d75` |
+| `pg11.txt` | Alice's Adventures in Wonderland | `01b38ea4c710a84bc18d0bd41271a5a1a92b94e97b2812f4dece97d4a694725e` |
+| `pg1661.txt` | The Adventures of Sherlock Holmes | `922e2a12ccb43a4c9544c260b2166c6ad2097aeb5957faeee113f173bb857cd0` |
+| `pg84.txt` | Frankenstein | `2b97b7f8aad508649481d8dd4f6b54f9b965ddb3ba634e9151c815f537b49e42` |
+| `pg43.txt` | The Strange Case of Dr Jekyll and Mr Hyde | `b43448a88391591f9cf82b25553df00faf47a2752a873185fcdd1156eebdb990` |
+| `pg35.txt` | The Time Machine | `2892e919000e17c83e1dac51b30f4675db50536b644d7579fe8a89bb399a9bdc` |
+| `pg46.txt` | A Christmas Carol | `8c36b93723d454982df045ec0efdf2664e5a48e6b5e2f670e883575f75ad0cc8` |
+| `pg16.txt` | Peter Pan | `6b08714281fe38266a756741e4c62915cda7536c2f78cca501f7fd53f3f445ae` |
+| `pg55.txt` | The Wonderful Wizard of Oz | `969bffab7740d4d8a0bac332d78bd0152ad4a40a2efc52f06c74a9bb6120be75` |
+
+Project Gutenberg's notice in each file says that the eBook is for the use of anyone in the United States at no
+cost and with almost no restrictions, and that readers elsewhere have to check the laws of their country; the
+books are in the public domain in the United States. pg84 (Frankenstein) was changed on gutenberg.org on
+2026-10-23, after the first export; the files above reproduce its tokens all the same.
 
 ## Model files
 

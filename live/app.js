@@ -1,5 +1,5 @@
 // The glass box page: loads ten public-domain books, counts them in the tab (model.js), and shows every vote.
-import { KN, Core, DocState, Vocab, tokenize, detok, ORDER, PTR_MIN } from './model.js';
+import { KN, Core, DocState, Vocab, tokenize, ORDER, PTR_MIN, mulberry32, sample, pct, sci } from './model.js';
 
 const $ = (s, r = document) => r.querySelector(s);
 const FILM = /[?&]film\b/.test(location.search);
@@ -7,19 +7,14 @@ const nf = new Intl.NumberFormat('en-US');
 const realNow = () => (window.__realNow ? window.__realNow() : performance.now());
 const frame = () => (FILM ? Promise.resolve() : new Promise((r) => requestAnimationFrame(() => r())));
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-const pct = (p) => (p >= 0.995 ? (p * 100).toFixed(1) : p >= 0.1 ? (p * 100).toFixed(1) : p >= 0.01 ? (p * 100).toFixed(2) : (p * 100).toFixed(3)) + '%';
 const sgn = (x, d = 2) => (x > 0 ? '+' : x < 0 ? '−' : '') + Math.abs(x).toFixed(d);
-function sci(x) {
-  if (x === 0) return '0';
-  const e = Math.floor(Math.log10(Math.abs(x)));
-  return `${(x / 10 ** e).toFixed(1)} × 10<sup>${e < 0 ? '−' : ''}${Math.abs(e)}</sup>`;
-}
+const REDUCE = typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches;
 const SUBS = ['', '₋₁', '₋₂', '₋₃', '₋₄'];
 const times = (n) => (n === 1 ? 'once' : n === 2 ? 'twice' : `${nf.format(n)} times`);
 const minus = (s) => String(s).replace(/^-/, '−');
 
 const S = {};            // model and data
-const G = { sel: null, undo: [], seed: 1, genSeed: 12 }; // page state
+const G = { sel: null, undo: [], seed: 1, genSeed: 12, still: false }; // page state
 
 // ------------------------------------------------------------------ loading
 async function gunzip(res) {
@@ -27,17 +22,25 @@ async function gunzip(res) {
   return new Response(res.body.pipeThrough(new DecompressionStream('gzip'))).arrayBuffer();
 }
 
-function setStatus(html, ready = false) {
+// state: 'ready' or 'error' end the pulse of the dot; #status is a status region, so changes are announced
+function setStatus(html, state = '') {
   $('#status-t').innerHTML = html;
-  $('#status').classList.toggle('ready', ready);
+  $('#status').classList.toggle('ready', state === 'ready');
+  $('#status').classList.toggle('error', state === 'error');
+}
+
+async function get(url) {
+  const r = await fetch(url);
+  if (!r.ok) throw new Error(`${url}: HTTP ${r.status}`);
+  return r;
 }
 
 async function load() {
   const [corpus, core, study, tokBuf] = await Promise.all([
-    fetch('corpus.json').then((r) => r.json()),
-    fetch('core.json').then((r) => r.json()),
-    fetch('study.json').then((r) => r.json()),
-    fetch('tokens.u16.gz').then(gunzip),
+    get('corpus.json').then((r) => r.json()),
+    get('core.json').then((r) => r.json()),
+    get('study.json').then((r) => r.json()),
+    get('tokens.u16.gz').then(gunzip),
   ]);
   Object.assign(S, { corpus, coreDoc: core, study });
   S.tokens = new Uint16Array(tokBuf);
@@ -69,7 +72,7 @@ async function load() {
   S.core = new Core(S.kn, core.weights);
   S.patterns = 0;
   for (let k = 2; k <= ORDER; k++) for (const c of S.kn.raw[k].cnt) if (c > 0) S.patterns++;
-  setStatus(`Counted <b>${nf.format(nTrain)}</b> tokens of ten books into <b>${nf.format(S.patterns)}</b> patterns in <b>${(S.fitMs / 1000).toFixed(1)} s</b>, in this tab. Training is counting.`, true);
+  setStatus(`Counted <b>${nf.format(nTrain)}</b> tokens of ten books into <b>${nf.format(S.patterns)}</b> patterns in <b>${(S.fitMs / 1000).toFixed(1)} s</b>, in this tab. Training is counting.`, 'ready');
 }
 
 // ------------------------------------------------------------------ text helpers
@@ -167,9 +170,9 @@ function renderBox() {
   ol.innerHTML = top.map((id) => {
     const p = st.mix.p[id], b = st.mix.fromBooks[id], m = st.mix.fromDoc[id];
     const slot = id >= S.vocab.nWords;
-    return `<li class="cand${id === G.sel ? ' on' : ''}" data-id="${id}" tabindex="0" role="button" aria-pressed="${id === G.sel}">
+    return `<li><button type="button" class="cand${id === G.sel ? ' on' : ''}" data-id="${id}" aria-pressed="${id === G.sel}">
       <span class="cw${slot ? ' slot' : ''}">${esc(wordOf(id, slots))}</span><span class="cp">${pct(p)}</span>
-      <span class="bar" aria-hidden="true"><i class="b" style="width:${(b * 100).toFixed(2)}%"></i><i class="m" style="width:${(m * 100).toFixed(2)}%"></i></span></li>`;
+      <span class="bar" aria-hidden="true"><i class="b" style="width:${(b * 100).toFixed(2)}%"></i><i class="m" style="width:${(m * 100).toFixed(2)}%"></i></span></button></li>`;
   }).join('');
   const kTxt = st.kStar === 0 ? 'none of your last words as a pattern the books contain' : st.kStar === 1 ? 'your last word as a pattern' : `your last ${st.kStar} words as a pattern`;
   const memW = st.f.n.some((x) => x > 0) ? 1 - st.w[0] / weightSum(st) : 0;
@@ -242,7 +245,9 @@ function renderLedger() {
   const pCore = st.mix.p[w];
   rows.push({ cls: 'total', cl: mem.length ? `Books weighted ${(st.w[0] / wsum).toFixed(3)}, memory ${(1 - st.w[0] / wsum).toFixed(3)}: <b>P(${esc(word)})</b>` : `No memory fires yet: <b>P(${esc(word)})</b> is the books' vote`, vote: pCore, isP: true });
   const box = $('#ledger');
-  box.innerHTML = rows.map((r, i) => `<div class="row ${r.cls || ''}" data-i="${i}"><div class="cl">${r.cl}</div>${r.vote === null || r.vote === undefined ? '<div></div>' : `<div class="vote ${r.isP ? '' : r.vote > 0 ? 'pos' : r.vote < 0 ? 'neg' : 'zero'}">${r.isP ? pct(r.vote) : sgn(r.vote)}</div>`}${r.sub ? `<div class="sub">${r.sub}</div>` : ''}</div>`).join('');
+  // rows with a source answer Enter and Space as well as clicks (initBox); aria-pressed marks the one shown
+  const tapAttrs = ' tabindex="0" role="button" aria-pressed="false" aria-controls="source"';
+  box.innerHTML = rows.map((r, i) => `<div class="row ${r.cls || ''}" data-i="${i}"${r.cls === 'tap' ? tapAttrs : ''}><div class="cl">${r.cl}</div>${r.vote === null || r.vote === undefined ? '<div></div>' : `<div class="vote ${r.isP ? '' : r.vote > 0 ? 'pos' : r.vote < 0 ? 'neg' : 'zero'}">${r.isP ? pct(r.vote) : sgn(r.vote)}</div>`}${r.sub ? `<div class="sub">${r.sub}</div>` : ''}</div>`).join('');
   G.rows = rows;
   // the default source: the longest clause that votes for the word
   let pick = null;
@@ -253,7 +258,11 @@ function renderLedger() {
 
 function showSource(i) {
   const r = G.rows[i];
-  document.querySelectorAll('#ledger .row').forEach((el) => el.classList.toggle('sel', +el.dataset.i === i));
+  document.querySelectorAll('#ledger .row').forEach((el) => {
+    const on = +el.dataset.i === i;
+    el.classList.toggle('sel', on);
+    if (el.hasAttribute('aria-pressed')) el.setAttribute('aria-pressed', String(on));
+  });
   const w = G.sel;
   const word = wordOf(w, G.cur.slots);
   const el = $('#source');
@@ -263,7 +272,7 @@ function showSource(i) {
   const hits = findSources(ctxIds, w);
   const qs = pickQuotes(hits, r.src.k ? 3 : 2);
   const what = r.src.k ? `“${esc(tokensPlain(ctxIds))} <b>${esc(word)}</b>”` : `<b>${esc(word)}</b>`;
-  el.innerHTML = `<h4>Where it was counted</h4><p class="more">${what} occurs ${hits.length >= 4000 ? 'over 4,000 times' : times(hits.length)} in the counted chapters${hits.length > qs.length ? `; ${qs.length} of them:` : ':'}</p>${qs.map((h) => quoteHtml(h, ctxIds.length)).join('')}`;
+  el.innerHTML = `<h4>Where it was counted</h4><p class="more">${what} occurs ${hits.length >= 4000 ? 'at least 4,000 times' : times(hits.length)} in the counted chapters${hits.length > qs.length ? `; ${qs.length} of them:` : ':'}</p>${qs.map((h) => quoteHtml(h, ctxIds.length)).join('')}`;
 }
 
 function tokensPlain(ids) {
@@ -293,34 +302,26 @@ function accept() {
   setText(appendWord($('#text').value, word));
 }
 
-function mulberry(a) {
-  return () => { a |= 0; a = (a + 0x6d2b79f5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
-}
-
-function sample(p, rng, T) {
-  let z = 0;
-  const q = new Float64Array(p.length);
-  for (let i = 0; i < p.length; i++) { q[i] = Math.pow(p[i], 1 / T); z += q[i]; }
-  let u = rng() * z;
-  for (let i = 0; i < q.length; i++) { u -= q[i]; if (u < 0) return i; }
-  return q.length - 1;
-}
-
+// samples only words and the slots that hold a word of the text (Vocab.limit); the button comes back
+// even if a step fails
 async function writeWords(n = 12) {
   const btn = $('#write');
   btn.disabled = true;
-  G.undo.push($('#text').value);
-  $('#undo').disabled = false;
-  const rng = mulberry(0x51ed + G.seed++ * 7919);
-  for (let i = 0; i < n; i++) {
-    const cur = compute($('#text').value);
-    const id = sample(cur.st.mix.p, rng, 0.8);
-    $('#text').value = appendWord($('#text').value, wordOf(id, cur.slots));
-    G.sel = null;
-    renderBox();
-    await new Promise((r) => setTimeout(r, 90));
+  try {
+    G.undo.push($('#text').value);
+    $('#undo').disabled = false;
+    const rng = mulberry32(0x51ed + G.seed++ * 7919);
+    for (let i = 0; i < n; i++) {
+      const cur = compute($('#text').value);
+      const id = sample(cur.st.mix.p, rng, 0.8, S.vocab.limit(cur.slots));
+      $('#text').value = appendWord($('#text').value, wordOf(id, cur.slots));
+      G.sel = null;
+      renderBox();
+      await new Promise((r) => setTimeout(r, 90));
+    }
+  } finally {
+    btn.disabled = false;
   }
-  btn.disabled = false;
 }
 
 const EXAMPLES = [
@@ -338,9 +339,21 @@ function initBox() {
   $('#examples').addEventListener('click', (e) => { const b = e.target.closest('button'); if (b) setText(EXAMPLES[+b.dataset.i][0]); });
   let tm = 0;
   $('#text').addEventListener('input', () => { clearTimeout(tm); tm = setTimeout(() => { G.sel = null; renderBox(); }, 40); });
-  $('#cands').addEventListener('click', (e) => { const li = e.target.closest('.cand'); if (li) { G.sel = +li.dataset.id; renderBox(); } });
-  $('#cands').addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { const li = e.target.closest('.cand'); if (li) { e.preventDefault(); G.sel = +li.dataset.id; renderBox(); } } });
+  // the candidates are buttons (Enter and Space click them); the list is drawn again, so the focus moves to the new button
+  $('#cands').addEventListener('click', (e) => {
+    const b = e.target.closest('.cand');
+    if (!b) return;
+    G.sel = +b.dataset.id;
+    renderBox();
+    const now = $(`#cands .cand[data-id="${G.sel}"]`);
+    if (now) now.focus();
+  });
   $('#ledger').addEventListener('click', (e) => { const r = e.target.closest('.row.tap'); if (r) showSource(+r.dataset.i); });
+  $('#ledger').addEventListener('keydown', (e) => {
+    if (e.key !== 'Enter' && e.key !== ' ') return;
+    const r = e.target.closest('.row.tap');
+    if (r) { e.preventDefault(); showSource(+r.dataset.i); }
+  });
   $('#accept').addEventListener('click', accept);
   $('#write').addEventListener('click', () => writeWords(12));
   $('#undo').addEventListener('click', () => { if (G.undo.length) { setText(G.undo.pop(), false); $('#undo').disabled = !G.undo.length; } });
@@ -371,10 +384,14 @@ function tickerItem(text) {
   return { text, word: wordOf(w, cur.slots), clause, book };
 }
 
+// The ticker types an opening, shows the next word and its clause, and moves on. The pause button
+// (#tk-pause) stops it together with the caret and the drifting pages behind the hero (WCAG 2.2.2);
+// with prefers-reduced-motion the page starts paused and shows one opening whole.
 function startTicker() {
   const items = OPENINGS.map(tickerItem);
-  let i = 0;
   const elT = $('#tk-text'), elN = $('#tk-next'), elC = $('#tk-clause'), elB = $('#tk-book');
+  let i = 0, timer = 0;
+  const whole = (it) => { elB.textContent = it.book || ' '; elT.textContent = it.text; elN.textContent = ' ' + it.word; elC.innerHTML = it.clause; };
   const show = () => {
     const it = items[i % items.length];
     elB.textContent = it.book || ' ';
@@ -383,12 +400,23 @@ function startTicker() {
     let c = 0;
     const type = () => {
       elT.textContent = it.text.slice(0, ++c);
-      if (c < it.text.length) setTimeout(type, 34);
-      else setTimeout(() => { elN.textContent = ' ' + it.word; elC.innerHTML = it.clause; setTimeout(() => { i++; show(); }, 3400); }, 420);
+      if (c < it.text.length) timer = setTimeout(type, 34);
+      else timer = setTimeout(() => { elN.textContent = ' ' + it.word; elC.innerHTML = it.clause; timer = setTimeout(() => { i++; show(); }, 3400); }, 420);
     };
     type();
   };
-  show();
+  const btn = $('#tk-pause');
+  const setStill = (still) => {
+    G.still = still;
+    document.documentElement.classList.toggle('still', still);
+    btn.setAttribute('aria-pressed', String(still));
+    clearTimeout(timer);
+    timer = 0;
+    if (still) whole(items[i % items.length]);
+    else { i++; show(); }
+  };
+  btn.addEventListener('click', () => setStill(!G.still));
+  if (REDUCE) setStill(true); else show();
 }
 
 function fillPages() {
@@ -443,11 +471,12 @@ function generate() {
   const enc = encodeText(prompt);
   const doc = new DocState();
   enc.ids.forEach((id) => doc.push(id));
-  const rng = mulberry(0xbeef + seed * 104729);
+  const rng = mulberry32(0xbeef + seed * 104729);
+  const limit = S.vocab.limit(enc.slots);           // generation adds no new word, so the slots stay those of the prompt
   const out = [];
   for (let i = 0; i < 60; i++) {
     const st = S.core.next(doc, 1);
-    const id = sample(st.mix.p, rng, 0.8);
+    const id = sample(st.mix.p, rng, 0.8, limit);
     const j = longestSeen(st.ctx, st.cids, id);
     const mem = st.mix.fromDoc[id] > st.mix.fromBooks[id];
     out.push({ id, j, mem, p: st.mix.p[id] });
@@ -572,7 +601,10 @@ function renderStudy() {
     fams.get(f).push(r);
   }
   const cls = { 'met': 'met', 'not met': 'notmet', 'not judged': 'nj', 'not run': 'nr' };
-  $('#ids').innerHTML = [...fams].map(([f, rs]) => `<div class="fam"><span class="fl">${f}</span><span class="fd">${rs.map((r) => `<i class="st ${cls[r.status]}" tabindex="0" data-id="${r.id}" aria-label="${r.id} ${r.status}"></i>`).join('')}</span></div>`).join('');
+  // the counts in the text and the legend come from study.json (index.html holds the same numbers for a page without scripts)
+  document.querySelectorAll('[data-count]').forEach((el) => { el.textContent = String(S.study.ids.filter((r) => r.status === el.dataset.count).length); });
+  // one button per id; #ids is a group and #id-tip a polite live region, so the text is read out on focus
+  $('#ids').innerHTML = [...fams].map(([f, rs]) => `<div class="fam"><span class="fl" aria-hidden="true">${f}</span><span class="fd">${rs.map((r) => `<button type="button" class="st ${cls[r.status]}" data-id="${r.id}" aria-label="${r.id} ${r.status}"></button>`).join('')}</span></div>`).join('');
   const byId = new Map(S.study.ids.map((r) => [r.id, r]));
   const tip = (el) => {
     const r = byId.get(el.dataset.id);
@@ -580,8 +612,7 @@ function renderStudy() {
     el.classList.add('on');
     $('#id-tip').innerHTML = `<b>${r.id}</b> · ${esc(r.status)}: ${esc(r.text)}${r.qualifier && r.qualifier !== 'none' ? `<span class="q">${esc(r.qualifier)}</span>` : ''}`;
   };
-  $('#ids').addEventListener('mouseover', (e) => { const el = e.target.closest('.st'); if (el) tip(el); });
-  $('#ids').addEventListener('focusin', (e) => { const el = e.target.closest('.st'); if (el) tip(el); });
+  for (const ev of ['mouseover', 'focusin', 'click']) $('#ids').addEventListener(ev, (e) => { const el = e.target.closest('.st'); if (el) tip(el); });
 }
 
 // ------------------------------------------------------------------ start
@@ -589,15 +620,16 @@ async function main() {
   try {
     await load();
   } catch (e) {
-    setStatus(`Could not load the books: ${esc(e.message)}`);
-    throw e;
+    setStatus(`Could not load the books: ${esc(e.message)}`, 'error');
+    console.error(e);
+    return;
   }
   initBox();
   renderStudy();
   generate();
   $('#gen').addEventListener('click', generate);
   if (!FILM) startTicker();
-  else { const it = tickerItem(OPENINGS[0]); $('#tk-text').textContent = it.text; $('#tk-next').textContent = ' ' + it.word; $('#tk-clause').innerHTML = it.clause; $('#tk-book').textContent = it.book; }
+  else { const it = tickerItem(OPENINGS[0]); $('#tk-text').textContent = it.text; $('#tk-next').textContent = ' ' + it.word; $('#tk-clause').innerHTML = it.clause; $('#tk-book').textContent = it.book; $('#tk-pause').hidden = true; }
   await measure();
   window.__glassbox = {
     S, G, setText, accept, renderBox, generate, drawChart, showSource,

@@ -61,3 +61,6 @@ dist/
 /studies/hierarchical_tm/src/feas_slide11/*.npz
 /studies/tm_language_model/launch/*.lock.want.*
 /studies/tm_language_model/launch/r2r4_skipped.txt
+
+# Node packages for the tests of the live page (npm install in live/).
+node_modules/

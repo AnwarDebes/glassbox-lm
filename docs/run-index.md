@@ -1,7 +1,7 @@
 # Run index
 
-One row per run folder of the studies that keep run folders, 1,076 in all: 643 of `tm_language_model`,
-319 of `hierarchical_tm`, 23 of `clause_lm` and 91 of `tally`. `decision_layer` has no run folders and
+One row per run folder of the studies that keep run folders, 1,185 in all: 650 of `tm_language_model`,
+381 of `hierarchical_tm`, 29 of `clause_lm` and 125 of `tally`. `decision_layer` has no run folders and
 no run ids: it keeps its results in files (JSON files per seed and per report, NumPy
 archives of predictions and models, and some JSON-lines logs) in `results/confirm/`, one folder per
 registered test or dataset, and in `results/explore/` for the dev experiments, and its results page cites those files and its run
@@ -11,9 +11,11 @@ results page can be placed.
 
 The table was generated on 2026-10-10 from the run records only, that is from the files `run.json`
 and `config.json` of each run folder, read in one pass. The 14 rows of `clause_lm` dated 2026-10-14
-and the 91 rows of `tally` were added on 2026-10-23 in the same way. The date is taken from the run
+and the 91 rows of `tally` were added on 2026-10-23 in the same way, and the 109 rows of the folders made on
+2026-10-25 and 26 (7 of `tm_language_model`, 62 of `hierarchical_tm`, 6 of `clause_lm` and 34 of `tally`) on
+2026-10-26. The date is taken from the run
 id, which is a UTC timestamp. The size is the size of the run folder. The studies use different record
-formats, and a cell is left empty where the record does not hold the value: the 23 folders of
+formats, and a cell is left empty where the record does not hold the value: the 29 folders of
 `clause_lm` have no `run.json`, so their status, exit status and wall time are empty, and the run
 records of `tally` hold a status and a wall time but no exit status. The table lists folder names. One
 folder of `tally`, `20261015T072640Z_t0_report_valid_smoke`, holds a record whose run id is
@@ -1110,3 +1112,112 @@ A run with exit status 1 and no flag ended with an error of its own.
 | `20261017T113732Z_t0_logreg_of_final_coal_c2000_s20_seed7` | tally | t0_logreg_of_final_coal_c2000_s20_seed7 | 2026-10-17 | finished |  | 16.2 min | 1.2 MB |  |
 | `20261017T131723Z_t0_logreg_of_final_coal_c2000_s20_seed9` | tally | t0_logreg_of_final_coal_c2000_s20_seed9 | 2026-10-17 | finished |  | 15.3 min | 1.2 MB |  |
 | `20261017T204300Z_t0_logreg_of_final_coal_c2000_s20_seed8` | tally | t0_logreg_of_final_coal_c2000_s20_seed8 | 2026-10-17 | finished |  | 15.9 min | 1.2 MB |  |
+| `20261025T104107Z_t0_kn_beside_valid` | tally | t0_kn_beside_valid | 2026-10-25 | finished |  | 15 s | 1.0 MB |  |
+| `20261025T104315Z_t0_report_devtest` | tally | t0_report_devtest | 2026-10-25 | finished |  | 4 s | 10.8 kB |  |
+| `20261025T104406Z_t0_kn_beside_devtest` | tally | t0_kn_beside_devtest | 2026-10-25 | finished |  | 6 s | 648.8 kB |  |
+| `20261025T113715Z_a1_aa_noise` | tally | a1_aa_noise | 2026-10-25 | finished |  | 24 s | 140.9 kB |  |
+| `20261025T113821Z_a1_baseline_check` | tally | a1_baseline_check | 2026-10-25 | finished |  | 18 s | 58.4 kB |  |
+| `20261025T114615Z_a2_smoke` | tally | a2_smoke | 2026-10-25 | finished |  | 17 s | 155.9 kB | smoke |
+| `20261025T114634Z_a2_smoke_claim_orgroups` | tally | a2_smoke_claim_orgroups | 2026-10-25 | finished |  | 17 s | 156.0 kB | smoke |
+| `20261025T114718Z_a2_valid_dev` | tally | a2_valid_dev | 2026-10-25 | finished |  | 4.7 min | 158.9 kB |  |
+| `20261025T123052Z_a2_smoke` | tally | a2_smoke | 2026-10-25 | finished |  | 46 s | 1.7 MB | smoke |
+| `20261025T123159Z_a2_valid_dev` | tally | a2_valid_dev | 2026-10-25 | finished |  | 1.5 min | 12.5 MB |  |
+| `20261025T130238Z_gate0_cause_torch_noneg_s8_seed7` | clause_lm | gate0_cause_torch_noneg_s8_seed7 | 2026-10-25 |  |  |  | 20.9 MB |  |
+| `20261025T130431Z_gate0_cause_torch_s8_seed42` | clause_lm | gate0_cause_torch_s8_seed42 | 2026-10-25 |  |  |  | 20.8 MB |  |
+| `20261025T130626Z_gate0_cause_torch_noneg_s8_seed42` | clause_lm | gate0_cause_torch_noneg_s8_seed42 | 2026-10-25 |  |  |  | 20.3 MB |  |
+| `20261025T130751Z_gate0_cause_torch_noneg_s8_seed123` | clause_lm | gate0_cause_torch_noneg_s8_seed123 | 2026-10-25 |  |  |  | 20.3 MB |  |
+| `20261025T130918Z_gate0_cause_torch_noneg_s8_seed456` | clause_lm | gate0_cause_torch_noneg_s8_seed456 | 2026-10-25 |  |  |  | 20.3 MB |  |
+| `20261025T131008Z_gate0_cause_report` | clause_lm | gate0_cause_report | 2026-10-25 |  |  |  | 30.8 kB |  |
+| `20261025T131222Z_s5_gpu_200` | tm_language_model | s5 | 2026-10-25 | finished | 0 | 2.8 min | 15.9 kB |  |
+| `20261025T131631Z_m4_parity_tests` | tm_language_model | M4_parity_tests | 2026-10-25 | finished | 0 | 1.1 min | 16.4 kB |  |
+| `20261025T131820Z_cvtm_a3_H8_8c` | tm_language_model | cvtm_a3_H8_8c | 2026-10-25 | finished | 0 | 13.7 min | 27.2 kB |  |
+| `20261025T132205Z_a2_smoke` | tally | a2_smoke | 2026-10-25 | finished |  | 23 s | 1.7 MB | smoke |
+| `20261025T132230Z_a2_valid_dev` | tally | a2_valid_dev | 2026-10-25 | finished |  | 1.5 min | 12.5 MB |  |
+| `20261025T133240Z_cvtm_a3_H8_9` | tm_language_model | cvtm_a3_H8_9 | 2026-10-25 | finished | 0 | 6.6 min | 35.9 kB |  |
+| `20261025T133912Z_a2_devtest_final` | tally | a2_devtest_final | 2026-10-25 | finished |  | 1.5 min | 7.9 MB |  |
+| `20261025T134132Z_cvtm_H9_6_vote_equilibrium` | tm_language_model | cvtm_H9_6_vote_equilibrium | 2026-10-25 | finished | 0 | 18.9 min | 115.8 MB |  |
+| `20261025T140525Z_c3prep_lstm_medium_seed1_valid_sum_steps_clip5_smoke6ep` | tally | c3prep_lstm_medium_seed1_valid_sum_steps_clip5_smoke6ep | 2026-10-25 | finished |  | 1.4 min | 9.2 kB | smoke |
+| `20261025T150251Z_c3prep_lstm_medium_seed1_valid_sum_steps_clip5` | tally | c3prep_lstm_medium_seed1_valid_sum_steps_clip5 | 2026-10-25 | finished |  | 8.7 min | 31.6 kB |  |
+| `20261025T150507Z_h2_4_recheck` | tm_language_model | E11 | 2026-10-25 | finished | 0 | 37.8 min | 1.3 MB |  |
+| `20261025T153313Z_cvtm_a3_H8_3_H8_4_test` | tm_language_model | cvtm_a3_H8_3_H8_4_test | 2026-10-25 | finished | 0 | 7.6 min | 19.4 MB |  |
+| `20261025T210409Z_htm01_dev_rescore_saveload_check_exploratory_posthoc` | hierarchical_tm | htm01_dev_rescore_saveload_check_exploratory_posthoc | 2026-10-25 | finished | 0 | 39 s | 548.9 kB |  |
+| `20261025T210454Z_htm01_dev_rescore_saveload_check_v2_exploratory_posthoc` | hierarchical_tm | htm01_dev_rescore_saveload_check_v2_exploratory_posthoc | 2026-10-25 | finished | 0 | 37 s | 547.5 kB |  |
+| `20261025T210531Z_htm01_dev_rescore_check_rescore_screen_s200_exploratory_posthoc` | hierarchical_tm | htm01_dev_rescore_check_rescore_screen_s200_exploratory_posthoc | 2026-10-25 | finished | 0 | 25 s | 363.1 kB |  |
+| `20261025T210557Z_htm01_dev_rescore_e4_head_sa_s1_scoreP100_posthoc` | hierarchical_tm | htm01_dev_rescore_e4_head_sa_s1_scoreP100_posthoc | 2026-10-25 | finished | 0 | 25 s | 391.6 kB |  |
+| `20261025T210622Z_htm01_dev_rescore_e4_head_sa_s2_score_posthoc` | hierarchical_tm | htm01_dev_rescore_e4_head_sa_s2_score_posthoc | 2026-10-25 | finished | 0 | 23 s | 357.3 kB |  |
+| `20261025T210646Z_htm01_dev_rescore_e4_head_sa_s3_score_posthoc` | hierarchical_tm | htm01_dev_rescore_e4_head_sa_s3_score_posthoc | 2026-10-25 | finished | 0 | 24 s | 357.6 kB |  |
+| `20261025T210709Z_htm01_dev_rescore_e4_head_np_s1_score_posthoc` | hierarchical_tm | htm01_dev_rescore_e4_head_np_s1_score_posthoc | 2026-10-25 | finished | 0 | 24 s | 356.9 kB |  |
+| `20261025T210733Z_htm01_dev_rescore_e4_head_np_s2_score_posthoc` | hierarchical_tm | htm01_dev_rescore_e4_head_np_s2_score_posthoc | 2026-10-25 | finished | 0 | 23 s | 355.5 kB |  |
+| `20261025T210756Z_htm01_dev_rescore_e4_head_np_s3_score_posthoc` | hierarchical_tm | htm01_dev_rescore_e4_head_np_s3_score_posthoc | 2026-10-25 | finished | 0 | 23 s | 358.0 kB |  |
+| `20261025T210819Z_htm01_dev_rescore_e4s_nsall_s100_s1_score_posthoc` | hierarchical_tm | htm01_dev_rescore_e4s_nsall_s100_s1_score_posthoc | 2026-10-25 | finished | 0 | 24 s | 344.3 kB |  |
+| `20261025T210844Z_htm01_dev_rescore_e4s_nsall_s100_s2_score_posthoc` | hierarchical_tm | htm01_dev_rescore_e4s_nsall_s100_s2_score_posthoc | 2026-10-25 | finished | 0 | 26 s | 343.7 kB |  |
+| `20261025T210911Z_htm01_dev_rescore_e4s_nsall_s100_s3_score_posthoc` | hierarchical_tm | htm01_dev_rescore_e4s_nsall_s100_s3_score_posthoc | 2026-10-25 | finished | 0 | 23 s | 346.0 kB |  |
+| `20261025T210934Z_htm01_dev_rescore_e4_flat_sa_s1_score_posthoc` | hierarchical_tm | htm01_dev_rescore_e4_flat_sa_s1_score_posthoc | 2026-10-25 | finished | 0 | 23 s | 236.0 kB |  |
+| `20261025T210958Z_htm01_dev_rescore_e4_flat_sa_s2_score_posthoc` | hierarchical_tm | htm01_dev_rescore_e4_flat_sa_s2_score_posthoc | 2026-10-25 | finished | 0 | 21 s | 234.2 kB |  |
+| `20261025T211019Z_htm01_dev_rescore_e4_flat_sa_s3_score_posthoc` | hierarchical_tm | htm01_dev_rescore_e4_flat_sa_s3_score_posthoc | 2026-10-25 | finished | 0 | 23 s | 234.8 kB |  |
+| `20261025T211042Z_htm01_dev_rescore_e4_flat_np_s1_score_posthoc` | hierarchical_tm | htm01_dev_rescore_e4_flat_np_s1_score_posthoc | 2026-10-25 | finished | 0 | 21 s | 233.0 kB |  |
+| `20261025T211103Z_htm01_dev_rescore_e4_flat_np_s2_score_posthoc` | hierarchical_tm | htm01_dev_rescore_e4_flat_np_s2_score_posthoc | 2026-10-25 | finished | 0 | 21 s | 233.6 kB |  |
+| `20261025T211125Z_htm01_dev_rescore_e4_flat_np_s3_score_posthoc` | hierarchical_tm | htm01_dev_rescore_e4_flat_np_s3_score_posthoc | 2026-10-25 | finished | 0 | 22 s | 233.2 kB |  |
+| `20261025T211147Z_htm01_dev_rescore_e4s_nsall_s400_s1_score_posthoc` | hierarchical_tm | htm01_dev_rescore_e4s_nsall_s400_s1_score_posthoc | 2026-10-25 | finished | 0 | 24 s | 342.6 kB |  |
+| `20261025T211211Z_htm01_dev_rescore_e4s_nsall_s400_s2_score_posthoc` | hierarchical_tm | htm01_dev_rescore_e4s_nsall_s400_s2_score_posthoc | 2026-10-25 | finished | 0 | 22 s | 341.3 kB |  |
+| `20261025T211233Z_htm01_dev_rescore_e4s_nsall_s400_s3_score_posthoc` | hierarchical_tm | htm01_dev_rescore_e4s_nsall_s400_s3_score_posthoc | 2026-10-25 | finished | 0 | 22 s | 342.6 kB |  |
+| `20261025T211255Z_htm01_dev_rescore_e4_second_sa_s1_score_posthoc` | hierarchical_tm | htm01_dev_rescore_e4_second_sa_s1_score_posthoc | 2026-10-25 | finished | 0 | 36 s | 556.3 kB |  |
+| `20261025T211331Z_htm01_dev_rescore_e4_second_sa_s2_score_posthoc` | hierarchical_tm | htm01_dev_rescore_e4_second_sa_s2_score_posthoc | 2026-10-25 | finished | 0 | 35 s | 562.3 kB |  |
+| `20261025T211407Z_htm01_dev_rescore_e4_second_sa_s3_score_posthoc` | hierarchical_tm | htm01_dev_rescore_e4_second_sa_s3_score_posthoc | 2026-10-25 | finished | 0 | 35 s | 562.9 kB |  |
+| `20261025T211442Z_htm01_dev_rescore_e4_second_np_s1_score_posthoc` | hierarchical_tm | htm01_dev_rescore_e4_second_np_s1_score_posthoc | 2026-10-25 | finished | 0 | 35 s | 561.9 kB |  |
+| `20261025T211518Z_htm01_dev_rescore_e4_second_np_s2_score_posthoc` | hierarchical_tm | htm01_dev_rescore_e4_second_np_s2_score_posthoc | 2026-10-25 | finished | 0 | 35 s | 563.1 kB |  |
+| `20261025T211553Z_htm01_dev_rescore_e4_second_np_s3_score_posthoc` | hierarchical_tm | htm01_dev_rescore_e4_second_np_s3_score_posthoc | 2026-10-25 | finished | 0 | 37 s | 552.1 kB |  |
+| `20261025T211630Z_htm01_dev_rescore_e4_head_sa_s4_score_posthoc` | hierarchical_tm | htm01_dev_rescore_e4_head_sa_s4_score_posthoc | 2026-10-25 | finished | 0 | 23 s | 358.7 kB |  |
+| `20261025T211654Z_htm01_dev_rescore_e4_head_sa_s5_score_posthoc` | hierarchical_tm | htm01_dev_rescore_e4_head_sa_s5_score_posthoc | 2026-10-25 | finished | 0 | 23 s | 357.1 kB |  |
+| `20261025T211718Z_htm01_dev_rescore_e4_head_np_s4_score_posthoc` | hierarchical_tm | htm01_dev_rescore_e4_head_np_s4_score_posthoc | 2026-10-25 | finished | 0 | 23 s | 356.8 kB |  |
+| `20261025T211741Z_htm01_dev_rescore_e4_head_np_s5_score_posthoc` | hierarchical_tm | htm01_dev_rescore_e4_head_np_s5_score_posthoc | 2026-10-25 | finished | 0 | 23 s | 356.3 kB |  |
+| `20261025T211805Z_htm01_dev_rescore_e4s_nsall_s100_s4_score_posthoc` | hierarchical_tm | htm01_dev_rescore_e4s_nsall_s100_s4_score_posthoc | 2026-10-25 | finished | 0 | 23 s | 343.9 kB |  |
+| `20261025T211828Z_htm01_dev_rescore_e4s_nsall_s100_s5_score_posthoc` | hierarchical_tm | htm01_dev_rescore_e4s_nsall_s100_s5_score_posthoc | 2026-10-25 | finished | 0 | 23 s | 344.5 kB |  |
+| `20261025T211851Z_htm01_dev_rescore_e4s_nsall_s200_s1_score_posthoc` | hierarchical_tm | htm01_dev_rescore_e4s_nsall_s200_s1_score_posthoc | 2026-10-25 | finished | 0 | 23 s | 343.0 kB |  |
+| `20261025T211914Z_htm01_dev_rescore_e4s_nsall_s200_s2_score_posthoc` | hierarchical_tm | htm01_dev_rescore_e4s_nsall_s200_s2_score_posthoc | 2026-10-25 | finished | 0 | 22 s | 342.1 kB |  |
+| `20261025T211937Z_htm01_dev_rescore_e4s_nsall_s200_s3_score_posthoc` | hierarchical_tm | htm01_dev_rescore_e4s_nsall_s200_s3_score_posthoc | 2026-10-25 | finished | 0 | 22 s | 342.7 kB |  |
+| `20261025T211959Z_htm01_dev_rescore_e4s_nsall_s100_shuf_s1_P100_posthoc` | hierarchical_tm | htm01_dev_rescore_e4s_nsall_s100_shuf_s1_P100_posthoc | 2026-10-25 | finished | 0 | 23 s | 342.7 kB |  |
+| `20261025T212022Z_htm01_dev_rescore_e4s_nsall_s100_shuf_s2_P100_posthoc` | hierarchical_tm | htm01_dev_rescore_e4s_nsall_s100_shuf_s2_P100_posthoc | 2026-10-25 | finished | 0 | 23 s | 344.0 kB |  |
+| `20261025T212046Z_htm01_dev_rescore_e4s_nsall_s100_shuf_s3_P100_posthoc` | hierarchical_tm | htm01_dev_rescore_e4s_nsall_s100_shuf_s3_P100_posthoc | 2026-10-25 | finished | 0 | 23 s | 342.2 kB |  |
+| `20261025T212109Z_htm01_dev_rescore_e4s_nsall_s100_shuf_s4_P100_posthoc` | hierarchical_tm | htm01_dev_rescore_e4s_nsall_s100_shuf_s4_P100_posthoc | 2026-10-25 | finished | 0 | 23 s | 342.8 kB |  |
+| `20261025T212132Z_htm01_dev_rescore_e4s_nsall_s100_shuf_s5_P100_posthoc` | hierarchical_tm | htm01_dev_rescore_e4s_nsall_s100_shuf_s5_P100_posthoc | 2026-10-25 | finished | 0 | 23 s | 344.2 kB |  |
+| `20261025T212243Z_htm03_repro_L2_A32_s100_s1_p2_exploratory` | hierarchical_tm | htm03_repro_L2_A32_s100_s1_p2_exploratory | 2026-10-25 | finished | 0 | 11 s | 74.2 kB |  |
+| `20261025T212254Z_htm03_smoke_L2_A8_s100_s1_p2_exploratory` | hierarchical_tm | htm03_smoke_L2_A8_s100_s1_p2_exploratory | 2026-10-25 | finished | 0 | 11 s | 48.2 kB | smoke |
+| `20261025T212310Z_htm03_e2_L2_hier_s1_s100_A8_exploratory` | hierarchical_tm | htm03_e2_L2_hier_s1_s100_A8_exploratory | 2026-10-25 | finished | 0 | 4.0 min | 115.8 kB |  |
+| `20261025T212709Z_htm03_e2_L2_hier_s2_s100_A8_exploratory` | hierarchical_tm | htm03_e2_L2_hier_s2_s100_A8_exploratory | 2026-10-25 | finished | 0 | 4.0 min | 115.9 kB |  |
+| `20261025T213111Z_htm03_e2_L2_hier_s3_s100_A8_exploratory` | hierarchical_tm | htm03_e2_L2_hier_s3_s100_A8_exploratory | 2026-10-25 | finished | 0 | 4.0 min | 116.1 kB |  |
+| `20261025T213601Z_htm01_retrain_e1_verify_default_posthoc` | hierarchical_tm | htm01_retrain_e1_verify_default_posthoc | 2026-10-25 | finished | 0 | 23 s | 111.6 kB |  |
+| `20261025T213631Z_htm01_retrain_e4_sa_granmo_C50_A64_s100_posthoc` | hierarchical_tm | htm01_retrain_e4_sa_granmo_C50_A64_s100_posthoc | 2026-10-25 | finished | 0 | 29.3 min | 347.4 kB |  |
+| `20261025T220547Z_htm01_retrain_e4_head_np_s1_posthoc` | hierarchical_tm | htm01_retrain_e4_head_np_s1_posthoc | 2026-10-25 | finished | 0 | 24.8 min | 26.5 MB |  |
+| `20261025T223033Z_htm01_retrain_e4s_nsall_s100_s1_posthoc` | hierarchical_tm | htm01_retrain_e4s_nsall_s100_s1_posthoc | 2026-10-25 | finished | 0 | 25.3 min | 26.5 MB |  |
+| `20261025T225549Z_htm01_retrain_e1_verify_binary_posthoc` | hierarchical_tm | htm01_retrain_e1_verify_binary_posthoc | 2026-10-25 | finished | 0 | 22 s | 110.8 kB |  |
+| `20261025T225612Z_htm01_retrain_e2_L1_hier_s1_posthoc` | hierarchical_tm | htm01_retrain_e2_L1_hier_s1_posthoc | 2026-10-25 | finished | 0 | 3.8 min | 130.2 kB |  |
+| `20261025T230002Z_htm01_retrain_e2_L2_hier_s1_posthoc` | hierarchical_tm | htm01_retrain_e2_L2_hier_s1_posthoc | 2026-10-25 | finished | 0 | 3.9 min | 136.9 kB |  |
+| `20261025T230358Z_htm01_retrain_e2_L3_hier_s1_s800_p300_posthoc` | hierarchical_tm | htm01_retrain_e2_L3_hier_s1_s800_p300_posthoc | 2026-10-25 | finished | 0 | 12.7 min | 285.2 kB |  |
+| `20261025T231650Z_htm01_retrain_e4_head_sa_s2_posthoc` | hierarchical_tm | htm01_retrain_e4_head_sa_s2_posthoc | 2026-10-25 | finished | 0 | 24.6 min | 26.5 MB |  |
+| `20261025T234129Z_htm01_retrain_e4_head_sa_s3_posthoc` | hierarchical_tm | htm01_retrain_e4_head_sa_s3_posthoc | 2026-10-25 | finished | 0 | 24.8 min | 26.5 MB |  |
+| `20261026T000620Z_htm01_retrain_e4_head_np_s2_posthoc` | hierarchical_tm | htm01_retrain_e4_head_np_s2_posthoc | 2026-10-26 | finished | 0 | 25.0 min | 26.5 MB |  |
+| `20261026T003119Z_htm01_retrain_e4_head_np_s3_posthoc` | hierarchical_tm | htm01_retrain_e4_head_np_s3_posthoc | 2026-10-26 | finished | 0 | 25.1 min | 26.5 MB |  |
+| `20261026T005628Z_htm01_retrain_e4s_nsall_s100_s2_posthoc` | hierarchical_tm | htm01_retrain_e4s_nsall_s100_s2_posthoc | 2026-10-26 | finished | 0 | 24.9 min | 26.5 MB |  |
+| `20261026T012119Z_htm01_retrain_e4s_nsall_s100_s3_posthoc` | hierarchical_tm | htm01_retrain_e4s_nsall_s100_s3_posthoc | 2026-10-26 | finished | 0 | 24.9 min | 26.5 MB |  |
+| `20261026T014616Z_htm01_retrain_e5a_screen_hier_s60_posthoc` | hierarchical_tm | htm01_retrain_e5a_screen_hier_s60_posthoc | 2026-10-26 | finished | 0 | 15.6 min | 26.8 MB |  |
+| `20261026T020150Z_htm01_retrain_e5a_screen_flat_s60_posthoc` | hierarchical_tm | htm01_retrain_e5a_screen_flat_s60_posthoc | 2026-10-26 | finished | 0 | 14.0 min | 28.8 MB |  |
+| `20261026T022008Z_c3prep_lstm_medium_seed2_valid_sum_steps_clip5` | tally | c3prep_lstm_medium_seed2_valid_sum_steps_clip5 | 2026-10-26 | finished |  | 8.6 min | 31.6 kB |  |
+| `20261026T022926Z_c3prep_lstm_medium_seed3_valid_sum_steps_clip5` | tally | c3prep_lstm_medium_seed3_valid_sum_steps_clip5 | 2026-10-26 | finished |  | 8.5 min | 31.5 kB |  |
+| `20261026T023841Z_c3prep_lstm_medium_seed4_valid_sum_steps_clip5` | tally | c3prep_lstm_medium_seed4_valid_sum_steps_clip5 | 2026-10-26 | finished |  | 8.6 min | 31.5 kB |  |
+| `20261026T024756Z_c3prep_lstm_medium_seed5_valid_sum_steps_clip5` | tally | c3prep_lstm_medium_seed5_valid_sum_steps_clip5 | 2026-10-26 | finished |  | 8.5 min | 31.5 kB |  |
+| `20261026T025711Z_c3prep_lstm_medium_seed6_valid_sum_steps_clip5` | tally | c3prep_lstm_medium_seed6_valid_sum_steps_clip5 | 2026-10-26 | finished |  | 8.6 min | 31.6 kB |  |
+| `20261026T030632Z_c3prep_lstm_medium_seed7_valid_sum_steps_clip5` | tally | c3prep_lstm_medium_seed7_valid_sum_steps_clip5 | 2026-10-26 | finished |  | 8.5 min | 31.5 kB |  |
+| `20261026T031547Z_c3prep_lstm_medium_seed8_valid_sum_steps_clip5` | tally | c3prep_lstm_medium_seed8_valid_sum_steps_clip5 | 2026-10-26 | finished |  | 8.5 min | 31.6 kB |  |
+| `20261026T032501Z_c3prep_lstm_medium_seed9_valid_sum_steps_clip5` | tally | c3prep_lstm_medium_seed9_valid_sum_steps_clip5 | 2026-10-26 | finished |  | 8.6 min | 31.6 kB |  |
+| `20261026T033417Z_c3prep_lstm_medium_seed10_valid_sum_steps_clip5` | tally | c3prep_lstm_medium_seed10_valid_sum_steps_clip5 | 2026-10-26 | finished |  | 8.5 min | 31.5 kB |  |
+| `20261026T034332Z_c3prep_lstm_large_seed1_valid_sum_steps_clip10` | tally | c3prep_lstm_large_seed1_valid_sum_steps_clip10 | 2026-10-26 | finished |  | 31.7 min | 42.6 kB |  |
+| `20261026T041555Z_c3prep_lstm_large_seed2_valid_sum_steps_clip10` | tally | c3prep_lstm_large_seed2_valid_sum_steps_clip10 | 2026-10-26 | finished |  | 31.7 min | 42.4 kB |  |
+| `20261026T044817Z_c3prep_lstm_large_seed3_valid_sum_steps_clip10` | tally | c3prep_lstm_large_seed3_valid_sum_steps_clip10 | 2026-10-26 | finished |  | 31.7 min | 42.8 kB |  |
+| `20261026T052040Z_c3prep_lstm_large_seed4_valid_sum_steps_clip10` | tally | c3prep_lstm_large_seed4_valid_sum_steps_clip10 | 2026-10-26 | finished |  | 31.6 min | 42.0 kB |  |
+| `20261026T055301Z_c3prep_lstm_large_seed5_valid_sum_steps_clip10` | tally | c3prep_lstm_large_seed5_valid_sum_steps_clip10 | 2026-10-26 | finished |  | 31.7 min | 42.7 kB |  |
+| `20261026T062525Z_c3prep_lstm_large_seed6_valid_sum_steps_clip10` | tally | c3prep_lstm_large_seed6_valid_sum_steps_clip10 | 2026-10-26 | finished |  | 31.7 min | 42.5 kB |  |
+| `20261026T065753Z_c3prep_lstm_large_seed7_valid_sum_steps_clip10` | tally | c3prep_lstm_large_seed7_valid_sum_steps_clip10 | 2026-10-26 | finished |  | 31.7 min | 42.9 kB |  |
+| `20261026T073023Z_c3prep_lstm_large_seed8_valid_sum_steps_clip10` | tally | c3prep_lstm_large_seed8_valid_sum_steps_clip10 | 2026-10-26 | finished |  | 31.8 min | 42.5 kB |  |
+| `20261026T080256Z_c3prep_lstm_large_seed9_valid_sum_steps_clip10` | tally | c3prep_lstm_large_seed9_valid_sum_steps_clip10 | 2026-10-26 | finished |  | 31.7 min | 42.4 kB |  |
+| `20261026T083523Z_c3prep_lstm_large_seed10_valid_sum_steps_clip10` | tally | c3prep_lstm_large_seed10_valid_sum_steps_clip10 | 2026-10-26 | finished |  | 31.7 min | 42.6 kB |  |

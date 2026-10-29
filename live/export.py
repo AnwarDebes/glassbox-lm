@@ -3,12 +3,16 @@
 
 1. Ten public-domain books are downloaded from Project Gutenberg (or read from --cache), their
    headers, licence text, contents pages and illustration captions are removed, and every book is
-   cut into chapters. A chapter is one document.
+   cut into chapters. A chapter is one document. The SHA-256 of every book file is printed and
+   written to corpus.json.
 2. Tokens: lowercase words (inner apostrophes kept), numbers, and the marks . , ; : ! ? Quotation
-   marks, dashes, brackets and underscores are dropped. The vocabulary is every word of the
-   training chapters, most frequent first, followed by 64 document-word slots that never occur in
-   training: a word that the vocabulary does not hold takes the next free slot of its document, so
-   a repeated new word keeps one id (the page does the same with typed text).
+   marks, dashes, brackets and underscores are dropped; accents and every other combining mark are
+   removed after NFKD. The vocabulary is every word of the training chapters, most frequent first,
+   followed by 256 document-word slots that never occur in training: a word that the vocabulary
+   does not hold takes the next free slot of its document, so a repeated new word keeps one id (the
+   page does the same with typed text). The export stops if a chapter has more new words than
+   slots (the most in one chapter is 160); in typed text the words after the 256th new one share
+   the last slot.
 3. Splits by the residue of docs/11 section 11.6, mix64(i XOR 0xC0FFEE) mod 100 over the global
    chapter index i: residues 90 to 99 are held-out chapters, except the first chapter of each book,
    which always stays in training. Among the training chapters, residues 0 to 9 (of the training
@@ -20,10 +24,15 @@
    `KNModel.logprob`, and the vote form is checked against `KNModel.prob` (H8.2 of the study).
 
 Writes corpus.json, tokens.u16.gz, core.json and study.json (the 91 registered ids of
-tm_language_model with their statuses, read from its results page) next to this file, and
-tests/golden.json, the reference values that tests/model.test.mjs checks the browser model against.
+tm_language_model with their statuses and qualifiers, read cell by cell from its results page and
+checked against the page's own count table) next to this file, and tests/golden.json, the
+reference values that tests/model.test.mjs and tests/text.test.mjs check the browser code against.
+From the repository root, with the study's environment (numpy, numba):
 
-    python live/export.py [--cache DIR]
+    studies/tm_language_model/.venv-tm/bin/python live/export.py [--cache DIR]
+
+Without --cache the books are downloaded into a new temporary folder; with it, books already in DIR
+are read and missing ones are downloaded into it.
 """
 
 from __future__ import annotations
@@ -49,7 +58,7 @@ sys.path.insert(0, str(ROOT / "studies" / "tm_language_model" / "src"))
 from tmlm.cvtm import mixture, model as cvtm_model, protocol  # noqa: E402
 from tmlm.engine.rng import mix64  # noqa: E402
 
-N_SLOTS = 64
+N_SLOTS = 256          # document-word slots; the most new words in one chapter is 160, and V stays below 2**15
 VAL_RESIDUES = range(90, 100)
 H_RESIDUES = tuple(range(10))
 SALT = 0xC0FFEE
@@ -74,7 +83,38 @@ BOOKS = [
 TOKEN_RE = re.compile(r"[a-z0-9]+(?:'[a-z0-9]+)*|[.,;:!?]")
 
 
+# Edge cases for the tokenizer test of the page (tests/text.test.mjs): their tokens, as this file's
+# tokenize() gives them, are written to tests/golden.json.
+TOKENIZER_CASES = [
+    "It is a truth universally acknowledged, that a single man in possession of a good fortune, must be in want of a wife.",
+    "\u201cWell,\u201d said he -- \u2018it\u2019s _very_ odd\u2019\u2014isn\u2019t it?",
+    "Caf\u00e9, na\u00efve, fa\u00e7ade, \u00c6sop, \u0152dipus, \u0153uvre.",
+    "a\u0301b a\u1dc4b a\u20d7b a\ufe20b a\u0f71b a\U0001d167b",   # combining marks inside and outside U+0300-036F
+    "a\u034fb a\ufe0fb a\u0e31b",                   # nonspacing marks of combining class 0: kept, so they split a word
+    "a\u1715b a\u302eb a\U0001d165b",               # spacing marks with a combining class: removed
+    "\ufb01ne \ufb00 \u2163 \u00bd \u2460 \uff21\uff22\uff23 x\u00b2",
+    "\u0130stanbul, \u01c5, \u212a, \u00df, \u1e9e",
+    "1,000.5 at 3:30; 2nd!? 'tis rock'n'roll dogs' a''b o'clock the '90s well-known R2-D2",
+    "\u0395\u03bb\u03bb\u03ac\u03b4\u03b1 \u0438 \u0420\u043e\u0441\u0441\u0438\u044f \u4e2d\u6587 \U0001f44d\U0001f3fd",
+    "line\r\nbreak\ttab [Illustration] (brackets) {braces} <angle> \"straight\" #hash @at 50% & co.",
+    "MR. UTTERSON THE LAWYER WAS A MAN OF A RUGGED COUNTENANCE",
+    "",
+]
+
+# Texts for the encoding test of the page: their ids under the exported vocabulary go to tests/golden.json.
+ENCODE_CASES = [
+    "It is a truth universally acknowledged",
+    "Anwar Debes wrote a model that counts words. Anwar Debes",
+    "xyzzy plugh xyzzy, plugh! Alice said xyzzy.",
+    " ".join(f"zqx{i}q" for i in range(300)),       # more new words than slots: the last slot is shared
+]
+
+
 # ------------------------------------------------------------------ text
+def sha256_file(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
 def fetch(gid: int, cache: Path) -> str:
     path = cache / f"pg{gid}.txt"
     if not path.exists():
@@ -196,21 +236,83 @@ def tokenize(text: str) -> list[str]:
     return TOKEN_RE.findall(normalise(text))
 
 
-def study_ids() -> list[dict]:
-    """Every registered id of tm_language_model with its status, from the study's results page."""
+STATUSES = ("met", "not met", "not judged", "not run")
+STATUS_RE = re.compile(r"(met|not met|not judged|not run)(?: \(.*\))?")
+RESULTS_PAGE = ROOT / "studies" / "tm_language_model" / "docs" / "results.md"
+
+
+def table_cells(line: str) -> list[str] | None:
+    """The stripped cells of a Markdown table row, or None for a line that is not one."""
+    s = line.strip()
+    if len(s) < 2 or not (s.startswith("|") and s.endswith("|")):
+        return None
+    return [c.strip() for c in s[1:-1].split("|")]
+
+
+def parse_study_ids(text: str) -> list[dict]:
+    """Every row "| id | claim | status | qualifier | evidence |" whose status cell is a status.
+
+    The first such row of an id counts (an id also appears in tables of numbers, whose third cell is
+    no status). An empty qualifier cell gives an empty qualifier.
+    """
     out, seen = [], set()
-    page = ROOT / "studies" / "tm_language_model" / "docs" / "results.md"
-    for line in page.read_text(encoding="utf-8").splitlines():
-        m = re.match(r"^\| (H\d+\.\d+) \| (.*?) \| (met|not met|not judged|not run)(?: \(.*?\))? \| (.*?) \|", line)
-        if m and m.group(1) not in seen:
-            seen.add(m.group(1))
-            out.append({"id": m.group(1), "text": m.group(2), "status": m.group(3), "qualifier": m.group(4)})
+    for line in text.splitlines():
+        cells = table_cells(line)
+        if cells is None or len(cells) != 5 or not re.fullmatch(r"H\d+\.\d+", cells[0]):
+            continue
+        m = STATUS_RE.fullmatch(cells[2])
+        if m is None or cells[0] in seen:
+            continue
+        seen.add(cells[0])
+        out.append({"id": cells[0], "text": cells[1], "status": m.group(1), "qualifier": cells[3]})
     out.sort(key=lambda r: tuple(int(x) for x in r["id"][1:].split(".")))
     return out
 
 
+def check_study_ids(ids: list[dict], text: str) -> None:
+    """Stop unless the parsed ids agree with the count table of the results page ("| all | ids | met | ...")."""
+    bad = [r["id"] for r in ids if "|" in r["text"] or "|" in r["qualifier"] or r["status"] not in STATUSES]
+    if bad:
+        raise SystemExit(f"results page: a cell of {bad} holds '|' or an unknown status")
+    rows = [c for c in map(table_cells, text.splitlines()) if c and c[0] == "all"]
+    if len(rows) != 1:
+        raise SystemExit(f"results page: expected one '| all |' row in the count table, found {len(rows)}")
+    want = [int(x) for x in rows[0][1:]]
+    got = [len(ids)] + [sum(r["status"] == s for r in ids) for s in STATUSES]
+    if got != want:
+        raise SystemExit(f"results page: parsed ids, met, not met, not judged, not run {got}; count table {want}")
+
+
+def study_ids() -> list[dict]:
+    """Every registered id of tm_language_model with its status and qualifier, from the study's results page."""
+    text = RESULTS_PAGE.read_text(encoding="utf-8")
+    ids = parse_study_ids(text)
+    check_study_ids(ids, text)
+    return ids
+
+
 def residue(i: int) -> int:
     return mix64(i ^ SALT) % 100
+
+
+def encode(toks: list[str], index: dict[str, int], slot0: int, n_slots: int) -> tuple[list[int], list[str]]:
+    """Token ids of one document: vocabulary words keep their id; the j-th new word of the document
+    takes slot j (id slot0 + j), and from the n_slots-th new word on all share the last slot
+    (the same rule as Vocab.encode in model.js)."""
+    ids, new = [], []
+    for t in toks:
+        if t in index:
+            ids.append(index[t])
+            continue
+        if t not in new:
+            new.append(t)
+        ids.append(slot0 + min(new.index(t), n_slots - 1))
+    return ids, new
+
+
+def slot_overflow(docs: list[dict], n_slots: int) -> list[dict]:
+    """The documents with more new words than slots (their later new words would share one id)."""
+    return [d for d in docs if len(d["new_words"]) > n_slots]
 
 
 # ------------------------------------------------------------------ main
@@ -219,18 +321,24 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--cache", type=Path, default=None, help="folder for the downloaded books")
     args = ap.parse_args(argv)
     t_start = time.perf_counter()
+    study_rows = study_ids()                          # read and checked first: a bad page stops before any file is written
+    if len(study_rows) != 91:
+        raise SystemExit(f"expected 91 registered ids on the results page, found {len(study_rows)}")
     cache = args.cache or Path(tempfile.mkdtemp(prefix="gutenberg-"))
     cache.mkdir(parents=True, exist_ok=True)
 
     books, docs = [], []
     for b, (gid, title, author, year, heading, tl, first) in enumerate(BOOKS):
         text = fetch(gid, cache)
+        digest = sha256_file(cache / f"pg{gid}.txt")
         chs = chapters(gid, heading, tl, first, body_lines(text))
-        books.append({"gutenberg": gid, "title": title, "author": author, "year": year, "chapters": len(chs)})
+        books.append({"gutenberg": gid, "title": title, "author": author, "year": year, "chapters": len(chs),
+                      "file": f"pg{gid}.txt", "sha256": digest})
         for c, (label, lines) in enumerate(chs):
             toks = tokenize("\n".join(lines))
             docs.append({"book": b, "chapter": c, "label": label, "tokens": toks})
-        print(f"{title}: {len(chs)} chapters, {sum(len(d['tokens']) for d in docs if d['book'] == b):,} tokens")
+        print(f"{title}: {len(chs)} chapters, {sum(len(d['tokens']) for d in docs if d['book'] == b):,} tokens; "
+              f"pg{gid}.txt sha256 {digest}")
 
     for i, d in enumerate(docs):
         d["residue"] = residue(i)
@@ -250,25 +358,19 @@ def main(argv: list[str] | None = None) -> int:
     index = {w: i for i, w in enumerate(words)}
     slot0 = len(words)
 
-    def encode(toks: list[str]) -> tuple[list[int], list[str]]:
-        ids, new = [], []
-        for t in toks:
-            if t in index:
-                ids.append(index[t])
-                continue
-            if t not in new:
-                new.append(t)
-            ids.append(slot0 + min(new.index(t), N_SLOTS - 1))
-        return ids, new
-
     stream, ds_all = [], [0]
     for d in docs:
-        ids, new = encode(d["tokens"])
+        ids, new = encode(d["tokens"], index, slot0, N_SLOTS)
         d["ids"] = ids
         d["new_words"] = new
         stream.extend(ids)
         ds_all.append(len(stream))
     tok_all = np.asarray(stream, dtype=np.uint16)
+    over = slot_overflow(docs, N_SLOTS)
+    if over:
+        raise SystemExit(f"{len(over)} chapters have more new words than the {N_SLOTS} slots, the most "
+                         f"{max(len(d['new_words']) for d in over)} ({over[0]['label']}): raise N_SLOTS")
+    print(f"new words per chapter: at most {max(len(d['new_words']) for d in docs)} of {N_SLOTS} slots")
 
     def concat(sel):
         t, s = [], [0]
@@ -332,6 +434,9 @@ def main(argv: list[str] | None = None) -> int:
         "discounts": {str(k): {"raw": list(kn.raw[k].d), "cont": (list(kn.cont[k].d) if kn.cont[k] is not None else None)}
                       for k in range(1, 6)},
         "n_types": [int(x) for x in kn.n_types],
+        "tokenizer": [[text, tokenize(text)] for text in TOKENIZER_CASES],
+        "encode": [dict(zip(("text", "ids", "new_words"), (text, *encode(tokenize(text), index, slot0, N_SLOTS))))
+                   for text in ENCODE_CASES],
     }
 
     # ---- files
@@ -377,13 +482,11 @@ def main(argv: list[str] | None = None) -> int:
         "state_hash": core.state_hash(),
     }
     (HERE / "core.json").write_text(json.dumps(core_doc, separators=(",", ":")), encoding="utf-8")
-    ids = study_ids()
-    if len(ids) != 91:
-        raise SystemExit(f"expected 91 registered ids on the results page, found {len(ids)}")
-    (HERE / "study.json").write_text(json.dumps({"source": "studies/tm_language_model/docs/results.md", "ids": ids},
+    (HERE / "study.json").write_text(json.dumps({"source": "studies/tm_language_model/docs/results.md",
+                                                 "source_sha256": sha256_file(RESULTS_PAGE), "ids": study_rows},
                                                 separators=(",", ":"), ensure_ascii=False), encoding="utf-8")
     (HERE / "tests" / "golden.json").write_text(json.dumps(golden, separators=(",", ":")), encoding="utf-8")
-    print(f"wrote corpus.json, tokens.u16.gz, core.json, tests/golden.json in {time.perf_counter() - t_start:.0f} s")
+    print(f"wrote corpus.json, tokens.u16.gz, core.json, study.json, tests/golden.json in {time.perf_counter() - t_start:.0f} s")
     return 0
 
 

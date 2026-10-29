@@ -2,9 +2,13 @@
   "name": "glassbox-lm-glass-box",
   "private": true,
   "type": "module",
-  "description": "The count floor of glassbox-lm, counted in the browser: Kneser-Ney 5-gram clause votes, document clauses and their sources.",
+  "description": "The CVTM-core of the first glassbox-lm study, counted in the browser: Kneser-Ney 5-gram clause votes, document clauses and their sources.",
   "scripts": {
-    "test": "node --test tests/model.test.mjs"
+    "test": "node --test tests/*.test.mjs"
+  },
+  "//": "jsdom 30.1.3 (MIT licence, from registry.npmjs.org) runs tests/page.test.mjs, a headless DOM test of the page; it is a test tool only and is not part of the published site.",
+  "devDependencies": {
+    "jsdom": "30.1.3"
   },
   "license": "CC-BY-NC-4.0"
 }

@@ -464,11 +464,35 @@ export class Core {
 // ------------------------------------------------------------------ text
 export const TOKEN_RE = /[a-z0-9]+(?:'[a-z0-9]+)*|[.,;:!?]/g;
 
+// The code points that unicodedata.combining() of the Python that runs export.py (Python 3.11,
+// Unicode 14.0.0) calls combining, as hexadecimal ranges: normalise() removes exactly these after
+// NFKD, as export.py does (912 code points; tests/test_export.py checks the list against Python).
+// The class \p{Mn} of Node 26 (Unicode 17) would differ from it on 1,197 code points, the former
+// range U+0300 to U+036F on 802.
+const COMBINING =
+  '300-34E,350-36F,483-487,591-5BD,5BF,5C1-5C2,5C4-5C5,5C7,610-61A,64B-65F,670,6D6-6DC,6DF-6E4,6E7-6E8,' +
+  '6EA-6ED,711,730-74A,7EB-7F3,7FD,816-819,81B-823,825-827,829-82D,859-85B,898-89F,8CA-8E1,8E3-8FF,93C,94D,' +
+  '951-954,9BC,9CD,9FE,A3C,A4D,ABC,ACD,B3C,B4D,BCD,C3C,C4D,C55-C56,CBC,CCD,D3B-D3C,D4D,DCA,E38-E3A,E48-E4B,' +
+  'EB8-EBA,EC8-ECB,F18-F19,F35,F37,F39,F71-F72,F74,F7A-F7D,F80,F82-F84,F86-F87,FC6,1037,1039-103A,108D,' +
+  '135D-135F,1714-1715,1734,17D2,17DD,18A9,1939-193B,1A17-1A18,1A60,1A75-1A7C,1A7F,1AB0-1ABD,1ABF-1ACE,' +
+  '1B34,1B44,1B6B-1B73,1BAA-1BAB,1BE6,1BF2-1BF3,1C37,1CD0-1CD2,1CD4-1CE0,1CE2-1CE8,1CED,1CF4,1CF8-1CF9,' +
+  '1DC0-1DFF,20D0-20DC,20E1,20E5-20F0,2CEF-2CF1,2D7F,2DE0-2DFF,302A-302F,3099-309A,A66F,A674-A67D,' +
+  'A69E-A69F,A6F0-A6F1,A806,A82C,A8C4,A8E0-A8F1,A92B-A92D,A953,A9B3,A9C0,AAB0,AAB2-AAB4,AAB7-AAB8,' +
+  'AABE-AABF,AAC1,AAF6,ABED,FB1E,FE20-FE2F,101FD,102E0,10376-1037A,10A0D,10A0F,10A38-10A3A,10A3F,' +
+  '10AE5-10AE6,10D24-10D27,10EAB-10EAC,10F46-10F50,10F82-10F85,11046,11070,1107F,110B9-110BA,11100-11102,' +
+  '11133-11134,11173,111C0,111CA,11235-11236,112E9-112EA,1133B-1133C,1134D,11366-1136C,11370-11374,11442,' +
+  '11446,1145E,114C2-114C3,115BF-115C0,1163F,116B6-116B7,1172B,11839-1183A,1193D-1193E,11943,119E0,11A34,' +
+  '11A47,11A99,11C3F,11D42,11D44-11D45,11D97,16AF0-16AF4,16B30-16B36,16FF0-16FF1,1BC9E,1D165-1D169,' +
+  '1D16D-1D172,1D17B-1D182,1D185-1D18B,1D1AA-1D1AD,1D242-1D244,1E000-1E006,1E008-1E018,1E01B-1E021,' +
+  '1E023-1E024,1E026-1E02A,1E130-1E136,1E2AE,1E2EC-1E2EF,1E8D0-1E8D6,1E944-1E94A';
+const COMBINING_RE = new RegExp(
+  `[${COMBINING.split(',').map((r) => r.split('-').map((h) => `\\u{${h}}`).join('-')).join('')}]`, 'gu');
+
 export function normalise(text) {
   return text
     .replace(/[\u2019\u2018]/g, "'").replace(/[\u201c\u201d]/g, '"')
     .replace(/_/g, ' ').replace(/--/g, ' ').replace(/[\u2014\u2013]/g, ' ')
-    .normalize('NFKD').replace(/[\u0300-\u036f]/g, '')
+    .normalize('NFKD').replace(COMBINING_RE, '')
     .replace(/\u00e6/g, 'ae').replace(/\u00c6/g, 'Ae').replace(/\u0153/g, 'oe').replace(/\u0152/g, 'Oe')
     .toLowerCase();
 }
@@ -504,6 +528,11 @@ export class Vocab {
     const j = id - this.nWords;
     return slots[j] !== undefined ? slots[j] : `<w${j}>`;
   }
+
+  // the ids at or above this one are slots that hold no word of a text with these slots
+  limit(slots) {
+    return this.nWords + Math.min(slots.length, this.nSlots);
+  }
 }
 
 // lowercase tokens back to readable text
@@ -518,4 +547,39 @@ export function detok(words) {
     if (/^[.!?]$/.test(w)) cap = true;
   }
   return out;
+}
+
+// ------------------------------------------------------------------ sampling and number formats of the page
+// a small seeded generator (mulberry32), so that a seed always writes the same words
+export function mulberry32(a) {
+  return () => { a |= 0; a = (a + 0x6d2b79f5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
+}
+
+// one id drawn from p ** (1 / T) over the ids below `limit` (Vocab.limit): the ids at or above it
+// are slots that hold no word of the text and have nothing to write
+export function sample(p, rng, T, limit = p.length) {
+  const n = Math.min(limit, p.length);
+  const q = new Float64Array(n);
+  let z = 0, last = -1;
+  for (let i = 0; i < n; i++) { q[i] = Math.pow(p[i], 1 / T); z += q[i]; if (q[i] > 0) last = i; }
+  if (last < 0) throw new Error('nothing to sample: every allowed id has probability 0');
+  let u = rng() * z;
+  for (let i = 0; i < n; i++) { u -= q[i]; if (u < 0) return i; }
+  return last;
+}
+
+// a probability as a percentage, as HTML (below 0.001 percent it says so instead of printing 0.000%)
+export function pct(p) {
+  if (!(p > 0)) return '0%';
+  const x = p * 100;
+  if (x < 0.001) return '&lt;0.001%';
+  return (p >= 0.1 ? x.toFixed(1) : p >= 0.01 ? x.toFixed(2) : x.toFixed(3)) + '%';
+}
+
+// x as m × 10^e with one decimal of m, as HTML (m is between 1.0 and 9.9 after rounding)
+export function sci(x) {
+  if (x === 0) return '0';
+  let e = Math.floor(Math.log10(Math.abs(x)));
+  if (Math.abs(Number((x / 10 ** e).toFixed(1))) >= 10) e += 1;
+  return `${(x / 10 ** e).toFixed(1)} × 10<sup>${e < 0 ? '−' : ''}${Math.abs(e)}</sup>`;
 }
