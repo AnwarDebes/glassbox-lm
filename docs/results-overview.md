@@ -1,6 +1,6 @@
 # Results overview
 
-This page gives, for each of the five studies, the status of what the study registered and its headline measurements. Every number is copied from the results page of its study and stands next to the id of the run that produced it; decision_layer keeps no run folders; its numbers stand next to the id of the registered test or rule, and the paragraphs below its table name the result files of its headline results. The results pages name the file of the run folder or the result file for each value and give the conditions that belong to it; where this page and a results page differ, the results page is right. Run folders, result files and datasets are not distributed, so no number can be recomputed from a clone. A run id can be placed in the [run index](run-index.md), and the limits of the evidence are on the page of [known limitations](known-limitations.md).
+This page gives, for each of the nine studies, the status of what the study registered and its headline measurements. Every number is copied from the results page of its study and stands next to the id of the run that produced it; decision_layer keeps no run folders; its numbers stand next to the id of the registered test or rule, and the paragraphs below its table name the result files of its headline results. The results pages name the file of the run folder or the result file for each value and give the conditions that belong to it; where this page and a results page differ, the results page is right. Run folders, result files and datasets are not distributed, so no number can be recomputed from a clone. A run id can be placed in the [run index](run-index.md), and the limits of the evidence are on the page of [known limitations](known-limitations.md).
 
 The statuses are those of the results pages: met, not met, not judged (runs exist, and no verdict was drawn from them) and not run. A kill criterion is triggered or not triggered.
 
@@ -251,3 +251,50 @@ The study holds the first steps of the design called Tally ([research/design.md]
 | Amendment of the flat settings, frozen at 21:14:27 UTC on 2026-10-15 | met | s = 5 and 1 epoch by the tuning rule, frozen after the three flat tuning runs had ended and before the first flat final run; the chosen s is the smallest value of the grid, and all three flat tuning runs had their best score after the first epoch; the flat tuning run with s = 10 started before T0 was frozen, the other two after it |
 
 The T0 verdict and the A2 look are the tally numbers on this page; both use the dev-test split, 21 blocks of 100 sentences cut from the Penn Treebank training file. The tuning scores that fixed the settings of T0 are on the [results page](../studies/tally/docs/results.md#tuning-runs), and the exploratory runs of A1 and C3 score the validation split and carry no claim. The LSTM runs of C3 were rerun with the loss and the clips of the paper on 2026-10-25 and 26; they do not reach the published values, and 4 of the 10 large runs collapsed in their first epoch ([results page, C3](../studies/tally/docs/results.md#c3)).
+
+## text_understanding
+
+Status of the study: finished (16 to 25 Oct 2026). [Results page](../studies/text_understanding/docs/results.md).
+
+| Id | Status | Qualifier |
+|---|---|---|
+| T2, existential bits (existsT) beside the mean-vector bits, CLINC150, Banking77, HWU64 | met (H1 and H2, strong) | mean+existsT closes 0.81, 0.56 and 0.59 of the gap from the mean bits to MiniLM |
+| T3, the same on MASSIVE en test, and word-plus-neighbour token clauses | met (R1, R2, H3, strong) | MASSIVE: mean+existsT 85.21 against MiniLM bits 84.41; token clauses 85.90 |
+| T4, a Tsetlin Machine slot filler on MASSIVE | met (H1 strong, H2) | test span F1 70.00 against 65.95 for a frozen MiniLM probe and 73.57 for an LR twin on the same bits |
+| T5, word codes from a Tsetlin Machine autoencoder | not met | neither variant reaches its bars against PPMI-SVD counting |
+| P1, Model2Vec's low-data protocol | not met | P1a, P1b and P1c on 0 of 3 sets |
+| N7, existsT on the TM text benchmarks (test) | partly met | D_potion and D_glove met; B, C and E not met |
+| W1-T, the C4 counting table against potion on N7's test splits (2nd use) | met | within 1.0 point of potion on 3 of 5 sets |
+| M1, the stack of steps 3a and 3c on three intent test splits (reused) | met (H1 strong, H2, H3a, H3b strong) | H1 with the TM +1.60, +1.72, +2.17 |
+| M2, H1 and H2 of M1 on MTOP English test (first use) | H1 not met; H2 met (not strong) | H1 +0.75 with the TM, +0.43 with LR (bar +0.5 for both) |
+
+## agent_guards
+
+Status of the study: finished (20 to 26 Oct 2026). [Results page](../studies/agent_guards/docs/results.md).
+
+| Id | Status | Qualifier |
+|---|---|---|
+| E4.2, code gates against the plain agent, tau2-bench retail, 114 test tasks | not met | -1.75 points [-4.39, 0.00]; the gates stop all 17 executed rule violations of the plain agent |
+| E4.3 and E4.5, the learned TM veto | not run | NO-GO at the dev go-bar (E4.3's power at the observed rates 2.3%) |
+| E2, a TM tool guard on AgentDojo | not run to the end | E2-2 stopped twice with exit code 3; by the registration E2 is incomplete |
+| WebGuard veto test (dev plan) | not shown | TM 63.77 against LR 64.03; the interval over 18 sites is too wide for the bar |
+
+## language_part3
+
+Status of the study: archived (21 to 23 Oct 2026). [Results page](../studies/language_part3/docs/results.md).
+
+| Id | Status | Qualifier |
+|---|---|---|
+| R1 [A-Struct], next-word choice for MultiWOZ system turns | not met at its gates | K3 failed on both arms; no Tsetlin Machine was trained |
+| R1 [C-core], a TM class model inside KN5 + cache on PTB | not run past its first gates | K0 and K0b passed; the GPU step was never frozen or run |
+
+## agent_vs_llm
+
+Status of the study: running (from 26 Oct 2026; its logsize dev study was running when it was published). [Results page](../studies/agent_vs_llm/docs/results.md).
+
+| Id | Status | Qualifier |
+|---|---|---|
+| NI, the readable agent not worse than LLM* by 3 points (STAR, ABCD, MultiWOZ 2.2 test) | met on all three | MultiWOZ on seed 1 only (5-seed two-level interval [-3.21, -0.14]); the 3-point margin was set after a dev result |
+| NI2, the same at 2 points | met on STAR and ABCD | not on MultiWOZ |
+| SUP, the readable agent better than LLM* by 3 points | not met | on no dataset |
+| FT, the fine-tuned bge-base ahead of the readable agent | met on all three | +8.60, +4.07, +7.20 |

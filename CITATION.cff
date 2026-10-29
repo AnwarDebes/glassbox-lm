@@ -3,7 +3,7 @@ message: "Please cite this repository with the metadata below."
 title: "Measured steps toward a logic-based language model with Tsetlin Machines"
 abstract: >-
   This repository holds the code, the registrations and the results pages of
-  five studies (19 Sep to 23 Oct 2026) that take measured steps toward a
+  nine studies (19 Sep to 29 Oct 2026) that take measured steps toward a
   language model built from Tsetlin Machine clauses; run folders, result
   files and datasets are not distributed. The first study built a
   token-level Tsetlin Machine language model on a sparse event-driven engine

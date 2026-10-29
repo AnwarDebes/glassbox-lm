@@ -296,3 +296,21 @@ limitations, the results overview, the roadmap and the counts of the README foll
 README gives tally's two verdicts in its text, its status table and its results table; the [run
 index](docs/run-index.md) lists the 109 run folders of 25 and 26 Oct; the [hash table](docs/hash-table.md) lists the
 pinned files changed in the pass.
+
+## 29 Oct 2026: four studies added from the research lines, and the finish pass's remaining files
+
+The research lines that ran beside the studies were added as four studies, each with its code, its frozen
+registrations and plans, its result files and a results page: [text_understanding](studies/text_understanding/README.md)
+(16 to 25 Oct), [agent_guards](studies/agent_guards/README.md) (20 to 26 Oct), [language_part3](studies/language_part3/README.md)
+(21 to 23 Oct) and [agent_vs_llm](studies/agent_vs_llm/README.md) (from 26 Oct). In agent_vs_llm's registered test the
+readable agent of decision_layer, with no neural network at any stage, is not worse than the best local LLM configuration
+by 3 points on STAR, ABCD and MultiWOZ 2.2 (MultiWOZ on seed 1 only) and better on none; a fine-tuned bge-base is ahead
+on all three and TF-IDF logistic regression is level with the readable agent. M1 of text_understanding is met on three reused
+intent test splits and M2's H1 is not met on MTOP English; E4 of agent_guards is not met and E2 is incomplete;
+language_part3 stopped at its gates. decision_layer gained FastCoTM (`speed/`, exact speed-ups with byte-identical
+results), its launch chains (`ops/`), more independent recomputes, four earlier script versions cited by hash and the run
+logs its pages cite. The finish pass's remaining files of 25 Oct were added: the Gate 0 cause plan and its code
+(clause_lm), A2's registration (tally), the notes of e80 and e87 (decision_layer), the HTM-01 and HTM-03 records
+(hierarchical_tm) and the amendments A11 and A12 with their drivers (tm_language_model). The published copies of files
+that ran find their paths from their own place in the repository and are edited in wording only; the hashes of the
+files as they ran are in [docs/hash-table.md](docs/hash-table.md).

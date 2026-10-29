@@ -10,7 +10,7 @@ repository, the SHA-256 as registered and the SHA-256 of the file as published.
 
 For tm_language_model, hierarchical_tm and clause_lm, where the two differ and the pin itself is a file
 of the repository, the pin was replaced by the published value, so that the checks in the code still
-compare equal values. The freeze records of decision_layer and tally are published unchanged, because
+compare equal values. Two files of hierarchical_tm were changed again on 2026-10-25, after the study, to fix bugs (`queue/run_queue_mps.sh` and `src/data_checks.py`). Their pins were kept, so for these two the record and the file differ, and `src/final_test_report.py --hashes frozen_settings_hashes.json`, which hashes `src/data_checks.py`, refuses to run (section "Changes of 2026-10-25" below). The freeze records of decision_layer and tally are published unchanged, because
 each records a freeze at a stated time; their sections give both values side by side. The one pin in
 the code of these two studies that checks a file, `SAMPLE_SHA` in
 `studies/decision_layer/scripts/e71_k35_sample.py`, holds the published value.
@@ -21,8 +21,12 @@ the code of these two studies that checks a file, `SAMPLE_SHA` in
 |---|---|---|
 | `studies/tm_language_model/docs/13-preregistration.md` | `0fd3fb8b1c47277d166ec2117e4c0e40477348d605c6959d8a0210e8a93d4938` | `805ce0da83be57b1048a419d738701f7231fa84b258ec11a4f50c1ff5502c9e9` |
 
-The registered value is the `prereg_sha256` of 384 of the 643 run records of tm_language_model and of
-all 319 run records of hierarchical_tm. The published copy differs in wording only; the note at the top
+The registered value is the `prereg_sha256` of 384 of the 643 run records of tm_language_model made before
+2026-10-25 and of all 319 run records of hierarchical_tm made before that date. The 69 runs of 2026-10-25 and 26
+record later versions of the published copy: `805ce0da83be57b1048a419d738701f7231fa84b258ec11a4f50c1ff5502c9e9`
+(5 runs of tm_language_model), `43f120ced0c18c04649deccac37ded099c7628932872816e346921a2db579e91`, the version with
+amendment A11 (`20261025T150507Z_h2_4_recheck`), and `44dff21d5b9de29fe462e629f100e30f20942e3c176e95ef4ea86ddf7a627ef3`,
+the version with amendment A12 (1 run of tm_language_model and the 62 of hierarchical_tm); see the last section. The published copy differs in wording only; the note at the top
 of the file says what was edited. Ten earlier revisions, recorded by 249 run records, were not retained.
 
 ## Pinned files in the repository
@@ -40,7 +44,7 @@ of the file says what was edited. Ten earlier revisions, recorded by 249 run rec
 | `studies/tm_language_model/src/tmlm/cvtm/suffix.py` | cvtm source, pinned in 7 configs (cvtm_sources_sha256) | `ea16dde565031d4086224411b3f81b610e08dbd2faf3a539a5fefbdcaa824d6f` | `ea16dde565031d4086224411b3f81b610e08dbd2faf3a539a5fefbdcaa824d6f` | unchanged |
 | `studies/tm_language_model/experiments/cvtm_t1_readout.py (the kernel source string T1_SRC)` | kernel string T1_SRC in experiments/cvtm_t1_readout.py, pinned by tests/test_ssl_r1_qpred_fast.py | `0a16974f13f031d11540d57cb796dcf371e162699ad6d56aedb201ae3bdcbd2c` | `0a16974f13f031d11540d57cb796dcf371e162699ad6d56aedb201ae3bdcbd2c` | pinned by a test; the string is unchanged |
 | `studies/tm_language_model/src/tmlm/kernels/graphtm_patched/kernels.py` | stock kernels.py, pinned in kernels/graphtm_patched/README.md | `9d97a1fb3a586beda467d9749b41d9a3f35bf42679450bfedc55081f7860332a` | `9d97a1fb3a586beda467d9749b41d9a3f35bf42679450bfedc55081f7860332a` | unchanged |
-| `studies/hierarchical_tm/queue/run_queue_mps.sh` | script, pinned in frozen_settings_hashes.json | `57c69a5585eaabd39eeeea04a21a5b6900e89e9a1992936b8b903cd2e45886e4` | `dae7738a023d02d812ee38ac4fe583e565e67d463aca0c4f2c276fe61c9663d9` | reworded for publication (comments, docstrings, message strings or absolute path constants); the pin in the tree was replaced by the published value |
+| `studies/hierarchical_tm/queue/run_queue_mps.sh` | script, pinned in frozen_settings_hashes.json | `57c69a5585eaabd39eeeea04a21a5b6900e89e9a1992936b8b903cd2e45886e4` | `dae7738a023d02d812ee38ac4fe583e565e67d463aca0c4f2c276fe61c9663d9` | reworded for publication (comments, docstrings, message strings or absolute path constants); the pin in the tree was replaced by the published value; changed again on 2026-10-25 (bugs HTM-B1 and HTM-B5, after the study), now 46e70e4ff077b2fbd06669a3ef346413ce8aab945b1bc75e14bcab078c9b6b81, and the pin was kept |
 | `studies/hierarchical_tm/src/apply_rules.py` | script, pinned in frozen_settings_hashes.json | `a3b74277803649091fb71d9e4170b0d747009924e4b1422eaa265f6bf847da5d` | `a3b74277803649091fb71d9e4170b0d747009924e4b1422eaa265f6bf847da5d` | unchanged |
 | `studies/hierarchical_tm/src/build_agnews.py` | script, pinned in frozen_settings_hashes.json | `4131b5e0bab00f61d0c79c4883121632517ef11d78ffee9fbb944e0ffd1b8ffc` | `c4fb7a262a8cf2f45e2234369b01ca2a29945906c39fcd07d5dbb6d278c07410` | reworded for publication (comments, docstrings, message strings or absolute path constants); the pin in the tree was replaced by the published value |
 | `studies/hierarchical_tm/src/build_ns_all.py` | script, pinned in frozen_settings_hashes.json | `e79070ee0770e3aed4fc907fe173157fa4f4db7973280da9162bc872c7557b65` | `d02794e933a16edbc329b4110634d577a8407430b910736663d202cb5fc2ffa5` | reworded for publication (comments, docstrings, message strings or absolute path constants); the pin in the tree was replaced by the published value |
@@ -48,7 +52,7 @@ of the file says what was edited. Ten earlier revisions, recorded by 249 run rec
 | `studies/hierarchical_tm/src/compare_runs.py` | script, pinned in frozen_settings_hashes.json | `33d5530610503827ba9ae96be6750063b7f6b07c59c4cb153ef150ad06451a83` | `33d5530610503827ba9ae96be6750063b7f6b07c59c4cb153ef150ad06451a83` | unchanged |
 | `studies/hierarchical_tm/src/crossfit_acc.py` | script, pinned in frozen_settings_hashes.json | `493b5813a7c70b74e4da4e51ce8945907bce8007ad4cadd57d0a28520c4cb828` | `5f9063f03e5a528d44790bb5b0eeb0cdb996d4e3ed173905587cf920bb419ac8` | reworded for publication (comments, docstrings, message strings or absolute path constants); the pin in the tree was replaced by the published value |
 | `studies/hierarchical_tm/src/crossfit_splits.py` | script, pinned in frozen_settings_hashes.json | `2ea2e08cd8b657a10f4ebcae625153ec5ea3aa105956b57d298ef385ab5c36ae` | `d73a8ca89221c3084cd08d577a0c7b900b7afc1a4c39746364b0ca41fdaa402a` | reworded for publication (comments, docstrings, message strings or absolute path constants); the pin in the tree was replaced by the published value |
-| `studies/hierarchical_tm/src/data_checks.py` | script, pinned in frozen_settings_hashes.json | `72b0d717d354c9e7e0e6dd2a8a3bf6c0fc285f43f6be4128d479cdabbd17ca4c` | `896f2bdc7505fbd1dd965cd01c0da2e4876f7f4068d72c3971ca6b1395a26447` | reworded for publication (comments, docstrings, message strings or absolute path constants); the pin in the tree was replaced by the published value |
+| `studies/hierarchical_tm/src/data_checks.py` | script, pinned in frozen_settings_hashes.json | `72b0d717d354c9e7e0e6dd2a8a3bf6c0fc285f43f6be4128d479cdabbd17ca4c` | `896f2bdc7505fbd1dd965cd01c0da2e4876f7f4068d72c3971ca6b1395a26447` | reworded for publication (comments, docstrings, message strings or absolute path constants); the pin in the tree was replaced by the published value; changed again on 2026-10-25 (bug HTM-B2, after the study), now 7523133e933459d552a355a28c0ac4967bcc9685be8d3c08d3a00fa42cbe6fe5, and the pin was kept |
 | `studies/hierarchical_tm/src/e5a_check2c.py` | script, pinned in frozen_settings_hashes.json | `3d240eb5e7a606dc76e89aaf1254f5e750319c110e625b04bb8b6857bc895a00` | `5bfda94cbc9e39839480fc2e42e1b67cb79f95152a965932b99a56247b01046e` | reworded for publication (comments, docstrings, message strings or absolute path constants); the pin in the tree was replaced by the published value |
 | `studies/hierarchical_tm/src/e5a_choice.py` | script, pinned in frozen_settings_hashes.json | `3381aad3a00499e31ca6bcbe3fd0d81dd534e5577f3578aac3eed2724cdd4691` | `eb9da9dae6d16d80504769578ee06c99b2d69a4d97a57b909589fac50df5a7e3` | reworded for publication (comments, docstrings, message strings or absolute path constants); the pin in the tree was replaced by the published value |
 | `studies/hierarchical_tm/src/final_test_report.py` | script, pinned in frozen_settings_hashes.json | `eff80607a13d739144e829b7e90fec1ec8c9d9d23c418df8046e94f7ef72d245` | `ca6a1ca38bfca82cb8931d3cd25fd5e252059574ee2585d66898553a5ecbdfb3` | reworded for publication (comments, docstrings, message strings or absolute path constants); the pin in the tree was replaced by the published value |
@@ -66,7 +70,7 @@ of the file says what was edited. Ten earlier revisions, recorded by 249 run rec
 ## decision_layer
 
 The study writes a freeze record next to every frozen registration, dev plan and dated note: 33 in
-`studies/decision_layer/registrations/` and 30 in `studies/decision_layer/logs/`, 63 in all. Each holds the UTC time
+`studies/decision_layer/registrations/` and 30 in `studies/decision_layer/logs/`, 63 in all at publication (three more were written on 2026-10-25; see the last section). Each holds the UTC time
 of the freeze, the SHA-256 of the frozen text and the SHA-256 of every file of `scripts/` and `src/` as
 it stood at that moment. Before publication every frozen text equalled the value in its record. The
 texts and the code were edited for publication on 2026-10-23, in wording and paths only. Each edited
@@ -194,6 +198,8 @@ changed after the freeze of T0 and before publication; they differ from the reco
 records of the two amendments, as the study README says. The run records, which are not distributed, also hold the SHA-256 of every file under
 `src/` at the start of each run.
 
+On 2026-10-25, after every run that the records of T0 cover had finished (and after the report of T0), nine more files under `src/` were changed: `src/tally/runlog.py`, `src/tally/floor/aa.py`, `src/tally/floor/kenlm.py`, `src/tally/b1/report.py`, `src/tally/b1/run.py`, `src/tally/b1/README.md`, `src/tally/b6/launch.py`, `src/tally/b6/README.md` and `src/tally/neural/lstm.py` (the study README lists why). They differ from all three freeze records. None of them is imported by `src/tally/t0/report.py`, except `src/tally/runlog.py`, whose frozen SHA-256 (`21014dc27cf93d15f623398e551a4d00fca9e8bcbacc4ecfed5f4b6a844aa713`) the report run of 2026-10-25 records.
+
 | file | freeze record | SHA-256 as registered | SHA-256 as published |
 |---|---|---|---|
 | `studies/tally/registrations/T0.md` | `registrations/T0.frozen.json` | `78d408591d89c24fbc3a92f0b20784ea3f355b882f82be4b3ec14cd6ac7dc409` | `ee3fccda83ba627ad7f531b42ba663d7b001cbe23b11602acb86c32b459dc254` |
@@ -219,3 +225,38 @@ other repositories, none of which is distributed, so the values were not recompu
 | dataset files of the pre-registration | `studies/tm_language_model/docs/notes/preregistration-data-hashes*.json` | in those files | datasets, not distributed |
 | tables, example files, caches and data files read by the registered runs of decision_layer | the registrations, dev plans and dated notes in `studies/decision_layer/registrations/` and `studies/decision_layer/logs/` | in those files | not distributed |
 | data files of each run of tally | `data_hashes.json` in each run folder of tally | in those files | run folders, not distributed |
+
+## Changes of 2026-10-25 (the finish pass)
+
+Five pinned files changed after the publication of 2026-10-23. The values were read with `sha256sum` on 2026-10-25 and checked again on 2026-10-26; every other row of this page still equals its file.
+
+| file | SHA-256 as published (2026-10-23) | SHA-256 now | change | record |
+|---|---|---|---|---|
+| `studies/tm_language_model/docs/13-preregistration.md` | `805ce0da83be57b1048a419d738701f7231fa84b258ec11a4f50c1ff5502c9e9` | `bce1e6db4c1102c2f04498e9dc04a493cad06814ec9bbf3e94dae91d18e1cd1b` | amendments A11 (15:04 UTC) and A12 (15:32 UTC) appended; nothing above them changed. The text as frozen with A12 has `44dff21d5b9de29fe462e629f100e30f20942e3c176e95ef4ea86ddf7a627ef3`; the published copy, added on 2026-10-29, differs from it in the wording of A11 and A12 only | the freeze records of A11 and A12 (`docs13_before_sha256`, `docs13_after_sha256`; kept with the finish pass's records, not distributed); the runs of A11 and A12 record the values as `prereg_sha256` |
+| `studies/hierarchical_tm/queue/run_queue_mps.sh` | `dae7738a023d...` (see above) | `46e70e4ff077b2fbd06669a3ef346413ce8aab945b1bc75e14bcab078c9b6b81` | the interpreters of the launchers named explicitly (`src/interpreters.sh`); bug HTM-B1 of the finish pass | the study's dated note of 2026-10-25 on the fixes and the pins ([changes after the study](../studies/hierarchical_tm/docs/changes_after_the_study.md)); tests `src/test_launchers.py` |
+| `studies/hierarchical_tm/src/data_checks.py` | `896f2bdc7505...` (see above) | `7523133e933459d552a355a28c0ac4967bcc9685be8d3c08d3a00fa42cbe6fe5` | `length_feats` no longer wraps around in uint64; bug HTM-B2 | the same note; test `src/test_data_checks.py` |
+| `studies/tally/src/tally/floor/kenlm.py` | `25f7585608ae...` (see above) | `b58815eccceabd3be7215a9720f03182205a95c4aae7801453ad43f10112d755` | `info()` added: it records the sha256 of the KenLM binaries and their maximum order; nothing else changed | the tally README (A1) and the freeze record of A2, which pins every file under `src/` with this value |
+| `studies/decision_layer/scripts/e86_check.py` | `c9828c1bef7dbc0af5d9a76572af4e6d9dce2ed0030742aa342c4bdec7396670` | `aa133df10fff68691a90e379994af92c681b62f4d92b026d41136cd3a91e128c` | the amendment of e86's dated note added (its docstring says so): STAR rows written before the note's freeze are set aside; not edited for publication, so the two earlier records that pin it (`logs/plan_e86_clause_drop.frozen.json`, `logs/plan_e87_receipts.frozen.json`) hold the published value | the freeze records of the three dated notes of 2026-10-25 (below) hold the new value |
+
+The pass also wrote new frozen texts with their own pins. decision_layer has three dated notes with freeze records, `logs/plan_e86_note_2026-10-25`, `logs/plan_e87_note_2026-10-25` and `logs/plan_e80_note_2026-10-25`, so `logs/` now holds 33 records and the study 66; their frozen texts and every file of `scripts/` and `src/` that they pin (158, 162 and 162 files) equal the published files. hierarchical_tm has three frozen texts after the study, published in [changes after the study](../studies/hierarchical_tm/docs/changes_after_the_study.md) and [registrations after the study](../studies/hierarchical_tm/docs/registrations_after_the_study.md): the note on the fixes and the pins (66 pins) and the registrations HTM-01 (93) and HTM-03 (64). Every pin equals its file except two pages that were edited after the freeze to record the outcomes of HTM-01 and HTM-03 and to link the new pages: `studies/hierarchical_tm/docs/results.md`, pinned by all three at `e9ca0667dd9ec08e24663a30f3248598ac328f7db2ed603f548e5dc4ebd51562`, and `studies/hierarchical_tm/README.md`, pinned by the note at `39bc36451d5e16218c37955293efccd1ddee6a5b4b07e67760ba6984de52fc9a`. Both pinned versions were rebuilt exactly and are kept with the records of the finish pass, outside the repository.
+
+## Copies of 2026-10-29 (four studies added)
+
+`docs/hash-table-2026-10-29.tsv` lists every file that was copied on 29 Oct 2026 from the private working folders of
+agent_vs_llm, text_understanding, agent_guards, language_part3 and the decision_layer additions (`speed/`, `ops/`,
+`verification/`), and every file of the working tree changed in the same pass: its SHA-256 before, its SHA-256 as
+published, and whether they are equal (1,404 rows: 785 equal, 619 changed).
+
+- The changes are paths (every script finds the repository from its own place), the wording of comments and
+  docstrings, and four test fixes for the published state: `agent_guards/e4/tests/test_scripts_isolated.py` accepts
+  the published form of the path insert, `agent_guards/e4/tests/test_freeze.py` checks that the freeze record of E4
+  (frozen since 2026-10-23) stays unchanged, `language_part3/A/tests/test_e2e.py` accepts the refusal reason given
+  since the real S2d ran, and `decision_layer/speed/phase2/tm/test_patches.py` makes its link `unit_root/src` itself.
+  No registered rule, number or result changed.
+- Freeze records and pins keep the hashes of the files as they ran; the table maps them to the published copies.
+- A few checks pin a file that changed in this way; those pins now hold the published hashes, and both values are
+  given where the pin is described (`studies/decision_layer/speed/README.md` for FastCoTM, the identity test and the
+  profiler).
+- Regenerated for the published copies: `studies/text_understanding/tu/m2_code_diff_vs_m1.txt` (by
+  `tu/m2_code_diff.sh`), `studies/agent_vs_llm/results_REG_agent_vs_llm/SHA256SUMS` and
+  `studies/decision_layer/speed/cbench/SHA256SUMS`.

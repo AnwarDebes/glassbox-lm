@@ -1,6 +1,6 @@
 # Documentation
 
-The pages in this folder span the five studies of the programme. Each study keeps its own documents, that is its registration, its results page and its data cards, in its folder under `studies/`; the second section lists them. The entry point of the repository is the [root README](../README.md), and the list of studies with the dependencies between them is in [studies/README.md](../studies/README.md).
+The pages in this folder span the nine studies of the programme. Each study keeps its own documents, that is its registration, its results page and its data cards, in its folder under `studies/`; the second section lists them. The entry point of the repository is the [root README](../README.md), and the list of studies with the dependencies between them is in [studies/README.md](../studies/README.md).
 
 ## Pages in this folder
 
