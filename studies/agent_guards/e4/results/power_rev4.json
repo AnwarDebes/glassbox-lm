@@ -1,0 +1,353 @@
+{
+ "what": "E4.2 power (114 tasks) and E4.3's whole go-bar boundary; trinomial model; registered rules",
+ "statistic": "summarize_e4.boot_ci (10,000 resamples, default_rng(20261021), 95% percentile)",
+ "E4.2": {
+  "rule": "met iff diff >= +3.0 points and the interval's lower end > 0 (114 tasks)",
+  "need_favourable_by_against": [
+   4,
+   7,
+   9,
+   11,
+   13,
+   14,
+   16,
+   17,
+   19,
+   20,
+   22,
+   23,
+   24,
+   26,
+   27,
+   29,
+   30,
+   31,
+   32,
+   34,
+   35,
+   36,
+   38,
+   39,
+   40,
+   42,
+   43,
+   44,
+   46,
+   47,
+   48,
+   49,
+   50,
+   52,
+   53,
+   54,
+   55,
+   57,
+   58,
+   59,
+   60,
+   61,
+   63,
+   64,
+   65,
+   66,
+   68,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null,
+   null
+  ],
+  "agrees_with": {
+   "file": "studies/agent_guards/e4/results/power_table_rev2.json",
+   "against": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+   ]
+  },
+  "effect_for_80pct_power": [
+   {
+    "l": 0.0,
+    "g": 0.047845264902752094,
+    "net_points": 4.784526490275209,
+    "power": 0.8,
+    "reachable": true,
+    "net_tasks_of_114": 5.454360198913738
+   },
+   {
+    "l": 0.025,
+    "g": 0.12320478613646021,
+    "net_points": 9.820478613646022,
+    "power": 0.800000000000001,
+    "reachable": true,
+    "net_tasks_of_114": 11.195345619556464
+   },
+   {
+    "l": 0.05,
+    "g": 0.17081341674247869,
+    "net_points": 12.081341674247868,
+    "power": 0.8000000000000005,
+    "reachable": true,
+    "net_tasks_of_114": 13.77272950864257
+   }
+  ],
+  "monte_carlo_check_80pct_l0": {
+   "exact": 0.8,
+   "draws": 2000,
+   "seed": 20261021,
+   "met": 1580,
+   "power": 0.79,
+   "se": 0.00910768905925098
+  }
+ },
+ "E4.3_go_bar_boundary": {
+  "what": "G - L = 4, G >= 8, G + L <= 74 (G counts A1-failed, L A1-passed train tasks)",
+  "points": [
+   {
+    "G": 8,
+    "L": 4,
+    "power": 0.11995701518386326
+   },
+   {
+    "G": 9,
+    "L": 5,
+    "power": 0.1072548915732793
+   },
+   {
+    "G": 10,
+    "L": 6,
+    "power": 0.0994844754585974
+   },
+   {
+    "G": 11,
+    "L": 7,
+    "power": 0.09484724939063391
+   },
+   {
+    "G": 12,
+    "L": 8,
+    "power": 0.09146511481391754
+   },
+   {
+    "G": 13,
+    "L": 9,
+    "power": 0.08795204365654075
+   },
+   {
+    "G": 14,
+    "L": 10,
+    "power": 0.08369661485926655
+   },
+   {
+    "G": 15,
+    "L": 11,
+    "power": 0.0788308612826652
+   },
+   {
+    "G": 16,
+    "L": 12,
+    "power": 0.07391993829867878
+   },
+   {
+    "G": 17,
+    "L": 13,
+    "power": 0.0695589510729984
+   },
+   {
+    "G": 18,
+    "L": 14,
+    "power": 0.066091895504949
+   },
+   {
+    "G": 19,
+    "L": 15,
+    "power": 0.06354918360278561
+   },
+   {
+    "G": 20,
+    "L": 16,
+    "power": 0.06174992827506277
+   },
+   {
+    "G": 21,
+    "L": 17,
+    "power": 0.06044592267468097
+   },
+   {
+    "G": 22,
+    "L": 18,
+    "power": 0.05941732993649149
+   },
+   {
+    "G": 23,
+    "L": 19,
+    "power": 0.05850525834317155
+   },
+   {
+    "G": 24,
+    "L": 20,
+    "power": 0.05761225302299061
+   },
+   {
+    "G": 25,
+    "L": 21,
+    "power": 0.05669603430684467
+   },
+   {
+    "G": 26,
+    "L": 22,
+    "power": 0.05575625894794588
+   },
+   {
+    "G": 27,
+    "L": 23,
+    "power": 0.054810233023275784
+   },
+   {
+    "G": 28,
+    "L": 24,
+    "power": 0.05387568473889031
+   },
+   {
+    "G": 29,
+    "L": 25,
+    "power": 0.05298970976776705
+   },
+   {
+    "G": 30,
+    "L": 26,
+    "power": 0.05225883251830904
+   },
+   {
+    "G": 31,
+    "L": 27,
+    "power": 0.05187549797535596
+   },
+   {
+    "G": 32,
+    "L": 28,
+    "power": 0.05202187281905362
+   },
+   {
+    "G": 33,
+    "L": 29,
+    "power": 0.05266294908785271
+   },
+   {
+    "G": 34,
+    "L": 30,
+    "power": 0.053364030867049
+   },
+   {
+    "G": 35,
+    "L": 31,
+    "power": 0.0533434717708031
+   },
+   {
+    "G": 36,
+    "L": 32,
+    "power": 0.05194210543787053
+   },
+   {
+    "G": 37,
+    "L": 33,
+    "power": 0.04951075646324093
+   },
+   {
+    "G": 38,
+    "L": 34,
+    "power": 0.04756307767019212
+   },
+   {
+    "G": 39,
+    "L": 35,
+    "power": 0.041900273688066605
+   }
+  ],
+  "first": {
+   "G": 8,
+   "L": 4,
+   "power": 0.11995701518386326
+  },
+  "last": {
+   "G": 39,
+   "L": 35,
+   "power": 0.041900273688066605
+  },
+  "lowest": {
+   "G": 39,
+   "L": 35,
+   "power": 0.041900273688066605
+  },
+  "need_from": "studies/agent_guards/e4/results/power_e43_rev3.json"
+ },
+ "seconds": 26.0,
+ "utc": "2026-10-21T11:50:29Z"
+}

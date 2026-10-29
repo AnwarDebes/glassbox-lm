@@ -1,0 +1,10 @@
+{
+ "gguf": "../tools/models_untrusted/qwen3.5-9b/gguf-b11742/Qwen3.5-9B-Q8_0.gguf",
+ "key": "tokenizer.chat_template",
+ "version": 3,
+ "n_tensors": 442,
+ "n_kv": 44,
+ "type": "str",
+ "chars": 7756,
+ "sha256_utf8": "a4aee8afcf2e0711942cf848899be66016f8d14a889ff9ede07bca099c28f715"
+}

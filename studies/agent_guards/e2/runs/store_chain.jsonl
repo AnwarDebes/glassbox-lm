@@ -1,0 +1,2 @@
+{"stage": "smoke", "run_dir": "studies/agent_guards/e2/runs/E2-0/20261023T003915Z", "utc": "2026-10-23T00:48:42Z", "bytes": 205915, "sha256": "0870b982e04418c4326fff9f31ecd78d161707a70d4a0c5401a63ea5db73731c"}
+{"stage": "d0", "run_dir": "studies/agent_guards/e2/runs/E2-1/20261026T113824Z", "utc": "2026-10-26T14:32:29Z", "bytes": 5965921, "sha256": "34ae0dfcb4d2e8bc60b100c98906910e7a8c0f6bb5c390742804b100129752dc", "frozen_sha256": "4d88b04377b9d74d56b6b6279372f16d57e115e4d93ffa2cde0c1e54e988e68d"}

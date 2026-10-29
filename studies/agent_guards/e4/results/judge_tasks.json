@@ -1,0 +1,2054 @@
+{
+ "summary": {
+  "tau2_data_dir": "studies/agent_guards/taubench/data_untrusted/tau2-bench/extracted/tau2-bench-fc0055dc4e0a316c3f83133267fbd6faaa770992/data",
+  "files_sha256": {
+   "retail/tasks.json": "8e03ebce7901bd6218e7a7dc3105faa9324091a68058f7fe61c65262868812e8",
+   "retail/split_tasks.json": "ed0580ec52575b63fbf76568af42490da6ee7783ecb4aa81af46961291358f20",
+   "retail/policy.md": "2c9652afbce57d6e087768d37cda64d31c53d50b3e3225cfdb791bac66466467"
+  },
+  "n_tasks": 114,
+  "split_sizes": {
+   "train": 74,
+   "test": 40,
+   "base": 114
+  },
+  "reward_basis_counts": {
+   "DB+NL_ASSERTION": 112,
+   "DB": 2
+  },
+  "judge_tasks_static": {
+   "n": 40,
+   "train": 29,
+   "test": 11,
+   "ids": [
+    "2",
+    "3",
+    "4",
+    "16",
+    "19",
+    "21",
+    "24",
+    "28",
+    "29",
+    "36",
+    "37",
+    "38",
+    "39",
+    "40",
+    "43",
+    "44",
+    "45",
+    "46",
+    "47",
+    "54",
+    "59",
+    "60",
+    "62",
+    "63",
+    "67",
+    "68",
+    "70",
+    "76",
+    "89",
+    "95",
+    "103",
+    "104",
+    "105",
+    "106",
+    "107",
+    "108",
+    "109",
+    "110",
+    "111",
+    "113"
+   ]
+  },
+  "judge_tasks_behavioural": {
+   "n": 40,
+   "train": 29,
+   "test": 11,
+   "ids": [
+    "2",
+    "3",
+    "4",
+    "16",
+    "19",
+    "21",
+    "24",
+    "28",
+    "29",
+    "36",
+    "37",
+    "38",
+    "39",
+    "40",
+    "43",
+    "44",
+    "45",
+    "46",
+    "47",
+    "54",
+    "59",
+    "60",
+    "62",
+    "63",
+    "67",
+    "68",
+    "70",
+    "76",
+    "89",
+    "95",
+    "103",
+    "104",
+    "105",
+    "106",
+    "107",
+    "108",
+    "109",
+    "110",
+    "111",
+    "113"
+   ]
+  },
+  "static_equals_behavioural": true,
+  "judge_stub_calls": 40,
+  "judge_model_named_in_calls": [
+   "gpt-4.1-2025-04-14"
+  ],
+  "basis_components_other_than_DB_and_NL": [],
+  "gold_db_reward_1": 114,
+  "gold_reward_all_with_stub_judge_1": 114,
+  "nl_assertions_per_judge_task": {
+   "1": 25,
+   "2": 10,
+   "3": 4,
+   "4": 1
+  },
+  "seconds": 53.6
+ },
+ "rows": [
+  {
+   "task_id": "0",
+   "split": "train",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "1",
+   "split": "train",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "2",
+   "split": "train",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 1,
+   "needs_judge_static": true,
+   "judge_called": true,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 1,
+   "nl_assertions": [
+    "Agent should tell the user that there are 10 t-shirt options available."
+   ]
+  },
+  {
+   "task_id": "3",
+   "split": "train",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 1,
+   "needs_judge_static": true,
+   "judge_called": true,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 1,
+   "nl_assertions": [
+    "Agent should tell the user that there are 10 t-shirt options available."
+   ]
+  },
+  {
+   "task_id": "4",
+   "split": "train",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 1,
+   "needs_judge_static": true,
+   "judge_called": true,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 1,
+   "nl_assertions": [
+    "Agent should tell the user that there are 10 t-shirt options available."
+   ]
+  },
+  {
+   "task_id": "5",
+   "split": "test",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "6",
+   "split": "train",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "7",
+   "split": "train",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "8",
+   "split": "train",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "9",
+   "split": "test",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "10",
+   "split": "train",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "11",
+   "split": "train",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "12",
+   "split": "test",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "13",
+   "split": "train",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "14",
+   "split": "train",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "15",
+   "split": "train",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "16",
+   "split": "train",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 1,
+   "needs_judge_static": true,
+   "judge_called": true,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": [
+    "Agent should tell the user the total refund amount is $8,276.23."
+   ]
+  },
+  {
+   "task_id": "17",
+   "split": "test",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "18",
+   "split": "test",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "19",
+   "split": "train",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 2,
+   "needs_judge_static": true,
+   "judge_called": true,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": [
+    "Agent should tell the user that returning the water bottle gives a refund of $54.04.",
+    "Agent should tell the user that exchanging the pet bed and office chair saves $41.64 total."
+   ]
+  },
+  {
+   "task_id": "20",
+   "split": "train",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "21",
+   "split": "train",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 1,
+   "needs_judge_static": true,
+   "judge_called": true,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": [
+    "Agent should tell the user their gift card balance is $44.08."
+   ]
+  },
+  {
+   "task_id": "22",
+   "split": "train",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "23",
+   "split": "train",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "24",
+   "split": "train",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 1,
+   "needs_judge_static": true,
+   "judge_called": true,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": [
+    "Agent should tell the user the materials of the two t-shirts are polyester and cotton."
+   ]
+  },
+  {
+   "task_id": "25",
+   "split": "train",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "26",
+   "split": "test",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "27",
+   "split": "test",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "28",
+   "split": "train",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 1,
+   "needs_judge_static": true,
+   "judge_called": true,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": [
+    "Agent should tell the user the total refund amount is $918.43."
+   ]
+  },
+  {
+   "task_id": "29",
+   "split": "train",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 1,
+   "needs_judge_static": true,
+   "judge_called": true,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": [
+    "Agent should tell the user the prices of the available bamboo skateboard options: $180.10, $189.57, and $208.60."
+   ]
+  },
+  {
+   "task_id": "30",
+   "split": "train",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "31",
+   "split": "train",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "32",
+   "split": "test",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "33",
+   "split": "test",
+   "reward_basis": [
+    "DB"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "34",
+   "split": "train",
+   "reward_basis": [
+    "DB"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "35",
+   "split": "train",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 1,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "36",
+   "split": "test",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 2,
+   "needs_judge_static": true,
+   "judge_called": true,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": [
+    "Agent should tell the user the most expensive item in the order is the camera.",
+    "Agent should tell the user the camera costs $481.50."
+   ]
+  },
+  {
+   "task_id": "37",
+   "split": "train",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 2,
+   "needs_judge_static": true,
+   "judge_called": true,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 1,
+   "nl_assertions": [
+    "Agent should tell the user the most expensive item in the order is the camera.",
+    "Agent should tell the user the camera costs $481.50."
+   ]
+  },
+  {
+   "task_id": "38",
+   "split": "test",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 2,
+   "needs_judge_static": true,
+   "judge_called": true,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 1,
+   "nl_assertions": [
+    "Agent should tell the user the most expensive item in the order is the camera.",
+    "Agent should tell the user the camera costs $481.50."
+   ]
+  },
+  {
+   "task_id": "39",
+   "split": "test",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 1,
+   "needs_judge_static": true,
+   "judge_called": true,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 1,
+   "nl_assertions": [
+    "Agent should tell the user the cheapest t-shirt costs $46.66."
+   ]
+  },
+  {
+   "task_id": "40",
+   "split": "test",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 2,
+   "needs_judge_static": true,
+   "judge_called": true,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": [
+    "Agent should tell the user their gift card balance is $60.",
+    "Agent should tell the user their recent order was paid with a Mastercard."
+   ]
+  },
+  {
+   "task_id": "41",
+   "split": "train",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "42",
+   "split": "test",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "43",
+   "split": "train",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 3,
+   "needs_judge_static": true,
+   "judge_called": true,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": [
+    "Agent should tell the user the tracking number is 840887978435.",
+    "Agent should tell the user the order was shipped to 943 Maple Drive, Suite 356, Chicago, IL 60621.",
+    "Agent should tell the user the tablet storage is 64GB."
+   ]
+  },
+  {
+   "task_id": "44",
+   "split": "train",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 1,
+   "needs_judge_static": true,
+   "judge_called": true,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": [
+    "Agent should tell the user they will get back $17.99."
+   ]
+  },
+  {
+   "task_id": "45",
+   "split": "test",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 1,
+   "needs_judge_static": true,
+   "judge_called": true,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": [
+    "Agent should tell the user the price difference is $9.89."
+   ]
+  },
+  {
+   "task_id": "46",
+   "split": "train",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 2,
+   "needs_judge_static": true,
+   "judge_called": true,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 2,
+   "nl_assertions": [
+    "Agent should tell the user the total refund amount is $1,126.04.",
+    "Agent should tell the user the total paid for remaining items is $1,497.65."
+   ]
+  },
+  {
+   "task_id": "47",
+   "split": "train",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 2,
+   "needs_judge_static": true,
+   "judge_called": true,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 2,
+   "nl_assertions": [
+    "Agent should tell the user the total refund amount is $1,095.55.",
+    "Agent should tell the user the total paid for remaining items is $1,528.14."
+   ]
+  },
+  {
+   "task_id": "48",
+   "split": "train",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "49",
+   "split": "test",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "50",
+   "split": "train",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "51",
+   "split": "test",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "52",
+   "split": "train",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "53",
+   "split": "test",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "54",
+   "split": "train",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 1,
+   "needs_judge_static": true,
+   "judge_called": true,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 1,
+   "nl_assertions": [
+    "Agent should tell the user the total refund amount is $3,646.68."
+   ]
+  },
+  {
+   "task_id": "55",
+   "split": "test",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 1,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "56",
+   "split": "test",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "57",
+   "split": "train",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "58",
+   "split": "train",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "59",
+   "split": "train",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 2,
+   "needs_judge_static": true,
+   "judge_called": true,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": [
+    "Agent should tell the user the refund for the cancelled desk lamp order is $164.28.",
+    "Agent should tell the user the total price of order #W2702727 is $625.60."
+   ]
+  },
+  {
+   "task_id": "60",
+   "split": "test",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 1,
+   "needs_judge_static": true,
+   "judge_called": true,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": [
+    "Agent should tell the user the price of the new earbuds is $242.92."
+   ]
+  },
+  {
+   "task_id": "61",
+   "split": "test",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "62",
+   "split": "test",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 2,
+   "needs_judge_static": true,
+   "judge_called": true,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": [
+    "Agent should tell the user the Bluetooth speaker costs $302.67.",
+    "Agent should tell the user the battery life is 20 hours."
+   ]
+  },
+  {
+   "task_id": "63",
+   "split": "train",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 3,
+   "needs_judge_static": true,
+   "judge_called": true,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": [
+    "Agent should tell the user the Bluetooth speaker costs $302.67.",
+    "Agent should tell the user the battery life is 20 hours.",
+    "Agent should tell the user the new order total is $1,288.65."
+   ]
+  },
+  {
+   "task_id": "64",
+   "split": "test",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 1,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "65",
+   "split": "test",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "66",
+   "split": "train",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "67",
+   "split": "train",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 1,
+   "needs_judge_static": true,
+   "judge_called": true,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 2,
+   "nl_assertions": [
+    "Agent should tell the user the order total is $829.43."
+   ]
+  },
+  {
+   "task_id": "68",
+   "split": "test",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 1,
+   "needs_judge_static": true,
+   "judge_called": true,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 1,
+   "nl_assertions": [
+    "Agent should tell the user the order total is $829.43."
+   ]
+  },
+  {
+   "task_id": "69",
+   "split": "train",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "70",
+   "split": "test",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 1,
+   "needs_judge_static": true,
+   "judge_called": true,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": [
+    "Agent should tell the user they need to pay $22.55 for the price difference."
+   ]
+  },
+  {
+   "task_id": "71",
+   "split": "test",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "72",
+   "split": "train",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "73",
+   "split": "train",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "74",
+   "split": "test",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "75",
+   "split": "train",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "76",
+   "split": "train",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 1,
+   "needs_judge_static": true,
+   "judge_called": true,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": [
+    "Agent should tell the user the total price of all grills is $1,939.05."
+   ]
+  },
+  {
+   "task_id": "77",
+   "split": "test",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "78",
+   "split": "train",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "79",
+   "split": "test",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "80",
+   "split": "train",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "81",
+   "split": "train",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "82",
+   "split": "train",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "83",
+   "split": "train",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "84",
+   "split": "train",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "85",
+   "split": "train",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "86",
+   "split": "test",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "87",
+   "split": "train",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "88",
+   "split": "train",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "89",
+   "split": "train",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 4,
+   "needs_judge_static": true,
+   "judge_called": true,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": [
+    "Agent should tell the user the cheapest mechanical keyboard costs $226.11.",
+    "Agent should tell the user the keyboard switch type is tactile.",
+    "Agent should tell the user the keyboard backlight is white.",
+    "Agent should tell the user the keyboard size is full."
+   ]
+  },
+  {
+   "task_id": "90",
+   "split": "test",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "91",
+   "split": "train",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "92",
+   "split": "train",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "93",
+   "split": "train",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "94",
+   "split": "test",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "95",
+   "split": "train",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 3,
+   "needs_judge_static": true,
+   "judge_called": true,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": [
+    "Agent should tell the user the price difference for one laptop exchange is $167.87.",
+    "Agent should tell the user the price difference for the other laptop exchange is $60.78 (a refund).",
+    "Agent should tell the user the total amount to pay today is $107.09."
+   ]
+  },
+  {
+   "task_id": "96",
+   "split": "train",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "97",
+   "split": "test",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "98",
+   "split": "train",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "99",
+   "split": "train",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "100",
+   "split": "test",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "101",
+   "split": "test",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "102",
+   "split": "test",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "103",
+   "split": "train",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 1,
+   "needs_judge_static": true,
+   "judge_called": true,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": [
+    "Agent should provide the tracking number 286422338955."
+   ]
+  },
+  {
+   "task_id": "104",
+   "split": "train",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 1,
+   "needs_judge_static": true,
+   "judge_called": true,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": [
+    "Agent should provide the tracking number 286422338955."
+   ]
+  },
+  {
+   "task_id": "105",
+   "split": "train",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 1,
+   "needs_judge_static": true,
+   "judge_called": true,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 1,
+   "nl_assertions": [
+    "Agent should exchange both tea kettles (same style) to the items requested"
+   ]
+  },
+  {
+   "task_id": "106",
+   "split": "train",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 1,
+   "needs_judge_static": true,
+   "judge_called": true,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": [
+    "Agent should process the exchange."
+   ]
+  },
+  {
+   "task_id": "107",
+   "split": "train",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 1,
+   "needs_judge_static": true,
+   "judge_called": true,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": [
+    "Agent should exchange items in both orders."
+   ]
+  },
+  {
+   "task_id": "108",
+   "split": "test",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 1,
+   "needs_judge_static": true,
+   "judge_called": true,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": [
+    "Agent should tell the user the refund amount is $346.93."
+   ]
+  },
+  {
+   "task_id": "109",
+   "split": "train",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 2,
+   "needs_judge_static": true,
+   "judge_called": true,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": [
+    "Agent should make changes to address on order and user profile",
+    "Agent should modify the pending order."
+   ]
+  },
+  {
+   "task_id": "110",
+   "split": "train",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 3,
+   "needs_judge_static": true,
+   "judge_called": true,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": [
+    "Agent should modify address for the order",
+    "Agent should modify user address",
+    "Agent should modify the items in the pending order."
+   ]
+  },
+  {
+   "task_id": "111",
+   "split": "test",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 1,
+   "needs_judge_static": true,
+   "judge_called": true,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": [
+    "Agent should modify the items and address as requested."
+   ]
+  },
+  {
+   "task_id": "112",
+   "split": "train",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 0,
+   "needs_judge_static": false,
+   "judge_called": false,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": []
+  },
+  {
+   "task_id": "113",
+   "split": "train",
+   "reward_basis": [
+    "DB",
+    "NL_ASSERTION"
+   ],
+   "n_nl_assertions": 1,
+   "needs_judge_static": true,
+   "judge_called": true,
+   "gold_reward_all_with_stub_judge": 1.0,
+   "gold_db_match": true,
+   "gold_db_reward": 1.0,
+   "gold_tool_errors": 0,
+   "nl_assertions": [
+    "Agent should cancel all pending orders"
+   ]
+  }
+ ]
+}

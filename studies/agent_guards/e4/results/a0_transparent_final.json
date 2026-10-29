@@ -1,0 +1,1494 @@
+{
+ "tasks": 114,
+ "identical": 114,
+ "model_calls_total": 674,
+ "stock_multi_call_messages_total": 227,
+ "a0_multi_call_messages_total": 0,
+ "db_reward_1_both": 114,
+ "a0_denied_total": 0,
+ "rows": [
+  {
+   "task": "0",
+   "identical": true,
+   "n_model_calls": 5,
+   "n_calls": 6,
+   "stock_multi_call_messages": 2,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "1",
+   "identical": true,
+   "n_model_calls": 5,
+   "n_calls": 6,
+   "stock_multi_call_messages": 2,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "2",
+   "identical": true,
+   "n_model_calls": 7,
+   "n_calls": 12,
+   "stock_multi_call_messages": 4,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "3",
+   "identical": true,
+   "n_model_calls": 7,
+   "n_calls": 13,
+   "stock_multi_call_messages": 4,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "4",
+   "identical": true,
+   "n_model_calls": 9,
+   "n_calls": 14,
+   "stock_multi_call_messages": 4,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "5",
+   "identical": true,
+   "n_model_calls": 5,
+   "n_calls": 6,
+   "stock_multi_call_messages": 2,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "6",
+   "identical": true,
+   "n_model_calls": 5,
+   "n_calls": 7,
+   "stock_multi_call_messages": 2,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "7",
+   "identical": true,
+   "n_model_calls": 5,
+   "n_calls": 7,
+   "stock_multi_call_messages": 2,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "8",
+   "identical": true,
+   "n_model_calls": 5,
+   "n_calls": 7,
+   "stock_multi_call_messages": 2,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "9",
+   "identical": true,
+   "n_model_calls": 5,
+   "n_calls": 7,
+   "stock_multi_call_messages": 2,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "10",
+   "identical": true,
+   "n_model_calls": 3,
+   "n_calls": 6,
+   "stock_multi_call_messages": 2,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "11",
+   "identical": true,
+   "n_model_calls": 7,
+   "n_calls": 7,
+   "stock_multi_call_messages": 2,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "12",
+   "identical": true,
+   "n_model_calls": 3,
+   "n_calls": 6,
+   "stock_multi_call_messages": 2,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "13",
+   "identical": true,
+   "n_model_calls": 5,
+   "n_calls": 6,
+   "stock_multi_call_messages": 2,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "14",
+   "identical": true,
+   "n_model_calls": 7,
+   "n_calls": 7,
+   "stock_multi_call_messages": 2,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "15",
+   "identical": true,
+   "n_model_calls": 6,
+   "n_calls": 8,
+   "stock_multi_call_messages": 2,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "16",
+   "identical": true,
+   "n_model_calls": 10,
+   "n_calls": 10,
+   "stock_multi_call_messages": 2,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "17",
+   "identical": true,
+   "n_model_calls": 5,
+   "n_calls": 7,
+   "stock_multi_call_messages": 2,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "18",
+   "identical": true,
+   "n_model_calls": 5,
+   "n_calls": 6,
+   "stock_multi_call_messages": 2,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "19",
+   "identical": true,
+   "n_model_calls": 6,
+   "n_calls": 8,
+   "stock_multi_call_messages": 2,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "20",
+   "identical": true,
+   "n_model_calls": 6,
+   "n_calls": 11,
+   "stock_multi_call_messages": 4,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "21",
+   "identical": true,
+   "n_model_calls": 7,
+   "n_calls": 13,
+   "stock_multi_call_messages": 4,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "22",
+   "identical": true,
+   "n_model_calls": 9,
+   "n_calls": 8,
+   "stock_multi_call_messages": 2,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "23",
+   "identical": true,
+   "n_model_calls": 10,
+   "n_calls": 13,
+   "stock_multi_call_messages": 5,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "24",
+   "identical": true,
+   "n_model_calls": 1,
+   "n_calls": 0,
+   "stock_multi_call_messages": 0,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "25",
+   "identical": true,
+   "n_model_calls": 4,
+   "n_calls": 7,
+   "stock_multi_call_messages": 2,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "26",
+   "identical": true,
+   "n_model_calls": 6,
+   "n_calls": 9,
+   "stock_multi_call_messages": 3,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "27",
+   "identical": true,
+   "n_model_calls": 5,
+   "n_calls": 7,
+   "stock_multi_call_messages": 2,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "28",
+   "identical": true,
+   "n_model_calls": 10,
+   "n_calls": 12,
+   "stock_multi_call_messages": 3,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "29",
+   "identical": true,
+   "n_model_calls": 7,
+   "n_calls": 8,
+   "stock_multi_call_messages": 3,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "30",
+   "identical": true,
+   "n_model_calls": 11,
+   "n_calls": 14,
+   "stock_multi_call_messages": 4,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "31",
+   "identical": true,
+   "n_model_calls": 8,
+   "n_calls": 13,
+   "stock_multi_call_messages": 4,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "32",
+   "identical": true,
+   "n_model_calls": 10,
+   "n_calls": 14,
+   "stock_multi_call_messages": 5,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "33",
+   "identical": true,
+   "n_model_calls": 5,
+   "n_calls": 7,
+   "stock_multi_call_messages": 2,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "34",
+   "identical": true,
+   "n_model_calls": 5,
+   "n_calls": 7,
+   "stock_multi_call_messages": 2,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "35",
+   "identical": true,
+   "n_model_calls": 8,
+   "n_calls": 9,
+   "stock_multi_call_messages": 2,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "36",
+   "identical": true,
+   "n_model_calls": 4,
+   "n_calls": 4,
+   "stock_multi_call_messages": 1,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "37",
+   "identical": true,
+   "n_model_calls": 5,
+   "n_calls": 6,
+   "stock_multi_call_messages": 2,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "38",
+   "identical": true,
+   "n_model_calls": 5,
+   "n_calls": 6,
+   "stock_multi_call_messages": 2,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "39",
+   "identical": true,
+   "n_model_calls": 5,
+   "n_calls": 6,
+   "stock_multi_call_messages": 2,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "40",
+   "identical": true,
+   "n_model_calls": 5,
+   "n_calls": 5,
+   "stock_multi_call_messages": 1,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "41",
+   "identical": true,
+   "n_model_calls": 11,
+   "n_calls": 11,
+   "stock_multi_call_messages": 3,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "42",
+   "identical": true,
+   "n_model_calls": 11,
+   "n_calls": 11,
+   "stock_multi_call_messages": 3,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "43",
+   "identical": true,
+   "n_model_calls": 5,
+   "n_calls": 6,
+   "stock_multi_call_messages": 2,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "44",
+   "identical": true,
+   "n_model_calls": 5,
+   "n_calls": 6,
+   "stock_multi_call_messages": 2,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "45",
+   "identical": true,
+   "n_model_calls": 5,
+   "n_calls": 6,
+   "stock_multi_call_messages": 2,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "46",
+   "identical": true,
+   "n_model_calls": 5,
+   "n_calls": 8,
+   "stock_multi_call_messages": 3,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "47",
+   "identical": true,
+   "n_model_calls": 5,
+   "n_calls": 8,
+   "stock_multi_call_messages": 3,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "48",
+   "identical": true,
+   "n_model_calls": 5,
+   "n_calls": 7,
+   "stock_multi_call_messages": 2,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "49",
+   "identical": true,
+   "n_model_calls": 7,
+   "n_calls": 11,
+   "stock_multi_call_messages": 3,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "50",
+   "identical": true,
+   "n_model_calls": 2,
+   "n_calls": 1,
+   "stock_multi_call_messages": 0,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "51",
+   "identical": true,
+   "n_model_calls": 5,
+   "n_calls": 7,
+   "stock_multi_call_messages": 2,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "52",
+   "identical": true,
+   "n_model_calls": 5,
+   "n_calls": 6,
+   "stock_multi_call_messages": 2,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "53",
+   "identical": true,
+   "n_model_calls": 5,
+   "n_calls": 7,
+   "stock_multi_call_messages": 2,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "54",
+   "identical": true,
+   "n_model_calls": 11,
+   "n_calls": 13,
+   "stock_multi_call_messages": 3,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "55",
+   "identical": true,
+   "n_model_calls": 13,
+   "n_calls": 14,
+   "stock_multi_call_messages": 3,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "56",
+   "identical": true,
+   "n_model_calls": 6,
+   "n_calls": 8,
+   "stock_multi_call_messages": 2,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "57",
+   "identical": true,
+   "n_model_calls": 1,
+   "n_calls": 0,
+   "stock_multi_call_messages": 0,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "58",
+   "identical": true,
+   "n_model_calls": 5,
+   "n_calls": 7,
+   "stock_multi_call_messages": 2,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "59",
+   "identical": true,
+   "n_model_calls": 7,
+   "n_calls": 6,
+   "stock_multi_call_messages": 1,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "60",
+   "identical": true,
+   "n_model_calls": 5,
+   "n_calls": 5,
+   "stock_multi_call_messages": 1,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "61",
+   "identical": true,
+   "n_model_calls": 5,
+   "n_calls": 6,
+   "stock_multi_call_messages": 2,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "62",
+   "identical": true,
+   "n_model_calls": 3,
+   "n_calls": 6,
+   "stock_multi_call_messages": 2,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "63",
+   "identical": true,
+   "n_model_calls": 6,
+   "n_calls": 8,
+   "stock_multi_call_messages": 2,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "64",
+   "identical": true,
+   "n_model_calls": 8,
+   "n_calls": 9,
+   "stock_multi_call_messages": 2,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "65",
+   "identical": true,
+   "n_model_calls": 3,
+   "n_calls": 4,
+   "stock_multi_call_messages": 1,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "66",
+   "identical": true,
+   "n_model_calls": 5,
+   "n_calls": 6,
+   "stock_multi_call_messages": 2,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "67",
+   "identical": true,
+   "n_model_calls": 3,
+   "n_calls": 6,
+   "stock_multi_call_messages": 2,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "68",
+   "identical": true,
+   "n_model_calls": 3,
+   "n_calls": 5,
+   "stock_multi_call_messages": 2,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "69",
+   "identical": true,
+   "n_model_calls": 5,
+   "n_calls": 5,
+   "stock_multi_call_messages": 1,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "70",
+   "identical": true,
+   "n_model_calls": 4,
+   "n_calls": 4,
+   "stock_multi_call_messages": 1,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "71",
+   "identical": true,
+   "n_model_calls": 6,
+   "n_calls": 5,
+   "stock_multi_call_messages": 1,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "72",
+   "identical": true,
+   "n_model_calls": 6,
+   "n_calls": 5,
+   "stock_multi_call_messages": 1,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "73",
+   "identical": true,
+   "n_model_calls": 4,
+   "n_calls": 4,
+   "stock_multi_call_messages": 1,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "74",
+   "identical": true,
+   "n_model_calls": 6,
+   "n_calls": 6,
+   "stock_multi_call_messages": 2,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "75",
+   "identical": true,
+   "n_model_calls": 4,
+   "n_calls": 4,
+   "stock_multi_call_messages": 1,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "76",
+   "identical": true,
+   "n_model_calls": 6,
+   "n_calls": 6,
+   "stock_multi_call_messages": 2,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "77",
+   "identical": true,
+   "n_model_calls": 4,
+   "n_calls": 4,
+   "stock_multi_call_messages": 1,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "78",
+   "identical": true,
+   "n_model_calls": 8,
+   "n_calls": 7,
+   "stock_multi_call_messages": 2,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "79",
+   "identical": true,
+   "n_model_calls": 4,
+   "n_calls": 4,
+   "stock_multi_call_messages": 1,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "80",
+   "identical": true,
+   "n_model_calls": 4,
+   "n_calls": 4,
+   "stock_multi_call_messages": 1,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "81",
+   "identical": true,
+   "n_model_calls": 6,
+   "n_calls": 6,
+   "stock_multi_call_messages": 2,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "82",
+   "identical": true,
+   "n_model_calls": 4,
+   "n_calls": 4,
+   "stock_multi_call_messages": 1,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "83",
+   "identical": true,
+   "n_model_calls": 4,
+   "n_calls": 4,
+   "stock_multi_call_messages": 1,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "84",
+   "identical": true,
+   "n_model_calls": 4,
+   "n_calls": 4,
+   "stock_multi_call_messages": 1,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "85",
+   "identical": true,
+   "n_model_calls": 4,
+   "n_calls": 4,
+   "stock_multi_call_messages": 1,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "86",
+   "identical": true,
+   "n_model_calls": 6,
+   "n_calls": 5,
+   "stock_multi_call_messages": 1,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "87",
+   "identical": true,
+   "n_model_calls": 10,
+   "n_calls": 9,
+   "stock_multi_call_messages": 3,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "88",
+   "identical": true,
+   "n_model_calls": 4,
+   "n_calls": 4,
+   "stock_multi_call_messages": 1,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "89",
+   "identical": true,
+   "n_model_calls": 4,
+   "n_calls": 4,
+   "stock_multi_call_messages": 1,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "90",
+   "identical": true,
+   "n_model_calls": 4,
+   "n_calls": 4,
+   "stock_multi_call_messages": 1,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "91",
+   "identical": true,
+   "n_model_calls": 6,
+   "n_calls": 6,
+   "stock_multi_call_messages": 2,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "92",
+   "identical": true,
+   "n_model_calls": 6,
+   "n_calls": 6,
+   "stock_multi_call_messages": 2,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "93",
+   "identical": true,
+   "n_model_calls": 4,
+   "n_calls": 4,
+   "stock_multi_call_messages": 1,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "94",
+   "identical": true,
+   "n_model_calls": 4,
+   "n_calls": 4,
+   "stock_multi_call_messages": 1,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "95",
+   "identical": true,
+   "n_model_calls": 6,
+   "n_calls": 6,
+   "stock_multi_call_messages": 2,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "96",
+   "identical": true,
+   "n_model_calls": 6,
+   "n_calls": 5,
+   "stock_multi_call_messages": 1,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "97",
+   "identical": true,
+   "n_model_calls": 6,
+   "n_calls": 5,
+   "stock_multi_call_messages": 1,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "98",
+   "identical": true,
+   "n_model_calls": 8,
+   "n_calls": 8,
+   "stock_multi_call_messages": 3,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "99",
+   "identical": true,
+   "n_model_calls": 6,
+   "n_calls": 6,
+   "stock_multi_call_messages": 2,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "100",
+   "identical": true,
+   "n_model_calls": 6,
+   "n_calls": 6,
+   "stock_multi_call_messages": 2,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "101",
+   "identical": true,
+   "n_model_calls": 8,
+   "n_calls": 7,
+   "stock_multi_call_messages": 2,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "102",
+   "identical": true,
+   "n_model_calls": 8,
+   "n_calls": 7,
+   "stock_multi_call_messages": 2,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "103",
+   "identical": true,
+   "n_model_calls": 10,
+   "n_calls": 9,
+   "stock_multi_call_messages": 3,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "104",
+   "identical": true,
+   "n_model_calls": 12,
+   "n_calls": 11,
+   "stock_multi_call_messages": 4,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "105",
+   "identical": true,
+   "n_model_calls": 4,
+   "n_calls": 4,
+   "stock_multi_call_messages": 1,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "106",
+   "identical": true,
+   "n_model_calls": 4,
+   "n_calls": 4,
+   "stock_multi_call_messages": 1,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "107",
+   "identical": true,
+   "n_model_calls": 6,
+   "n_calls": 6,
+   "stock_multi_call_messages": 2,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "108",
+   "identical": true,
+   "n_model_calls": 4,
+   "n_calls": 4,
+   "stock_multi_call_messages": 1,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "109",
+   "identical": true,
+   "n_model_calls": 8,
+   "n_calls": 6,
+   "stock_multi_call_messages": 1,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "110",
+   "identical": true,
+   "n_model_calls": 8,
+   "n_calls": 7,
+   "stock_multi_call_messages": 2,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "111",
+   "identical": true,
+   "n_model_calls": 8,
+   "n_calls": 7,
+   "stock_multi_call_messages": 2,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "112",
+   "identical": true,
+   "n_model_calls": 8,
+   "n_calls": 7,
+   "stock_multi_call_messages": 2,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  },
+  {
+   "task": "113",
+   "identical": true,
+   "n_model_calls": 6,
+   "n_calls": 6,
+   "stock_multi_call_messages": 2,
+   "a0_multi_call_messages": 0,
+   "db_reward": [
+    1.0,
+    1.0
+   ],
+   "a0_denied": 0
+  }
+ ],
+ "seconds": 111.2
+}

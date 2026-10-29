@@ -1,0 +1,265 @@
+{
+ "test_rows": 253,
+ "test_sites": 18,
+ "labels": {
+  "SAFE": 69,
+  "LOW": 98,
+  "HIGH": 86
+ },
+ "tm_s": 16.0,
+ "lr_C": 1.0,
+ "veto_on_test": 28,
+ "tm": {
+  "acc_per_seed": [
+   68.77,
+   63.24,
+   59.29
+  ],
+  "acc": 63.77,
+  "high_recall": 74.81,
+  "false_alarm": 21.26,
+  "dev_false_alarm": 20.45
+ },
+ "lr": {
+  "acc": 64.03,
+  "high_recall": 75.58,
+  "false_alarm": 21.74,
+  "at_tm_dev_false_alarm": {
+   "threshold": 0.4543,
+   "acc": 63.64,
+   "high_recall": 74.42,
+   "false_alarm": 21.74
+  }
+ },
+ "guard": {
+  "M_per_seed": [
+   42364,
+   48358,
+   42155
+  ],
+  "tm": {
+   "acc": 64.03,
+   "high_recall": 75.97,
+   "rows_changed_per_seed": [
+    2,
+    1,
+    2
+   ]
+  },
+  "lr": {
+   "acc": 64.82,
+   "high_recall": 76.74,
+   "rows_changed": 2
+  }
+ },
+ "bootstrap": {
+  "resamples": 10000,
+  "tm_acc_ci": [
+   57.83,
+   69.59
+  ],
+  "lr_acc_ci": [
+   55.51,
+   72.99
+  ],
+  "diff_acc": -0.26,
+  "diff_acc_ci": [
+   -11.11,
+   10.78
+  ],
+  "diff_high_recall_ci": [
+   -12.6,
+   10.32
+  ]
+ },
+ "bar": {
+  "rule": "lower end of the site-bootstrap 95% interval of (TM - LR) accuracy > -5.0",
+  "lower": -11.11,
+  "non_inferior": false
+ },
+ "solver": [
+  {
+   "seed": 1,
+   "guard": false,
+   "status": "feasible",
+   "seconds": 0.16,
+   "n_active_clauses": 996,
+   "counterexample_scores": [
+    -123,
+    -136,
+    -216
+   ],
+   "counterexample_on_bits": [
+    "node word ~ concept 4 >= 0.000",
+    "node word ~ concept 9 >= 0.010",
+    "node word ~ concept 16 >= 0.017",
+    "node word ~ concept 21 >= 0.010",
+    "node word ~ concept 24 >= 0.010",
+    "node word ~ concept 29 >= 0.009",
+    "node word ~ concept 30 >= 0.006",
+    "node word ~ concept 33 >= 0.001",
+    "node word ~ concept 41 >= 0.004",
+    "node word ~ concept 43 >= 0.016",
+    "node word ~ concept 48 >= 0.005",
+    "node word ~ concept 49 >= 0.008",
+    "node word ~ concept 49 >= 0.045",
+    "node word ~ concept 49 >= 0.064",
+    "node word ~ concept 49 >= 0.080",
+    "node word ~ concept 49 >= 0.113",
+    "node word ~ concept 62 >= 0.005",
+    "node word ~ concept 63 >= 0.007",
+    "node word ~ concept 73 >= 0.030",
+    "node word ~ concept 73 >= 0.081",
+    "node word ~ concept 73 >= 0.138",
+    "node word ~ concept 73 >= 0.183",
+    "node word ~ concept 73 >= 0.248",
+    "node word ~ concept 80 >= 0.006",
+    "node word ~ concept 95 >= 0.000",
+    "node word ~ concept 95 >= 0.034",
+    "node word ~ concept 95 >= 0.064",
+    "node word ~ concept 105 >= 0.019",
+    "node word ~ concept 106 >= 0.019",
+    "node word ~ concept 107 >= 0.000",
+    "node word ~ concept 127 >= 0.000",
+    "node word ~ concept 138 >= 0.000",
+    "node word ~ concept 141 >= 0.025",
+    "node word ~ concept 141 >= 0.079",
+    "node word ~ concept 141 >= 0.114",
+    "node word ~ concept 144 >= 0.005",
+    "node word ~ concept 157 >= 0.000",
+    "node word ~ concept 161 >= 0.027",
+    "node word ~ concept 170 >= 0.007",
+    "node word ~ concept 171 >= 0.008"
+   ]
+  },
+  {
+   "seed": 1,
+   "guard": true,
+   "status": "infeasible",
+   "seconds": 0.03,
+   "n_active_clauses": 996
+  },
+  {
+   "seed": 2,
+   "guard": false,
+   "status": "feasible",
+   "seconds": 0.15,
+   "n_active_clauses": 992,
+   "counterexample_scores": [
+    -157,
+    -262,
+    -157
+   ],
+   "counterexample_on_bits": [
+    "node word ~ concept 3 >= 0.007",
+    "node word ~ concept 4 >= 0.000",
+    "node word ~ concept 5 >= 0.008",
+    "node word ~ concept 10 >= 0.007",
+    "node word ~ concept 12 >= 0.002",
+    "node word ~ concept 33 >= 0.001",
+    "node word ~ concept 34 >= 0.029",
+    "node word ~ concept 46 >= 0.019",
+    "node word ~ concept 49 >= 0.008",
+    "node word ~ concept 62 >= 0.005",
+    "node word ~ concept 66 >= 0.006",
+    "node word ~ concept 69 >= 0.000",
+    "node word ~ concept 75 >= 0.001",
+    "node word ~ concept 81 >= 0.010",
+    "node word ~ concept 85 >= 0.000",
+    "node word ~ concept 93 >= 0.001",
+    "node word ~ concept 124 >= 0.000",
+    "node word ~ concept 128 >= 0.000",
+    "node word ~ concept 137 >= 0.000",
+    "node word ~ concept 145 >= 0.000",
+    "node word ~ concept 146 >= 0.000",
+    "node word ~ concept 147 >= 0.000",
+    "node word ~ concept 158 >= 0.006",
+    "node word ~ concept 160 >= 0.002",
+    "node word ~ concept 171 >= 0.008",
+    "node word ~ concept 172 >= 0.007",
+    "node word ~ concept 175 >= 0.007",
+    "node word ~ concept 184 >= 0.003",
+    "node word ~ concept 186 >= 0.000",
+    "node word ~ concept 191 >= 0.011",
+    "node word ~ concept 198 >= 0.009",
+    "node word ~ concept 199 >= 0.013",
+    "node word ~ concept 228 >= 0.004",
+    "node word ~ concept 231 >= -0.002",
+    "node word ~ concept 234 >= 0.008",
+    "node word ~ concept 241 >= 0.007",
+    "node word ~ concept 244 >= 0.008",
+    "node role = button",
+    "node tag = other",
+    "node name has an irreversible-action word"
+   ]
+  },
+  {
+   "seed": 2,
+   "guard": true,
+   "status": "infeasible",
+   "seconds": 0.03,
+   "n_active_clauses": 992
+  },
+  {
+   "seed": 3,
+   "guard": false,
+   "status": "feasible",
+   "seconds": 0.15,
+   "n_active_clauses": 994,
+   "counterexample_scores": [
+    -59,
+    -60,
+    -446
+   ],
+   "counterexample_on_bits": [
+    "node word ~ concept 9 >= 0.010",
+    "node word ~ concept 10 >= 0.007",
+    "node word ~ concept 20 >= -0.002",
+    "node word ~ concept 36 >= 0.002",
+    "node word ~ concept 49 >= 0.008",
+    "node word ~ concept 72 >= 0.025",
+    "node word ~ concept 79 >= 0.008",
+    "node word ~ concept 86 >= -0.005",
+    "node word ~ concept 116 >= 0.010",
+    "node word ~ concept 127 >= 0.000",
+    "node word ~ concept 129 >= 0.007",
+    "node word ~ concept 162 >= 0.001",
+    "node word ~ concept 162 >= 0.027",
+    "node word ~ concept 163 >= 0.023",
+    "node word ~ concept 167 >= 0.015",
+    "node word ~ concept 170 >= 0.007",
+    "node word ~ concept 177 >= 0.009",
+    "node word ~ concept 181 >= 0.005",
+    "node word ~ concept 200 >= 0.000",
+    "node word ~ concept 202 >= 0.011",
+    "node word ~ concept 210 >= 0.002",
+    "node word ~ concept 216 >= 0.010",
+    "node word ~ concept 219 >= 0.013",
+    "node word ~ concept 228 >= 0.004",
+    "node word ~ concept 231 >= -0.002",
+    "node word ~ concept 236 >= 0.000",
+    "node word ~ concept 247 >= 0.000",
+    "node word ~ concept 249 >= 0.000",
+    "node role = div",
+    "node tag = input type=\"text\"",
+    "node name has an irreversible-action word",
+    "page title/url word ~ concept 16 >= 0.034",
+    "page title/url word ~ concept 19 >= 0.103",
+    "page title/url word ~ concept 23 >= 0.106",
+    "page title/url word ~ concept 43 >= 0.133",
+    "page title/url word ~ concept 45 >= 0.023",
+    "page title/url word ~ concept 48 >= 0.100",
+    "page title/url word ~ concept 59 >= 0.064",
+    "page title/url word ~ concept 60 >= 0.017",
+    "page title/url word ~ concept 72 >= 0.096"
+   ]
+  },
+  {
+   "seed": 3,
+   "guard": true,
+   "status": "infeasible",
+   "seconds": 0.03,
+   "n_active_clauses": 994
+  }
+ ]
+}

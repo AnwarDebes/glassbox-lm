@@ -1,0 +1,76 @@
+{
+ "what": "E4 freeze record (write-once; scripts/freeze_e4.py)",
+ "registration": "studies/agent_guards/e4/REGISTRATION_E4.md",
+ "registration_sha256": "84bdfe7a7bb2c8cde8b67404d3fa2a560c5019381070ad14c670f98d35d33582",
+ "registration_copy": "studies/agent_guards/e4/runs/E4_frozen_registration.md",
+ "campaign": "e4reg_20261023",
+ "slot_minutes": 300.0,
+ "cut": [],
+ "smoke_tasks": [
+  "0",
+  "1",
+  "2",
+  "3",
+  "4",
+  "6",
+  "7",
+  "8",
+  "10",
+  "11"
+ ],
+ "h6": [
+  {
+   "spec": "runs/SMOKE_e4reg_20261023/smoke_report.json",
+   "sha256": "fe70db9f6af4cecb25eb8122352be92da389523b1273733fb3c49bd40b272a1c"
+  },
+  {
+   "spec": "runs/SMOKE_e4reg_20261023/confirmations.json",
+   "sha256": "a6894c55b71db76cd54e89c989585c0fd32cfdd179d5faf1190153ab547acdd7"
+  },
+  {
+   "spec": "runs/SMOKE_e4reg_20261023/confirmations_labels.json",
+   "sha256": "7f55922d15fa145ad9926931699789592cfdaf7221a49e364f085dc09b7e9616"
+  },
+  {
+   "spec": "runs/SMOKE_e4reg_20261023/repeat_check.json",
+   "sha256": "23b2bc5915dd58ee4454d9b18d8c7a72a3843766bc3f9d0dee23760021f1818a"
+  },
+  {
+   "spec": "runs/SMOKE_e4reg_20261023/A0_smoke/manifest.json",
+   "sha256": "97c4b41c373031209c78a4cac109b1e55c75846caa711f9c70a6af2393211b7a"
+  }
+ ],
+ "smoke_report_sha256": "fe70db9f6af4cecb25eb8122352be92da389523b1273733fb3c49bd40b272a1c",
+ "check_pins": {
+  "stage": "freeze",
+  "tables": {
+   "H1 E4 code (e4guard/, scripts/, tests/)": {
+    "rows": 56,
+    "match": 56
+   },
+   "H2 frozen pins and E4 data files": {
+    "rows": 5,
+    "match": 5
+   },
+   "H3 read-only inputs (files)": {
+    "rows": 34,
+    "match": 34
+   },
+   "H4 tau2 trees (every file; no __pycache__ or .pyc)": {
+    "rows": 3,
+    "match": 3
+   },
+   "H5 installed packages, interpreters and the server": {
+    "rows": 20,
+    "match": 20
+   },
+   "H6 the smoke outcome (EMPTY until the freeze: filled with exactly the five files of section 11.4 from runs/SMOKE_<campaign>/; check_pins.py requires them from the freeze on)": {
+    "rows": 5,
+    "match": 5
+   }
+  },
+  "differences": []
+ },
+ "freeze_tool_sha256": "adf5de744148c4d74a29cd95821672e4b34c7d036364e6dbcb62fc96003c6c28",
+ "utc": "2026-10-23T01:27:37Z"
+}

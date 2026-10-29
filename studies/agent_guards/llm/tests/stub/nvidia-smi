@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# Stub nvidia-smi for the serve_qwen_agent.sh tests: --query-compute-apps prints $STUB_APPS (one line per process,
+# empty = the GPU is free); --query-gpu prints a fixed line. STUB_NVSMI_FAIL=1 makes it fail.
+[ "${STUB_NVSMI_FAIL:-0}" = 1 ] && { echo "stub nvidia-smi: failure" >&2; exit 9; }
+case "$*" in
+  *--query-compute-apps*) [ -n "${STUB_APPS:-}" ] && printf '%s\n' "$STUB_APPS" ;;
+  *--query-gpu*) echo "1234 MiB, 0 %" ;;
+  *) echo "stub nvidia-smi" ;;
+esac
+exit 0

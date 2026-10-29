@@ -1,0 +1,31 @@
+{
+ "registration": "studies/agent_guards/e4/REGISTRATION_E4.md",
+ "registration_sha256": "99897c79c59480d5a7f30b6056dcd69f4ef2cbbc78f41fd5f8b832c5acacf4ae",
+ "stage": "smoke",
+ "campaign": "e4reg_20261023",
+ "utc": "2026-10-23T00:48:52Z",
+ "tables": {
+  "H1 E4 code (e4guard/, scripts/, tests/)": {
+   "rows": 56,
+   "match": 56
+  },
+  "H2 frozen pins and E4 data files": {
+   "rows": 5,
+   "match": 5
+  },
+  "H3 read-only inputs (files)": {
+   "rows": 34,
+   "match": 34
+  },
+  "H4 tau2 trees (every file; no __pycache__ or .pyc)": {
+   "rows": 3,
+   "match": 3
+  },
+  "H5 installed packages, interpreters and the server": {
+   "rows": 20,
+   "match": 20
+  }
+ },
+ "differences": [],
+ "pins_changed": false
+}

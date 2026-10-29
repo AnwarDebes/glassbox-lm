@@ -1,0 +1,136 @@
+{
+ "n_train_tasks": 74,
+ "n_oof_rows": 102,
+ "rule": "GO iff G >= 8 and G - L >= 4 (TM seed 1)",
+ "models": {
+  "tm_seed1": {
+   "G": 4,
+   "L": 4,
+   "G_minus_L": 0,
+   "G_tasks": [
+    "6",
+    "7",
+    "8",
+    "31"
+   ],
+   "L_tasks": [
+    "13",
+    "29",
+    "58",
+    "69"
+   ],
+   "learned_denials": 9,
+   "persist_after_reconfirm": 9,
+   "persist_share": 1.0
+  },
+  "lr": {
+   "G": 3,
+   "L": 3,
+   "G_minus_L": 0,
+   "G_tasks": [
+    "7",
+    "8",
+    "31"
+   ],
+   "L_tasks": [
+    "16",
+    "75",
+    "95"
+   ],
+   "learned_denials": 6,
+   "persist_after_reconfirm": 6,
+   "persist_share": 1.0
+  },
+  "tree": {
+   "G": 3,
+   "L": 4,
+   "G_minus_L": -1,
+   "G_tasks": [
+    "6",
+    "7",
+    "22"
+   ],
+   "L_tasks": [
+    "30",
+    "58",
+    "98",
+    "107"
+   ],
+   "learned_denials": 9,
+   "persist_after_reconfirm": 9,
+   "persist_share": 1.0
+  }
+ },
+ "GO": false,
+ "outcome": "no-go",
+ "decision": "NO-GO: E4.3 and E4.5 are a dev-only line; A2, A3, A3t are not run on the test tasks",
+ "power": {
+  "what": "E4.3 (low power): exact power of the registered rule at this go-bar's observed rates; trinomial, g = G / n_train, l = L / n_train (upper bounds: a denial need not flip a task)",
+  "power_file": "studies/agent_guards/e4/results/power_e43_rev3.json",
+  "power_file_sha256": "4426d907121d2554c8bedfd25184092f22fb8ed5938bc5f0b472c9bc8aa51c58",
+  "n_train_tasks": 74,
+  "at_go_bar_corner_G8_L4": 0.11995701518386326,
+  "at_go_bar_G8_L0": 0.6407795554971686,
+  "effect_for_80pct_power": [
+   {
+    "l": 0.0,
+    "g": 0.13357102808950286,
+    "net_points": 13.357102808950286,
+    "net_tasks_of_40": 5.342841123580114,
+    "power": 0.8000000000000009,
+    "reachable": true
+   },
+   {
+    "l": 0.025,
+    "g": 0.22902664956228241,
+    "net_points": 20.402664956228243,
+    "net_tasks_of_40": 8.161065982491296,
+    "power": 0.8000000000000004,
+    "reachable": true
+   },
+   {
+    "l": 0.05405405405405406,
+    "g": 0.30013139404945927,
+    "net_points": 24.60773399954052,
+    "net_tasks_of_40": 9.843093599816209,
+    "power": 0.8000000000000017,
+    "reachable": true
+   }
+  ],
+  "at_observed_rates": {
+   "tm_seed1": 0.022516057725392995,
+   "lr": 0.017076773964234678,
+   "tree": 0.010167558470634903
+  }
+ },
+ "inputs": {
+  "oof": "studies/agent_guards/e4/runs/e4reg_20261023/models/oof_rows.json",
+  "oof_sha256": "5bf86367a0713e108b9bd1340baed705c197f43cfc67b368724f1a90f7f00646",
+  "oof_meta": {
+   "rows_file": "studies/agent_guards/e4/runs/e4reg_20261023/rows_train_all.json",
+   "rows_file_sha256": "fab0a3475589aefaccf7bcff0266abe4309b70231d625c03efbfcd02f7258ab5",
+   "sources": [
+    "qwen_A1"
+   ],
+   "picks": {
+    "tm_s": 3.0,
+    "lr_C": 10.0,
+    "tree_depth": 4
+   },
+   "folds": 5,
+   "cv_seed": 20261021,
+   "tm_seed": 1,
+   "stand_in": false,
+   "rows_in_folds_without_a_model": 0,
+   "folds_with_a_model": [
+    0,
+    1,
+    2,
+    3,
+    4
+   ]
+  },
+  "a1": "studies/agent_guards/e4/runs/e4reg_20261023/A1_base",
+  "a1_rerun_tasks": []
+ }
+}

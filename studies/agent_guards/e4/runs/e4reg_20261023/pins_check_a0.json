@@ -1,0 +1,39 @@
+{
+ "registration": "studies/agent_guards/e4/REGISTRATION_E4.md",
+ "registration_sha256": "84bdfe7a7bb2c8cde8b67404d3fa2a560c5019381070ad14c670f98d35d33582",
+ "stage": "a0",
+ "campaign": "e4reg_20261023",
+ "utc": "2026-10-26T09:09:41Z",
+ "tables": {
+  "H1 E4 code (e4guard/, scripts/, tests/)": {
+   "rows": 56,
+   "match": 56
+  },
+  "H2 frozen pins and E4 data files": {
+   "rows": 5,
+   "match": 5
+  },
+  "H3 read-only inputs (files)": {
+   "rows": 34,
+   "match": 34
+  },
+  "H4 tau2 trees (every file; no __pycache__ or .pyc)": {
+   "rows": 3,
+   "match": 3
+  },
+  "H5 installed packages, interpreters and the server": {
+   "rows": 20,
+   "match": 20
+  },
+  "H6 the smoke outcome (EMPTY until the freeze: filled with exactly the five files of section 11.4 from runs/SMOKE_<campaign>/; check_pins.py requires them from the freeze on)": {
+   "rows": 5,
+   "match": 5
+  }
+ },
+ "differences": [],
+ "pins_changed": false,
+ "frozen_record": "studies/agent_guards/e4/runs/E4_frozen.json",
+ "frozen_record_sha256": "6771d793f582efd0e0a436570841e0e0597b9c62d3cc844445b2135961b1f29f",
+ "store_exists": false,
+ "a0_marker": false
+}

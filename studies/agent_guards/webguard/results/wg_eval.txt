@@ -1,0 +1,6 @@
+WebGuard veto test (our site split; 253 test rows from 18 sites; a first guard check, not a benchmark)
+TM (s 16, seeds 1-3): accuracy 63.77 [68.77, 63.24, 59.29], HIGH recall 74.81, false alarm 21.26
+LR (C 1): accuracy 64.03, HIGH recall 75.58, false alarm 21.74; at the TM's dev false-alarm rate: HIGH recall 74.42, accuracy 63.64
+TM - LR accuracy -0.26, site-bootstrap 95% interval [-11.11, 10.78]; BAR (lower end > -5): NOT SHOWN
+guard (veto bit on 28 test rows): TM accuracy 64.03, HIGH recall 75.97, rows changed [2, 1, 2]; LR accuracy 64.82, HIGH recall 76.74, rows changed 2
+solver (can SAFE win with the veto bit on?): seed 1 alone: feasible; seed 1 guarded: infeasible; seed 2 alone: feasible; seed 2 guarded: infeasible; seed 3 alone: feasible; seed 3 guarded: infeasible

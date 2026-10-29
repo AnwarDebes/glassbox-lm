@@ -1,0 +1,544 @@
+{
+ "model": "studies/agent_guards/e4/runs/e4reg_20261023/models/tm_seed1.json",
+ "model_sha256": "e891159dde743addb948a207ad2f0bd36a9fff19f853100af28d510c234b7e1c",
+ "rows_sha256": {
+  "studies/agent_guards/e4/runs/e4reg_20261023/rows_train.json": "114a5a144cd21074a98cf42e261fa4c7ec9af74705ba3533fbdaab8e56a3b17e",
+  "studies/agent_guards/e4/runs/e4reg_20261023/bits_allcalls.json": "da13ae7882daaa2b4dfad3a58cc2e0cfd7da27a89a41d6fa620f26145082ad9d"
+ },
+ "code_sha256": {
+  "studies/decision_layer/scripts/verify_policy.py": "c10c7722bb9f3defb018e13e1421188309d85c8d605283483d48dc780e4f67ed",
+  "studies/agent_guards/e4/scripts/milp_proof.py": "c4ab6c64c5470ce4887307fb84f301f87fe04918b2726192c754714d36950f82",
+  "studies/agent_guards/e4/e4guard/__init__.py": "b033c8d4e77fccbe750eb87f254225441450399dfa2c5df0c7587a0718aff549",
+  "studies/agent_guards/e4/e4guard/agent.py": "60f6d37a23f573aeaf7069f6cfeda12801268b444031a667e9d6ce8b5a95913d",
+  "studies/agent_guards/e4/e4guard/bits.py": "056832d5d13c23dc99ec13333afc4e1964d5ff41525df673d368563d5863ac3f",
+  "studies/agent_guards/e4/e4guard/episodes.py": "779526dda511ae3098a6b666346e61b59736bce313a7c0d3ad84a723ea088ea2",
+  "studies/agent_guards/e4/e4guard/facts.py": "832b418e8936fcb2888bd626f79e3f9069fd27761dcb9beef96a1e5bb914bd8f",
+  "studies/agent_guards/e4/e4guard/models.py": "45890fbc32ebe69dbf04791b68b8049ace23cdef4a60445791557c569788e863",
+  "studies/agent_guards/e4/e4guard/replay.py": "a49eb886410448ee1c85b9fba8b2515a7aacd9a66b7b4c68629cdbee7f478b89",
+  "studies/agent_guards/e4/e4guard/rules.py": "79ad7e4a06d38a4b9e22b6ba0f6003c2da320bf91047be25df74e0bf1e0db88d",
+  "studies/agent_guards/e4/e4guard/runs.py": "a7aa4af3ad3e525ceac30b0aa3c2888d735765160e9f673e12292abdf617294e",
+  "studies/agent_guards/e4/e4guard/scripted.py": "1345b1656b3909d0d1215881309aef88c172b8184730e350b45e5ffa9e25292c"
+ },
+ "model_meta": {
+  "tag": "e4reg_20261023",
+  "stand_in": false,
+  "seed": 1,
+  "cfg": {
+   "n_clauses": 200,
+   "T": 100,
+   "epochs": 60,
+   "batch_size": 16,
+   "half": false,
+   "negation": true,
+   "s": 3.0
+  }
+ },
+ "solver": {
+  "scipy": "1.17.1",
+  "highs": "1.12.0",
+  "mip_feasibility_tolerance": 1e-06,
+  "primal_feasibility_tolerance": 1e-07,
+  "random_seed": 0,
+  "time_limit": 120.0,
+  "threads": 2
+ },
+ "n_bits": 75,
+ "n_domain_rows": 48,
+ "n_learned_clauses": 147,
+ "M": 1790,
+ "time": "2026-10-26T11:26:33Z",
+ "pre_D_domain_holds": [
+  1760,
+  1760
+ ],
+ "pre_E_votes_equal_raw": [
+  500,
+  500
+ ],
+ "pre_E_votes_equal_guarded": [
+  500,
+  500
+ ],
+ "pre_W_own_feasible": [
+  50,
+  50
+ ],
+ "pre_W_other_infeasible": [
+  50,
+  50
+ ],
+ "checks": [
+  {
+   "clause": "E4-R1",
+   "rule": "E4-R1",
+   "model": "raw",
+   "status": "feasible",
+   "seconds": 0.01,
+   "nodes": 1,
+   "n_free_bits": 73,
+   "n_active_clauses": 141,
+   "replay_allow_wins": true,
+   "replay_domain_holds": true,
+   "replay_clause_fires": true,
+   "outcome": "counterexample",
+   "bits_on": [
+    "tool=get_user_details",
+    "needs_auth",
+    "status=__no_order__",
+    "user_said_payment"
+   ]
+  },
+  {
+   "clause": "E4-R1",
+   "rule": "E4-R1",
+   "model": "guarded",
+   "status": "infeasible",
+   "seconds": 0.0,
+   "nodes": -1,
+   "n_free_bits": 73,
+   "n_active_clauses": 153,
+   "outcome": "proved"
+  },
+  {
+   "clause": "E4-R2a",
+   "rule": "E4-R2",
+   "model": "raw",
+   "status": "feasible",
+   "seconds": 0.01,
+   "nodes": 1,
+   "n_free_bits": 74,
+   "n_active_clauses": 143,
+   "replay_allow_wins": true,
+   "replay_domain_holds": true,
+   "replay_clause_fires": true,
+   "outcome": "counterexample",
+   "bits_on": [
+    "tool=return_delivered_order_items",
+    "is_write",
+    "is_order_write",
+    "needs_auth",
+    "needs_delivered",
+    "uses_payment",
+    "needs_oid_confirm",
+    "status=__no_order__",
+    "authenticated",
+    "uid_mismatch"
+   ]
+  },
+  {
+   "clause": "E4-R2a",
+   "rule": "E4-R2",
+   "model": "guarded",
+   "status": "infeasible",
+   "seconds": 0.0,
+   "nodes": -1,
+   "n_free_bits": 74,
+   "n_active_clauses": 155,
+   "outcome": "proved"
+  },
+  {
+   "clause": "E4-R2b",
+   "rule": "E4-R2",
+   "model": "raw",
+   "status": "feasible",
+   "seconds": 0.01,
+   "nodes": 1,
+   "n_free_bits": 74,
+   "n_active_clauses": 141,
+   "replay_allow_wins": true,
+   "replay_domain_holds": true,
+   "replay_clause_fires": true,
+   "outcome": "counterexample",
+   "bits_on": [
+    "tool=get_order_details",
+    "needs_auth",
+    "status=pending",
+    "has_order_arg",
+    "authenticated",
+    "order_owner_mismatch",
+    "last_result_error",
+    "user_said_payment"
+   ]
+  },
+  {
+   "clause": "E4-R2b",
+   "rule": "E4-R2",
+   "model": "guarded",
+   "status": "infeasible",
+   "seconds": 0.0,
+   "nodes": -1,
+   "n_free_bits": 74,
+   "n_active_clauses": 153,
+   "outcome": "proved"
+  },
+  {
+   "clause": "E4-R3a",
+   "rule": "E4-R3",
+   "model": "raw",
+   "status": "feasible",
+   "seconds": 0.01,
+   "nodes": 1,
+   "n_free_bits": 73,
+   "n_active_clauses": 142,
+   "replay_allow_wins": true,
+   "replay_domain_holds": true,
+   "replay_clause_fires": true,
+   "outcome": "counterexample",
+   "bits_on": [
+    "tool=return_delivered_order_items",
+    "is_write",
+    "is_order_write",
+    "needs_auth",
+    "needs_delivered",
+    "uses_payment",
+    "needs_oid_confirm",
+    "status=__no_order__"
+   ]
+  },
+  {
+   "clause": "E4-R3a",
+   "rule": "E4-R3",
+   "model": "guarded",
+   "status": "infeasible",
+   "seconds": 0.0,
+   "nodes": -1,
+   "n_free_bits": 73,
+   "n_active_clauses": 154,
+   "outcome": "proved"
+  },
+  {
+   "clause": "E4-R3b",
+   "rule": "E4-R3",
+   "model": "raw",
+   "status": "feasible",
+   "seconds": 0.01,
+   "nodes": 1,
+   "n_free_bits": 73,
+   "n_active_clauses": 139,
+   "replay_allow_wins": true,
+   "replay_domain_holds": true,
+   "replay_clause_fires": true,
+   "outcome": "counterexample",
+   "bits_on": [
+    "tool=modify_user_address",
+    "is_write",
+    "needs_auth",
+    "status=__no_order__"
+   ]
+  },
+  {
+   "clause": "E4-R3b",
+   "rule": "E4-R3",
+   "model": "guarded",
+   "status": "infeasible",
+   "seconds": 0.0,
+   "nodes": -1,
+   "n_free_bits": 73,
+   "n_active_clauses": 151,
+   "outcome": "proved"
+  },
+  {
+   "clause": "E4-R4",
+   "rule": "E4-R4",
+   "model": "raw",
+   "status": "feasible",
+   "seconds": 0.01,
+   "nodes": 1,
+   "n_free_bits": 73,
+   "n_active_clauses": 140,
+   "replay_allow_wins": true,
+   "replay_domain_holds": true,
+   "replay_clause_fires": true,
+   "outcome": "counterexample",
+   "bits_on": [
+    "tool=return_delivered_order_items",
+    "is_write",
+    "is_order_write",
+    "needs_auth",
+    "needs_delivered",
+    "uses_payment",
+    "needs_oid_confirm",
+    "status=__no_order__"
+   ]
+  },
+  {
+   "clause": "E4-R4",
+   "rule": "E4-R4",
+   "model": "guarded",
+   "status": "infeasible",
+   "seconds": 0.0,
+   "nodes": -1,
+   "n_free_bits": 73,
+   "n_active_clauses": 152,
+   "outcome": "proved"
+  },
+  {
+   "clause": "E4-R5",
+   "rule": "E4-R5",
+   "model": "raw",
+   "status": "feasible",
+   "seconds": 0.01,
+   "nodes": 1,
+   "n_free_bits": 73,
+   "n_active_clauses": 144,
+   "replay_allow_wins": true,
+   "replay_domain_holds": true,
+   "replay_clause_fires": true,
+   "outcome": "counterexample",
+   "bits_on": [
+    "tool=cancel_pending_order",
+    "is_write",
+    "is_order_write",
+    "needs_auth",
+    "needs_pending",
+    "needs_oid_confirm",
+    "status=__no_order__",
+    "user_said_payment"
+   ]
+  },
+  {
+   "clause": "E4-R5",
+   "rule": "E4-R5",
+   "model": "guarded",
+   "status": "infeasible",
+   "seconds": 0.0,
+   "nodes": -1,
+   "n_free_bits": 73,
+   "n_active_clauses": 156,
+   "outcome": "proved"
+  },
+  {
+   "clause": "E4-R6",
+   "rule": "E4-R6",
+   "model": "raw",
+   "status": "feasible",
+   "seconds": 0.01,
+   "nodes": 1,
+   "n_free_bits": 73,
+   "n_active_clauses": 143,
+   "replay_allow_wins": true,
+   "replay_domain_holds": true,
+   "replay_clause_fires": true,
+   "outcome": "counterexample",
+   "bits_on": [
+    "tool=return_delivered_order_items",
+    "is_write",
+    "is_order_write",
+    "needs_auth",
+    "needs_delivered",
+    "uses_payment",
+    "needs_oid_confirm",
+    "status=__no_order__"
+   ]
+  },
+  {
+   "clause": "E4-R6",
+   "rule": "E4-R6",
+   "model": "guarded",
+   "status": "infeasible",
+   "seconds": 0.0,
+   "nodes": -1,
+   "n_free_bits": 73,
+   "n_active_clauses": 155,
+   "outcome": "proved"
+  },
+  {
+   "clause": "E4-R7",
+   "rule": "E4-R7",
+   "model": "raw",
+   "status": "feasible",
+   "seconds": 0.01,
+   "nodes": 1,
+   "n_free_bits": 73,
+   "n_active_clauses": 137,
+   "replay_allow_wins": true,
+   "replay_domain_holds": true,
+   "replay_clause_fires": true,
+   "outcome": "counterexample",
+   "bits_on": [
+    "tool=exchange_delivered_order_items",
+    "is_write",
+    "is_order_write",
+    "needs_auth",
+    "needs_delivered",
+    "is_item_change",
+    "uses_payment",
+    "status=pending",
+    "has_order_arg",
+    "item_change_done",
+    "new_items_seen_in_tools",
+    "order_written_before",
+    "writes_ge1",
+    "last_result_error"
+   ]
+  },
+  {
+   "clause": "E4-R7",
+   "rule": "E4-R7",
+   "model": "guarded",
+   "status": "infeasible",
+   "seconds": 0.0,
+   "nodes": -1,
+   "n_free_bits": 73,
+   "n_active_clauses": 149,
+   "outcome": "proved"
+  },
+  {
+   "clause": "E4-R8",
+   "rule": "E4-R8",
+   "model": "raw",
+   "status": "feasible",
+   "seconds": 0.01,
+   "nodes": 1,
+   "n_free_bits": 73,
+   "n_active_clauses": 141,
+   "replay_allow_wins": true,
+   "replay_domain_holds": true,
+   "replay_clause_fires": true,
+   "outcome": "counterexample",
+   "bits_on": [
+    "tool=cancel_pending_order",
+    "is_write",
+    "is_order_write",
+    "needs_auth",
+    "needs_pending",
+    "needs_oid_confirm",
+    "status=__no_order__",
+    "user_said_return",
+    "user_said_address"
+   ]
+  },
+  {
+   "clause": "E4-R8",
+   "rule": "E4-R8",
+   "model": "guarded",
+   "status": "infeasible",
+   "seconds": 0.0,
+   "nodes": -1,
+   "n_free_bits": 73,
+   "n_active_clauses": 153,
+   "outcome": "proved"
+  },
+  {
+   "clause": "E4-R9a",
+   "rule": "E4-R9",
+   "model": "raw",
+   "status": "feasible",
+   "seconds": 0.01,
+   "nodes": 1,
+   "n_free_bits": 73,
+   "n_active_clauses": 144,
+   "replay_allow_wins": true,
+   "replay_domain_holds": true,
+   "replay_clause_fires": true,
+   "outcome": "counterexample",
+   "bits_on": [
+    "tool=return_delivered_order_items",
+    "is_write",
+    "is_order_write",
+    "needs_auth",
+    "needs_delivered",
+    "uses_payment",
+    "needs_oid_confirm",
+    "status=__no_order__"
+   ]
+  },
+  {
+   "clause": "E4-R9a",
+   "rule": "E4-R9",
+   "model": "guarded",
+   "status": "infeasible",
+   "seconds": 0.0,
+   "nodes": -1,
+   "n_free_bits": 73,
+   "n_active_clauses": 156,
+   "outcome": "proved"
+  },
+  {
+   "clause": "E4-R9b",
+   "rule": "E4-R9",
+   "model": "raw",
+   "status": "feasible",
+   "seconds": 0.01,
+   "nodes": 1,
+   "n_free_bits": 72,
+   "n_active_clauses": 145,
+   "replay_allow_wins": true,
+   "replay_domain_holds": true,
+   "replay_clause_fires": true,
+   "outcome": "counterexample",
+   "bits_on": [
+    "tool=return_delivered_order_items",
+    "is_write",
+    "is_order_write",
+    "needs_auth",
+    "needs_delivered",
+    "uses_payment",
+    "needs_oid_confirm",
+    "status=__no_order__"
+   ]
+  },
+  {
+   "clause": "E4-R9b",
+   "rule": "E4-R9",
+   "model": "guarded",
+   "status": "infeasible",
+   "seconds": 0.0,
+   "nodes": -1,
+   "n_free_bits": 72,
+   "n_active_clauses": 157,
+   "outcome": "proved"
+  },
+  {
+   "clause": "E4-R10",
+   "rule": "E4-R10",
+   "model": "raw",
+   "status": "feasible",
+   "seconds": 0.01,
+   "nodes": 1,
+   "n_free_bits": 73,
+   "n_active_clauses": 144,
+   "replay_allow_wins": true,
+   "replay_domain_holds": true,
+   "replay_clause_fires": true,
+   "outcome": "counterexample",
+   "bits_on": [
+    "tool=exchange_delivered_order_items",
+    "is_write",
+    "is_order_write",
+    "needs_auth",
+    "needs_delivered",
+    "is_item_change",
+    "uses_payment",
+    "status=__no_order__",
+    "new_items_seen_in_tools"
+   ]
+  },
+  {
+   "clause": "E4-R10",
+   "rule": "E4-R10",
+   "model": "guarded",
+   "status": "infeasible",
+   "seconds": 0.0,
+   "nodes": -1,
+   "n_free_bits": 73,
+   "n_active_clauses": 156,
+   "outcome": "proved"
+  }
+ ],
+ "summary": {
+  "raw": {
+   "proved": 0,
+   "counterexample": 13,
+   "unknown": 0,
+   "replay failed": 0
+  },
+  "guarded": {
+   "proved": 13,
+   "counterexample": 0,
+   "unknown": 0,
+   "replay failed": 0
+  }
+ },
+ "seconds": 0.7
+}

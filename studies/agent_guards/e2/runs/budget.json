@@ -1,0 +1,77 @@
+{
+ "cap_minutes": 1750.0,
+ "formula": "share_a = max(20%, v_a x r) per replay arm (section 11, rev3)",
+ "items_minutes": {
+  "e2_1": 104.5,
+  "d1": 127.5,
+  "build": 15.0,
+  "e2_3_rule_arms": 104.5,
+  "e2_3_no_rule_arms": 62.7,
+  "a2": 44.8,
+  "a3_guard_aware_d3r_d4": 236.9,
+  "a3_d6": 118.4,
+  "a3_black_box": 236.9
+ },
+ "inputs": {
+  "seconds_per_call": {
+   "banking": 1.9892,
+   "slack": 1.3958,
+   "travel": 2.1375,
+   "workspace": 2.3922
+  },
+  "calls_per_episode": {
+   "banking": 4,
+   "slack": 3.17,
+   "travel": 4,
+   "workspace": 2.14
+  },
+  "filter_seconds": 1.317,
+  "optimizer_seconds": 3.56,
+  "d6_seconds_per_round": 22.5571,
+  "timing_contaminated": true
+ },
+ "steps": [
+  {
+   "dropped": null,
+   "total": 1051.2
+  }
+ ],
+ "plan": {
+  "a3_black_box": true,
+  "a2": true,
+  "d1": true,
+  "e2_3_no_rule_arms": true,
+  "a3_d6": true
+ },
+ "cut_order": [
+  "a3_black_box",
+  "a2",
+  "d1",
+  "e2_3_no_rule_arms",
+  "a3_d6"
+ ],
+ "e2_3_arms": {
+  "rule_arms": [
+   "d3r",
+   "d4_tm",
+   "d5_lr",
+   "d5_tree",
+   "d6_rules"
+  ],
+  "no_rule_arms": [
+   "d2",
+   "d3",
+   "w_only"
+  ]
+ },
+ "never_cut": [
+  "e2_1",
+  "e2_3_rule_arms",
+  "a3_guard_aware_d3r_d4",
+  "build"
+ ],
+ "core_minutes": 460.9,
+ "projected_total": 1051.2,
+ "stop": false,
+ "why": ""
+}

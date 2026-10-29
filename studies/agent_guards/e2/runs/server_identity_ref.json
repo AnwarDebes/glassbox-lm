@@ -1,0 +1,78 @@
+{
+ "utc": "2026-10-23T00:39:42Z",
+ "port": 18082,
+ "health": "ok",
+ "models": [
+  "qwen3.5-9b-q8_0"
+ ],
+ "props": {
+  "build_info": "b1-4c3c581",
+  "model_path": "../tools/models_untrusted/qwen3.5-9b/gguf-b11742/Qwen3.5-9B-Q8_0.gguf",
+  "model_alias": "qwen3.5-9b-q8_0",
+  "total_slots": 1,
+  "n_ctx": 65536,
+  "chat_template_sha256": "a4aee8afcf2e0711942cf848899be66016f8d14a889ff9ede07bca099c28f715",
+  "chat_template_tool_use_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "modalities": {
+   "vision": false,
+   "video": false,
+   "audio": false
+  },
+  "default_params_sha256": "19364d460a901e0df339d1f934b22358fa2f3b94a0aafa912e13cbe7dd799b7e"
+ },
+ "process": {
+  "cmdline": [
+   "../tools/llama.cpp/b11742/build-cuda129/bin/llama-server",
+   "-m",
+   "../tools/models_untrusted/qwen3.5-9b/gguf-b11742/Qwen3.5-9B-Q8_0.gguf",
+   "--host",
+   "127.0.0.1",
+   "--port",
+   "18082",
+   "-a",
+   "qwen3.5-9b-q8_0",
+   "--jinja",
+   "--reasoning-budget",
+   "0",
+   "-fa",
+   "off",
+   "-np",
+   "1",
+   "-c",
+   "65536",
+   "-ngl",
+   "99",
+   "-t",
+   "2",
+   "--no-webui",
+   "--metrics",
+   "-rea",
+   "off"
+  ],
+  "exe": "../tools/llama.cpp/b11742/build-cuda129/bin/llama-server",
+  "flags": {
+   "-np": "1",
+   "--jinja": true,
+   "--reasoning-budget": "0",
+   "-fa": "off",
+   "-c": "65536",
+   "-m": "../tools/models_untrusted/qwen3.5-9b/gguf-b11742/Qwen3.5-9B-Q8_0.gguf"
+  },
+  "exe_sha256": {
+   "llama-server": "2fc2870a983daedf21cc248a890752fb761fd9df85e04d68b1264bc61a84652b",
+   "libllama-server-impl.so": "22be23afb6ca5593cab0c89eccbab0e8234dc3242b64e1d29113a735efafced4",
+   "libllama.so.0.7.0": "52828c64f37a0fab9a4571d044aa39d36f05eb85a1d885e6ca91f7a4297f13cb",
+   "libllama-common.so.0.7.0": "9980440e054a95c1ed32fec798640d337cace43e9b1c06fc304bb4e693fe8fc4",
+   "libggml.so.0.27.0": "06a3d6200f8ead292f38e2f265eb657ccf315891f1d69d6728a4d83ac090cc43",
+   "libggml-base.so.0.27.0": "02396b5e005ca26e1731bac7c11e9b4bb0048be49bb1a8ab93425f3bcfefa0c0",
+   "libggml-cpu.so.0.27.0": "d317381205a1a687214aae1344c6bf11dc13f4c6507fb1d9125391a7becc5648",
+   "libggml-cuda.so.0.27.0": "5b695d777bdb870e6cb1bcb48d2f9ba02c9a5a2933905c9d37039ca0b6d59d6b",
+   "libmtmd.so.0.7.0": "5ecccabbb1e1dc8b557ffb2835fc0d9ecdbbd6e613ea889ed1cfa9f02d044765"
+  }
+ },
+ "gguf": {
+  "path": "../tools/models_untrusted/qwen3.5-9b/gguf-b11742/Qwen3.5-9B-Q8_0.gguf",
+  "bytes": 9786060672,
+  "sha256": "ff3d8ff122c21c37f2ca52502db705e36903c581657f1e8d3e930a9cfb4d50aa"
+ }
+}

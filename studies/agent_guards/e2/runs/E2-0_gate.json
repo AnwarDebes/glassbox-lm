@@ -1,0 +1,36 @@
+{
+ "go": true,
+ "checks": {
+  "parse_gate": true,
+  "context_headroom": true,
+  "no_context_errors": true,
+  "thinking_off": true,
+  "paired_replay_identity": true,
+  "decide_check": true,
+  "label_path": true,
+  "harness_sanity": true,
+  "closed_loop_no_error": true,
+  "a3_candidate_episode": true,
+  "optimizer_probes_no_exception": true,
+  "d6_probe": true
+ },
+ "fake": false,
+ "failed": [],
+ "context_errors": {
+  "all": 0,
+  "context_size": 0,
+  "other_http_400": 0,
+  "path_if_failed": null
+ },
+ "d6_probe_exit": 0,
+ "d6_probe_round_errors": 0,
+ "a3_refusal_rule": {
+  "a3_allowed": true,
+  "probe_calls": 8,
+  "probe_errors": 0,
+  "no_valid_candidate": 0,
+  "why": ""
+ },
+ "d6_probe_calls_checked": 10,
+ "note": "stop/go only: E2-0's outcomes stay sealed; the budget rule is report_e2.py budget"
+}

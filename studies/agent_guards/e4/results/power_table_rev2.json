@@ -1,0 +1,945 @@
+{
+ "statistic": "summarize_e4.boot_ci (10,000 resamples, default_rng(20261021), 95% percentile)",
+ "E4.2_114_tasks": [
+  {
+   "against": 0,
+   "favourable_needed": 4,
+   "diff_points": 3.51,
+   "ci95": [
+    0.88,
+    7.02
+   ]
+  },
+  {
+   "against": 1,
+   "favourable_needed": 7,
+   "diff_points": 5.26,
+   "ci95": [
+    0.88,
+    10.53
+   ]
+  },
+  {
+   "against": 2,
+   "favourable_needed": 9,
+   "diff_points": 6.14,
+   "ci95": [
+    0.88,
+    11.4
+   ]
+  },
+  {
+   "against": 3,
+   "favourable_needed": 11,
+   "diff_points": 7.02,
+   "ci95": [
+    0.88,
+    13.16
+   ]
+  },
+  {
+   "against": 4,
+   "favourable_needed": 13,
+   "diff_points": 7.89,
+   "ci95": [
+    0.88,
+    14.91
+   ]
+  },
+  {
+   "against": 5,
+   "favourable_needed": 14,
+   "diff_points": 7.89,
+   "ci95": [
+    0.88,
+    15.79
+   ]
+  },
+  {
+   "against": 6,
+   "favourable_needed": 16,
+   "diff_points": 8.77,
+   "ci95": [
+    0.88,
+    16.67
+   ]
+  }
+ ],
+ "E4.3_40_tasks": [
+  {
+   "against": 0,
+   "favourable_needed": 4,
+   "diff_points": 10.0,
+   "ci95": [
+    2.5,
+    20.0
+   ]
+  },
+  {
+   "against": 1,
+   "favourable_needed": 7,
+   "diff_points": 15.0,
+   "ci95": [
+    2.5,
+    27.5
+   ]
+  },
+  {
+   "against": 2,
+   "favourable_needed": 9,
+   "diff_points": 17.5,
+   "ci95": [
+    2.5,
+    32.5
+   ]
+  },
+  {
+   "against": 3,
+   "favourable_needed": 10,
+   "diff_points": 17.5,
+   "ci95": [
+    2.44,
+    35.0
+   ]
+  },
+  {
+   "against": 4,
+   "favourable_needed": 13,
+   "diff_points": 22.5,
+   "ci95": [
+    2.5,
+    42.5
+   ]
+  },
+  {
+   "against": 5,
+   "favourable_needed": 14,
+   "diff_points": 22.5,
+   "ci95": [
+    2.5,
+    42.5
+   ]
+  },
+  {
+   "against": 6,
+   "favourable_needed": 16,
+   "diff_points": 25.0,
+   "ci95": [
+    2.5,
+    45.06
+   ]
+  }
+ ],
+ "E4.5_40_tasks_margin_-5": [
+  {
+   "A2_better": 0,
+   "A3_better": 0,
+   "diff_points": 0.0,
+   "ci95": [
+    0.0,
+    0.0
+   ],
+   "verdict": "not informative"
+  },
+  {
+   "A2_better": 0,
+   "A3_better": 1,
+   "diff_points": -2.5,
+   "ci95": [
+    -7.5,
+    0.0
+   ],
+   "verdict": "not informative"
+  },
+  {
+   "A2_better": 0,
+   "A3_better": 2,
+   "diff_points": -5.0,
+   "ci95": [
+    -12.5,
+    0.0
+   ],
+   "verdict": "not informative"
+  },
+  {
+   "A2_better": 0,
+   "A3_better": 3,
+   "diff_points": -7.5,
+   "ci95": [
+    -17.5,
+    0.0
+   ],
+   "verdict": "not informative"
+  },
+  {
+   "A2_better": 0,
+   "A3_better": 4,
+   "diff_points": -10.0,
+   "ci95": [
+    -20.0,
+    -2.5
+   ],
+   "verdict": "not shown"
+  },
+  {
+   "A2_better": 0,
+   "A3_better": 5,
+   "diff_points": -12.5,
+   "ci95": [
+    -22.5,
+    -2.5
+   ],
+   "verdict": "not shown"
+  },
+  {
+   "A2_better": 0,
+   "A3_better": 6,
+   "diff_points": -15.0,
+   "ci95": [
+    -27.5,
+    -5.0
+   ],
+   "verdict": "not shown"
+  },
+  {
+   "A2_better": 0,
+   "A3_better": 7,
+   "diff_points": -17.5,
+   "ci95": [
+    -30.0,
+    -7.5
+   ],
+   "verdict": "not shown"
+  },
+  {
+   "A2_better": 0,
+   "A3_better": 8,
+   "diff_points": -20.0,
+   "ci95": [
+    -32.5,
+    -7.5
+   ],
+   "verdict": "not shown"
+  },
+  {
+   "A2_better": 1,
+   "A3_better": 0,
+   "diff_points": 2.5,
+   "ci95": [
+    0.0,
+    7.5
+   ],
+   "verdict": "not informative"
+  },
+  {
+   "A2_better": 1,
+   "A3_better": 1,
+   "diff_points": 0.0,
+   "ci95": [
+    -7.5,
+    7.5
+   ],
+   "verdict": "not informative"
+  },
+  {
+   "A2_better": 1,
+   "A3_better": 2,
+   "diff_points": -2.5,
+   "ci95": [
+    -10.0,
+    5.0
+   ],
+   "verdict": "not informative"
+  },
+  {
+   "A2_better": 1,
+   "A3_better": 3,
+   "diff_points": -5.0,
+   "ci95": [
+    -15.0,
+    5.0
+   ],
+   "verdict": "not shown"
+  },
+  {
+   "A2_better": 1,
+   "A3_better": 4,
+   "diff_points": -7.5,
+   "ci95": [
+    -17.5,
+    2.5
+   ],
+   "verdict": "not shown"
+  },
+  {
+   "A2_better": 1,
+   "A3_better": 5,
+   "diff_points": -10.0,
+   "ci95": [
+    -22.5,
+    0.0
+   ],
+   "verdict": "not shown"
+  },
+  {
+   "A2_better": 1,
+   "A3_better": 6,
+   "diff_points": -12.5,
+   "ci95": [
+    -25.0,
+    0.0
+   ],
+   "verdict": "not shown"
+  },
+  {
+   "A2_better": 1,
+   "A3_better": 7,
+   "diff_points": -15.0,
+   "ci95": [
+    -27.5,
+    -2.5
+   ],
+   "verdict": "not shown"
+  },
+  {
+   "A2_better": 1,
+   "A3_better": 8,
+   "diff_points": -17.5,
+   "ci95": [
+    -32.5,
+    -5.0
+   ],
+   "verdict": "not shown"
+  },
+  {
+   "A2_better": 2,
+   "A3_better": 0,
+   "diff_points": 5.0,
+   "ci95": [
+    0.0,
+    12.5
+   ],
+   "verdict": "not informative"
+  },
+  {
+   "A2_better": 2,
+   "A3_better": 1,
+   "diff_points": 2.5,
+   "ci95": [
+    -5.0,
+    10.0
+   ],
+   "verdict": "not informative"
+  },
+  {
+   "A2_better": 2,
+   "A3_better": 2,
+   "diff_points": 0.0,
+   "ci95": [
+    -10.0,
+    10.0
+   ],
+   "verdict": "not shown"
+  },
+  {
+   "A2_better": 2,
+   "A3_better": 3,
+   "diff_points": -2.5,
+   "ci95": [
+    -12.5,
+    7.5
+   ],
+   "verdict": "not shown"
+  },
+  {
+   "A2_better": 2,
+   "A3_better": 4,
+   "diff_points": -5.0,
+   "ci95": [
+    -17.5,
+    7.5
+   ],
+   "verdict": "not shown"
+  },
+  {
+   "A2_better": 2,
+   "A3_better": 5,
+   "diff_points": -7.5,
+   "ci95": [
+    -20.0,
+    5.0
+   ],
+   "verdict": "not shown"
+  },
+  {
+   "A2_better": 2,
+   "A3_better": 6,
+   "diff_points": -10.0,
+   "ci95": [
+    -25.0,
+    2.5
+   ],
+   "verdict": "not shown"
+  },
+  {
+   "A2_better": 2,
+   "A3_better": 7,
+   "diff_points": -12.5,
+   "ci95": [
+    -27.5,
+    2.5
+   ],
+   "verdict": "not shown"
+  },
+  {
+   "A2_better": 2,
+   "A3_better": 8,
+   "diff_points": -15.0,
+   "ci95": [
+    -30.0,
+    0.0
+   ],
+   "verdict": "not shown"
+  },
+  {
+   "A2_better": 3,
+   "A3_better": 0,
+   "diff_points": 7.5,
+   "ci95": [
+    0.0,
+    17.5
+   ],
+   "verdict": "not informative"
+  },
+  {
+   "A2_better": 3,
+   "A3_better": 1,
+   "diff_points": 5.0,
+   "ci95": [
+    -5.0,
+    15.0
+   ],
+   "verdict": "not shown"
+  },
+  {
+   "A2_better": 3,
+   "A3_better": 2,
+   "diff_points": 2.5,
+   "ci95": [
+    -7.5,
+    15.0
+   ],
+   "verdict": "not shown"
+  },
+  {
+   "A2_better": 3,
+   "A3_better": 3,
+   "diff_points": 0.0,
+   "ci95": [
+    -12.5,
+    12.5
+   ],
+   "verdict": "not shown"
+  },
+  {
+   "A2_better": 3,
+   "A3_better": 4,
+   "diff_points": -2.5,
+   "ci95": [
+    -15.0,
+    10.0
+   ],
+   "verdict": "not shown"
+  },
+  {
+   "A2_better": 3,
+   "A3_better": 5,
+   "diff_points": -5.0,
+   "ci95": [
+    -17.5,
+    10.0
+   ],
+   "verdict": "not shown"
+  },
+  {
+   "A2_better": 3,
+   "A3_better": 6,
+   "diff_points": -7.5,
+   "ci95": [
+    -22.5,
+    7.5
+   ],
+   "verdict": "not shown"
+  },
+  {
+   "A2_better": 3,
+   "A3_better": 7,
+   "diff_points": -10.0,
+   "ci95": [
+    -25.0,
+    5.0
+   ],
+   "verdict": "not shown"
+  },
+  {
+   "A2_better": 3,
+   "A3_better": 8,
+   "diff_points": -12.5,
+   "ci95": [
+    -27.5,
+    2.5
+   ],
+   "verdict": "not shown"
+  },
+  {
+   "A2_better": 4,
+   "A3_better": 0,
+   "diff_points": 10.0,
+   "ci95": [
+    2.5,
+    20.0
+   ],
+   "verdict": "non-inferior"
+  },
+  {
+   "A2_better": 4,
+   "A3_better": 1,
+   "diff_points": 7.5,
+   "ci95": [
+    -2.5,
+    20.0
+   ],
+   "verdict": "non-inferior"
+  },
+  {
+   "A2_better": 4,
+   "A3_better": 2,
+   "diff_points": 5.0,
+   "ci95": [
+    -7.5,
+    17.5
+   ],
+   "verdict": "not shown"
+  },
+  {
+   "A2_better": 4,
+   "A3_better": 3,
+   "diff_points": 2.5,
+   "ci95": [
+    -10.0,
+    15.0
+   ],
+   "verdict": "not shown"
+  },
+  {
+   "A2_better": 4,
+   "A3_better": 4,
+   "diff_points": 0.0,
+   "ci95": [
+    -15.0,
+    15.0
+   ],
+   "verdict": "not shown"
+  },
+  {
+   "A2_better": 4,
+   "A3_better": 5,
+   "diff_points": -2.5,
+   "ci95": [
+    -17.5,
+    12.5
+   ],
+   "verdict": "not shown"
+  },
+  {
+   "A2_better": 4,
+   "A3_better": 6,
+   "diff_points": -5.0,
+   "ci95": [
+    -20.0,
+    10.0
+   ],
+   "verdict": "not shown"
+  },
+  {
+   "A2_better": 4,
+   "A3_better": 7,
+   "diff_points": -7.5,
+   "ci95": [
+    -25.0,
+    7.5
+   ],
+   "verdict": "not shown"
+  },
+  {
+   "A2_better": 4,
+   "A3_better": 8,
+   "diff_points": -10.0,
+   "ci95": [
+    -27.5,
+    7.5
+   ],
+   "verdict": "not shown"
+  },
+  {
+   "A2_better": 5,
+   "A3_better": 0,
+   "diff_points": 12.5,
+   "ci95": [
+    2.5,
+    22.5
+   ],
+   "verdict": "non-inferior"
+  },
+  {
+   "A2_better": 5,
+   "A3_better": 1,
+   "diff_points": 10.0,
+   "ci95": [
+    0.0,
+    22.5
+   ],
+   "verdict": "non-inferior"
+  },
+  {
+   "A2_better": 5,
+   "A3_better": 2,
+   "diff_points": 7.5,
+   "ci95": [
+    -5.0,
+    20.0
+   ],
+   "verdict": "not shown"
+  },
+  {
+   "A2_better": 5,
+   "A3_better": 3,
+   "diff_points": 5.0,
+   "ci95": [
+    -7.5,
+    20.0
+   ],
+   "verdict": "not shown"
+  },
+  {
+   "A2_better": 5,
+   "A3_better": 4,
+   "diff_points": 2.5,
+   "ci95": [
+    -12.5,
+    17.5
+   ],
+   "verdict": "not shown"
+  },
+  {
+   "A2_better": 5,
+   "A3_better": 5,
+   "diff_points": 0.0,
+   "ci95": [
+    -15.0,
+    15.0
+   ],
+   "verdict": "not shown"
+  },
+  {
+   "A2_better": 5,
+   "A3_better": 6,
+   "diff_points": -2.5,
+   "ci95": [
+    -17.5,
+    12.5
+   ],
+   "verdict": "not shown"
+  },
+  {
+   "A2_better": 5,
+   "A3_better": 7,
+   "diff_points": -5.0,
+   "ci95": [
+    -22.5,
+    12.5
+   ],
+   "verdict": "not shown"
+  },
+  {
+   "A2_better": 5,
+   "A3_better": 8,
+   "diff_points": -7.5,
+   "ci95": [
+    -25.0,
+    10.0
+   ],
+   "verdict": "not shown"
+  },
+  {
+   "A2_better": 6,
+   "A3_better": 0,
+   "diff_points": 15.0,
+   "ci95": [
+    5.0,
+    27.5
+   ],
+   "verdict": "non-inferior"
+  },
+  {
+   "A2_better": 6,
+   "A3_better": 1,
+   "diff_points": 12.5,
+   "ci95": [
+    0.0,
+    25.0
+   ],
+   "verdict": "non-inferior"
+  },
+  {
+   "A2_better": 6,
+   "A3_better": 2,
+   "diff_points": 10.0,
+   "ci95": [
+    -2.5,
+    22.5
+   ],
+   "verdict": "non-inferior"
+  },
+  {
+   "A2_better": 6,
+   "A3_better": 3,
+   "diff_points": 7.5,
+   "ci95": [
+    -7.5,
+    22.5
+   ],
+   "verdict": "not shown"
+  },
+  {
+   "A2_better": 6,
+   "A3_better": 4,
+   "diff_points": 5.0,
+   "ci95": [
+    -10.0,
+    20.0
+   ],
+   "verdict": "not shown"
+  },
+  {
+   "A2_better": 6,
+   "A3_better": 5,
+   "diff_points": 2.5,
+   "ci95": [
+    -12.5,
+    17.5
+   ],
+   "verdict": "not shown"
+  },
+  {
+   "A2_better": 6,
+   "A3_better": 6,
+   "diff_points": 0.0,
+   "ci95": [
+    -17.5,
+    17.5
+   ],
+   "verdict": "not shown"
+  },
+  {
+   "A2_better": 6,
+   "A3_better": 7,
+   "diff_points": -2.5,
+   "ci95": [
+    -20.0,
+    15.0
+   ],
+   "verdict": "not shown"
+  },
+  {
+   "A2_better": 6,
+   "A3_better": 8,
+   "diff_points": -5.0,
+   "ci95": [
+    -22.5,
+    12.5
+   ],
+   "verdict": "not shown"
+  },
+  {
+   "A2_better": 7,
+   "A3_better": 0,
+   "diff_points": 17.5,
+   "ci95": [
+    7.5,
+    30.0
+   ],
+   "verdict": "non-inferior"
+  },
+  {
+   "A2_better": 7,
+   "A3_better": 1,
+   "diff_points": 15.0,
+   "ci95": [
+    2.5,
+    27.5
+   ],
+   "verdict": "non-inferior"
+  },
+  {
+   "A2_better": 7,
+   "A3_better": 2,
+   "diff_points": 12.5,
+   "ci95": [
+    0.0,
+    27.5
+   ],
+   "verdict": "non-inferior"
+  },
+  {
+   "A2_better": 7,
+   "A3_better": 3,
+   "diff_points": 10.0,
+   "ci95": [
+    -5.0,
+    25.0
+   ],
+   "verdict": "not shown"
+  },
+  {
+   "A2_better": 7,
+   "A3_better": 4,
+   "diff_points": 7.5,
+   "ci95": [
+    -7.5,
+    22.5
+   ],
+   "verdict": "not shown"
+  },
+  {
+   "A2_better": 7,
+   "A3_better": 5,
+   "diff_points": 5.0,
+   "ci95": [
+    -12.5,
+    22.5
+   ],
+   "verdict": "not shown"
+  },
+  {
+   "A2_better": 7,
+   "A3_better": 6,
+   "diff_points": 2.5,
+   "ci95": [
+    -15.0,
+    20.0
+   ],
+   "verdict": "not shown"
+  },
+  {
+   "A2_better": 7,
+   "A3_better": 7,
+   "diff_points": 0.0,
+   "ci95": [
+    -17.5,
+    17.5
+   ],
+   "verdict": "not shown"
+  },
+  {
+   "A2_better": 7,
+   "A3_better": 8,
+   "diff_points": -2.5,
+   "ci95": [
+    -22.5,
+    17.5
+   ],
+   "verdict": "not shown"
+  },
+  {
+   "A2_better": 8,
+   "A3_better": 0,
+   "diff_points": 20.0,
+   "ci95": [
+    7.5,
+    32.5
+   ],
+   "verdict": "non-inferior"
+  },
+  {
+   "A2_better": 8,
+   "A3_better": 1,
+   "diff_points": 17.5,
+   "ci95": [
+    5.0,
+    32.5
+   ],
+   "verdict": "non-inferior"
+  },
+  {
+   "A2_better": 8,
+   "A3_better": 2,
+   "diff_points": 15.0,
+   "ci95": [
+    0.0,
+    30.0
+   ],
+   "verdict": "non-inferior"
+  },
+  {
+   "A2_better": 8,
+   "A3_better": 3,
+   "diff_points": 12.5,
+   "ci95": [
+    -2.5,
+    27.5
+   ],
+   "verdict": "non-inferior"
+  },
+  {
+   "A2_better": 8,
+   "A3_better": 4,
+   "diff_points": 10.0,
+   "ci95": [
+    -5.06,
+    27.5
+   ],
+   "verdict": "not shown"
+  },
+  {
+   "A2_better": 8,
+   "A3_better": 5,
+   "diff_points": 7.5,
+   "ci95": [
+    -10.0,
+    25.0
+   ],
+   "verdict": "not shown"
+  },
+  {
+   "A2_better": 8,
+   "A3_better": 6,
+   "diff_points": 5.0,
+   "ci95": [
+    -12.5,
+    22.5
+   ],
+   "verdict": "not shown"
+  },
+  {
+   "A2_better": 8,
+   "A3_better": 7,
+   "diff_points": 2.5,
+   "ci95": [
+    -17.5,
+    22.5
+   ],
+   "verdict": "not shown"
+  },
+  {
+   "A2_better": 8,
+   "A3_better": 8,
+   "diff_points": 0.0,
+   "ci95": [
+    -20.0,
+    20.0
+   ],
+   "verdict": "not shown"
+  }
+ ]
+}

@@ -1,0 +1,3 @@
+{"kind": "stopped", "stage": "d1", "run_dir": "studies/agent_guards/e2/runs/E2-2/20261026T143229Z", "exit_code": 3, "utc": "2026-10-26T14:54:37Z", "bytes": 6259600, "sha256": "632192aae59f346cd1dcd5ca3292e0532867cbf518b58c70e905309707f9e062"}
+{"kind": "rerun", "stage": "d1", "rerun_of": "studies/agent_guards/e2/runs/E2-2/20261026T143229Z", "utc": "2026-10-26T14:55:03Z"}
+{"kind": "stopped", "stage": "d1", "run_dir": "studies/agent_guards/e2/runs/E2-2/20261026T145437Z", "exit_code": 3, "utc": "2026-10-26T15:10:51Z", "bytes": 6259600, "sha256": "632192aae59f346cd1dcd5ca3292e0532867cbf518b58c70e905309707f9e062"}

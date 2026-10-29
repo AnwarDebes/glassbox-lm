@@ -1,0 +1,18 @@
+{
+ "registration": "glassbox-lm/studies/agent_guards/e2/REGISTRATION_E2.md",
+ "registration_sha256": "5c52966d9a21553a4dde4487a670070e8e6f9adbf0a6b0673d74fec588994c81",
+ "utc": "2026-10-23T01:47:25Z",
+ "identity_ref_sha256": "6878ba322746a0379c62f31f719b2194cbfe07dd1fc90e7083c7bea7a3a0b718",
+ "gate_sha256": "721ff9b15ea4921896fe9267d011377b40b441951a03204315f6034e0f6e5127",
+ "budget_sha256": "6a724bfd1227588196dcefb89d594c1baa2e48e5261f981d7fd89241c9ca7818",
+ "budget_detail_sha256": "92ab19c1ee6b50f649b4b3319d4c07d685027d5acb3f793fba96976ede72d094",
+ "e2_0_summary_sha256": "099434bd2758bdd899daaec3bafca0c76ec6c8b83b544e2707ac2dc46563ce48",
+ "e2_0_chain_record": {
+  "stage": "smoke",
+  "run_dir": "studies/agent_guards/e2/runs/E2-0/20261023T003915Z",
+  "utc": "2026-10-23T00:48:42Z",
+  "bytes": 205915,
+  "sha256": "0870b982e04418c4326fff9f31ecd78d161707a70d4a0c5401a63ea5db73731c"
+ },
+ "rule": "write-once; e2_check.py --begin requires it for every stage after E2-0"
+}

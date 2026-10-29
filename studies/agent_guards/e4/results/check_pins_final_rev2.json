@@ -1,0 +1,30 @@
+{
+ "registration": "REGISTRATION_E4.md",
+ "registration_sha256": "079be918a12cf4820fa344363f1ae8bf46a17c88fa7254c58a0a69344a16f47c",
+ "stage": "smoke",
+ "campaign": "e4reg_check",
+ "utc": "2026-10-21T06:55:42Z",
+ "tables": {
+  "H1 E4 code (e4guard/, scripts/, tests/)": {
+   "rows": 45,
+   "match": 45
+  },
+  "H2 frozen pins and E4 data files": {
+   "rows": 4,
+   "match": 4
+  },
+  "H3 read-only inputs (files)": {
+   "rows": 34,
+   "match": 34
+  },
+  "H4 tau2 trees (every file; no __pycache__ or .pyc)": {
+   "rows": 3,
+   "match": 3
+  },
+  "H5 installed packages, interpreters and the server": {
+   "rows": 18,
+   "match": 18
+  }
+ },
+ "differences": []
+}
