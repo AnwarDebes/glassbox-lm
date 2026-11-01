@@ -29,7 +29,14 @@ This repository, `glassbox-lm`, holds a research programme that takes measured s
 
 **[Open the glass box](https://anwardebes.github.io/glassbox-lm/)**: the CVTM-core of the first study, counted in the browser from ten public-domain books. It is the word part of the count floor of [research/design.md](research/design.md), without the design's word-category codes.
 
+<a href="https://anwardebes.github.io/glassbox-lm/"><img src="docs/film-preview.webp" width="100%" alt="glassbox-lm: what if a language model’s knowledge were a list of rules you could read? Click to open the live glass box."></a>
+
+<details>
+<summary>▶ Watch the 50-second film with sound</summary>
+
 https://github.com/user-attachments/assets/5b06241d-a0be-4f2a-89bf-f9d824464df2
+
+</details>
 
 The page counts the books in the browser tab and predicts the next word with the CVTM-core of tm_language_model (section 11 of its [engine specification](studies/tm_language_model/docs/11-engine-spec.md)): Kneser-Ney 5-gram suffix clauses in their exact vote form, the document clauses, the pointer clause and the bucketed mixture, with weights fitted by the study's MAP-EM. For every candidate word it shows the clauses that vote, the memory of the text typed so far and the passages where the voting pattern was counted, and it scores 19 held-out chapters when it loads. No Tsetlin Machine runs on the page. A test checks the JavaScript against the study's own Python code on the same tokens: at 2,500 sampled held-out positions every probability agrees to within 4e-15, and over all 58,266 positions the totals agree to within 1e-9. The page, its data and the test are in [live/](live/README.md); its numbers belong to its corpus and are not comparable with those of the studies.
 
