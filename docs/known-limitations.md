@@ -8,7 +8,7 @@ Paths are given from the repository root. The short names docs/11, docs/12 and d
 
 ### What is not distributed
 
-A clone holds code, configs, registrations and documents. It holds no run folder, no dataset, no saved model, no compiled engine binary, no virtual environment and no clone of a third-party reference repository; the glass box page in `live/` is the one exception, with the token ids of ten public-domain books and the mixture weights fitted on them, which a clone can rebuild and test ([live/README.md](../live/README.md)). No number on a results page can be recomputed from a clone alone, and only the recorded outputs of the recomputations in `studies/decision_layer/verification/` can be inspected in their files. A cited run id can be looked up in the [run index](run-index.md), which lists the 1,185 run folders of the four studies that keep run folders with date, exit status and flag. decision_layer keeps result files and run logs instead of run folders; they are not distributed either. Nothing more of a run is published: the raw run records carry paths and host names of one machine and stay out.
+A clone holds code, configs, registrations and documents. It holds no run folder, no dataset, no saved model, no compiled engine binary, no virtual environment and no clone of a third-party reference repository; the glass box page in `live/` is the one exception, with the token ids of ten public-domain books and the mixture weights fitted on them, which a clone can rebuild and test ([live/README.md](../live/README.md)). No number on a results page can be recomputed from a clone alone. Source files of numbers can be inspected for the recorded outputs of the recomputations in `studies/decision_layer/verification/`, for the run logs that decision_layer cites and for the small result files of the four studies added on 29 Oct 2026. A cited run id can be looked up in the [run index](run-index.md), which lists the 1,185 run folders of the four studies that keep run folders with date, exit status and flag. decision_layer keeps result files and run logs instead of run folders; its result files are not distributed either, and of its run logs only those that its pages cite are. Nothing more of a run is published: the raw run records carry paths and host names of one machine and stay out.
 
 Reproducing a result means obtaining the data as the [data page](data.md) describes, building an environment from the lock files, and running the experiment again on comparable hardware. No such rerun was made from the published tree, so whether one returns a recorded value is not known.
 
@@ -121,7 +121,7 @@ The statements below are limits of the evidence. The status of every registered 
 
 ### tm_language_model
 
-The core result of this study is negative: its main accuracy goal was missed, 11 of the 30 hypotheses that were run are not met, and 61 of the 91 registered hypotheses were not run. Results page: [studies/tm_language_model/docs/results.md](../studies/tm_language_model/docs/results.md).
+The core result of this study is negative: its main accuracy goal was missed, 14 of the 34 hypotheses that were run are not met, and 57 of the 91 registered hypotheses were not run. Results page: [studies/tm_language_model/docs/results.md](../studies/tm_language_model/docs/results.md).
 
 - The main accuracy comparison, H1.1, was run on seed 1 only (docs/13 A3).
 - The count-vote read-out is credited through comparisons whose baseline is the model's own read-out. H8.1 compares the count-vote read-out with the signed votes of the same clause bank, not with an n-gram model. The count-vote core contains the Kneser-Ney 5-gram model as a component, so its comparison with that model (H8.3) says nothing about Tsetlin learning. docs/13 A3 states this itself and credits Tsetlin learning only through H8.1 and H8.10.
@@ -202,6 +202,10 @@ The study has two registered results, both computed on 2026-10-25: T0 is not met
 - The data preparation of B6 reads the AG News test file directly from the cache of tm_language_model, not through the loaders of that study, which count every read of a test split. No run of tally has scored that split.
 - `studies/tally/scripts/t0_kn_beside.py`, a script of T0 that the results page names, scores Kneser-Ney 3 and 5 on the dev-test split by default (`--split devtest`) with no guard. As a file of T0 it was left as it is; a run for any other purpose has to pass `--split valid`.
 - The study depends on other studies for its environments, its CPU slots and GPU lock, the Penn Treebank text and WordNet, and on a run folder of hierarchical_tm for the OR-groups of A2 (section 1).
+
+### The studies added from 29 Oct 2026 on
+
+The four studies added on 29 Oct 2026 and or_group_tm, added on 12 Nov 2026, state their limits on their own pages, next to the numbers they qualify: [agent_vs_llm](../studies/agent_vs_llm/docs/results.md) (section "What must travel with these numbers" and the log-size section), [text_understanding](../studies/text_understanding/docs/results.md), [agent_guards](../studies/agent_guards/docs/results.md), [language_part3](../studies/language_part3/docs/results.md) and [or_group_tm](../studies/or_group_tm/README.md). The limits of the time and energy figures are on the [efficiency page](efficiency.md). This page has not yet been extended with sections of its own for these studies.
 
 ## 5. Flagged runs
 

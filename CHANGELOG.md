@@ -314,3 +314,26 @@ logs its pages cite. The finish pass's remaining files of 25 Oct were added: the
 (hierarchical_tm) and the amendments A11 and A12 with their drivers (tm_language_model). The published copies of files
 that ran find their paths from their own place in the repository and are edited in wording only; the hashes of the
 files as they ran are in [docs/hash-table.md](docs/hash-table.md).
+
+## 30 Oct 2026: agent_vs_llm, the logsize dev study
+
+The logsize dev study of agent_vs_llm (`PLAN_logsize_dev.md`, frozen 2026-10-28T08:04:16Z, no test row) ended on
+30 Oct. With 64 or 256 logged dialogues LLM* is ahead of the readable agent on all three datasets, by 6.6 to 48.0
+points on 500 dev rows; the readable agent reaches LLM* (point estimates) from 4096 dialogues on STAR and at no size on
+ABCD or MultiWOZ, where the interval holds 0 from 4096 and from 1024 dialogues on. The table and its conditions are on
+the [results page](studies/agent_vs_llm/docs/results.md), and the result file is
+`studies/agent_vs_llm/runs/logsize/table.json`. With it agent_vs_llm is finished.
+
+## 12 Nov 2026: the front page, an efficiency page and corrections
+
+The front page now opens with what the programme is, its strongest measured results with their limits and where to
+start reading. The new [efficiency page](docs/efficiency.md) collects time per decision, power, energy and training
+time from the result files and sorts them into measured, bounded or estimated, and not measured. Corrections: every
+page now gives 57 for the hypotheses of tm_language_model that were not run (the front page and the page of known
+limitations still said 61); the pages say that the four studies added on 29 Oct 2026 ship small result files and that
+the run logs that decision_layer cites are distributed; the citation file describes all studies; the results table of
+the front page gains R16 and R16b of decision_layer; two characters outside ASCII on the front page were replaced. A
+tenth study, [or_group_tm](studies/or_group_tm/README.md), was added on 12 Nov 2026: a learning rule for clauses made
+of OR-groups of words, with registered tests on planted word groups (E1), on the slide-10 sentence family with direct
+labels (E3) and on the Wikipedia test pairs of hierarchical_tm (E5), a cost page, and the design work that did not
+meet its bars (the slide-10 pair version and the synthetic sequence task).

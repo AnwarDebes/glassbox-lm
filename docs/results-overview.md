@@ -1,6 +1,6 @@
 # Results overview
 
-This page gives, for each of the nine studies, the status of what the study registered and its headline measurements. Every number is copied from the results page of its study and stands next to the id of the run that produced it; decision_layer keeps no run folders; its numbers stand next to the id of the registered test or rule, and the paragraphs below its table name the result files of its headline results. The results pages name the file of the run folder or the result file for each value and give the conditions that belong to it; where this page and a results page differ, the results page is right. Run folders, result files and datasets are not distributed, so no number can be recomputed from a clone. A run id can be placed in the [run index](run-index.md), and the limits of the evidence are on the page of [known limitations](known-limitations.md).
+This page gives, for each of the ten studies, the status of what the study registered and its headline measurements. Every number is copied from the results page of its study and stands next to the id of the run that produced it; decision_layer keeps no run folders; its numbers stand next to the id of the registered test or rule, and the paragraphs below its table name the result files of its headline results. The results pages name the file of the run folder or the result file for each value and give the conditions that belong to it; where this page and a results page differ, the results page is right. Run folders and datasets are not distributed; small result files are, for the four studies added on 29 Oct 2026, and so are the run logs that decision_layer cites. No number can be recomputed from a clone. A run id can be placed in the [run index](run-index.md), and the limits of the evidence are on the page of [known limitations](known-limitations.md).
 
 The statuses are those of the results pages: met, not met, not judged (runs exist, and no verdict was drawn from them) and not run. A kill criterion is triggered or not triggered.
 
@@ -229,7 +229,7 @@ The study asks where Tsetlin Machines fail on language, part by part, and what w
 
 The rows were counted id by id from the results page, and from the registrations where the results page is silent. Some registered items are reporting rules without a pass condition and carry no status of this kind: R4.3 and R4b.3, which name an arm "ahead" of LR in a cell where its interval lies above 0 (in R4 the read-out arm in one cell, Banking77 with bge-base, +0.45 [+0.02, +0.90], which the results page calls fragile; in R4b no arm), and R6.3, the effect of the memory literals in R6, +0.0006 [-0.0019, +0.0034], reported with no threshold. The encoder ladder that the failure map calls R3 is part of R4 and has no rule of its own.
 
-decision_layer keeps no run folders and no run ids. Its registered results are files in `results/confirm/<registration>/` of the study folder, and its run logs are in `logs/`; neither is distributed, and the files below are named relative to `studies/decision_layer/`. R23 was the 14th use of ABCD's test split and R22 the 6th use of STAR's, so the results of R22 and R23 rest on splits that had been read many times.
+decision_layer keeps no run folders and no run ids. Its registered results are files in `results/confirm/<registration>/` of the study folder, which are not distributed, and its run logs are in `logs/`, where the logs that its pages cite are distributed; the files below are named relative to `studies/decision_layer/`. R23 was the 14th use of ABCD's test split and R22 the 6th use of STAR's, so the results of R22 and R23 rest on splits that had been read many times.
 
 On frozen LLM embeddings a single 4,000-clause Tsetlin Machine router trails LR on the same embedding in every cell of R4, by 0.56 to 2.41 points; after one temperature its calibration error is 0.013 to 0.025 (R1.1), and with 16,000 clauses it flags out-of-scope queries better than LR in every seed with both encoders (R4b.4). The readable layer of R7 comes within 0.3 points of LR on the same named inputs, and post hoc it agrees with the one-rule nearest-centre router on 99.2 to 99.7% of test queries: its accuracy comes from the encoder and the whitened centres (run files in `results/confirm/R7/`). From reward alone the TM bandit reaches 0.998 and 0.996 of the supervised TM with 150 and 77 actions (R5c, R5d), and online it makes 2.6 to 3.4 times the errors of LinUCB (online accuracy 78.1% against 93.6% in R5c, 84.5% against 94.0% in R5d).
 
@@ -290,7 +290,7 @@ Status of the study: archived (21 to 23 Oct 2026). [Results page](../studies/lan
 
 ## agent_vs_llm
 
-Status of the study: running (from 26 Oct 2026; its logsize dev study was running when it was published). [Results page](../studies/agent_vs_llm/docs/results.md).
+Status of the study: finished (26 to 30 Oct 2026; its logsize dev study ended on 30 Oct 2026: the readable agent reaches LLM* from 4096 logged dialogues on STAR, not at any size on ABCD or MultiWOZ, point estimates on dev). [Results page](../studies/agent_vs_llm/docs/results.md).
 
 | Id | Status | Qualifier |
 |---|---|---|
@@ -298,3 +298,19 @@ Status of the study: running (from 26 Oct 2026; its logsize dev study was runnin
 | NI2, the same at 2 points | met on STAR and ABCD | not on MultiWOZ |
 | SUP, the readable agent better than LLM* by 3 points | not met | on no dataset |
 | FT, the fine-tuned bge-base ahead of the readable agent | met on all three | +8.60, +4.07, +7.20 |
+
+## or_group_tm
+
+Status of the study: finished (12 Nov 2026). [README](../studies/or_group_tm/README.md).
+
+The study tests a learning rule for OR-groups of words, in which a group is a set of member words with one Tsetlin automaton per word, on three tasks of hierarchical_tm: the planted word groups of Check 2a and the slide-10 sentence family of Check 2b, with the bars of those checks, and the Wikipedia paragraph pairs, on which the package ended below word overlap in the final test. It uses the data files and scorers of that study, and its plans were fixed before the runs they govern. The statuses of its registered rules, read from its report files:
+
+| Registered rule | Status | Measurement |
+|---|---|---|
+| E1, planted word groups (the bars of Check 2a), worlds of seeds 11 to 15 | met | R1, R2 and R3 on 5 of 5 seeds each (`studies/or_group_tm/logs/RUNS.md`) |
+| E3, slide-10 sentence family with direct labels (the bars of Check 2b, both flags of the scorer), EVAL sentences | met | 5 of 5 registered seeds; 13 of 25 with 20 further seeds that carry no rule (`studies/or_group_tm/logs/e3_report.json`) |
+| E5, same-article test pairs: above the stock model of hierarchical_tm in its registered setting (vote sum) | met, as predicted from DEV | +0.0907 [+0.0815, +0.0993]; with the seeds resampled [+0.0803, +0.1009] (`studies/or_group_tm/logs/e5_report.json`) |
+| E5, next-paragraph test pairs: above the stock model of hierarchical_tm in its registered setting (vote sum) | met, as predicted from DEV | +0.1015 [+0.0934, +0.1096]; with the seeds resampled [+0.0895, +0.1145] (`studies/or_group_tm/logs/e5_report.json`) |
+| E5, next-paragraph, shared words removed test pairs: above the stock model of hierarchical_tm in its registered setting (vote sum) | met, as predicted from DEV | +0.0978 [+0.0850, +0.1098]; with the seeds resampled [+0.0842, +0.1107] (`studies/or_group_tm/logs/e5_report.json`) |
+
+Not met, on DEV data only and without a registered run: the slide-10 sentence family as pairs (the self-supervised procedure of the proposal) and the synthetic sequence task (E6). E5 has no rule against word overlap (the vote sum minus word overlap: +0.009 on same-article and -0.005 on next-paragraph pairs; the intervals are on the study page), and the vote sum minus PPMI cosine and minus logistic regression has its interval below 0; E5 is not a comparison at matched size or cost. It is a different model from the package that hierarchical_tm tested, so its results do not change the registered verdicts of that study.
