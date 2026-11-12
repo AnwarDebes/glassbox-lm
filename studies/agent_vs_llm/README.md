@@ -6,8 +6,9 @@ memory bits of the actions taken, a Tsetlin machine). It is compared with prompt
 Qwen3.6-35B-A3B through llama.cpp, with retrieved training examples), a fine-tuned transformer (bge-base, BERT,
 RoBERTa) and TF-IDF logistic regression, on the same rows.
 
-**Status:** the registered test is done and verified (results below); the logsize dev study was still running when
-this folder was published.
+**Status:** finished (26 to 30 Oct 2026). The registered test is done and verified (results below); the logsize dev
+study ended on 30 Oct 2026 (dev only; its table is in [docs/results.md](docs/results.md)). The time and energy figures
+are collected on the [efficiency page](../../docs/efficiency.md).
 
 **Result in one line** (registered, seed 1, 95% bootstrap over dialogues): the agent is not worse than the best local
 LLM configuration by more than 3 points on all three datasets (MultiWOZ on seed 1 only), it beats it on none, the
