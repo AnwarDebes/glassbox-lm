@@ -213,8 +213,8 @@ On 2026-10-25, after every run that the records of T0 cover had finished (and af
 
 ## Pins on files that are not in the repository
 
-These values are published as registered. Their targets are run folders, datasets or local copies of
-other repositories, none of which is distributed, so the values were not recomputed.
+These values are published as registered. Their targets are run folders, datasets, local copies of
+other repositories or working files, none of which is distributed, so the values were not recomputed.
 
 | what is pinned | where the value is recorded | SHA-256 as registered | note |
 |---|---|---|---|
@@ -225,6 +225,7 @@ other repositories, none of which is distributed, so the values were not recompu
 | dataset files of the pre-registration | `studies/tm_language_model/docs/notes/preregistration-data-hashes*.json` | in those files | datasets, not distributed |
 | tables, example files, caches and data files read by the registered runs of decision_layer | the registrations, dev plans and dated notes in `studies/decision_layer/registrations/` and `studies/decision_layer/logs/` | in those files | not distributed |
 | data files of each run of tally | `data_hashes.json` in each run folder of tally | in those files | run folders, not distributed |
+| working drafts, test outputs and pool files | `studies/tally/registrations/A2.frozen.json` (three drafts in `verification/a2_dev/`); `studies/tm_language_model/experiments/h2_4_recheck.py` and `cvtm_test_read.py` (two draft plans in `docs/drafts/` and their freeze records); `studies/agent_vs_llm/PLAN_logsize_dev.frozen.json` (two test outputs, `runs/logsize/subsets.json`, `runs/logsize/queue_lines.txt` and run files) | in those files | working files, not distributed; `logsize_subsets.py` rebuilds the pool order |
 
 ## Changes of 2026-10-25 (the finish pass)
 
