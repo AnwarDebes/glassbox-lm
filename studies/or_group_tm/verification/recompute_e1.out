@@ -1,0 +1,15 @@
+{"rung": "L2", "seed": 11, "retrained_state_equals_stored": true, "dev_plain_acc": 1.0, "dev_plain_acc_reported": 1.0, "recovery": 1.0, "recovery_reported": 1.0, "match": true}
+{"rung": "L2", "seed": 12, "retrained_state_equals_stored": true, "dev_plain_acc": 1.0, "dev_plain_acc_reported": 1.0, "recovery": 1.0, "recovery_reported": 1.0, "match": true}
+{"rung": "L2", "seed": 13, "retrained_state_equals_stored": true, "dev_plain_acc": 1.0, "dev_plain_acc_reported": 1.0, "recovery": 1.0, "recovery_reported": 1.0, "match": true}
+{"rung": "L2", "seed": 14, "retrained_state_equals_stored": true, "dev_plain_acc": 1.0, "dev_plain_acc_reported": 1.0, "recovery": 1.0, "recovery_reported": 1.0, "match": true}
+{"rung": "L2", "seed": 15, "retrained_state_equals_stored": true, "dev_plain_acc": 1.0, "dev_plain_acc_reported": 1.0, "recovery": 1.0, "recovery_reported": 1.0, "match": true}
+{"rung": "L3", "seed": 11, "retrained_state_equals_stored": true, "dev_plain_acc": 1.0, "dev_plain_acc_reported": 1.0, "recovery": 1.0, "recovery_reported": 1.0, "unseen_plain_acc": 0.99925, "unseen_plain_acc_reported": 0.99925, "match": true}
+{"rung": "L3", "seed": 12, "retrained_state_equals_stored": true, "dev_plain_acc": 1.0, "dev_plain_acc_reported": 1.0, "recovery": 1.0, "recovery_reported": 1.0, "unseen_plain_acc": 1.0, "unseen_plain_acc_reported": 1.0, "match": true}
+{"rung": "L3", "seed": 13, "retrained_state_equals_stored": true, "dev_plain_acc": 1.0, "dev_plain_acc_reported": 1.0, "recovery": 1.0, "recovery_reported": 1.0, "unseen_plain_acc": 1.0, "unseen_plain_acc_reported": 1.0, "match": true}
+{"rung": "L3", "seed": 14, "retrained_state_equals_stored": true, "dev_plain_acc": 1.0, "dev_plain_acc_reported": 1.0, "recovery": 1.0, "recovery_reported": 1.0, "unseen_plain_acc": 1.0, "unseen_plain_acc_reported": 1.0, "match": true}
+{"rung": "L3", "seed": 15, "retrained_state_equals_stored": true, "dev_plain_acc": 0.99975, "dev_plain_acc_reported": 0.99975, "recovery": 1.0, "recovery_reported": 1.0, "unseen_plain_acc": 0.999, "unseen_plain_acc_reported": 0.999, "match": true}
+VERDICT {"R1_L2_seeds_meeting": 5, "R2_L3_seeds_meeting": 5, "R3_unseen_seeds_meeting": 5, "R1_met": true, "R2_met": true, "R3_met": true, "E1_met": true, "all_numbers_match_and_states_reproduced": true}
+exit 0
+2026-11-12T16:30:11Z
+
+Publication note (2026-11-12T18:10:59Z): the 13 lines above are the output of `verification/recompute_e1.py` as it ran in the working folder, copied byte for byte (SHA-256 of those 13 lines: `1256a541421019f7873e48754f01439e7dab80a6cca0a6276afd9b551884b364`); the last of them is the time at which it ended. The script in this folder differs from the one that ran in two lines of its docstring and in the line that finds the folder of hierarchical_tm. It reads the run folders of E1, which stayed in the working folder and are not distributed.

@@ -1,0 +1,280 @@
+{
+ "sentences": 5856,
+ "words": 221,
+ "families": 21,
+ "distinct_bags_of_words": 5856,
+ "sentences_per_kind": {
+  "slide10": {
+   "train": 86,
+   "dev": 101,
+   "eval": 101
+  },
+  "negated": {
+   "train": 86,
+   "dev": 101,
+   "eval": 101
+  },
+  "nearmiss": {
+   "train": 187,
+   "dev": 221,
+   "eval": 216
+  },
+  "broken": {
+   "train": 835,
+   "dev": 977,
+   "eval": 972
+  },
+  "other": {
+   "train": 562,
+   "dev": 658,
+   "eval": 652
+  }
+ },
+ "family_sentences_in_the_216_view": {
+  "train": 66,
+  "dev": 70,
+  "eval": 80
+ },
+ "text_train_npz": {
+  "rows": 10000,
+  "label_1_rows": 5000,
+  "splits_of_the_rows": [
+   0
+  ],
+  "rows_per_kind": {
+   "slide10": 5000,
+   "negated": 1666,
+   "nearmiss": 1666,
+   "broken": 1668,
+   "other": 0
+  },
+  "distinct_sentences_per_kind": {
+   "slide10": 86,
+   "negated": 86,
+   "nearmiss": 187,
+   "broken": 729,
+   "other": 0
+  }
+ },
+ "text_dev_npz": {
+  "rows": 10000,
+  "label_1_rows": 5000,
+  "splits_of_the_rows": [
+   1
+  ],
+  "rows_per_kind": {
+   "slide10": 5000,
+   "negated": 1666,
+   "nearmiss": 1666,
+   "broken": 1668,
+   "other": 0
+  },
+  "distinct_sentences_per_kind": {
+   "slide10": 101,
+   "negated": 101,
+   "nearmiss": 221,
+   "broken": 805,
+   "other": 0
+  }
+ },
+ "equal_bags_between_splits": {
+  "train_dev": 0,
+  "train_eval": 0,
+  "dev_eval": 0
+ },
+ "alternatives_per_bracket": [
+  3,
+  2,
+  3,
+  2,
+  2,
+  4
+ ],
+ "times_each_alternative_is_in_a_training_family_sentence": [
+  [
+   33,
+   26,
+   27
+  ],
+  [
+   45,
+   41
+  ],
+  [
+   31,
+   27,
+   28
+  ],
+  [
+   38,
+   48
+  ],
+  [
+   43,
+   43
+  ],
+  [
+   22,
+   21,
+   23,
+   20
+  ]
+ ],
+ "combinations_shared_between_splits": 0,
+ "dev_family_sentences_by_brackets_changed_against_the_nearest_training_sentence": {
+  "1": 100,
+  "2": 1
+ },
+ "eval_family_sentences_by_brackets_changed_against_the_nearest_training_sentence": {
+  "1": 99,
+  "2": 2
+ },
+ "words_of_the_family": 35,
+ "words_of_the_direct_label_task": 47,
+ "eval_family_words_missing_from_training_family_sentences": 0,
+ "template_clause": {
+  "words_per_group": [
+   3,
+   2,
+   4,
+   2,
+   6,
+   9,
+   1
+  ],
+  "fires_on": {
+   "train": {
+    "slide10": [
+     86,
+     86
+    ],
+    "negated": [
+     0,
+     86
+    ],
+    "nearmiss": [
+     43,
+     187
+    ],
+    "broken": [
+     0,
+     835
+    ],
+    "other": [
+     0,
+     562
+    ]
+   },
+   "dev": {
+    "slide10": [
+     101,
+     101
+    ],
+    "negated": [
+     0,
+     101
+    ],
+    "nearmiss": [
+     51,
+     221
+    ],
+    "broken": [
+     0,
+     977
+    ],
+    "other": [
+     0,
+     658
+    ]
+   },
+   "eval": {
+    "slide10": [
+     101,
+     101
+    ],
+    "negated": [
+     0,
+     101
+    ],
+    "nearmiss": [
+     50,
+     216
+    ],
+    "broken": [
+     0,
+     972
+    ],
+    "other": [
+     0,
+     652
+    ]
+   }
+  }
+ },
+ "template_clause_allowed_as_it_is": false,
+ "brackets_whose_full_group_is_not_allowed": [
+  5
+ ],
+ "ceiling_of_the_bracket_jaccard_per_bracket": {
+  "288": [
+   1.0,
+   1.0,
+   1.0,
+   1.0,
+   0.667,
+   1.0
+  ],
+  "216": [
+   1.0,
+   1.0,
+   1.0,
+   1.0,
+   0.667,
+   0.833
+  ]
+ },
+ "brackets_that_can_be_recovered": {
+  "288": 5,
+  "216": 5
+ },
+ "deletion_texts_dev": {
+  "n": 606,
+  "training_negatives_once_the_filler_is_dropped": 428,
+  "per_bracket": [
+   70,
+   80,
+   67,
+   78,
+   70,
+   63
+  ]
+ },
+ "one_word_texts_dev": {
+  "n": 583,
+  "per_bracket": {
+   "3": 74,
+   "5": 303,
+   "6": 206
+  }
+ },
+ "deletion_texts_eval": {
+  "n": 606,
+  "training_negatives_once_the_filler_is_dropped": 428,
+  "per_bracket": [
+   67,
+   71,
+   68,
+   69,
+   76,
+   77
+  ]
+ },
+ "one_word_texts_eval": {
+  "n": 569,
+  "per_bracket": {
+   "3": 62,
+   "5": 303,
+   "6": 204
+  }
+ }
+}

@@ -1,0 +1,24 @@
+ok   evaluation_groups_and_empty_group
+ok   seed_deals_each_present_word_to_one_group_of_its_side
+ok   seed_all_gives_every_empty_group_every_present_word
+ok   blank_clause_is_not_seeded_by_a_negative_example
+ok   max_seed_limits_seeding_per_example
+ok   recruit_near_miss_then_member
+ok   repress_then_two_recruits_needed
+ok   reject_hits_present_members_of_one_group
+ok   reinforce_present_members_only
+ok   reinforce_critical_and_share
+ok   decay_hits_only_weaker_present_members
+ok   reject_weakest_firing_group
+ok   modes_designate_the_right_groups
+ok   rejected_word_is_not_seeded_again
+ok   one_text_side_works
+ok   random_training_invariants
+ok   tied_sides_keep_both_copies_equal
+ok   weights_follow_the_share_of_right_firings
+ok   ratio_reading_counts_clauses_matched_by_either_text
+ok   several_sides_and_the_atleast_mode
+ok   constructor_and_input_checks
+ok   packers_agree
+ok   metric_functions
+ALL 23 TESTS PASSED

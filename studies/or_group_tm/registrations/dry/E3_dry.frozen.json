@@ -1,0 +1,40 @@
+{
+ "plan": "registrations/dry/E3_dry.md",
+ "plan_sha256": "35914ad14b7d6794b5495bc22908c8772cebbe56907a5a718aef230ece2c2367",
+ "frozen_utc": "2026-11-12T17:38:03Z",
+ "sources_sha256": {
+  "src/diag_allocation.py": "c1b8eb3e1661ea7f36d87a127956cadb52ac2186f02ffc0efca6c705a0fbba19",
+  "src/diag_slide10_pairs.py": "4f6d6a35fb52a72b771010548f70e5b23f652fe7cc1bd68610904e30a6b3c50e",
+  "src/e3_common.py": "5c9fe39e960bb339b9ad6922384a0c5b0fdf3a9e9d51088679b02f455e716762",
+  "src/e3_report.py": "07fe5b9d2e144714d3241eee4d2fc8cab9007a2034ca29aacbbf185bc3c1f020",
+  "src/freeze.py": "1737db98afb3920a15c733109825c869e68987e38d087f56c8b8e78c4d02b9be",
+  "src/metrics.py": "bf614ee5e02bd10525380641e66b02cbfe9af9c238bc00e9b7c0714cf22232c1",
+  "src/orgroup_tm.py": "b94db364700f41125dc9c1a12577e91a597c6d5476924330ca7d33b2e728999e",
+  "src/probe_slide10.py": "34481dbab669029b8c7baf8dba8d90c6cc35b74878133229a8f038c379926b4c",
+  "src/rescore_wiki.py": "b43625bf9e4bf941ca03033db67bc5dc462cac5556be8b99c317c7e65d1eaf89",
+  "src/run_pcp.py": "8a6b1f29aa8401a7f1cec31481287a2ba250c0d3765fef4ab5869e731160ec9b",
+  "src/run_seq.py": "f92eddc34ddafc65e84ee3469c563d305daf71cf952fa55ffbda8dbd091ec850",
+  "src/run_slide10.py": "6292c8010ac9075e26bc77824434ff3121940160682b1061d398af4f3e5c2ad5",
+  "src/run_wiki.py": "0979f52238dc8106fb2d4364927736a7dd5e7f873f962805921ab69a6ab698ec",
+  "src/score_groups.py": "84c8c6b3da327a15d856dbd84d3744af66743da964f72fc72b179219f9d9142e",
+  "src/slide10_facts.py": "5cfb7f66408bf2438dc60535cbe761a0a867b19899edcd1a011c02316389c677",
+  "src/wiki_report.py": "cbfd67dfd79b41b5ced6d92143f754caddba99ef5cdb0cace22d086734d3acb9",
+  "tests/test_e3_pipeline.py": "dd729252c63057f6f9cf9866c04e3095b9414d9983c2031990ec5c3566ef6df3",
+  "tests/test_e3_units.py": "da02ffeffa8ed05fb01e35fbf2b106ea67e1e85f5d6af3ed2e72ca3a15f018f5",
+  "tests/test_orgroup_tm.py": "1d883a4377e76c42ea9306705672a71692c0f9b45d3efc397d29b26a23f978a7",
+  "tests/test_smoke_pcp.py": "3a45c3fbcc685ccc8b457c63fbda5bec4e1548e8697204d87305d16074581506",
+  "tests/test_smoke_real.py": "bdc473b7962ff0ba276766038740fa8d12bfaba2ad4071270df83901ab98bb16"
+ },
+ "extras_sha256": {
+  "../hierarchical_tm/data/slide10/pairs_slide10.npz": "d15b0d5a65994d7de8fa8507d635b3d64368d5dc8ebe9dba46c9f88459c01a32",
+  "../hierarchical_tm/data/slide10/slide10_meta.json": "05a2bbcf03656aa031d72f4f7b9b787b60ab5621a843d5b96a40da059af98925",
+  "../hierarchical_tm/data/slide10/vocab_slide10.json": "9ff404f6729a39ccf0090437d83f645f8369b2a2775062922acc8dabbed5a018",
+  "../hierarchical_tm/data/slide10/text/train.npz": "d6bd557d415a978dd175cc1d9de8ffe8b67adc56fd1c32fa1c70b91f1a37a0cc",
+  "../hierarchical_tm/data/slide10/text/dev.npz": "c54c6a50969a35fbfea62be7350a9bf30d8b624311866dbea299d1bb7b39730d",
+  "../hierarchical_tm/src/slide10.py": "00c0d0812b472f0b38532bd3296f8944956b7fc1e7e8c07d5111a0a7fd81b6f8",
+  "../hierarchical_tm/src/htm_driver.py": "0073b2a4bd61a3b86bdac07f7a3022efeaa401a8fec1e09f65927f910fd0f478",
+  "../hierarchical_tm/src/recovered/e3fb_deletion_probe.py": "1228a2a02610bf5a6e58e02018bd2c08f9ea717d06069f6b91610e72dd3b2976",
+  "registrations/E3_job.sh": "1a3f4089a5e4088b6d734a27b7b401795f85e2c78a14fb5c01576489f2326658",
+  "env/requirements.txt": "350d2ee929c65283a486c7cd0a8f127ec86ac4bedda1d7149bbdb474b8e79690"
+ }
+}

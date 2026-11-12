@@ -1,0 +1,22 @@
+PASS {"pass": 1, "fit_s": 0.286, "dev_plain_acc": 0.8558, "dev_tuned_acc": 0.9273, "dev_auc": 0.9691184, "members": 1400}
+PASS {"pass": 2, "fit_s": 0.126, "dev_plain_acc": 0.8881, "dev_tuned_acc": 0.9488, "dev_auc": 0.98328682, "members": 1380}
+PASS {"pass": 3, "fit_s": 0.125, "dev_plain_acc": 0.8885, "dev_tuned_acc": 0.9288, "dev_auc": 0.97737576, "members": 1345}
+PASS {"pass": 4, "fit_s": 0.125, "dev_plain_acc": 0.9084, "dev_tuned_acc": 0.9246, "dev_auc": 0.98219748, "members": 1351}
+PASS {"pass": 5, "fit_s": 0.126, "dev_plain_acc": 0.9, "dev_tuned_acc": 0.9482, "dev_auc": 0.98705756, "members": 1332}
+PASS {"pass": 6, "fit_s": 0.124, "dev_plain_acc": 0.9063, "dev_tuned_acc": 0.9679, "dev_auc": 0.99268614, "members": 1348}
+PASS {"pass": 7, "fit_s": 0.124, "dev_plain_acc": 0.9106, "dev_tuned_acc": 0.9631, "dev_auc": 0.98780942, "members": 1330}
+PASS {"pass": 8, "fit_s": 0.125, "dev_plain_acc": 0.9088, "dev_tuned_acc": 0.9766, "dev_auc": 0.99233374, "members": 1331}
+PASS {"pass": 9, "fit_s": 0.125, "dev_plain_acc": 0.9044, "dev_tuned_acc": 0.967, "dev_auc": 0.99222822, "members": 1329}
+PASS {"pass": 10, "fit_s": 0.13, "dev_plain_acc": 0.9205, "dev_tuned_acc": 0.9705, "dev_auc": 0.9918684, "members": 1324}
+PASS {"pass": 11, "fit_s": 0.124, "dev_plain_acc": 0.9047, "dev_tuned_acc": 0.9807, "dev_auc": 0.99355438, "members": 1359}
+PASS {"pass": 12, "fit_s": 0.123, "dev_plain_acc": 0.9164, "dev_tuned_acc": 0.9813, "dev_auc": 0.99394374, "members": 1318}
+PASS {"pass": 13, "fit_s": 0.123, "dev_plain_acc": 0.9221, "dev_tuned_acc": 0.9777, "dev_auc": 0.99015798, "members": 1310}
+PASS {"pass": 14, "fit_s": 0.122, "dev_plain_acc": 0.922, "dev_tuned_acc": 0.9717, "dev_auc": 0.9917188, "members": 1341}
+PASS {"pass": 15, "fit_s": 0.124, "dev_plain_acc": 0.9246, "dev_tuned_acc": 0.9759, "dev_auc": 0.991782, "members": 1333}
+PASS {"pass": 16, "fit_s": 0.125, "dev_plain_acc": 0.9206, "dev_tuned_acc": 0.9768, "dev_auc": 0.99204916, "members": 1341}
+PASS {"pass": 17, "fit_s": 0.123, "dev_plain_acc": 0.9223, "dev_tuned_acc": 0.9731, "dev_auc": 0.9914909, "members": 1339}
+PASS {"pass": 18, "fit_s": 0.122, "dev_plain_acc": 0.924, "dev_tuned_acc": 0.9752, "dev_auc": 0.99409276, "members": 1338}
+PASS {"pass": 19, "fit_s": 0.123, "dev_plain_acc": 0.92, "dev_tuned_acc": 0.9659, "dev_auc": 0.99084142, "members": 1345}
+PASS {"pass": 20, "fit_s": 0.123, "dev_plain_acc": 0.9234, "dev_tuned_acc": 0.9695, "dev_auc": 0.99172696, "members": 1343}
+FINAL {"pass": 20, "fit_s": 0.123, "dev_plain_acc": 0.9234, "dev_tuned_acc": 0.9695, "dev_auc": 0.99172696, "members": 1343, "train_plain_acc": 0.9523, "train_tuned_acc": 0.992, "train_auc": 0.99887106, "tied_best_rules": [{"rule": 36, "coverage_288": 0.9405940594059405, "coverage_216": 0.9142857142857143, "fires_max": 0.0, "brackets_288": 4, "pass_288": true, "brackets_216": 3, "pass_216": false}], "export_equals_model_on_train_and_dev": true, "events": {"seed": 14352, "reinforce": 39183, "recruit": 54220, "reject": 14648, "repress": 384001, "gated": 1170992}, "options_per_group_exported": 24, "wall_s": 5.18}
+CHECK2B {"run": "20261112T173829Z_e3dry_text_s4", "best_rule": 36, "selection_score_train": 1.0, "coverage_train": 1.0, "coverage_dev_288": 0.9405940594059405, "coverage_dev_216": 0.9142857142857143, "fires_dev_negated": 0.0, "fires_dev_nearmiss": 0.0, "fires_dev_broken": 0.0, "fires_dev_other": 0.0, "n_dev_slide10": 101, "n_dev_negated": 101, "n_dev_nearmiss": 221, "n_dev_broken": 977, "fires_dev_max": 0.0, "bracket_jaccard_288": [0.75, 1.0, 1.0, 1.0, 0.667, 1.0], "bracket_jaccard_strict_288": [0.75, 1.0, 1.0, 1.0, 0.667, 0.9], "brackets_recovered_288": 4, "check2b_dev_pass_288": true, "bracket_jaccard_216": [0.75, 1.0, 1.0, 1.0, 0.667, 0.556], "bracket_jaccard_strict_216": [0.75, 1.0, 1.0, 1.0, 0.667, 0.5], "brackets_recovered_216": 3, "check2b_dev_pass_216": false}

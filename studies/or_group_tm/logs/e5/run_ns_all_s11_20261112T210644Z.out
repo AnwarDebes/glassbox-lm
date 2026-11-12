@@ -1,0 +1,12 @@
+CONFIG {"data": "ns_all", "F": 1024, "seed": 11, "clauses": 2000, "K": 1, "T": 40.0, "mode": "side", "init_state": -3, "seed_state": 0, "r": 2, "p_rec": 1.0, "p_rep": 1.0, "q_seed": 1.0, "max_seed": 1, "reject": "weakest", "reinforce": "share", "p_decay": 0.0, "seed_all": false, "tied": true, "wmax": 64, "neg_frac": 0.0, "smin": -32, "smax": 31, "passes": 10, "eval_every": 10, "n_train": 40000, "n_dev": 0, "split": "test", "registered": "registrations/E5_wikipedia_test.frozen.json", "top": 40, "name": "e5_ns_all_s11", "out_root": "runs", "no_log": false, "n_eval": 10000}
+PASS {"pass": 1, "fit_s": 20.17}
+PASS {"pass": 2, "fit_s": 19.96}
+PASS {"pass": 3, "fit_s": 19.8}
+PASS {"pass": 4, "fit_s": 20.08}
+PASS {"pass": 5, "fit_s": 20.09}
+PASS {"pass": 6, "fit_s": 19.31}
+PASS {"pass": 7, "fit_s": 18.96}
+PASS {"pass": 8, "fit_s": 19.87}
+PASS {"pass": 9, "fit_s": 19.52}
+PASS {"pass": 10, "fit_s": 19.02, "test_auc": 0.70999146, "test_tuned_acc": 0.6607, "test_mean_votes_pos": 11.6378, "test_mean_votes_neg": 4.996, "test_zero_vote_share": 0.127, "test_auc_ratio": 0.74028278, "test_tuned_acc_ratio": 0.6901, "test_auc_weight": 0.7106556, "test_tuned_acc_weight": 0.6626, "test_auc_logodds": 0.71030046, "test_tuned_acc_logodds": 0.6628, "members": 16580, "mean_group": 4.14, "empty_groups": 0, "blank_clauses": 0}
+FINAL {"passes": 10, "test_auc": 0.70999146, "test_tuned_acc": 0.6607, "test_mean_votes_pos": 11.6378, "test_mean_votes_neg": 4.996, "test_zero_vote_share": 0.127, "test_auc_ratio": 0.74028278, "test_tuned_acc_ratio": 0.6901, "test_auc_weight": 0.7106556, "test_tuned_acc_weight": 0.6626, "test_auc_logodds": 0.71030046, "test_tuned_acc_logodds": 0.6628, "partner_shuffle_auc": 0.51068942, "partner_shuffle_tuned_acc": 0.5119, "train_auc": 0.8198957833974113, "members": 16580, "events": {"seed": 2000, "reinforce": 597785, "recruit": 14983082, "reject": 626523, "repress": 28668645, "gated": 358913831}, "best_pass_by_auc": 10, "fit_s_per_pass": 19.62, "n_train": 40000, "n_eval": 10000, "wall_s": 214.0}

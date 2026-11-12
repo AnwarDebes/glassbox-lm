@@ -1,0 +1,16 @@
+ok   preflight_passes_and_fails_as_it_should
+ok   dry_and_registered_records_are_not_interchangeable
+ok   run_arguments_are_checked
+ok   the_lists_of_pinned_files_and_the_job
+ok   pinned_files_exist_and_are_the_study_files
+ok   runner_refuses_the_test_pairs_before_any_pair_is_read
+ok   report_tool_refuses_the_test_pairs_before_any_pair_is_read
+ok   the_intervals_of_the_report_tool
+ok   a_run_opens_only_pinned_data_and_writes_the_registered_fields
+ok   the_checks_of_one_run
+ok   environment_and_run_log
+ok   report_helpers
+ok   sentences_and_the_registered_numbers_of_the_study
+ok   the_report_paths_after_a_freeze
+ok   report_refuses_a_record_that_is_not_e5s
+ALL 15 TESTS PASSED

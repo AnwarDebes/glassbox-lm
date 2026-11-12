@@ -125,3 +125,12 @@ data_untrusted/
 /studies/decision_layer/speed/phase2/tm/unit_root/src
 /studies/decision_layer/speed/tmcode/results
 /studies/decision_layer/speed/tmcode/runs*/
+
+# or_group_tm (2026-11-12): run folders (models, per-pair scores, rule words of the unpublished slide-10
+# sentences), test outputs and the console outputs of design runs stay local; the reports of the registered runs
+# and the outputs of their job scripts are kept in logs/.
+/studies/or_group_tm/runs
+/studies/or_group_tm/runs_dry
+/studies/or_group_tm/logs/tests
+/studies/or_group_tm/logs/e5dev_*.out
+/studies/or_group_tm/logs/*.status

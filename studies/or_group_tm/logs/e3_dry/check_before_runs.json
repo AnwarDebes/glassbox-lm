@@ -1,0 +1,7 @@
+{
+ "record": "registrations/dry/E3_dry.frozen.json",
+ "dry": true,
+ "frozen_utc": "2026-11-12T17:38:03Z",
+ "plan_sha256": "35914ad14b7d6794b5495bc22908c8772cebbe56907a5a718aef230ece2c2367",
+ "problems": []
+}

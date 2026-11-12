@@ -1,0 +1,12 @@
+CONFIG {"data": "ns_all", "F": 1024, "seed": 15, "clauses": 2000, "K": 1, "T": 40.0, "mode": "side", "init_state": -3, "seed_state": 0, "r": 2, "p_rec": 1.0, "p_rep": 1.0, "q_seed": 1.0, "max_seed": 1, "reject": "weakest", "reinforce": "share", "p_decay": 0.0, "seed_all": false, "tied": true, "wmax": 64, "neg_frac": 0.0, "smin": -32, "smax": 31, "passes": 10, "eval_every": 10, "n_train": 40000, "n_dev": 0, "split": "test", "registered": "registrations/E5_wikipedia_test.frozen.json", "top": 40, "name": "e5_ns_all_s15", "out_root": "runs", "no_log": false, "n_eval": 10000}
+PASS {"pass": 1, "fit_s": 23.72}
+PASS {"pass": 2, "fit_s": 23.56}
+PASS {"pass": 3, "fit_s": 23.01}
+PASS {"pass": 4, "fit_s": 22.76}
+PASS {"pass": 5, "fit_s": 23.88}
+PASS {"pass": 6, "fit_s": 19.44}
+PASS {"pass": 7, "fit_s": 19.5}
+PASS {"pass": 8, "fit_s": 18.89}
+PASS {"pass": 9, "fit_s": 18.93}
+PASS {"pass": 10, "fit_s": 18.92, "test_auc": 0.71096118, "test_tuned_acc": 0.6609, "test_mean_votes_pos": 11.8492, "test_mean_votes_neg": 5.0282, "test_zero_vote_share": 0.1249, "test_auc_ratio": 0.74024392, "test_tuned_acc_ratio": 0.6875, "test_auc_weight": 0.7103852, "test_tuned_acc_weight": 0.6614, "test_auc_logodds": 0.70730922, "test_tuned_acc_logodds": 0.659, "members": 16512, "mean_group": 4.13, "empty_groups": 0, "blank_clauses": 0}
+FINAL {"passes": 10, "test_auc": 0.71096118, "test_tuned_acc": 0.6609, "test_mean_votes_pos": 11.8492, "test_mean_votes_neg": 5.0282, "test_zero_vote_share": 0.1249, "test_auc_ratio": 0.74024392, "test_tuned_acc_ratio": 0.6875, "test_auc_weight": 0.7103852, "test_tuned_acc_weight": 0.6614, "test_auc_logodds": 0.70730922, "test_tuned_acc_logodds": 0.659, "partner_shuffle_auc": 0.49836766, "partner_shuffle_tuned_acc": 0.5037, "train_auc": 0.8144325401828831, "members": 16512, "events": {"seed": 2000, "reinforce": 601517, "recruit": 14956029, "reject": 626554, "repress": 28650050, "gated": 358744567}, "best_pass_by_auc": 10, "fit_s_per_pass": 20.99, "n_train": 40000, "n_eval": 10000, "wall_s": 230.4}

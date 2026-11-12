@@ -1,0 +1,130 @@
+{
+ "data": "sa",
+ "split": "dev",
+ "reading": "unit",
+ "n_pairs": 20000,
+ "n_articles": 2846,
+ "ours": {
+  "ours_seed1": {
+   "auc": 0.82546322,
+   "auc_ci95": [
+    0.8181218397755663,
+    0.8326830732506929
+   ],
+   "run": "20261112T164052Z_e4_sa_B_tied_w64_s1",
+   "engine": "53cc7b4bf79c328521c3ec267798907ede397d9403e6585b37bfc8d51d6a1ea5"
+  }
+ },
+ "ours_mean_auc": 0.82546322,
+ "ours_sd_auc": null,
+ "stock": {
+  "stock_1": {
+   "auc": 0.745230375,
+   "run": "20261002T050235Z_e4_head_sa_s1_scoreP100"
+  },
+  "stock_2": {
+   "auc": 0.73947441,
+   "run": "20261002T052930Z_e4_head_sa_s2_score"
+  },
+  "stock_3": {
+   "auc": 0.73333949,
+   "run": "20261002T060727Z_e4_head_sa_s3_score"
+  },
+  "stock_4": {
+   "auc": 0.732336875,
+   "run": "20261002T145933Z_e4_head_sa_s4_score"
+  },
+  "stock_5": {
+   "auc": 0.733409645,
+   "run": "20261002T152719Z_e4_head_sa_s5_score"
+  }
+ },
+ "stock_mean_auc": 0.7367581590000001,
+ "baselines": {
+  "jaccard": {
+   "auc": 0.819060595,
+   "auc_ci95": [
+    0.8123575960313297,
+    0.8258175277576796
+   ]
+  },
+  "tfidf_cosine": {
+   "auc": 0.82400976,
+   "auc_ci95": [
+    0.8172876542764518,
+    0.8309365276619497
+   ]
+  },
+  "shared_count": {
+   "auc": 0.79109765,
+   "auc_ci95": [
+    0.7842680158389992,
+    0.7979623596230031
+   ]
+  },
+  "ppmi_svd_cosine": {
+   "auc": 0.85383464,
+   "auc_ci95": [
+    0.8474178250590604,
+    0.859730020031092
+   ]
+  },
+  "lr_A_AND_B": {
+   "auc": 0.82135449,
+   "auc_ci95": [
+    0.8145739994055848,
+    0.828324499168845
+   ]
+  },
+  "lr_A_B_AandB": {
+   "auc": 0.87133947,
+   "auc_ci95": [
+    0.8657445590698376,
+    0.8767904315905053
+   ]
+  }
+ },
+ "comparisons": {
+  "word_overlap": {
+   "vs": "jaccard",
+   "what": "word overlap",
+   "mean_diff": 0.006402625000000106,
+   "ci95": [
+    0.00041299482800675195,
+    0.012050134555595355
+   ],
+   "verdict": "beats jaccard"
+  },
+  "best_on_dev": {
+   "vs": "lr_A_B_AandB",
+   "what": "the baseline that was best on dev in the study",
+   "mean_diff": -0.04587624999999995,
+   "ci95": [
+    -0.05261124513132453,
+    -0.039283534904908934
+   ],
+   "verdict": "below lr_A_B_AandB"
+  },
+  "ppmi_svd_cosine": {
+   "vs": "ppmi_svd_cosine",
+   "what": "count-based word vectors",
+   "mean_diff": -0.028371419999999925,
+   "ci95": [
+    -0.0347273507137487,
+    -0.022309751597155716
+   ],
+   "verdict": "below ppmi_svd_cosine"
+  },
+  "stock": {
+   "vs": "the stock model",
+   "what": "mean of 5 stock seeds on the same pairs",
+   "mean_diff": 0.08870506099999997,
+   "ci95": [
+    0.08196950260457798,
+    0.09518134452171582
+   ],
+   "verdict": "beats the stock model"
+  }
+ },
+ "registered": ""
+}

@@ -1,0 +1,12 @@
+CONFIG {"data": "sa", "F": 1024, "seed": 12, "clauses": 2000, "K": 1, "T": 40.0, "mode": "side", "init_state": -3, "seed_state": 0, "r": 2, "p_rec": 1.0, "p_rep": 1.0, "q_seed": 1.0, "max_seed": 1, "reject": "weakest", "reinforce": "share", "p_decay": 0.0, "seed_all": false, "tied": true, "wmax": 64, "neg_frac": 0.0, "smin": -32, "smax": 31, "passes": 10, "eval_every": 10, "n_train": 40000, "n_dev": 0, "split": "test", "registered": "registrations/E5_wikipedia_test.frozen.json", "top": 40, "name": "e5_sa_s12", "out_root": "runs", "no_log": false, "n_eval": 10000}
+PASS {"pass": 1, "fit_s": 18.27}
+PASS {"pass": 2, "fit_s": 18.18}
+PASS {"pass": 3, "fit_s": 18.05}
+PASS {"pass": 4, "fit_s": 17.97}
+PASS {"pass": 5, "fit_s": 18.69}
+PASS {"pass": 6, "fit_s": 18.56}
+PASS {"pass": 7, "fit_s": 18.01}
+PASS {"pass": 8, "fit_s": 17.98}
+PASS {"pass": 9, "fit_s": 17.96}
+PASS {"pass": 10, "fit_s": 18.05, "test_auc": 0.8245911, "test_tuned_acc": 0.7696, "test_mean_votes_pos": 19.7982, "test_mean_votes_neg": 3.6788, "test_zero_vote_share": 0.219, "test_auc_ratio": 0.84549018, "test_tuned_acc_ratio": 0.7932, "test_auc_weight": 0.82382726, "test_tuned_acc_weight": 0.7691, "test_auc_logodds": 0.82208384, "test_tuned_acc_logodds": 0.7682, "members": 11170, "mean_group": 2.79, "empty_groups": 0, "blank_clauses": 0}
+FINAL {"passes": 10, "test_auc": 0.8245911, "test_tuned_acc": 0.7696, "test_mean_votes_pos": 19.7982, "test_mean_votes_neg": 3.6788, "test_zero_vote_share": 0.219, "test_auc_ratio": 0.84549018, "test_tuned_acc_ratio": 0.7932, "test_auc_weight": 0.82382726, "test_tuned_acc_weight": 0.7691, "test_auc_logodds": 0.82208384, "test_tuned_acc_logodds": 0.7682, "partner_shuffle_auc": 0.50088044, "partner_shuffle_tuned_acc": 0.5056, "train_auc": 0.8822717480420186, "members": 11170, "events": {"seed": 4995, "reinforce": 540977, "recruit": 6331683, "reject": 474688, "repress": 17004374, "gated": 323797092}, "best_pass_by_auc": 10, "fit_s_per_pass": 18.16, "n_train": 40000, "n_eval": 10000, "wall_s": 201.0}

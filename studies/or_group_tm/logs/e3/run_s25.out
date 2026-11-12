@@ -1,0 +1,22 @@
+PASS {"pass": 1, "fit_s": 0.291, "dev_plain_acc": 0.857, "dev_tuned_acc": 0.8934, "dev_auc": 0.96066486, "members": 1258}
+PASS {"pass": 2, "fit_s": 0.126, "dev_plain_acc": 0.8693, "dev_tuned_acc": 0.9399, "dev_auc": 0.98211538, "members": 1241}
+PASS {"pass": 3, "fit_s": 0.126, "dev_plain_acc": 0.9024, "dev_tuned_acc": 0.9721, "dev_auc": 0.99354946, "members": 1220}
+PASS {"pass": 4, "fit_s": 0.126, "dev_plain_acc": 0.9125, "dev_tuned_acc": 0.9683, "dev_auc": 0.99218692, "members": 1208}
+PASS {"pass": 5, "fit_s": 0.126, "dev_plain_acc": 0.9057, "dev_tuned_acc": 0.9673, "dev_auc": 0.9941476, "members": 1223}
+PASS {"pass": 6, "fit_s": 0.125, "dev_plain_acc": 0.9099, "dev_tuned_acc": 0.9829, "dev_auc": 0.99481904, "members": 1214}
+PASS {"pass": 7, "fit_s": 0.123, "dev_plain_acc": 0.9144, "dev_tuned_acc": 0.9846, "dev_auc": 0.99765514, "members": 1220}
+PASS {"pass": 8, "fit_s": 0.123, "dev_plain_acc": 0.9184, "dev_tuned_acc": 0.9902, "dev_auc": 0.99874604, "members": 1216}
+PASS {"pass": 9, "fit_s": 0.123, "dev_plain_acc": 0.9085, "dev_tuned_acc": 0.9847, "dev_auc": 0.99719386, "members": 1228}
+PASS {"pass": 10, "fit_s": 0.122, "dev_plain_acc": 0.9355, "dev_tuned_acc": 0.9923, "dev_auc": 0.99947364, "members": 1213}
+PASS {"pass": 11, "fit_s": 0.123, "dev_plain_acc": 0.9312, "dev_tuned_acc": 0.9931, "dev_auc": 0.99950536, "members": 1221}
+PASS {"pass": 12, "fit_s": 0.123, "dev_plain_acc": 0.9297, "dev_tuned_acc": 0.9844, "dev_auc": 0.99892, "members": 1207}
+PASS {"pass": 13, "fit_s": 0.123, "dev_plain_acc": 0.9277, "dev_tuned_acc": 0.9898, "dev_auc": 0.99950646, "members": 1218}
+PASS {"pass": 14, "fit_s": 0.13, "dev_plain_acc": 0.9506, "dev_tuned_acc": 0.9926, "dev_auc": 0.999492, "members": 1212}
+PASS {"pass": 15, "fit_s": 0.124, "dev_plain_acc": 0.9268, "dev_tuned_acc": 0.9911, "dev_auc": 0.9994304, "members": 1216}
+PASS {"pass": 16, "fit_s": 0.124, "dev_plain_acc": 0.9386, "dev_tuned_acc": 0.9896, "dev_auc": 0.99894794, "members": 1212}
+PASS {"pass": 17, "fit_s": 0.123, "dev_plain_acc": 0.9256, "dev_tuned_acc": 0.9895, "dev_auc": 0.99952978, "members": 1216}
+PASS {"pass": 18, "fit_s": 0.123, "dev_plain_acc": 0.9308, "dev_tuned_acc": 0.9894, "dev_auc": 0.99867826, "members": 1202}
+PASS {"pass": 19, "fit_s": 0.123, "dev_plain_acc": 0.9395, "dev_tuned_acc": 0.9914, "dev_auc": 0.99937786, "members": 1213}
+PASS {"pass": 20, "fit_s": 0.123, "dev_plain_acc": 0.9277, "dev_tuned_acc": 0.9915, "dev_auc": 0.9994992, "members": 1207}
+FINAL {"pass": 20, "fit_s": 0.123, "dev_plain_acc": 0.9277, "dev_tuned_acc": 0.9915, "dev_auc": 0.9994992, "members": 1207, "train_plain_acc": 0.9571, "train_tuned_acc": 0.9989, "train_auc": 0.99998504, "tied_best_rules": [{"rule": 0, "coverage_288": 1.0, "coverage_216": 1.0, "fires_max": 0.0, "brackets_288": 3, "pass_288": false, "brackets_216": 2, "pass_216": false}, {"rule": 10, "coverage_288": 1.0, "coverage_216": 1.0, "fires_max": 0.0, "brackets_288": 4, "pass_288": true, "brackets_216": 3, "pass_216": false}, {"rule": 38, "coverage_288": 0.9504950495049505, "coverage_216": 0.975, "fires_max": 0.0, "brackets_288": 5, "pass_288": true, "brackets_216": 4, "pass_216": true}], "export_equals_model_on_train_and_dev": true, "events": {"seed": 13113, "reinforce": 41395, "recruit": 48612, "reject": 10887, "repress": 370488, "gated": 1169652}, "options_per_group_exported": 20, "wall_s": 5.15}
+CHECK2B {"run": "20261112T175043Z_e3_text_s25", "best_rule": 0, "selection_score_train": 1.0, "coverage_train": 1.0, "coverage_eval_288": 1.0, "coverage_eval_216": 1.0, "fires_eval_negated": 0.0, "fires_eval_nearmiss": 0.0, "fires_eval_broken": 0.0, "fires_eval_other": 0.0, "n_eval_slide10": 101, "n_eval_negated": 101, "n_eval_nearmiss": 216, "n_eval_broken": 972, "fires_eval_max": 0.0, "bracket_jaccard_288": [0.6, 0.667, 1.0, 1.0, 0.667, 1.0], "bracket_jaccard_strict_288": [0.6, 0.667, 1.0, 1.0, 0.667, 0.9], "brackets_recovered_288": 3, "check2b_eval_pass_288": false, "bracket_jaccard_216": [0.6, 0.667, 1.0, 1.0, 0.667, 0.556], "bracket_jaccard_strict_216": [0.6, 0.667, 1.0, 1.0, 0.667, 0.5], "brackets_recovered_216": 2, "check2b_eval_pass_216": false}
