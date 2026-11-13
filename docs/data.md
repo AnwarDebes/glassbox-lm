@@ -194,3 +194,9 @@ For the clause_lm study:
 For the decision_layer study the [data card](../studies/decision_layer/docs/data.md) lists the known problems. Among them: most sources are pinned by content hashes only; MASSIVE en-US shares source texts with HWU64, so it is a related dataset and not a fresh one; and the C4 counting table matches 2.47% of the MultiWOZ dev and 2.61% of the MultiWOZ test utterances verbatim or by a shared 8-gram.
 
 The page of [known limitations](known-limitations.md) collects the limits that concern the programme as a whole, and the [hash table](hash-table.md) lists the pinned files that are in the repository.
+
+## The studies added from 29 Oct 2026 on
+
+This page was written for the first five studies. The later studies describe their data on their own pages, and none of their data files is distributed either: [text_understanding](../studies/text_understanding/README.md), [agent_guards](../studies/agent_guards/README.md), [language_part3](../studies/language_part3/README.md) and [agent_vs_llm](../studies/agent_vs_llm/README.md).
+
+[or_group_tm](../studies/or_group_tm/README.md) (12 Nov 2026) has no data of its own. It reads three sets of files of hierarchical_tm read-only, at the places given above for that study: the planted word-group pairs (worlds generated from their seeds by `studies/hierarchical_tm/src/pcp_world.py`), the slide-10 sentences (not distributed; they are built from a templates file that holds sentences of the unpublished project proposal) and the Wikipedia paragraph pairs with 1,024 words (train, dev and test). Its two registered tests record the SHA-256 of every data file they read: `studies/or_group_tm/registrations/E3_slide10_text.frozen.json` and `studies/or_group_tm/registrations/E5_wikipedia_test.frozen.json`.

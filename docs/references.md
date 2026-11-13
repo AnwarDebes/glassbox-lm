@@ -391,3 +391,7 @@ Each of these is an absence that was searched for. All carry the label "searched
 | torchtsetlin (PyPI 0.3.0, September 2026) | github.com/vlbthambawita/torchtsetlin | reported, not re-checked | An engineering option that was left to be checked. |
 | NVIDIA, documentation of the Multi-Process Service (R610) and the CUDA 8.0 programming guide | identifier not recorded | reported, not re-checked | Whether work from several processes can overlap on one GPU: background for the GPU sharing of the hierarchical_tm study (its study rule 4). |
 | Clause-Driven-LLM | https://github.com/AnwarDebes/Clause-Driven-LLM | checked against the source (the files of the downloaded copy were read); the commit is recorded in project notes, not checked against upstream | The router that M5 step 1 reproduces. The study README describes the copy that was used and the two changes to it. |
+
+## References of the studies added from 29 Oct 2026 on
+
+The later studies cite their sources on their own pages: [text_understanding](../studies/text_understanding/README.md), [agent_guards](../studies/agent_guards/README.md), [language_part3](../studies/language_part3/README.md) and [agent_vs_llm](../studies/agent_vs_llm/README.md). [or_group_tm](../studies/or_group_tm/README.md) names the prior art of its clause form and of its training signal in the section "Prior art" of its README, with titles, venues and years.

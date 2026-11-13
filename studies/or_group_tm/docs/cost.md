@@ -24,7 +24,7 @@ References on the same DEV pairs (the hierarchical_tm study): word overlap 0.819
 
 ## Slide-10 sentences, direct labels (same training and DEV files for all rows)
 
-| | OR-group rule (E3 setting) | stock package, version of the study | stock package, current version 0.3.4 |
+| | OR-group rule (E3 setting) | stock package, version of the study | stock package at commit f40b2a3 of 2026-11-12 (version string 0.3.4) |
 |---|---|---|---|
 | DEV result | plain accuracy 0.933 (median of 25 seeds), AUC 0.9996; Check 2b on the held-back sentences: see `../README.md` | accuracy 1.0 with a word blacklist; Check 2b failed (its slide-10 rule is always true) | accuracy 1.0; Check 2b on the DEV sentences not passed on the two seeds with a literal budget of 1 (coverage 1.000, firing 1.000 on every kind of negative, 0 brackets; descriptive runs, checked only by their own scripts) |
 | training | 0.122 s per pass on one CPU thread, 20 passes (2.6 s in all) | 1.48 s per pass on a shared GPU, 1,000 passes | 1.18 to 1.30 s per pass on the GPU, 300 passes |

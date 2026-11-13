@@ -129,6 +129,8 @@ Verification of E5 (2026-11-12, verdict MATCH; its record is not distributed). S
 
 Uses of the test pairs. E5 is their second registered use and the first by this study: hierarchical_tm scored them in its one final test and read its saved outputs again on 2026-10-25. The verification of 2026-11-12 read them once more. Any further scoring needs a new registration that lists the numbers of E5.
 
+The record of E5 (`registrations/E5_wikipedia_test.frozen.json`) holds the hash of every file that was under `src/` and `tests/` at its freeze. One of them was changed after the report and its verification, on 2026-11-13: in `tests/test_e5_units.py` one test that reads a result file of hierarchical_tm, which is not distributed, now skips when the data are missing, so that the tests run in a clone. The file as pinned is kept as `verification/e5_sources/test_e5_units.py`. A check of the whole tree against the record (`src/e5_common.py --check`) therefore lists this one file; no file on the path of the registered runs or of the report changed.
+
 ## Limits
 
 - One day of runs. The rule, its settings and two readings were chosen on development data of the same tests: E0b changed the rule after E0's results on the same files; the slide-10 refinements, seed-all, K 12 and the 288 reading were chosen on the DEV sentences; the ratio reading was defined after the tied Wikipedia rows had been seen; min true 4 in E6 was set from the structure of the task.
@@ -178,11 +180,13 @@ Neither the clause form nor the training signal is new. A conjunction of disjunc
 or_group_tm/
   README.md
   docs/results.md        every number per plan, with the file it is read from
-  registrations/         the plans in the order they were fixed (INDEX.md), the record of E3 and its job script
-  src/                   the engine, the runners, the probes and reports of E3, the Wikipedia readings, the freeze tool
+  docs/cost.md           training time, inference time and model size, with what is measured and what is only bounded
+  registrations/         the plans in the order they were fixed (INDEX.md), the records of E3 and E5 and their job scripts
+  src/                   the engine, the runners, the probes and reports of E3 and E5, the Wikipedia readings, the freeze tool
   tests/                 unit, smoke and pipeline tests (plain scripts)
-  verification/          the independent recomputation of E1 and its output
-  logs/                  run logs (RUNS*.md), the reports of E3, data facts, design outputs, the outputs of the E3 jobs
+  verification/          the independent recomputation of E1 and its output; e3_sources/ and e5_sources/ hold three
+                         files as the records of E3 and E5 pin them, which were changed later
+  logs/                  run logs (RUNS*.md), the reports of E3 and E5, data facts, design outputs, the outputs of the jobs
   env/requirements.txt   the package versions of the virtualenv
 ```
 

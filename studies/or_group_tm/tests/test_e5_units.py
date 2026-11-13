@@ -607,7 +607,7 @@ def made_up_reading(d, reading, n, dry, seeds):
             "ours": {f"ours_seed{s}": {"auc": 0.83} for s in seeds}}
 
 
-@test
+@needs_data
 def sentences_and_the_registered_numbers_of_the_study():
     res = {d: {r: made_up_reading(d, r, e5.N_EVAL[False], False, e5.SEEDS[False]) for r in ("unit", "ratio")} for d in e5.DATA}
     rl = e5_report.rules(res)

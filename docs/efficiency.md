@@ -99,7 +99,7 @@ The Tsetlin Machine model used about 8.5 times the energy for a model 0.94 bits 
 ### The OR-group rule against the hierarchical package (or_group_tm, 2026-11-12)
 
 From [studies/or_group_tm/docs/cost.md](../studies/or_group_tm/docs/cost.md), where every row names its source; one
-CPU thread, rough. On the slide-10 sentences (direct labels, same files) the current version 0.3.4 of the
+CPU thread, rough. On the slide-10 sentences (direct labels, same files) commit f40b2a3 of 2026-11-12 (version string 0.3.4) of the
 hierarchical package used a measured 105 to 120 J of GPU board energy per pass and 35 to 38 kJ per run of 300 passes,
 and did not pass Check 2b on the DEV sentences (descriptive runs, checked only by their own scripts). The OR-group rule trained in 2.6 s on one CPU thread; charged a whole CPU
 package (a bound, not a measurement) that is at most about 0.5 kJ per run, below 2% of the package's measured figure,

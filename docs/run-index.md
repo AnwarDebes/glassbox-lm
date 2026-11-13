@@ -1221,3 +1221,9 @@ A run with exit status 1 and no flag ended with an error of its own.
 | `20261026T073023Z_c3prep_lstm_large_seed8_valid_sum_steps_clip10` | tally | c3prep_lstm_large_seed8_valid_sum_steps_clip10 | 2026-10-26 | finished |  | 31.8 min | 42.5 kB |  |
 | `20261026T080256Z_c3prep_lstm_large_seed9_valid_sum_steps_clip10` | tally | c3prep_lstm_large_seed9_valid_sum_steps_clip10 | 2026-10-26 | finished |  | 31.7 min | 42.4 kB |  |
 | `20261026T083523Z_c3prep_lstm_large_seed10_valid_sum_steps_clip10` | tally | c3prep_lstm_large_seed10_valid_sum_steps_clip10 | 2026-10-26 | finished |  | 31.7 min | 42.6 kB |  |
+
+## The studies added from 29 Oct 2026 on
+
+This index covers the run folders of the first five studies. The later studies keep their run records on their own pages: [text_understanding](../studies/text_understanding/README.md), [agent_guards](../studies/agent_guards/README.md), [language_part3](../studies/language_part3/README.md) and [agent_vs_llm](../studies/agent_vs_llm/README.md).
+
+[or_group_tm](../studies/or_group_tm/README.md) (12 Nov 2026) lists every run in four run logs, `studies/or_group_tm/logs/RUNS.md`, `RUNS_slide10.md`, `RUNS_wiki.md` and `RUNS_seq.md`. Its run folders are not distributed; the reports of its two registered tests are `studies/or_group_tm/logs/e3_report.json` and `studies/or_group_tm/logs/e5_report.json`, and the outputs of their job scripts are in `studies/or_group_tm/logs/e3/` and `studies/or_group_tm/logs/e5/`.
