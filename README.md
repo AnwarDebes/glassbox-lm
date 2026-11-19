@@ -11,6 +11,8 @@
   <a href="CITATION.cff">Cite</a>
 </p>
 
+<p align="center">▶ <a href="https://anwardebes.github.io/shorts/#predictions">Watch it in 40 seconds</a></p>
+
 # Measured steps toward a logic-based language model with Tsetlin Machines
 
 **What this is.** Ten studies (19 Sep to 12 Nov 2026) on how far Tsetlin Machines, whose knowledge is a set of readable logical clauses, get on language: as a language model, in the hierarchical procedure of the supervisor's project proposal (unpublished), and as the decision layer of dialogue agents. Registered rules were fixed before their runs, and negative results are reported like the others.
