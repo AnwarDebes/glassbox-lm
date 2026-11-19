@@ -337,3 +337,18 @@ tenth study, [or_group_tm](studies/or_group_tm/README.md), was added on 12 Nov 2
 of OR-groups of words, with registered tests on planted word groups (E1), on the slide-10 sentence family with direct
 labels (E3) and on the Wikipedia test pairs of hierarchical_tm (E5), a cost page, and the design work that did not
 meet its bars (the slide-10 pair version and the synthetic sequence task).
+
+## 19 Nov 2026: final report and results video
+
+The [final report](docs/report/glassbox-lm-final-report.pdf) (16 pages; its text is
+[docs/report/final-report.md](docs/report/final-report.md)) sets out the question, the ten studies, the results that
+hold with their limits, the cost figures by kind (measured, bounded, never measured), the answer to the proposal
+slide by slide, the negative results and how to check each number. A
+[results video](docs/video/glassbox-lm-final-results.mp4) (4 min 12 s, with captions) presents the same results;
+[docs/video/narration.md](docs/video/narration.md) holds the narration as spoken and the source file of every number
+on screen. Every number in the report was read from a file of the repository as it stood at commit a655ef6, and the
+video uses the same fact sheet; no run and no result was added. The front page and the documentation index link
+both, the front page also links a 40-second video, and the citation file carries the new date and version 0.3.1.
+On the same day the front page, the efficiency page, the results overview and the cost page of or_group_tm were
+brought to the wording of the report: slide 10 with all three counts everywhere, and the comparison with TF-IDF
+logistic regression with its intervals.

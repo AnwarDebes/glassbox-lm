@@ -1,0 +1,303 @@
+1
+00:00:03,920 --> 00:00:08,640
+Could the knowledge of a language model
+be a list of rules that you can read,
+
+2
+00:00:08,720 --> 00:00:10,570
+at a fraction of the power?
+
+3
+00:00:10,680 --> 00:00:14,200
+In ten studies, I measured
+how far Tsetlin machines,
+
+4
+00:00:14,280 --> 00:00:17,090
+which learn logical clauses,
+get on language.
+
+5
+00:00:17,460 --> 00:00:20,750
+No model built here is called
+a large language model.
+
+6
+00:00:22,060 --> 00:00:25,580
+The clause form comes from
+my supervisor's project proposal,
+
+7
+00:00:25,660 --> 00:00:26,870
+which is unpublished.
+
+8
+00:00:27,040 --> 00:00:30,730
+Inside a group, single words
+are joined by a logical OR.
+
+9
+00:00:30,880 --> 00:00:32,970
+The groups are joined by a logical AND.
+
+10
+00:00:33,090 --> 00:00:35,330
+The clause fires
+when every group finds
+
+11
+00:00:35,410 --> 00:00:37,980
+at least one of its words in the text.
+
+12
+00:00:39,460 --> 00:00:42,590
+An earlier study,
+which ended mostly negative,
+
+13
+00:00:42,740 --> 00:00:45,700
+tested the proposal's procedure
+with the package it names,
+
+14
+00:00:45,780 --> 00:00:46,980
+the stock model.
+
+15
+00:00:47,080 --> 00:00:51,400
+The latest study keeps the clause form
+and replaces the learning rule:
+
+16
+00:00:51,480 --> 00:00:55,410
+one small automaton
+for every clause, group and word.
+
+17
+00:00:55,570 --> 00:00:59,100
+It is a different model,
+and the earlier verdicts stand.
+
+18
+00:01:00,740 --> 00:01:05,070
+Test one: artificial worlds
+that hide 8 groups of words.
+
+19
+00:01:05,300 --> 00:01:08,340
+The registered bars are met
+on 5 of 5 seeds,
+
+20
+00:01:08,420 --> 00:01:10,750
+with a group recovery of 1.0.
+
+21
+00:01:11,120 --> 00:01:14,810
+But the rule was designed
+on worlds of the same generator.
+
+22
+00:01:16,300 --> 00:01:21,030
+Test two: slide 10 of the proposal,
+one clause for a sentence family.
+
+23
+00:01:21,110 --> 00:01:23,510
+With direct labels
+and a different model,
+
+24
+00:01:23,590 --> 00:01:26,390
+the best single clause
+meets the bars of Check 2b
+
+25
+00:01:26,470 --> 00:01:30,870
+on 5 of 5 registered seeds,
+on 8 of 20 further seeds,
+
+26
+00:01:30,950 --> 00:01:34,240
+and on 13 of 25 pooled:
+about one half.
+
+27
+00:01:34,410 --> 00:01:37,210
+The pair version,
+the procedure of the proposal,
+
+28
+00:01:37,290 --> 00:01:39,700
+met none of the bars
+on the DEV sentences.
+
+29
+00:01:41,490 --> 00:01:44,620
+Test three: Wikipedia paragraph pairs.
+
+30
+00:01:44,760 --> 00:01:48,120
+On held-back test pairs,
+the three rules of the registered test
+
+31
+00:01:48,200 --> 00:01:51,010
+are met, as predicted from DEV:
+
+32
+00:01:51,160 --> 00:01:55,240
+the OR-group rule is above the stock model
+in its registered setting
+
+33
+00:01:55,320 --> 00:02:02,320
+by 0.091, 0.101 and 0.098
+AUC of the vote sum.
+
+34
+00:02:04,600 --> 00:02:07,640
+It is not a comparison
+at matched size or cost,
+
+35
+00:02:07,720 --> 00:02:10,020
+so it does not tell
+what makes the difference,
+
+36
+00:02:10,200 --> 00:02:13,090
+and the test has no rule
+against word overlap.
+
+37
+00:02:13,420 --> 00:02:19,350
+The vote sum minus PPMI cosine,
+a baseline built from word counts,
+
+38
+00:02:19,740 --> 00:02:23,430
+has its interval below zero
+on all three kinds of pairs.
+
+39
+00:02:23,740 --> 00:02:28,140
+Minus logistic regression, the interval
+is below zero on the two kinds
+
+40
+00:02:28,220 --> 00:02:30,310
+where that baseline is above chance.
+
+41
+00:02:31,740 --> 00:02:34,700
+The cost: the nine models
+of the design stage
+
+42
+00:02:34,780 --> 00:02:37,830
+have a median size
+of about 22 kilobytes.
+
+43
+00:02:38,140 --> 00:02:44,870
+Each registered test run took
+192 to 230 seconds on one CPU thread.
+
+44
+00:02:45,170 --> 00:02:47,580
+The energy is bounded, not measured.
+
+45
+00:02:47,860 --> 00:02:52,340
+In the one measured comparison
+of training energy, indicative only,
+
+46
+00:02:52,420 --> 00:02:54,100
+the Tsetlin machine language model
+
+47
+00:02:54,180 --> 00:02:58,990
+used about 8.5 times the energy
+of a small transformer, and scored worse.
+
+48
+00:03:00,580 --> 00:03:04,180
+A readable agent,
+with no neural network at any stage,
+
+49
+00:03:04,260 --> 00:03:06,990
+chooses the next action
+in logged dialogues.
+
+50
+00:03:07,280 --> 00:03:12,480
+Within the registered margin of 3 points,
+it is not worse than a prompted local LLM
+
+51
+00:03:12,560 --> 00:03:18,410
+on three test sets; on one of them,
+on seed 1 only, not on the 5-seed mean.
+
+52
+00:03:18,500 --> 00:03:23,310
+The timings are rough: it decides
+in milliseconds on one CPU thread,
+
+53
+00:03:23,620 --> 00:03:26,990
+against seconds on a GPU
+for the LLM.
+
+54
+00:03:27,120 --> 00:03:31,690
+But it is better on no test set,
+a fine-tuned transformer is ahead,
+
+55
+00:03:31,920 --> 00:03:38,570
+and TF-IDF logistic regression is level
+or ahead, and faster on two of the three.
+
+56
+00:03:40,000 --> 00:03:44,080
+Code, registrations and results pages
+are in the repository.
+
+57
+00:03:44,160 --> 00:03:48,250
+No number of the studies
+can be recomputed from a clone alone.
+
+58
+00:03:48,580 --> 00:03:51,470
+The registered rules were fixed
+before their runs.
+
+59
+00:03:51,620 --> 00:03:54,120
+The negative results
+are reported like the others.
+
+60
+00:03:54,260 --> 00:03:57,940
+The Tsetlin machine language model,
+in a single-seed run,
+
+61
+00:03:58,020 --> 00:04:01,060
+missed its main accuracy goal
+against a 5-gram model.
+
+62
+00:04:01,140 --> 00:04:04,510
+And the proposal's own procedure
+ended below word overlap.
+
+63
+00:04:04,820 --> 00:04:09,070
+So the opening question stays open:
+no power saving was measured.

@@ -4,6 +4,7 @@
   <a href="#status-per-study">Studies</a> |
   <a href="#results">Results</a> |
   <a href="docs/efficiency.md">Efficiency</a> |
+  <a href="docs/report/glassbox-lm-final-report.pdf">Final report</a> |
   <a href="docs/results-overview.md">All registered ids</a> |
   <a href="docs/known-limitations.md">Limitations</a> |
   <a href="research/README.md">Ideas and roadmap</a> |
@@ -25,6 +26,8 @@
 - **Added on 12 Nov 2026: a learning rule for the proposal's clause form** ([or_group_tm](studies/or_group_tm/README.md)). Clauses that are ANDs of OR-groups of words are learned with one Tsetlin automaton per clause, group and word, on one CPU thread, in models of about 22 kB. On the held-back Wikipedia test pairs of hierarchical_tm its arm TB (chosen on DEV) is above the stock hierarchical model in its registered setting by +0.091 / +0.101 / +0.098 AUC of the vote sum (same article / next paragraph / shared words removed; E5, registered, both intervals above 0, as predicted from DEV; not a comparison at matched size or cost). On the slide-10 sentence family with direct labels its best clause meets the bars of Check 2b on 5 of 5 registered seeds (E3), on 8 of 20 further seeds and on 13 of 25 pooled. Limits: E5 has no rule against word overlap (the vote sum minus word overlap is +0.009 [+0.002, +0.016] on the same-article version, where the interval includes 0 with the articles of both paragraphs resampled and without the listed duplicate articles, and -0.005 [-0.011, +0.002] on the next-paragraph version, where the interval includes 0), and the vote sum minus PPMI cosine (-0.026, -0.034, -0.100) and minus logistic regression (-0.044, -0.051) has its interval below 0; the proposal's self-supervised pair procedure met no bar on the slide-10 sentences; its energy is bounded, not measured.
 
 **Start reading:** [efficiency](docs/efficiency.md), [results overview](docs/results-overview.md) (every registered id), [known limitations](docs/known-limitations.md), [status per study](#status-per-study).
+
+**Final report and results video (19 Nov 2026):** the [final report](docs/report/glassbox-lm-final-report.pdf) (PDF, 16 pages; the same text as [Markdown](docs/report/final-report.md)) and a [results video](docs/video/glassbox-lm-final-results.mp4) (4 min 12 s, with captions), with its [narration and the source of every number on screen](docs/video/narration.md).
 
 ## How the programme ran
 

@@ -14,6 +14,8 @@ The pages in this folder span the ten studies of the programme. Each study keeps
 | [upstream-repositories.md](upstream-repositories.md) | The third-party repositories and packages that the studies use, with the commit that is recorded for each. |
 | [run-index.md](run-index.md) | One row per run folder of the four studies that keep run folders: run id, study, experiment, date, status, exit status, wall time, size and flag. The flags mark the runs whose numbers are not used as results. The run folders themselves are not distributed; decision_layer keeps result files instead of run folders. |
 | [hash-table.md](hash-table.md) | The files that a config or a record pins by SHA-256, with the hash as registered and the hash as published. |
+| [report/](report/README.md) | The final report of 19 Nov 2026: the text as Markdown, its five figures and the PDF (16 pages). Each table and figure names the file its numbers were read from. |
+| [video/narration.md](video/narration.md) | The results video of 19 Nov 2026 (4 min 12 s) with its captions: the narration as spoken and a table from every number on screen to its source file. |
 
 ## Documents of the studies
 

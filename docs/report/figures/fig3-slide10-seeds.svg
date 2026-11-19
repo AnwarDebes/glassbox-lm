@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 303" width="680" height="303" role="img" aria-labelledby="fig3-title fig3-desc" font-family="'Noto Sans', Helvetica, Arial, sans-serif" style="font-variant-numeric: tabular-nums; font-variant-ligatures: none; font-kerning: none; word-spacing: 0.6px">
+<title id="fig3-title">Slide 10 with direct labels (E3): the bars of Check 2b, seed by seed</title>
+<desc id="fig3-desc">Slide 10 with direct labels (E3), a different model from the one that study 2 (hierarchical_tm) tested: the best single clause meets the bars of Check 2b on 5 of 5 registered seeds, on 8 of 20 further seeds and on 13 of 25 pooled. A strip of 25 squares shows the seeds one by one; of the seeds without both flags of the scorer, ten have the flag of the 288 view only and two have neither. Below, the share of seeds with both flags and its exact 95% interval for the three sets of seeds.</desc>
+<rect x="0" y="0" width="680" height="303" fill="#ffffff"/>
+<text x="14.0" y="20.0" font-size="12.5" font-weight="700" fill="#0b0b0b">Slide 10 with direct labels (E3): the bars of Check 2b, seed by seed</text>
+<text x="14.0" y="36.0" font-size="10" fill="#52514e">One square per model seed: does the best single clause meet the bars? A different model from the one</text>
+<text x="14.0" y="49.0" font-size="10" fill="#52514e">that study 2 (hierarchical_tm) tested. The registered seeds carry the rule of E3; the 20 further seeds carry</text>
+<text x="14.0" y="62.0" font-size="10" fill="#52514e">no rule. The three counts are never read without each other. The model as a whole is template-like on 0 of 25 seeds.</text>
+<text x="28.0" y="89.0" font-size="10.5" font-weight="700" fill="#0b0b0b">5 registered seeds</text>
+<text x="176.0" y="89.0" font-size="10.5" font-weight="700" fill="#0b0b0b">20 further seeds (no rule)</text>
+<rect x="28.0" y="97.0" width="20.0" height="20.0" rx="3" fill="#1c5cab"/>
+<text x="38.0" y="129.0" font-size="9" text-anchor="middle" fill="#52514e">11</text>
+<rect x="52.0" y="97.0" width="20.0" height="20.0" rx="3" fill="#1c5cab"/>
+<text x="62.0" y="129.0" font-size="9" text-anchor="middle" fill="#52514e">12</text>
+<rect x="76.0" y="97.0" width="20.0" height="20.0" rx="3" fill="#1c5cab"/>
+<text x="86.0" y="129.0" font-size="9" text-anchor="middle" fill="#52514e">13</text>
+<rect x="100.0" y="97.0" width="20.0" height="20.0" rx="3" fill="#1c5cab"/>
+<text x="110.0" y="129.0" font-size="9" text-anchor="middle" fill="#52514e">14</text>
+<rect x="124.0" y="97.0" width="20.0" height="20.0" rx="3" fill="#1c5cab"/>
+<text x="134.0" y="129.0" font-size="9" text-anchor="middle" fill="#52514e">15</text>
+<rect x="176.0" y="97.0" width="20.0" height="20.0" rx="3" fill="#86b6ef"/>
+<text x="186.0" y="129.0" font-size="9" text-anchor="middle" fill="#52514e">16</text>
+<rect x="200.0" y="97.0" width="20.0" height="20.0" rx="3" fill="#1c5cab"/>
+<text x="210.0" y="129.0" font-size="9" text-anchor="middle" fill="#52514e">17</text>
+<rect x="224.0" y="97.0" width="20.0" height="20.0" rx="3" fill="#1c5cab"/>
+<text x="234.0" y="129.0" font-size="9" text-anchor="middle" fill="#52514e">18</text>
+<rect x="248.0" y="97.0" width="20.0" height="20.0" rx="3" fill="#1c5cab"/>
+<text x="258.0" y="129.0" font-size="9" text-anchor="middle" fill="#52514e">19</text>
+<rect x="272.0" y="97.0" width="20.0" height="20.0" rx="3" fill="#1c5cab"/>
+<text x="282.0" y="129.0" font-size="9" text-anchor="middle" fill="#52514e">20</text>
+<rect x="296.8" y="97.8" width="18.5" height="18.5" rx="3" fill="#ffffff" stroke="#8f8e87" stroke-width="1.5"/>
+<text x="306.0" y="129.0" font-size="9" text-anchor="middle" fill="#52514e">21</text>
+<rect x="320.0" y="97.0" width="20.0" height="20.0" rx="3" fill="#86b6ef"/>
+<text x="330.0" y="129.0" font-size="9" text-anchor="middle" fill="#52514e">22</text>
+<rect x="344.0" y="97.0" width="20.0" height="20.0" rx="3" fill="#1c5cab"/>
+<text x="354.0" y="129.0" font-size="9" text-anchor="middle" fill="#52514e">23</text>
+<rect x="368.0" y="97.0" width="20.0" height="20.0" rx="3" fill="#1c5cab"/>
+<text x="378.0" y="129.0" font-size="9" text-anchor="middle" fill="#52514e">24</text>
+<rect x="392.8" y="97.8" width="18.5" height="18.5" rx="3" fill="#ffffff" stroke="#8f8e87" stroke-width="1.5"/>
+<text x="402.0" y="129.0" font-size="9" text-anchor="middle" fill="#52514e">25</text>
+<rect x="416.0" y="97.0" width="20.0" height="20.0" rx="3" fill="#86b6ef"/>
+<text x="426.0" y="129.0" font-size="9" text-anchor="middle" fill="#52514e">26</text>
+<rect x="440.0" y="97.0" width="20.0" height="20.0" rx="3" fill="#86b6ef"/>
+<text x="450.0" y="129.0" font-size="9" text-anchor="middle" fill="#52514e">27</text>
+<rect x="464.0" y="97.0" width="20.0" height="20.0" rx="3" fill="#86b6ef"/>
+<text x="474.0" y="129.0" font-size="9" text-anchor="middle" fill="#52514e">28</text>
+<rect x="488.0" y="97.0" width="20.0" height="20.0" rx="3" fill="#86b6ef"/>
+<text x="498.0" y="129.0" font-size="9" text-anchor="middle" fill="#52514e">29</text>
+<rect x="512.0" y="97.0" width="20.0" height="20.0" rx="3" fill="#86b6ef"/>
+<text x="522.0" y="129.0" font-size="9" text-anchor="middle" fill="#52514e">30</text>
+<rect x="536.0" y="97.0" width="20.0" height="20.0" rx="3" fill="#86b6ef"/>
+<text x="546.0" y="129.0" font-size="9" text-anchor="middle" fill="#52514e">31</text>
+<rect x="560.0" y="97.0" width="20.0" height="20.0" rx="3" fill="#86b6ef"/>
+<text x="570.0" y="129.0" font-size="9" text-anchor="middle" fill="#52514e">32</text>
+<rect x="584.0" y="97.0" width="20.0" height="20.0" rx="3" fill="#1c5cab"/>
+<text x="594.0" y="129.0" font-size="9" text-anchor="middle" fill="#52514e">33</text>
+<rect x="608.0" y="97.0" width="20.0" height="20.0" rx="3" fill="#86b6ef"/>
+<text x="618.0" y="129.0" font-size="9" text-anchor="middle" fill="#52514e">34</text>
+<rect x="632.0" y="97.0" width="20.0" height="20.0" rx="3" fill="#1c5cab"/>
+<text x="642.0" y="129.0" font-size="9" text-anchor="middle" fill="#52514e">35</text>
+<rect x="28.0" y="141.0" width="12.0" height="12.0" rx="2" fill="#1c5cab"/>
+<text x="46.0" y="151.0" font-size="10" fill="#52514e">both flags of the scorer (288 view and 216 view)</text>
+<rect x="307.5" y="141.0" width="12.0" height="12.0" rx="2" fill="#86b6ef"/>
+<text x="325.5" y="151.0" font-size="10" fill="#52514e">flag of the 288 view only</text>
+<rect x="471.4" y="141.8" width="10.5" height="10.5" rx="2" fill="#ffffff" stroke="#8f8e87" stroke-width="1.5"/>
+<text x="488.7" y="151.0" font-size="10" fill="#52514e">neither flag</text>
+<line x1="232.0" y1="171.0" x2="232.0" y2="241.0" stroke="#dddcd5" stroke-width="1" stroke-linecap="butt"/>
+<line x1="288.0" y1="171.0" x2="288.0" y2="241.0" stroke="#dddcd5" stroke-width="1" stroke-linecap="butt"/>
+<line x1="344.0" y1="171.0" x2="344.0" y2="241.0" stroke="#dddcd5" stroke-width="1" stroke-linecap="butt"/>
+<line x1="400.0" y1="171.0" x2="400.0" y2="241.0" stroke="#dddcd5" stroke-width="1" stroke-linecap="butt"/>
+<line x1="456.0" y1="171.0" x2="456.0" y2="241.0" stroke="#dddcd5" stroke-width="1" stroke-linecap="butt"/>
+<line x1="512.0" y1="171.0" x2="512.0" y2="241.0" stroke="#dddcd5" stroke-width="1" stroke-linecap="butt"/>
+<text x="28.0" y="189.0" font-size="11" fill="#0b0b0b">registered seeds</text>
+<text x="218.0" y="189.0" font-size="11" text-anchor="end" font-weight="700" fill="#0b0b0b">5 of 5</text>
+<line x1="365.8" y1="185.0" x2="512.0" y2="185.0" stroke="#1c5cab" stroke-width="2" stroke-linecap="round"/>
+<circle cx="512.0" cy="185.0" r="4.5" fill="#1c5cab" stroke="#ffffff" stroke-width="1.5"/>
+<text x="528.0" y="189.0" font-size="10.5" fill="#0b0b0b">[0.478, 1.000]</text>
+<text x="28.0" y="211.0" font-size="11" fill="#0b0b0b">further seeds</text>
+<text x="218.0" y="211.0" font-size="11" text-anchor="end" font-weight="700" fill="#0b0b0b">8 of 20</text>
+<line x1="285.5" y1="207.0" x2="410.9" y2="207.0" stroke="#1c5cab" stroke-width="2" stroke-linecap="round"/>
+<circle cx="344.0" cy="207.0" r="4.5" fill="#1c5cab" stroke="#ffffff" stroke-width="1.5"/>
+<text x="528.0" y="211.0" font-size="10.5" fill="#0b0b0b">[0.191, 0.639]</text>
+<text x="28.0" y="233.0" font-size="11" fill="#0b0b0b">pooled</text>
+<text x="218.0" y="233.0" font-size="11" text-anchor="end" font-weight="700" fill="#0b0b0b">13 of 25</text>
+<line x1="319.6" y1="229.0" x2="434.2" y2="229.0" stroke="#1c5cab" stroke-width="2" stroke-linecap="round"/>
+<circle cx="377.6" cy="229.0" r="4.5" fill="#1c5cab" stroke="#ffffff" stroke-width="1.5"/>
+<text x="528.0" y="233.0" font-size="10.5" fill="#0b0b0b">[0.313, 0.722]</text>
+<line x1="232.0" y1="243.0" x2="512.0" y2="243.0" stroke="#8f8e87" stroke-width="1" stroke-linecap="butt"/>
+<text x="232.0" y="257.0" font-size="10" text-anchor="middle" fill="#52514e">0.0</text>
+<text x="288.0" y="257.0" font-size="10" text-anchor="middle" fill="#52514e">0.2</text>
+<text x="344.0" y="257.0" font-size="10" text-anchor="middle" fill="#52514e">0.4</text>
+<text x="400.0" y="257.0" font-size="10" text-anchor="middle" fill="#52514e">0.6</text>
+<text x="456.0" y="257.0" font-size="10" text-anchor="middle" fill="#52514e">0.8</text>
+<text x="512.0" y="257.0" font-size="10" text-anchor="middle" fill="#52514e">1.0</text>
+<text x="372.0" y="273.0" font-size="10" text-anchor="middle" fill="#52514e">share of seeds with both flags (dot) and its exact 95% interval (line)</text>
+<text x="14.0" y="291.0" font-size="9" fill="#52514e">Source: studies/or_group_tm/logs/e3_report.json</text>
+</svg>

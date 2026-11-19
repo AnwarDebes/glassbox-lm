@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 403" width="680" height="403" role="img" aria-labelledby="fig1-title fig1-desc" font-family="'Noto Sans', Helvetica, Arial, sans-serif" style="font-variant-numeric: tabular-nums; font-variant-ligatures: none; font-kerning: none; word-spacing: 0.6px">
+<title id="fig1-title">Readable agent minus each reference: accuracy difference on the test split</title>
+<desc id="fig1-desc">Forest plot. Nine rows in three groups: the readable agent minus the transformer-encoder agent, minus the prompted local LLM, and minus the fine-tuned transformer, on STAR, ABCD and MultiWOZ 2.2, each with its 95% interval and, where a non-inferiority rule exists, its registered margin. Rule NI2, with a margin of 2 points against LLM*, is met on STAR and ABCD and not on MultiWOZ.</desc>
+<rect x="0" y="0" width="680" height="403" fill="#ffffff"/>
+<text x="14.0" y="20.0" font-size="12.5" font-weight="700" fill="#0b0b0b">Readable agent minus each reference: accuracy difference on the test split</text>
+<text x="14.0" y="36.0" font-size="10" fill="#52514e">Points. Dot: difference; line: 95% interval; short bar: registered non-inferiority margin.</text>
+<text x="14.0" y="49.0" font-size="10" fill="#52514e">Right of 0 the readable agent is ahead. A non-inferiority rule is met when the line stays right of the bar.</text>
+<text x="14.0" y="62.0" font-size="10" fill="#52514e">Rule NI2, with a margin of 2 points against LLM*, is met on STAR and ABCD and not on MultiWOZ.</text>
+<text x="14.0" y="95.0" font-size="10" fill="#52514e">minus the transformer-encoder agent (bge-large-en-v1.5, run per decision)</text>
+<text x="666.0" y="95.0" font-size="10" text-anchor="end" fill="#52514e">rules R22.3, R23.1, R24.1: met</text>
+<line x1="196.0" y1="99.0" x2="196.0" y2="159.0" stroke="#dddcd5" stroke-width="1" stroke-linecap="butt"/>
+<line x1="236.0" y1="99.0" x2="236.0" y2="159.0" stroke="#dddcd5" stroke-width="1" stroke-linecap="butt"/>
+<line x1="276.0" y1="99.0" x2="276.0" y2="159.0" stroke="#dddcd5" stroke-width="1" stroke-linecap="butt"/>
+<line x1="316.0" y1="99.0" x2="316.0" y2="159.0" stroke="#dddcd5" stroke-width="1" stroke-linecap="butt"/>
+<line x1="356.0" y1="99.0" x2="356.0" y2="159.0" stroke="#dddcd5" stroke-width="1" stroke-linecap="butt"/>
+<line x1="396.0" y1="99.0" x2="396.0" y2="159.0" stroke="#8f8e87" stroke-width="1" stroke-linecap="butt"/>
+<line x1="436.0" y1="99.0" x2="436.0" y2="159.0" stroke="#dddcd5" stroke-width="1" stroke-linecap="butt"/>
+<line x1="476.0" y1="99.0" x2="476.0" y2="159.0" stroke="#dddcd5" stroke-width="1" stroke-linecap="butt"/>
+<text x="162.0" y="113.0" font-size="11" text-anchor="end" fill="#0b0b0b">STAR</text>
+<line x1="414.8" y1="109.0" x2="443.0" y2="109.0" stroke="#1c5cab" stroke-width="2" stroke-linecap="round"/>
+<rect x="354.8" y="102.0" width="2.5" height="14.0" fill="#52514e"/>
+<circle cx="428.8" cy="109.0" r="4.5" fill="#1c5cab" stroke="#ffffff" stroke-width="1.5"/>
+<text x="492.0" y="113.0" font-size="10.5" fill="#0b0b0b">+1.64 [+0.94, +2.35]</text>
+<text x="162.0" y="133.0" font-size="11" text-anchor="end" fill="#0b0b0b">ABCD</text>
+<line x1="363.8" y1="129.0" x2="390.8" y2="129.0" stroke="#1c5cab" stroke-width="2" stroke-linecap="round"/>
+<rect x="354.8" y="122.0" width="2.5" height="14.0" fill="#52514e"/>
+<circle cx="377.6" cy="129.0" r="4.5" fill="#1c5cab" stroke="#ffffff" stroke-width="1.5"/>
+<text x="492.0" y="133.0" font-size="10.5" fill="#0b0b0b">-0.92 [-1.61, -0.26]</text>
+<text x="162.0" y="153.0" font-size="11" text-anchor="end" fill="#0b0b0b">MultiWOZ 2.2</text>
+<line x1="392.4" y1="149.0" x2="420.6" y2="149.0" stroke="#1c5cab" stroke-width="2" stroke-linecap="round"/>
+<rect x="374.8" y="142.0" width="2.5" height="14.0" fill="#52514e"/>
+<circle cx="406.6" cy="149.0" r="4.5" fill="#1c5cab" stroke="#ffffff" stroke-width="1.5"/>
+<text x="492.0" y="153.0" font-size="10.5" fill="#0b0b0b">+0.53 [-0.18, +1.23]</text>
+<text x="14.0" y="181.0" font-size="10" fill="#52514e">minus LLM* (prompted local 35B LLM), seed 1, 4,000 / 3,608 / 4,000 test rows</text>
+<text x="666.0" y="181.0" font-size="10" text-anchor="end" fill="#52514e">rule NI: met (MultiWOZ on seed 1 only)</text>
+<line x1="196.0" y1="185.0" x2="196.0" y2="245.0" stroke="#dddcd5" stroke-width="1" stroke-linecap="butt"/>
+<line x1="236.0" y1="185.0" x2="236.0" y2="245.0" stroke="#dddcd5" stroke-width="1" stroke-linecap="butt"/>
+<line x1="276.0" y1="185.0" x2="276.0" y2="245.0" stroke="#dddcd5" stroke-width="1" stroke-linecap="butt"/>
+<line x1="316.0" y1="185.0" x2="316.0" y2="245.0" stroke="#dddcd5" stroke-width="1" stroke-linecap="butt"/>
+<line x1="356.0" y1="185.0" x2="356.0" y2="245.0" stroke="#dddcd5" stroke-width="1" stroke-linecap="butt"/>
+<line x1="396.0" y1="185.0" x2="396.0" y2="245.0" stroke="#8f8e87" stroke-width="1" stroke-linecap="butt"/>
+<line x1="436.0" y1="185.0" x2="436.0" y2="245.0" stroke="#dddcd5" stroke-width="1" stroke-linecap="butt"/>
+<line x1="476.0" y1="185.0" x2="476.0" y2="245.0" stroke="#dddcd5" stroke-width="1" stroke-linecap="butt"/>
+<text x="162.0" y="199.0" font-size="11" text-anchor="end" fill="#0b0b0b">STAR</text>
+<line x1="395.5" y1="195.0" x2="457.0" y2="195.0" stroke="#1c5cab" stroke-width="2" stroke-linecap="round"/>
+<rect x="334.8" y="188.0" width="2.5" height="14.0" fill="#52514e"/>
+<circle cx="426.0" cy="195.0" r="4.5" fill="#1c5cab" stroke="#ffffff" stroke-width="1.5"/>
+<text x="492.0" y="199.0" font-size="10.5" fill="#0b0b0b">+1.50 [-0.02, +3.05]</text>
+<text x="162.0" y="219.0" font-size="11" text-anchor="end" fill="#0b0b0b">ABCD</text>
+<line x1="372.6" y1="215.0" x2="418.8" y2="215.0" stroke="#1c5cab" stroke-width="2" stroke-linecap="round"/>
+<rect x="334.8" y="208.0" width="2.5" height="14.0" fill="#52514e"/>
+<circle cx="396.0" cy="215.0" r="4.5" fill="#1c5cab" stroke="#ffffff" stroke-width="1.5"/>
+<text x="492.0" y="219.0" font-size="10.5" fill="#0b0b0b">+0.00 [-1.17, +1.14]</text>
+<text x="162.0" y="239.0" font-size="11" text-anchor="end" fill="#0b0b0b">MultiWOZ 2.2</text>
+<line x1="340.4" y1="235.0" x2="407.4" y2="235.0" stroke="#1c5cab" stroke-width="2" stroke-linecap="round"/>
+<rect x="334.8" y="228.0" width="2.5" height="14.0" fill="#52514e"/>
+<circle cx="373.5" cy="235.0" r="4.5" fill="#1c5cab" stroke="#ffffff" stroke-width="1.5"/>
+<text x="492.0" y="239.0" font-size="10.5" fill="#0b0b0b">-1.12 [-2.78, +0.57]</text>
+<text x="14.0" y="267.0" font-size="10" fill="#52514e">minus the fine-tuned transformer (bge-base), seed 1, same rows; sign turned</text>
+<text x="666.0" y="267.0" font-size="10" text-anchor="end" fill="#52514e">rule FT (transformer ahead): met</text>
+<line x1="196.0" y1="271.0" x2="196.0" y2="331.0" stroke="#dddcd5" stroke-width="1" stroke-linecap="butt"/>
+<line x1="236.0" y1="271.0" x2="236.0" y2="331.0" stroke="#dddcd5" stroke-width="1" stroke-linecap="butt"/>
+<line x1="276.0" y1="271.0" x2="276.0" y2="331.0" stroke="#dddcd5" stroke-width="1" stroke-linecap="butt"/>
+<line x1="316.0" y1="271.0" x2="316.0" y2="331.0" stroke="#dddcd5" stroke-width="1" stroke-linecap="butt"/>
+<line x1="356.0" y1="271.0" x2="356.0" y2="331.0" stroke="#dddcd5" stroke-width="1" stroke-linecap="butt"/>
+<line x1="396.0" y1="271.0" x2="396.0" y2="331.0" stroke="#8f8e87" stroke-width="1" stroke-linecap="butt"/>
+<line x1="436.0" y1="271.0" x2="436.0" y2="331.0" stroke="#dddcd5" stroke-width="1" stroke-linecap="butt"/>
+<line x1="476.0" y1="271.0" x2="476.0" y2="331.0" stroke="#dddcd5" stroke-width="1" stroke-linecap="butt"/>
+<text x="162.0" y="285.0" font-size="11" text-anchor="end" fill="#0b0b0b">STAR</text>
+<line x1="196.3" y1="281.0" x2="251.1" y2="281.0" stroke="#1c5cab" stroke-width="2" stroke-linecap="round"/>
+<circle cx="224.0" cy="281.0" r="4.5" fill="#1c5cab" stroke="#ffffff" stroke-width="1.5"/>
+<text x="492.0" y="285.0" font-size="10.5" fill="#0b0b0b">-8.60 [-9.98, -7.24]</text>
+<text x="162.0" y="305.0" font-size="11" text-anchor="end" fill="#0b0b0b">ABCD</text>
+<line x1="294.9" y1="301.0" x2="333.9" y2="301.0" stroke="#1c5cab" stroke-width="2" stroke-linecap="round"/>
+<circle cx="314.5" cy="301.0" r="4.5" fill="#1c5cab" stroke="#ffffff" stroke-width="1.5"/>
+<text x="492.0" y="305.0" font-size="10.5" fill="#0b0b0b">-4.07 [-5.06, -3.11]</text>
+<text x="162.0" y="325.0" font-size="11" text-anchor="end" fill="#0b0b0b">MultiWOZ 2.2</text>
+<line x1="220.3" y1="321.0" x2="285.7" y2="321.0" stroke="#1c5cab" stroke-width="2" stroke-linecap="round"/>
+<circle cx="252.0" cy="321.0" r="4.5" fill="#1c5cab" stroke="#ffffff" stroke-width="1.5"/>
+<text x="492.0" y="325.0" font-size="10.5" fill="#0b0b0b">-7.20 [-8.78, -5.51]</text>
+<line x1="176.0" y1="343.0" x2="476.0" y2="343.0" stroke="#8f8e87" stroke-width="1" stroke-linecap="butt"/>
+<text x="196.0" y="357.0" font-size="10" text-anchor="middle" fill="#52514e">-10</text>
+<text x="236.0" y="357.0" font-size="10" text-anchor="middle" fill="#52514e">-8</text>
+<text x="276.0" y="357.0" font-size="10" text-anchor="middle" fill="#52514e">-6</text>
+<text x="316.0" y="357.0" font-size="10" text-anchor="middle" fill="#52514e">-4</text>
+<text x="356.0" y="357.0" font-size="10" text-anchor="middle" fill="#52514e">-2</text>
+<text x="396.0" y="357.0" font-size="10" text-anchor="middle" fill="#52514e">0</text>
+<text x="436.0" y="357.0" font-size="10" text-anchor="middle" fill="#52514e">+2</text>
+<text x="476.0" y="357.0" font-size="10" text-anchor="middle" fill="#52514e">+4</text>
+<text x="326.0" y="373.0" font-size="10" text-anchor="middle" fill="#52514e">accuracy difference: readable agent minus reference (points)</text>
+<text x="14.0" y="391.0" font-size="9" fill="#52514e">Sources: README.md; studies/agent_vs_llm/results_REG_agent_vs_llm/results.json</text>
+</svg>

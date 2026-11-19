@@ -35,13 +35,14 @@ abstract: >-
   it and a fine-tuned transformer is ahead; static word tables, guards
   around an LLM agent and a Tsetlin Machine that writes text gave mixed or
   negative results. The tenth study tests a learning rule for OR-groups of
-  words on tasks of the second study.
+  words on tasks of the second study. A final report and a results video
+  were added on 19 Nov 2026.
 authors:
   - given-names: Anwar
     family-names: Debes
     affiliation: "University of Agder, Centre for Artificial Intelligence Research (CAIR)"
-version: "0.3.0"
-date-released: "2026-11-12"
+version: "0.3.1"
+date-released: "2026-11-19"
 repository-code: "https://github.com/AnwarDebes/glassbox-lm"
 license: CC-BY-NC-4.0
 keywords:
