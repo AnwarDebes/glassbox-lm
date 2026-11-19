@@ -18,8 +18,11 @@ the registered accuracy tests, not tested by them.
   the rated power of a whole CPU package, it would use 0.10 to 0.61 J per decision, against 1,993 to 2,175 J for LLM*
   (traced GPU board power times time), a ratio of about 3,500 to 21,000; charged both packages of the machine, about
   1,800 to 10,600.
-- The speed is not specific to the Tsetlin Machine: TF-IDF logistic regression decides in 0.83 to 0.90 ms at the same
-  accuracy. A fine-tuned transformer of about 110M parameters is 4.07 to 8.60 points more accurate and takes 195 to
+- The speed is not specific to the Tsetlin Machine: TF-IDF logistic regression decides in 0.83 to 0.90 ms, faster than
+  the readable agent on STAR and MultiWOZ, and is level with it in accuracy on STAR and MultiWOZ and 0.94 points ahead
+  on ABCD (readable agent minus TF-IDF, seed 1: STAR +0.35 [-1.00, +1.72], ABCD -0.94 [-1.92, +0.03], MultiWOZ +0.07
+  [-1.32, +1.47] points, each interval includes 0; with 5 seeds the ABCD interval, [-1.95, -0.23], is below 0).
+  A fine-tuned transformer of about 110M parameters is 4.07 to 8.60 points more accurate and takes 195 to
   263 ms per decision on the same CPU thread, or about 1 ms in GPU batches; its power was not traced.
 - Training is not cheaper: the Tsetlin Machine of the readable agent trains on the V100 in 140.5 to 1,202.5 s per
   seed, longer than fine-tuning the transformer on STAR and MultiWOZ and shorter on ABCD. The one measured comparison
@@ -103,7 +106,7 @@ CPU thread, rough. On the slide-10 sentences (direct labels, same files) commit 
 hierarchical package used a measured 105 to 120 J of GPU board energy per pass and 35 to 38 kJ per run of 300 passes,
 and did not pass Check 2b on the DEV sentences (descriptive runs, checked only by their own scripts). The OR-group rule trained in 2.6 s on one CPU thread; charged a whole CPU
 package (a bound, not a measurement) that is at most about 0.5 kJ per run, below 2% of the package's measured figure,
-and its best rule met the bars of Check 2b with direct labels on 5 of 5 registered seeds (13 of 25 with the further seeds). On Wikipedia pairs it trains in 17.9 s per pass
+and its best rule met the bars of Check 2b with direct labels on 5 of 5 registered seeds, on 8 of 20 further seeds and on 13 of 25 pooled. On Wikipedia pairs it trains in 17.9 s per pass
 over 40,000 pairs on one CPU thread (10 passes; the package needs 13.9 s per pass on the V100 for 100 passes), scores
 a pair in 285 microseconds, and its model holds 22.1 kB of member words against 3.28 MB of include bits; per pair it
 is not faster than the package's GPU bound. No energy of this rule was measured.
@@ -119,6 +122,8 @@ is not faster than the package's GPU bound. No energy of this rule was measured.
 | Ratio | 3,588x | 21,184x | 3,542x |
 | Readable agent charged both CPU packages of the machine (2 x 205 W) | 1.11 J | 0.21 J | 1.22 J |
 | Ratio | 1,794x | 10,592x | 1,771x |
+
+The ratios are computed from the unrounded values, not from the rounded figures of the rows above them.
 
 The first three rows are those of the [energy note](../studies/agent_vs_llm/NOTE_energy.md); the last two double its
 figures for the readable agent and halve its ratios, because the workstation has two such packages (lscpu). What makes
@@ -158,7 +163,8 @@ with no neural network at any stage matches a prompted local 35B LLM within the 
 What does not follow from them:
 
 - An accuracy per joule: the energy of the readable agent is an estimate from a rated power.
-- An advantage of the Tsetlin Machine: TF-IDF logistic regression has the same accuracy and the same speed
+- An advantage of the Tsetlin Machine: TF-IDF logistic regression is level or ahead in accuracy and decides in 0.83 to
+  0.90 ms, faster than the readable agent on STAR and MultiWOZ
   ([agent_vs_llm results page](../studies/agent_vs_llm/docs/results.md)).
 - An advantage over a fine-tuned transformer, which is 4.07 to 8.60 points more accurate and may cost about the same
   per decision on a GPU.

@@ -22,8 +22,9 @@ abstract: >-
   neural network at any stage is not worse, within the registered margin,
   than an agent that runs a transformer encoder per decision on three
   dialogue test splits, the registered test of superiority is not met, and
-  the hierarchical machine of the proposal's package beats the flat machine
-  of the same package on one workflow task. The fifth study holds the first
+  the hierarchical machine of the package named in the
+  proposal is above the flat machine of the same package
+  on one workflow task. The fifth study holds the first
   steps of a count-based language model: in its test T0 the learned votes
   of a Tsetlin Machine beat a counted read-out, and in A2 an exchange-class
   code lowers the perplexity of a count model. Four studies added on 29 Oct

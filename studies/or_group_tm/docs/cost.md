@@ -30,9 +30,9 @@ References on the same DEV pairs (the hierarchical_tm study): word overlap 0.819
 | training | 0.122 s per pass on one CPU thread, 20 passes (2.6 s in all) | 1.48 s per pass on a shared GPU, 1,000 passes | 1.18 to 1.30 s per pass on the GPU, 300 passes |
 | inference | 8.8 microseconds per sentence | not measured | not measured |
 | model size | 1,384 member words (median), 5.5 kB as pairs | 42.4 kB of include bits | not measured |
-| energy | not measured; CPU bound at most 25 J per pass, about 0.5 kJ per run | not measured | measured GPU board power x time: 105 to 120 J per pass, 35 to 38 kJ per run (the idle board draws about 50 W, included) |
+| energy | not measured; CPU bound at most 25 J per pass, about 0.5 kJ per run | not measured | measured GPU board power x time: 105 to 120 J per pass (mean power x the median time of a pass); 35 to 38 kJ per run, over the whole GPU time of the run, which is more than 300 times the figure per pass because the mean pass is longer than the median and the run also starts up and scores the model (the idle board draws about 50 W, included) |
 
-The current package's figure is a measurement of board power; the OR-group figure is a bound that charges a whole CPU package to one thread. Even so, one OR-group run on this task (at most about 0.5 kJ) stays below 2% of the measured energy of one run of the current package (35 to 38 kJ), and its best rule met the bars of Check 2b with direct labels on 5 of 5 registered seeds of E3 (13 of 25 with the further seeds).
+The current package's figure is a measurement of board power; the OR-group figure is a bound that charges a whole CPU package to one thread. Even so, one OR-group run on this task (at most about 0.5 kJ) stays below 2% of the measured energy of one run of the current package (35 to 38 kJ), and its best rule met the bars of Check 2b with direct labels on 5 of 5 registered seeds of E3, on 8 of 20 further seeds and on 13 of 25 pooled.
 
 ## Limits
 
